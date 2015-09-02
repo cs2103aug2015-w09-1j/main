@@ -1,4 +1,6 @@
 
 public class Task {
-	//Task data model
+	private void add(){
+		//Task data model
+	}
 }
