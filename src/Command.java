@@ -14,17 +14,17 @@ public class Command {
 			if(description == null){
 				description = "";
 			}
+			
 			Task task = null;
 			if(date != null && start_time != null && end_time != null){
 				task = new Event(task_name, description, date, start_time, end_time);
+			}else{
+				if(date == null){
+					//floating task
+				}	else{
+					//deadline task
+				}
 			}
-			
-			if(date == null){
-				//floating task
-			}	else{
-				//deadline task
-			}
-			
 			return task;
 		}
 	}
