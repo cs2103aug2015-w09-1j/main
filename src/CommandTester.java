@@ -32,9 +32,11 @@ public class CommandTester {
 		listOfTask.add(t3);
 		listOfTask.add(e4);
 		listOfTask.add(e5);
-
-		new LogicCommand().deleteTask(listOfTask, "2");	
-		new LogicCommand().deleteTask(listOfTask, "4");	
+		new LogicCommand().deleteTask(listOfTask, "1");	
+		new LogicCommand().deleteTask(listOfTask, "2");
+		new LogicCommand().deleteTask(listOfTask, "3");	
+		new LogicCommand().deleteTask(listOfTask, "4");
+		new LogicCommand().deleteTask(listOfTask, "5");	
 		//new LogicCommand().deleteTask(listOfTask, getNumToDelete("1"));	
 		System.out.println(new LogicCommand().displayTask(listOfTask));
 	}

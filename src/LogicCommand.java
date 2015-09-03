@@ -63,6 +63,8 @@ public class LogicCommand {
 				}
 				output += "\r\n";
 			}
+		}else{
+			output = "Task list is empty.";
 		}
 		return output;
 	}
