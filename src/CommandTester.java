@@ -11,6 +11,8 @@ public class CommandTester {
 		Task e1 = new LogicCommand().addTask("1", "Do code for CS2103",	"Event, Deadline and Floating Task.", "03/09/2015", "18:00", "22:00");
 		Task e2 = new LogicCommand().addTask("2", "Eat Dinner", null, null, null, null);	
 		Task e3 = new LogicCommand().addTask("3", "Watch Movie", "Avenagers 2", "04/09/2015", null, "2200");
+		Task e4 = new LogicCommand().addTask("4", "Do MA1101R",	"Revise on Matrices.", "03/09/2015", "1500", "1600");
+		Task e5 = new LogicCommand().addTask("5", "Do CS2101",	"OP1", null, null, null);
 //			if(e instanceof EventTask) {
 //				EventTask t = (EventTask) e;
 //				listOfTask.add(t);
@@ -28,7 +30,11 @@ public class CommandTester {
 		listOfTask.add(t1);
 		listOfTask.add(t2);
 		listOfTask.add(t3);
+		listOfTask.add(e4);
+		listOfTask.add(e5);
 
+		new LogicCommand().deleteTask(listOfTask, "2");	
+		new LogicCommand().deleteTask(listOfTask, "4");	
 		//new LogicCommand().deleteTask(listOfTask, getNumToDelete("1"));	
 		System.out.println(new LogicCommand().displayTask(listOfTask));
 	}

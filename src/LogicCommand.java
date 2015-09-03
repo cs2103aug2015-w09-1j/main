@@ -32,9 +32,13 @@ public class LogicCommand {
 		}
 	}
 	
-	public ArrayList<Task> deleteTask(ArrayList<Task> listOfTask, int index){
+	public ArrayList<Task> deleteTask(ArrayList<Task> listOfTask, String index){
 		if(!listOfTask.isEmpty()){
-			listOfTask.remove(index-1);
+			for(int i = 0; i < listOfTask.size(); i++){
+				if(listOfTask.get(i).getTaskId().equals(index)){
+					listOfTask.remove(i);
+				}
+			}
 		}
 		return listOfTask; 
 	}
