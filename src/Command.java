@@ -15,9 +15,11 @@ public class Command {
 				description = "";
 			}
 			
+			
 			Task task = null;
 			if(date != null && start_time != null && end_time != null){
-				task = new Event(task_name, description, date, start_time, end_time);
+				//event task
+				task = new EventTask(task_name, description, date, start_time, end_time);
 			}else{
 				if(date == null){
 					//floating task
