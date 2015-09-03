@@ -40,7 +40,26 @@ public class LogicCommand {
 	}
 	
 	public String displayTask(ArrayList<Task> listOfTask){
-		
-		return "";
+		String output = "";
+		if(!listOfTask.isEmpty()){
+			for(int i = 0; i < listOfTask.size(); i++){
+				output += listOfTask.get(i).getTaskId() + ". "
+						+ listOfTask.get(i).getTaskName() + "\r\n";
+				if(listOfTask.get(i).getDescription() != ""){
+					output += "Description: "+listOfTask.get(i).getDescription()+"\r\n"; 
+				}			
+				if(listOfTask.get(i) instanceof EventTask){
+					EventTask et = (EventTask) listOfTask.get(i);
+					output += "Date/Time: "+et.getDate()+", "+et.getStartTime()+" - "+et.getEndTime()+"\r\n";
+				}else if(listOfTask.get(i) instanceof DeadlineTask){
+					DeadlineTask dt = (DeadlineTask) listOfTask.get(i);
+					output += "Deadline: "+dt.getDeadlineDate()+", "+dt.getDeadlineTime()+"\r\n";
+				}else if(listOfTask.get(i) instanceof FloatingTask){
+					
+				}
+				output += "\r\n";
+			}
+		}
+		return output;
 	}
 }

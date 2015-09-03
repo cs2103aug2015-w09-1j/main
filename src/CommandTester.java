@@ -28,16 +28,9 @@ public class CommandTester {
 		listOfTask.add(t1);
 		listOfTask.add(t2);
 		listOfTask.add(t3);
-		
-		for(Task t : listOfTask){
-			System.out.println(t.getTaskName());
-		}	
-					
-		System.out.println("");	
-		new LogicCommand().deleteTask(listOfTask, getNumToDelete("1"));	
-		for(Task t : listOfTask){
-			System.out.println(t.getTaskName());
-		}	
+
+		//new LogicCommand().deleteTask(listOfTask, getNumToDelete("1"));	
+		System.out.println(new LogicCommand().displayTask(listOfTask));
 	}
 	
 	private static int getNumToDelete(String command) {
