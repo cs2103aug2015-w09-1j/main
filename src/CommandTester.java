@@ -24,8 +24,7 @@ public class CommandTester {
 			
 			for(Task t : listOfTask){
 				System.out.println(t.getTaskName());
-			}
-			
+			}			
 	}
 
 }
