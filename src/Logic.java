@@ -1,8 +1,8 @@
 import java.util.*;
 
-public class LogicCommand {
+public class Logic {
 
-	public LogicCommand(){
+	public Logic(){
 		
 	}
 	
