@@ -1,19 +1,25 @@
 import java.util.*;
 import CommandType;
 
+/**
+ * @author Zhou You
+ */
+
 public class Parser {
 	/* Attribute */
 	private userInput;
+	private String[] inputArr;
 	
 	
 	/* Constructor */
 	public Parser(String userInput){
 		this.userInput = userInput;
+		this.inputArr = userInput.split(" ");
 	}
 	
 	/* Parser API */
 	protected String getTaskID(){
-		
+		//use a randomised generator to assign an ID to each task		
 	} 
 	
 	protected String getTaskName(){
