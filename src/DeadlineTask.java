@@ -3,6 +3,7 @@ import java.util.*;
  * @author Sim Thiam Guan, Calvin
  */
 public class DeadlineTask extends Task {
+	private static final long serialVersionUID = -5756742526618058323L;
 	private String deadline_date;
 	private String deadline_time;
 	
@@ -30,5 +31,14 @@ public class DeadlineTask extends Task {
 
 	public void setDeadlineTime(String deadline_time) {
 		this.deadline_time = deadline_time;
+	}
+	
+	@Override
+	public String toString() {
+		return new StringBuffer(" task_id : ").append(this.task_id)
+		              .append(" task_name : ").append(this.task_name)
+			    .append(" description : ").append(this.description)
+			  .append(" deadline_date : ").append(this.deadline_date)
+			  .append(" deadline_time : ").append(this.deadline_time).toString();
 	}
 }
