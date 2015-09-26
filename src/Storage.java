@@ -4,7 +4,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-public class storage {
+public class Storage {
 
 	@SuppressWarnings({ "unchecked", "resource" })
 	public static ArrayList<Task> loadList(String path) {
@@ -36,15 +36,15 @@ public class storage {
 		ArrayList<Task> listToSave = new ArrayList<Task>();
 
 		FloatingTask A = new FloatingTask();
-		A.setTaskName("asdfg");
+		A.setTaskName("task name");
 		listToSave.add(A);
 
 		DeadlineTask B = new DeadlineTask();
-		B.setDeadlineDate("qwer");
+		B.setDeadlineDate("ddl date");
 		listToSave.add(B);
 
 		EventTask C = new EventTask();
-		C.setEndTime("zxcv");
+		C.setEndTime("end time");
 		listToSave.add(C);
 
 		saveList(listToSave, "test.txt");
