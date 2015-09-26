@@ -4,10 +4,12 @@ import java.util.*;
  * @author Sim Thiam Guan, Calvin
  */
 
-public abstract class Task {
-	private String task_id;
-	private String task_name;
-	private String description;
+public abstract class Task implements Serializable{
+	
+	private static final long serialVersionUID = 5618347644760861490L;
+	protected String task_id;
+	protected String task_name;
+	protected String description;
 	
 	public Task(){
 		
@@ -41,5 +43,12 @@ public abstract class Task {
 	}
 	public void setTaskName(String task_name) {
 		this.task_name = task_name;
+	}
+	
+	@Override
+	public String toString() {
+		return new StringBuffer(" task_id : ").append(this.task_id)
+		              .append(" task_name : ").append(this.task_name)
+			    .append(" description : ").append(this.description).toString();
 	}
 }
