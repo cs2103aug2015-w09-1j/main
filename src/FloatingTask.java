@@ -4,6 +4,7 @@ import java.util.*;
  * @author Sim Thiam Guan, Calvin
  */
 public class FloatingTask extends Task{
+	private static final long serialVersionUID = 1414697415471027388L;
 	public FloatingTask(){
 		super();
 	}
