@@ -6,6 +6,7 @@ import java.util.*;
  */
 
 public class EventTask extends Task {
+	private static final long serialVersionUID = 4324698638688782746L;
 	private String date;
 	private String start_time;
 	private String end_time;
@@ -44,5 +45,15 @@ public class EventTask extends Task {
 
 	public void setEndTime(String end_time) {
 		this.end_time = end_time;
+	}
+	
+	@Override
+	public String toString() {
+		return new StringBuffer(" task_id : ").append(this.task_id)
+		              .append(" task_name : ").append(this.task_name)
+			    .append(" description : ").append(this.description)
+			           .append(" date : ").append(this.date)
+		       	     .append(" start_time : ").append(this.start_time)
+		       	       .append(" end_time : ").append(this.end_time).toString();
 	}
 }
