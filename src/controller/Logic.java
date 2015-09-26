@@ -1,12 +1,13 @@
+package controller;
 import java.util.*;
-
+import model.*;
 public class Logic {
 
 	public Logic(){
 		
 	}
 	
-	public Task addTask(String task_id, String task_name, String description, String date, String start_time, String end_time){
+	public Task buildTask(String task_id, String task_name, String description, String date, String start_time, String end_time){
 		
 		if(task_name == null){
 			return null; //fail to add task.
