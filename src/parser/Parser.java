@@ -1,3 +1,4 @@
+package parser;
 import java.util.*;
 /**
  * @author Zhou You
@@ -46,7 +47,7 @@ public class Parser {
 	}
 	
 	/* =========== Parser API ===========*/
-	protected String getCommandType(){
+	public String getCommandType(){
 		return getFirstWord(userInput);
 	}
 	

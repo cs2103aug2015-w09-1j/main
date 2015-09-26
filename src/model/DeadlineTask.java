@@ -1,3 +1,4 @@
+package model;
 import java.util.*;
 /**
  * @author Sim Thiam Guan, Calvin
