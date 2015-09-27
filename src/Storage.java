@@ -23,6 +23,7 @@ public class Storage {
 		try {
 			ObjectOutputStream fileToSave = new ObjectOutputStream(new FileOutputStream(path));
 			fileToSave.writeObject(listToSave);
+			
 			fileToSave.flush();
 
 		} catch (Exception e) {

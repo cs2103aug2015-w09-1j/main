@@ -35,8 +35,7 @@ public class CommandTester {
 		new Logic().deleteTask(listOfTask, "1");	
 		new Logic().deleteTask(listOfTask, "2");
 		new Logic().deleteTask(listOfTask, "3");	
-		new Logic().deleteTask(listOfTask, "4");
-		new Logic().deleteTask(listOfTask, "5");	
+		new Logic().deleteTask(listOfTask, "4");	
 		//new LogicCommand().deleteTask(listOfTask, getNumToDelete("1"));	
 		System.out.println(new Logic().displayTask(listOfTask));
 	}
