@@ -21,19 +21,31 @@ public class MainApp extends Application {
     /**
      * The data as an observable list of Tasks.
      */
-    private ObservableList<Task> taskData = FXCollections.observableArrayList();
+    public static ObservableList<Task> taskData = FXCollections.observableArrayList();
+    
+    public static void addTask(Task e) {
+    	taskData.add(e);
+    	rearrId();
+
+    }
+    
+    public static void rearrId() {
+    	for (Task t:taskData) {
+    		t.setTaskId(taskData.indexOf(t) + 1);
+    	}
+    }
 
     /**
      * Constructor
      */
     public MainApp() {
         // Add some sample data
-        taskData.add(new Task("CS2103T", "Do GUI"));
-        taskData.add(new Task("CS2103T", "Push code to repo"));
-        taskData.add(new Task("CS2010", "Do Problem Set 3"));
-        taskData.add(new Task("ST2334", "Revise for midterm"));
-        taskData.add(new Task("CS2106", "Revise for midterm"));
-        taskData.add(new Task("Misc", "Finish web portfolio"));
+        addTask(new Task("CS2103T", "Do GUI"));
+        addTask(new Task("CS2103T", "Push code to repo"));
+        addTask(new Task("CS2010", "Do Problem Set 3"));
+        addTask(new Task("ST2334", "Revise for midterm"));
+        addTask(new Task("CS2106", "Revise for midterm"));
+        addTask(new Task("Misc", "Finish web portfolio"));
     }
 
     /**

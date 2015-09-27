@@ -13,7 +13,7 @@
             <Font name="DejaVu Sans Bold" size="39.0" />
          </font>
       </Text>
-      <TextField layoutX="27.0" layoutY="395.0" prefHeight="26.0" prefWidth="549.0" />
+      <TextField fx:id="textField" layoutX="15.0" layoutY="395.0" onAction="#onEnter" prefHeight="26.0" prefWidth="635.0" />
       <TableView fx:id="taskTable" layoutX="14.0" layoutY="63.0" prefHeight="308.0" prefWidth="635.0">
         <columns>
           <TableColumn fx:id="taskIdColumn" prefWidth="41.0" text="Id" />

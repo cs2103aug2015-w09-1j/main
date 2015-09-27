@@ -41,7 +41,7 @@ public class Task {
 
         // Some initial dummy data, just for convenient testing.
         this.startTime = new SimpleStringProperty("start time");
-        this.taskid = new SimpleIntegerProperty(1234);
+        this.taskid = new SimpleIntegerProperty(-1);
         this.endTime = new SimpleStringProperty("end time");
         this.dueDate = new SimpleObjectProperty<LocalDate>(LocalDate.of(1999, 2, 21));
     }
