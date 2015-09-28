@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="448.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="meteorite.todo.view.TaskViewController">
+   <children>
+      <Text layoutX="27.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Task">
+         <font>
+            <Font name="DejaVu Sans Bold" size="39.0" />
+         </font>
+      </Text>
+      <TextField fx:id="textField" layoutX="15.0" layoutY="395.0" onAction="#onEnter" prefHeight="26.0" prefWidth="635.0" />
+      <TableView fx:id="taskTable" layoutX="14.0" layoutY="63.0" prefHeight="308.0" prefWidth="635.0">
+        <columns>
+          <TableColumn fx:id="taskIdColumn" prefWidth="41.0" text="Id" />
+          <TableColumn fx:id="taskNameColumn" prefWidth="109.0" text="TaskName" />
+            <TableColumn fx:id="descriptionColumn" prefWidth="137.0" text="Description" />
+            <TableColumn fx:id="startTimeColumn" prefWidth="95.0" text="Start Time" />
+            <TableColumn fx:id="endTimeColumn" prefWidth="103.0" text="End Time" />
+            <TableColumn fx:id="dueDateColumn" prefWidth="149.0" text="Due Date" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
