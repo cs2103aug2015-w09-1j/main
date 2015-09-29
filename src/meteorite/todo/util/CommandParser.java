@@ -83,9 +83,6 @@ public class CommandParser {
 		this.taskId = inputArray[1];
 	}
 	
-	private void parseDisplayCommand(String userInput){
-		
-	}
 	
 	private String getFirstWord(String commandTypeString){
 		String[] strArr = commandTypeString.split(" ");
