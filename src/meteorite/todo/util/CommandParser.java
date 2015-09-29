@@ -24,10 +24,6 @@ public class CommandParser {
 	public String getCommandType() {
 		return getFirstWord(userInput);
 	}
-	public String getTaskID(){
-		//use a randomised generator to assign an ID to each task
-		return taskId;		
-	} 
 	
 	public String getTaskName(){
 		return taskName;
