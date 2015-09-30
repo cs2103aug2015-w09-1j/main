@@ -19,7 +19,7 @@ public class MainApp extends Application {
     private BorderPane rootLayout;
     
     /**
-     * The data as an observable list of Tasks.
+     * The data as an observable list of Tasks
      */
     public static ObservableList<Task> taskData = FXCollections.observableArrayList();
     
