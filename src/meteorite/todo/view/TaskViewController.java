@@ -61,7 +61,7 @@ public class TaskViewController {
     	String cmdType = cp.getCommandType();
     	switch(cmdType) {
     		case "add": 
-    			MainApp.addTask(new Task(cp.getTaskName(), cp.getDescription()));
+    			MainApp.addTask(new Task(cp.getTaskName(), cp.getDescription(), cp.getStartTime(), cp.getEndTime(), cp.getDueDate()));
     			break;
     		case "delete":
     			MainApp.taskData.remove(Integer.parseInt(cp.getIndex()) - 1);

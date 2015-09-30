@@ -8,6 +8,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import meteorite.todo.util.DateUtil;
 
 /**
  * Model class for a Task.
@@ -33,7 +34,8 @@ public class Task {
     /**
      * Constructor with some initial data.
      * 
-     * @param firstName
+     * @param taskName
+     * @param description
      */
     public Task(String taskName, String description) {
     	this.taskName = new SimpleStringProperty(taskName);
@@ -44,6 +46,19 @@ public class Task {
         this.taskid = new SimpleIntegerProperty(-1);
         this.endTime = new SimpleStringProperty("end time");
         this.dueDate = new SimpleObjectProperty<LocalDate>(LocalDate.of(1999, 2, 21));
+    }
+    
+    /**
+     * Constructor with all attributes 
+     *
+     */
+    public Task (String taskName, String description, String startTime, String endTime, String dueDate) {
+    	this.taskName = new SimpleStringProperty(taskName);
+    	this.description = new SimpleStringProperty(description);
+    	this.startTime = new SimpleStringProperty(startTime);
+    	this.endTime = new SimpleStringProperty(endTime);
+    	this.dueDate = new SimpleObjectProperty<LocalDate>(DateUtil.parse(dueDate));
+    	this.taskid = new SimpleIntegerProperty(-1);
     }
 
     public String getDescription() {

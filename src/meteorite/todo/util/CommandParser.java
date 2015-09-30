@@ -81,6 +81,9 @@ public class CommandParser {
 	private void parseAddCommand(String userInput){
 		this.taskName = inputArray[1];
 		this.description = inputArray[2];
+		this.startTime = inputArray[3];
+		this.endTime = inputArray[4];
+		this.dueDate = inputArray[5];
 	}
 
 	private void parseDeleteCommand(String userInput){
