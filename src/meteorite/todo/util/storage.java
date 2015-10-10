@@ -35,13 +35,13 @@ public class storage {
 
 	// For test
 
-	public static void write(Object f, String filename) throws Exception {
+	public static void save(Object f, String filename) throws Exception {
 		XMLEncoder encoder = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(filename)));
 		encoder.writeObject(f);
 		encoder.close();
 	}
 
-	public static Object read(String filename) throws Exception {
+	public static Object load(String filename) throws Exception {
 		XMLDecoder decoder = new XMLDecoder(new BufferedInputStream(new FileInputStream(filename)));
 		Object o = decoder.readObject();
 		decoder.close();
@@ -52,7 +52,7 @@ public class storage {
 		ArrayList<Task> listToSave = new ArrayList<Task>();
 		Task a = new Task("xxxx", "yyyyy");
 
-		storage.write(a, "foo.fxml");
+		storage.save(a, "foo.fxml");
 		return;
 
 	}
