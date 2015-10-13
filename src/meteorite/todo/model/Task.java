@@ -8,6 +8,10 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+<<<<<<< HEAD
+=======
+import meteorite.todo.util.DateUtil;
+>>>>>>> feature-UI
 
 /**
  * Model class for a Task.
@@ -17,9 +21,15 @@ import javafx.beans.property.StringProperty;
 public class Task {
 	
 	private final StringProperty taskName;
+<<<<<<< HEAD
     private final ObjectProperty<LocalDate> startDate;
     private final IntegerProperty taskid;
     private final ObjectProperty<LocalDate> endDate;
+=======
+    private final StringProperty description;
+    private final IntegerProperty taskid;
+    private final ObjectProperty<LocalDate> dueDate;
+>>>>>>> feature-UI
     private final StringProperty startTime;
     private final StringProperty endTime;
 
@@ -27,21 +37,35 @@ public class Task {
      * Default constructor.
      */
     public Task() {
+<<<<<<< HEAD
         this(null);
+=======
+        this(null, null);
+>>>>>>> feature-UI
     }
 
     /**
      * Constructor with some initial data.
      * 
+<<<<<<< HEAD
      * @param firstName
      */
     public Task(String taskName) {
     	this.taskName = new SimpleStringProperty(taskName);
+=======
+     * @param taskName
+     * @param description
+     */
+    public Task(String taskName, String description) {
+    	this.taskName = new SimpleStringProperty(taskName);
+        this.description = new SimpleStringProperty(description);
+>>>>>>> feature-UI
 
         // Some initial dummy data, just for convenient testing.
         this.startTime = new SimpleStringProperty("start time");
         this.taskid = new SimpleIntegerProperty(-1);
         this.endTime = new SimpleStringProperty("end time");
+<<<<<<< HEAD
         this.startDate = new SimpleObjectProperty<LocalDate>(LocalDate.now());
         this.endDate = new SimpleObjectProperty<LocalDate>(LocalDate.now());
     }
@@ -56,6 +80,34 @@ public class Task {
 
     public ObjectProperty<LocalDate> endDateProperty() {
         return endDate;
+=======
+        this.dueDate = new SimpleObjectProperty<LocalDate>(LocalDate.of(1999, 2, 21));
+    }
+    
+    /**
+     * Constructor with all attributes 
+     *
+     */
+    public Task (String taskName, String description, String startTime, String endTime, String dueDate) {
+    	this.taskName = new SimpleStringProperty(taskName);
+    	this.description = new SimpleStringProperty(description);
+    	this.startTime = new SimpleStringProperty(startTime);
+    	this.endTime = new SimpleStringProperty(endTime);
+    	this.dueDate = new SimpleObjectProperty<LocalDate>(DateUtil.parse(dueDate));
+    	this.taskid = new SimpleIntegerProperty(-1);
+    }
+
+    public String getDescription() {
+        return description.get();
+    }
+
+    public void setDescription(String description) {
+        this.description.set(description);
+    }
+
+    public StringProperty descriptionProperty() {
+        return description;
+>>>>>>> feature-UI
     }
     
     public String getTaskName() {
@@ -106,6 +158,7 @@ public class Task {
         return taskid;
     }
 
+<<<<<<< HEAD
     public LocalDate getStartDate() {
         return startDate.get();
     }
@@ -116,5 +169,17 @@ public class Task {
 
     public ObjectProperty<LocalDate> startDateProperty() {
         return startDate;
+=======
+    public LocalDate getDueDate() {
+        return dueDate.get();
+    }
+
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate.set(dueDate);
+    }
+
+    public ObjectProperty<LocalDate> dueDateProperty() {
+        return dueDate;
+>>>>>>> feature-UI
     }
 }

@@ -19,7 +19,11 @@ public class MainApp extends Application {
     private BorderPane rootLayout;
     
     /**
+<<<<<<< HEAD
      * The data as an observable list of Tasks
+=======
+     * The data as an observable list of Tasks.
+>>>>>>> feature-UI
      */
     public static ObservableList<Task> taskData = FXCollections.observableArrayList();
     
@@ -40,12 +44,21 @@ public class MainApp extends Application {
      */
     public MainApp() {
         // Add some sample data
+<<<<<<< HEAD
         addTask(new Task("Do GUI CS2103T"));
         addTask(new Task("CS2103T Push code to repo"));
         addTask(new Task("CS2010 Do Problem Set 3"));
         addTask(new Task("ST2334 Revise for midterm"));
         addTask(new Task("CS2106 Revise for midterm"));
         addTask(new Task("Misc Finish web portfolio"));
+=======
+        addTask(new Task("CS2103T", "Do GUI"));
+        addTask(new Task("CS2103T", "Push code to repo"));
+        addTask(new Task("CS2010", "Do Problem Set 3"));
+        addTask(new Task("ST2334", "Revise for midterm"));
+        addTask(new Task("CS2106", "Revise for midterm"));
+        addTask(new Task("Misc", "Finish web portfolio"));
+>>>>>>> feature-UI
     }
 
     /**

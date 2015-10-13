@@ -24,6 +24,13 @@ public class CommandParser {
 	public String getCommandType() {
 		return getFirstWord(userInput);
 	}
+<<<<<<< HEAD
+=======
+	public String getTaskID(){
+		//use a randomised generator to assign an ID to each task
+		return taskId;		
+	} 
+>>>>>>> feature-UI
 	
 	public String getTaskName(){
 		return taskName;
@@ -74,6 +81,7 @@ public class CommandParser {
 		}
 	}
 	
+<<<<<<< HEAD
 	private void parseDisplayCommand(String userInput2) {
 		// TODO Auto-generated method stub
 		
@@ -82,12 +90,26 @@ public class CommandParser {
 	private void parseAddCommand(String userInput){
 		this.taskName = inputArray[1];
 		this.description = inputArray[2];
+=======
+	private void parseAddCommand(String userInput){
+		this.taskName = inputArray[1];
+		this.description = inputArray[2];
+		this.startTime = inputArray[3];
+		this.endTime = inputArray[4];
+		this.dueDate = inputArray[5];
+>>>>>>> feature-UI
 	}
 
 	private void parseDeleteCommand(String userInput){
 		this.taskId = inputArray[1];
 	}
 	
+<<<<<<< HEAD
+=======
+	private void parseDisplayCommand(String userInput){
+		
+	}
+>>>>>>> feature-UI
 	
 	private String getFirstWord(String commandTypeString){
 		String[] strArr = commandTypeString.split(" ");
