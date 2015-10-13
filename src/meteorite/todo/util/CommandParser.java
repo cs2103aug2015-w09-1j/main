@@ -5,42 +5,48 @@ package meteorite.todo.util;
 public class CommandParser {
 	//Attributes
 	private String userInput;
+	private String command;
+	private String args;
+	private String[] argArray;
 	private String[] inputArray;
 	private String taskName;
-	private String description;
-	private String taskId;
 	private String startTime;
 	private String endTime;
-	private String dueDate;
+	private String startDate;
+	private String endDate;
+	private int id;
 	
 	//Constructor
 	public CommandParser(String userInput) {
 		this.userInput = userInput;
-		this.inputArray = userInput.split(" ");
+		this.inputArray = userInput.split(" ", 2);
+		this.command = inputArray[0];
+		this.args = inputArray[1];
+		this.argArray = args.split("from |to |by ");
 		parse(userInput);
 	}
 	
 	//Parser API
 	public String getCommandType() {
-		return getFirstWord(userInput);
+		return command;
 	}
-	public String getTaskID(){
-		//use a randomised generator to assign an ID to each task
-		return taskId;		
-	} 
+	public int getId() {
+		return id;
+	}
 	
 	public String getTaskName(){
 		return taskName;
 	}
 	
-	public String getDescription(){
-		return description;
+	//event task
+	public String getStartDate(){
+		return startDate;
+	}
+	//event task
+	public String getEndDate() {
+		return endDate;
 	}
 	
-	//event task
-	public String getDueDate(){
-		return dueDate;
-	}
 	
 	//event task
 	public String getStartTime(){
@@ -50,13 +56,6 @@ public class CommandParser {
 	//event task
 	public String getEndTime(){
 		return endTime;	
-	}
-	
-	
-	
-	/* special API for delete cmd */
-	public String getIndex(){
-		return taskId;	
 	}
 	
 	
@@ -78,27 +77,40 @@ public class CommandParser {
 		}
 	}
 	
-	private void parseAddCommand(String userInput){
-		this.taskName = inputArray[1];
-		this.description = inputArray[2];
-		this.startTime = inputArray[3];
-		this.endTime = inputArray[4];
-		this.dueDate = inputArray[5];
+	private void helper(int pos, String str) {
+		switch(pos) {
+		case 0:this.taskName = str;
+		       break;
+		case 1:this.startTime = str;
+		       break;
+		case 2:this.endTime = str;
+			   break;
+		case 3:this.startDate = str;
+		       break;
+		case 4:this.endDate = str;
+		       break;
+		}
+	}
+	
+	private void parseAddCommand(String userInput) {
+		int len = this.argArray.length;
+		for (int i = 0;i < len;i++) {
+			helper(i, this.argArray[i]);
+		}
 	}
 
-	private void parseDeleteCommand(String userInput){
-		this.taskId = inputArray[1];
+	private void parseDeleteCommand(String userInput) {
+		this.id = Integer.parseInt(this.argArray[0]);
 	}
 	
 	private void parseDisplayCommand(String userInput){
 		
 	}
 	
-	private String getFirstWord(String commandTypeString){
-		String[] strArr = commandTypeString.split(" ");
-		String commandType = strArr[0];
-		return commandType;
-	
+	//testing purpose
+	public static void main(String[] args) {
+		CommandParser cp = new CommandParser("add meeting with boss from 9 to 10 by Monday");
+		System.out.println(cp.getStartTime());
 	}
 
 }
