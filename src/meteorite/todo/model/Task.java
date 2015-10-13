@@ -17,9 +17,9 @@ import javafx.beans.property.StringProperty;
 public class Task {
 	
 	private final StringProperty taskName;
-    private final StringProperty description;
+    private final ObjectProperty<LocalDate> startDate;
     private final IntegerProperty taskid;
-    private final ObjectProperty<LocalDate> dueDate;
+    private final ObjectProperty<LocalDate> endDate;
     private final StringProperty startTime;
     private final StringProperty endTime;
 
@@ -27,7 +27,7 @@ public class Task {
      * Default constructor.
      */
     public Task() {
-        this(null, null);
+        this(null);
     }
 
     /**
@@ -35,27 +35,27 @@ public class Task {
      * 
      * @param firstName
      */
-    public Task(String taskName, String description) {
+    public Task(String taskName) {
     	this.taskName = new SimpleStringProperty(taskName);
-        this.description = new SimpleStringProperty(description);
 
         // Some initial dummy data, just for convenient testing.
         this.startTime = new SimpleStringProperty("start time");
         this.taskid = new SimpleIntegerProperty(-1);
         this.endTime = new SimpleStringProperty("end time");
-        this.dueDate = new SimpleObjectProperty<LocalDate>(LocalDate.of(1999, 2, 21));
+        this.startDate = new SimpleObjectProperty<LocalDate>(LocalDate.now());
+        this.endDate = new SimpleObjectProperty<LocalDate>(LocalDate.now());
     }
 
-    public String getDescription() {
-        return description.get();
+    public LocalDate getEndDate() {
+        return endDate.get();
     }
 
-    public void setDescription(String description) {
-        this.description.set(description);
+    public void setEndDate(LocalDate date) {
+        this.endDate.set(date);
     }
 
-    public StringProperty descriptionProperty() {
-        return description;
+    public ObjectProperty<LocalDate> endDateProperty() {
+        return endDate;
     }
     
     public String getTaskName() {
@@ -106,15 +106,15 @@ public class Task {
         return taskid;
     }
 
-    public LocalDate getDueDate() {
-        return dueDate.get();
+    public LocalDate getStartDate() {
+        return startDate.get();
     }
 
-    public void setDueDate(LocalDate dueDate) {
-        this.dueDate.set(dueDate);
+    public void setStartDate(LocalDate startDate) {
+        this.startDate.set(startDate);
     }
 
-    public ObjectProperty<LocalDate> dueDateProperty() {
-        return dueDate;
+    public ObjectProperty<LocalDate> startDateProperty() {
+        return startDate;
     }
 }

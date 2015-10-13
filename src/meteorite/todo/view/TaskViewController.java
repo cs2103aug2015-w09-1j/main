@@ -15,7 +15,7 @@ public class TaskViewController {
     @FXML
     private TableView<Task> taskTable;
     @FXML
-    private TableColumn<Task, String> descriptionColumn;
+    private TableColumn<Task, LocalDate> endDateColumn;
     @FXML
     private TableColumn<Task, String> taskNameColumn;
     @FXML
@@ -25,7 +25,7 @@ public class TaskViewController {
     @FXML
     private TableColumn<Task, String> endTimeColumn;
     @FXML
-    private TableColumn<Task, LocalDate> dueDateColumn;
+    private TableColumn<Task, LocalDate> startDateColumn;
     
     @FXML
     private TextField textField;
@@ -47,12 +47,12 @@ public class TaskViewController {
     @FXML
     private void initialize() {
         // Initialize the person table with the two columns.
-        descriptionColumn.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
+        endDateColumn.setCellValueFactory(cellData -> cellData.getValue().endDateProperty());
         taskNameColumn.setCellValueFactory(cellData -> cellData.getValue().taskNameProperty());
         taskIdColumn.setCellValueFactory(cellData -> cellData.getValue().taskIdProperty().asObject());
         startTimeColumn.setCellValueFactory(cellData -> cellData.getValue().startTimeProperty());
         endTimeColumn.setCellValueFactory(cellData -> cellData.getValue().endTimeProperty());
-        dueDateColumn.setCellValueFactory(cellData -> cellData.getValue().dueDateProperty());
+        startDateColumn.setCellValueFactory(cellData -> cellData.getValue().startDateProperty());
     }
     
     public void onEnter() {
@@ -61,7 +61,7 @@ public class TaskViewController {
     	String cmdType = cp.getCommandType();
     	switch(cmdType) {
     		case "add": 
-    			MainApp.addTask(new Task(cp.getTaskName(), cp.getDescription()));
+    			MainApp.addTask(new Task(cp.getTaskName()));
     			break;
     		case "delete":
     			MainApp.taskData.remove(Integer.parseInt(cp.getIndex()) - 1);
