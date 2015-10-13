@@ -74,6 +74,11 @@ public class CommandParser {
 		}
 	}
 	
+	private void parseDisplayCommand(String userInput2) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	private void parseAddCommand(String userInput){
 		this.taskName = inputArray[1];
 		this.description = inputArray[2];
