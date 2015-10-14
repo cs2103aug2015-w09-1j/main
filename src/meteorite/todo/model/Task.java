@@ -41,11 +41,11 @@ public class Task {
     	this.taskName = new SimpleStringProperty(taskName);
 
         // Some initial dummy data, just for convenient testing.
-        this.startTime = new SimpleStringProperty("start time");
+        this.startTime = new SimpleStringProperty("");
         this.taskid = new SimpleIntegerProperty(-1);
-        this.endTime = new SimpleStringProperty("end time");
-        this.startDate = new SimpleObjectProperty<LocalDate>(LocalDate.now());
-        this.endDate = new SimpleObjectProperty<LocalDate>(LocalDate.now().plusDays(2));
+        this.endTime = new SimpleStringProperty("");
+        this.startDate = new SimpleObjectProperty<LocalDate>();
+        this.endDate = new SimpleObjectProperty<LocalDate>();
     }
     
     /**

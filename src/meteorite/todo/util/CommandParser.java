@@ -6,6 +6,7 @@ public class CommandParser {
 	//Attributes
 	private String userInput;
 	private String command;
+	private String taskType;
 	private String args;
 	private String[] argArray;
 	private String[] inputArray;
@@ -18,15 +19,29 @@ public class CommandParser {
 	
 	//Constructor
 	public CommandParser(String userInput) {
-		this.userInput = userInput;
-		this.inputArray = userInput.split(" ", 2);
+		this.setUserInput(userInput);
+		this.inputArray = userInput.split(" ", 3);
 		this.command = inputArray[0];
-		this.args = inputArray[1];
+		this.setTaskType(inputArray[1]);
+		this.args = inputArray[2];
 		this.argArray = args.split("from |to |by ");
 		parse(userInput);
 	}
 	
-	//Parser API
+	public CommandParser() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+	
+	public String getUserInput() {
+		return userInput;
+	}
+
+	public void setUserInput(String userInput) {
+		this.userInput = userInput;
+	}
+
 	public String getCommandType() {
 		return command;
 	}
@@ -38,6 +53,14 @@ public class CommandParser {
 		return taskName;
 	}
 	
+	public String getTaskType() {
+		return taskType;
+	}
+
+	public void setTaskType(String taskType) {
+		this.taskType = taskType;
+	}
+
 	//event task
 	public String getStartDate(){
 		return startDate;

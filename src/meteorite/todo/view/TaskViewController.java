@@ -8,6 +8,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import meteorite.todo.MainApp;
+import meteorite.todo.model.Logic;
 import meteorite.todo.model.Task;
 import meteorite.todo.util.CommandParser;
 
@@ -59,6 +60,9 @@ public class TaskViewController {
     	String input = textField.getText();
     	CommandParser cp = new CommandParser(input);
     	String cmdType = cp.getCommandType();
+    	Logic lg = MainApp.getLogic();
+    	lg.setParser(cp);
+    	lg.executeCmd(cmdType);
     	
     	textField.clear();
     }

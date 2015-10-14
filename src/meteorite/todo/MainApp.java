@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import meteorite.todo.model.Logic;
 import meteorite.todo.model.Task;
 import meteorite.todo.view.TaskViewController;
 
@@ -17,35 +18,20 @@ public class MainApp extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
+    private static Logic logic = new Logic();
     
-    /**
-     * The data as an observable list of Tasks.
-     */
-    public static ObservableList<Task> taskData = FXCollections.observableArrayList();
-    
-    public static void addTask(Task e) {
-    	taskData.add(e);
-    	rearrId();
-
-    }
-    
-    public static void rearrId() {
-    	for (Task t:taskData) {
-    		t.setTaskId(taskData.indexOf(t) + 1);
-    	}
-    }
 
     /**
      * Constructor
      */
     public MainApp() {
         // Add some sample data
-        addTask(new Task("CS2103T Do GUI"));
-        addTask(new Task("CS2103T Push code to repo"));
-        addTask(new Task("CS2010 Do Problem Set 3"));
-        addTask(new Task("ST2334 Revise for midterm"));
-        addTask(new Task("CS2106 Revise for midterm"));
-        addTask(new Task("Misc Finish web portfolio"));
+        getLogic().addTask(new Task("CS2103T Do GUI"));
+        getLogic().addTask(new Task("CS2103T Push code to repo"));
+        getLogic().addTask(new Task("CS2010 Do Problem Set 3"));
+        getLogic().addTask(new Task("ST2334 Revise for midterm"));
+        getLogic().addTask(new Task("CS2106 Revise for midterm"));
+        getLogic().addTask(new Task("Misc Finish web portfolio"));
     }
 
     /**
@@ -53,12 +39,20 @@ public class MainApp extends Application {
      * @return
      */
     public ObservableList<Task> getTaskData() {
-        return taskData;
+        return getLogic().getTaskLst();
     }
 
     // ... THE REST OF THE CLASS ...
 
-    @Override
+    public static Logic getLogic() {
+		return logic;
+	}
+
+	public void setLogic(Logic logic) {
+		this.logic = logic;
+	}
+
+	@Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("ToDoApp");
