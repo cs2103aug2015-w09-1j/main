@@ -8,11 +8,11 @@ public class DeadlineTask extends Task {
 	private String deadline_time;
 	
 	public DeadlineTask(){
-		
+		super();
 	}
 	
-	public DeadlineTask(String task_id, String task_name, String description, String deadline_date, String deadline_time){
-		super(task_id, task_name, description);
+	public DeadlineTask(String task_name, String deadline_date, String deadline_time){
+		super(task_name);
 		this.deadline_date = deadline_date;
 		this.deadline_time = deadline_time;
 	}
