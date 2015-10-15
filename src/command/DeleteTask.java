@@ -11,8 +11,9 @@ public class DeleteTask extends DeleteCommand {
 	@Override
 	public void execute() {
 		// Firstly, delete into the local memory
-		// TaskMemory.getInstance().Remove(this.task);
-
+		 TaskMemory.getInstance().Remove(this.task);
+		 System.out.println("Task deleted");
+		 System.out.println(TaskMemory.getInstance().Count());
 		// Secondly, delete this task into the storage
 		// Call storage API
 	}

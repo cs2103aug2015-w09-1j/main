@@ -18,11 +18,13 @@ public class CreateTask extends CreateCommand {
 
 	@Override
 	public void execute() {
-		// Firstly, Add into the local memory
-
-		// Secondly, build this task and add into the storage
-		task = Logic.buildTask("Have a date with xxx", null, "2015-10-15", null, "1800");
+		
 		System.out.println("Task created");
+		// Firstly, Add into the local memory
+		TaskMemory.getInstance().Add(this.task);
+		System.out.println(TaskMemory.getInstance().Count());
+		// Secondly, build this task and add into the storage
+		
 		// Call storage API
 		
 	}
