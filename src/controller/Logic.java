@@ -2,11 +2,31 @@ package controller;
 
 import java.util.*;
 
+import command.ICommand;
 import command.TaskMemory;
 import model.*;
 
 public class Logic {
-
+	//whoever inherit interface, is able to add in to the stack.
+	private Stack<ICommand> processStack = null;
+	
+	public Logic(){
+		processStack = new Stack<ICommand>();
+	}
+	
+	private void pushToProcessStack(ICommand command){
+		if(command.undoable()){
+			processStack.push(command);
+		}
+	}
+	public void undo(){
+		if(processStack.isEmpty()){
+			
+		}else{
+			processStack.pop().undo();
+		}
+	}
+	
 	public static Task buildTask(String task_name, String start_date,
 			String end_date, String start_time, String end_time) {
 		Task task = null;
