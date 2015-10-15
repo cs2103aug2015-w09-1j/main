@@ -13,6 +13,12 @@ public class storage {
 
 	private static String path="";
 	private static String fileName=null;
+	
+	public static void reset(){
+		path="";
+		fileName=null;
+		return;
+	}
 
 	public static void setPath(String path) {
 		storage.path = path;
@@ -33,6 +39,7 @@ public class storage {
 	}
 
 	public static void save(Object f) {
+		//assert fileName==null;;
 		try {
 			XMLEncoder encoder = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(path+fileName)));
 			encoder.writeObject(f);
@@ -43,7 +50,7 @@ public class storage {
 		return;
 	}
 
-	public static Object load() throws Exception {
+	public static Object load(){
 		try {
 			XMLDecoder decoder = new XMLDecoder(new BufferedInputStream(new FileInputStream(path+fileName)));
 			Object o = decoder.readObject();
@@ -58,6 +65,8 @@ public class storage {
 	public static void main(String args[]) throws Exception {
 		Task a = new Task("xxxx", "yyyyy");
 
+		storage.reset();
+		//storage.save(a);
 		storage.setPath("..\\");
 		storage.setfileName("test.fxml");
 		storage.save(a);
