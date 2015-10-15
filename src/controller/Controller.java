@@ -27,8 +27,8 @@ public class Controller {
 			case "add": {
 				Logic logic = new Logic();
 				//logic.buildTask(task_id, task_name, description, date, start_time, end_time)
-				ICommand cmd = new Create();
-				cmd.execute();
+				//ICommand cmd = new Create();
+				//cmd.execute();
 			}
 			case "delete": {
 				
