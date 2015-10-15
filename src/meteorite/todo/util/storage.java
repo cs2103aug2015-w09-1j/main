@@ -9,36 +9,47 @@ import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
-public class storage {
+public class Storage {
 
-	private static String path="";
-	private static String fileName=null;
+	private String path="";
+	private String fileName=null;
+	private static Storage theOne=null;
 	
-	public static void reset(){
+	public Storage(){
+		reset();
+	}
+	
+	public void reset(){
 		path="";
 		fileName=null;
 		return;
 	}
 
-	public static void setPath(String path) {
-		storage.path = path;
+	public void setPath(String path) {
+		this.path = path;
 		return;
 	}
 
-	public static void setfileName(String fileName) {
-		storage.fileName = fileName;
+	public void setfileName(String fileName) {
+		this.fileName = fileName;
 		return;
 	}
-
-	public static String getPath() {
+	
+	public static Storage getInstance(){
+		if(theOne==null)
+			theOne= new Storage();
+		return theOne;
+	}
+	
+	public String getPath() {
 		return path;
 	}
 
-	public static String getfileName() {
+	public String getfileName() {
 		return fileName;
 	}
 
-	public static void save(Object f) {
+	public void save(Object f) {
 		//assert fileName==null;;
 		try {
 			XMLEncoder encoder = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(path+fileName)));
@@ -50,7 +61,7 @@ public class storage {
 		return;
 	}
 
-	public static Object load(){
+	public Object load(){
 		try {
 			XMLDecoder decoder = new XMLDecoder(new BufferedInputStream(new FileInputStream(path+fileName)));
 			Object o = decoder.readObject();
@@ -64,15 +75,16 @@ public class storage {
 	
 	public static void main(String args[]) throws Exception {
 		Task a = new Task("xxxx", "yyyyy");
-
-		storage.reset();
+		Storage test=Storage.getInstance();
+		
+		test.reset();
 		//storage.save(a);
-		storage.setPath("..\\");
-		storage.setfileName("test.fxml");
-		storage.save(a);
-		storage.setPath("doncare\\");
-		storage.setfileName("test.fxml");
-		storage.save(a);
+		test.setPath("..\\");
+		test.setfileName("test.fxml");
+		test.save(a);
+		test.setPath("doncare\\");
+		test.setfileName("test.fxml");
+		test.save(a);
 
 		return;
 
