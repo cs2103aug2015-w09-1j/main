@@ -1,8 +1,5 @@
 package command;
 
-import java.util.ArrayList;
-
-import controller.Logic;
 import model.Task;
 
 public class CreateTask extends CreateCommand {
@@ -22,7 +19,7 @@ public class CreateTask extends CreateCommand {
 		System.out.println("Task created");
 		// Firstly, Add into the local memory
 		TaskMemory.getInstance().Add(this.task);
-		System.out.println(TaskMemory.getInstance().Count());
+		System.out.println(TaskMemory.getInstance().getSize());
 		// Secondly, build this task and add into the storage
 		
 		// Call storage API

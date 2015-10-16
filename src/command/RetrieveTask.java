@@ -10,7 +10,7 @@ public class RetrieveTask extends RetrieveCommand {
 
 	@Override
 	public void undo() {
-		// false
+		// false, unable to do a undo for retrieve
 		if (this.undoable()) {
 
 		}

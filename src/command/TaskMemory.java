@@ -53,7 +53,7 @@ public class TaskMemory {
 		
 	}
 
-	public int Count() {
+	public int getSize() {
 		return taskList.size();
 	}
 }

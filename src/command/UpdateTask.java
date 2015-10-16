@@ -1,22 +1,25 @@
 package command;
 
-public class UpdateTask extends UpdateCommand {
-	public UpdateTask() {
+import model.Task;
 
+public class UpdateTask extends UpdateCommand {
+	private Task task;
+
+	public UpdateTask(Task task) {
+		this.task = task;
 	}
 
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
+		System.out.println("Task updated");
 
 	}
 
 	@Override
 	public void undo() {
 		if (this.undoable()) {
-
+			
 		}
-
 	}
 
 }

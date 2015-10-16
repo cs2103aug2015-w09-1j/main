@@ -6,22 +6,49 @@ import command.DeleteTask;
 import command.TaskMemory;
 import controller.*;
 import model.*;
-import controller.Controller;
 
 public class ToDoList {
 
 	public static void main(String[] args) throws IOException {
-		Task task = Logic.buildTask("Going home to eat.", null, null, null,
-				null);
+		Logic logic = new Logic();
+		
+		Task task = logic.buildTask("Going home to eat.", null, null, null, null);
 		CreateTask create = new CreateTask(task);
 		create.execute();
-
+		Task task2 = logic.buildTask("Going home to eat.", null, "10-10-2015", null, "1800");
+		CreateTask create2 = new CreateTask(task2);
+		create2.execute();
+		logic.pushToProcessStack(create);
+		logic.pushToProcessStack(create2);
+		
 		ArrayList<Task> taskList = TaskMemory.getInstance().getTaskList();
 		System.out.println("taskList : " + taskList.size());
+		Task thisTask = taskList.get(4);
+		
+		if(task.equals(thisTask)){
+			System.out.println("True");
+		}else{
+			System.out.println("False");
+		}
+		
+//		ArrayList<Task> searchedList = logic.searchTask("home");
+//		printout(searchedList);
+		
+//		Task taskToDelete = logic.deleteTask(1);
+//		DeleteTask delete = new DeleteTask(taskToDelete);
+//		delete.execute();
+//		
+//		logic.pushToProcessStack(delete);
+//		logic.undo();
+//		logic.undo();
 
-		DeleteTask delete = new DeleteTask(taskList.get(1));
-		delete.execute();
+		//printout(taskList);
+		
+		
 
+	}
+
+	private static void printout(ArrayList<Task> taskList) {
 		for (int i = 0; i < taskList.size(); i++) {
 			if (taskList.get(i) instanceof EventTask) {
 				EventTask et = (EventTask) taskList.get(i);
@@ -34,7 +61,6 @@ public class ToDoList {
 				System.out.println(fl.getTaskName());
 			}
 		}
-
 	}
 
 }

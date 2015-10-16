@@ -11,4 +11,5 @@ public class FloatingTask extends Task{
 	public FloatingTask(String task_name){
 		super(task_name);	
 	}
+
 }
