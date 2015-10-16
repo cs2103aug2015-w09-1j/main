@@ -107,7 +107,7 @@ public class CommandParser {
 		case 1:this.startTime = str;
 		       break;
 		case 2:this.endTime = str;
-			   break;
+		       break;
 		case 3:this.startDate = str;
 		       break;
 		case 4:this.endDate = str;
