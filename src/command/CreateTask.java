@@ -16,10 +16,8 @@ public class CreateTask extends CreateCommand {
 	@Override
 	public void execute() {
 		
-		System.out.println("Task created");
 		// Firstly, Add into the local memory
 		TaskMemory.getInstance().Add(this.task);
-		System.out.println(TaskMemory.getInstance().getSize());
 		// Secondly, build this task and add into the storage
 		
 		// Call storage API

@@ -10,28 +10,35 @@ import model.*;
 public class ToDoList {
 
 	public static void main(String[] args) throws IOException {
-		Logic logic = new Logic();
-		
-		Task task = logic.buildTask("Going home to eat.", null, null, null, null);
-		CreateTask create = new CreateTask(task);
-		create.execute();
-		Task task2 = logic.buildTask("Going home to eat.", null, "10-10-2015", null, "1800");
-		CreateTask create2 = new CreateTask(task2);
-		create2.execute();
-		logic.pushToProcessStack(create);
-		logic.pushToProcessStack(create2);
-		
-		ArrayList<Task> taskList = TaskMemory.getInstance().getTaskList();
-		System.out.println("taskList : " + taskList.size());
-		Task thisTask = taskList.get(4);
-		
-		if(task.equals(thisTask)){
-			System.out.println("True");
-		}else{
-			System.out.println("False");
-		}
-		
-//		ArrayList<Task> searchedList = logic.searchTask("home");
+		Controller.executeCMD("search");
+		Controller.executeCMD("showall");
+//		Controller.executeCMD("delete");
+//		Controller.executeCMD("undo");
+//		Controller.executeCMD("add");
+		//Controller.getInstance();
+		printout(Controller.getInstance().getTaskList());
+//		Logic logic = new Logic();
+//		
+//		Task task = logic.buildTask("Going home to eat.", null, null, null, null);
+//		CreateTask create = new CreateTask(task);
+//		create.execute();
+//		Task task2 = logic.buildTask("Going home to eat.", null, "10-10-2015", null, "1800");
+//		CreateTask create2 = new CreateTask(task2);
+//		create2.execute();
+//		logic.pushToProcessStack(create);
+//		logic.pushToProcessStack(create2);
+//		
+//		ArrayList<Task> taskList = TaskMemory.getInstance().getTaskList();
+//		System.out.println("taskList : " + taskList.size());
+//		Task thisTask = taskList.get(4);
+//		
+//		if(task.equals(thisTask)){
+//			System.out.println("True");
+//		}else{
+//			System.out.println("False");
+//		}
+//		
+//		ArrayList<Task> searchedList = logic.searchTask(taskList, "2103");
 //		printout(searchedList);
 		
 //		Task taskToDelete = logic.deleteTask(1);

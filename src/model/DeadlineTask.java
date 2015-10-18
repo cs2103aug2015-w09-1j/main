@@ -12,7 +12,7 @@ public class DeadlineTask extends Task {
 	}
 	
 	public DeadlineTask(String task_name, String deadline_date, String deadline_time){
-		super(task_name);
+		super(task_name, "DeadlineTask");
 		this.deadline_date = deadline_date;
 		this.deadline_time = deadline_time;
 	}

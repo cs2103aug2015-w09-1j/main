@@ -9,7 +9,7 @@ public class FloatingTask extends Task{
 		super();
 	}
 	public FloatingTask(String task_name){
-		super(task_name);	
+		super(task_name, "FloatingTask");	
 	}
 
 }

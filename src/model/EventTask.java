@@ -19,7 +19,7 @@ public class EventTask extends Task {
 
 	public EventTask(String task_name, String start_date, String end_date,
 			String start_time, String end_time) {
-		super(task_name);
+		super(task_name, "EventTask");
 		this.start_date = start_date;
 		this.end_date = end_date;
 		this.start_time = start_time;

@@ -7,6 +7,9 @@ import command.TaskMemory;
 import model.*;
 
 public class Logic {
+	private static String BUILDTASK_MESSAGE = "Unable to add task.";
+	private static String DELETETASK_MESSAGE = "Unable to delete task";
+	private static String UPDATETASK_MESSAGE = "Unable to update task";
 	// whoever inherit interface, is able to add in to the stack. It is for Undo
 	// purposes
 	private static Stack<ICommand> processStack = null;
@@ -56,22 +59,28 @@ public class Logic {
 
 			}
 		} catch (Exception e) {
-			System.out.println("Unable to add task");
+			System.out.println(BUILDTASK_MESSAGE);
 		}
 		return task;
 	}
 
 	// Deleting a task
-	public Task deleteTask(int index) {
+	public Task deleteTask(ArrayList<Task> currentList, int index) {
 		Task task = null;
 		try {
 			ArrayList<Task> taskList = TaskMemory.getInstance().getTaskList();
-			task = taskList.get(index - 1);
+			task = currentList.get(index - 1);
+			for(Task t : taskList){
+				if(task.equals(t)){
+					task = t;
+				}
+			}
+			
+			
 		} catch (Exception e) {
-			System.out.println("Unable to delete task");
+			System.out.println(DELETETASK_MESSAGE);
 		}
 		return task;
-
 	}
 
 	// Updating a task
@@ -79,22 +88,20 @@ public class Logic {
 		Task task = null;
 		try {
 			// 1.do a search to find out which task i want to update.
-			int taskIndex = getSearchTaskById(currentList, index);
+			task = getSearchTaskById(currentList, index-1);
 			// 2.delete this particular task and create the edited task.
-			task = deleteTask(taskIndex);
-			// 3.do a sort
 			
-
 		} catch (Exception e) {
-
+			System.out.println(UPDATETASK_MESSAGE);
 		}
 		return task;
 	}
 
 	// Searching for tasks , return the filtered arraylist based on the keyword
-	public ArrayList<Task> searchTask(ArrayList<Task> taskList, String keyword) {
+	public ArrayList<Task> searchTask(ArrayList<Task> currentList, String keyword) {
 		ArrayList<Task> taskOfSearchedList = new ArrayList<Task>();
 		try {
+			ArrayList<Task> taskList = currentList;
 			for (Task t : taskList) {
 				if (t.getTaskName() != null
 						&& t.getTaskName().contains(keyword)) {
@@ -111,13 +118,13 @@ public class Logic {
 	
 	// Search for specific task based on the index of the current display list and return the same task from the Task List
 	// return int
-	public int getSearchTaskById(ArrayList<Task> currentList, int index){
-		int results = -1;
+	public Task getSearchTaskById(ArrayList<Task> currentList, int index){
+		Task results = null;
 		try{
 			ArrayList<Task> TaskList = TaskMemory.getInstance().getTaskList();
 			for(int i = 0; i < TaskList.size() ; i++){
 				if(currentList.get(index).equals(TaskList.get(i))){
-					results = i;
+					results = TaskList.get(i);
 				}
 			}
 		}catch(Exception e){
