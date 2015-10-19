@@ -61,6 +61,7 @@ public class CommandParser {
 	private String searchWord;
 	private String searchDate;
 	private String displayMode;
+	private String storagePath;
 	
 	CommandChecker cc;
 	
@@ -113,6 +114,9 @@ public class CommandParser {
 	public String getDisplayMode(){
 		return this.displayMode;
 	}
+	public String getStoragePath(){
+		return this.storagePath;
+	}
 	
 	
 	
@@ -121,7 +125,7 @@ public class CommandParser {
 		String cmdType = getCommandType();
 		switch (cmdType) {
 			case "add":
-				parseAddCommand();
+				parseAddCommand(getArgs());
 				break;
 			case "delete":
 				parseDeleteCommand();
@@ -132,9 +136,62 @@ public class CommandParser {
 			case "search":
 				parseSearchCommand();
 				break;
+			case "undo":
+				parseUndoCommand();
+				break;
+			case "help":
+				parseHelpCommand();
+				break;
+			case "complete":
+				parseCompleteCommand();
+				break;
+			case "archive":
+				parserArchiveCommand();
+				break;
+			case "set":
+				parseSetCommand();
+				break;
+			case "edit":
+				parseEditCommand();
+				break;
 			default:
 				throw new Error("command not recognised: "+cmdType);
 		}
+	}
+	
+	private void parseEditCommand(){
+		String args = getArgs();
+		String[] argArray = args.split(" ", 2);
+		if(argArray.length == 1) {
+			setTaskID(Integer.parseInt(args));
+		} else {
+			String id = argArray[0];
+			setTaskID(Integer.parseInt(id));
+			parseAddCommand(argArray[1]);
+		}
+	}
+	
+	private void parseSetCommand(){
+		String args = getArgs();
+		setStoragePath(args);
+	}
+	
+	private void parserArchiveCommand() {
+		String args = getArgs();
+		setTaskID(Integer.parseInt(args));
+		
+	}
+	private void parseCompleteCommand() {
+		String args = getArgs();
+		setTaskID(Integer.parseInt(args));
+		
+	}
+	private void parseHelpCommand(){
+		
+	}
+	
+	private void parseUndoCommand(){
+		
 	}
 	
 	private void parseSearchCommand() {
@@ -147,8 +204,7 @@ public class CommandParser {
 		}
 		
 	}
-	private void parseAddCommand(){
-		String args = getArgs();
+	private void parseAddCommand(String args){
 		String taskType = getTaskType(args);
 		switch (taskType){
 			case "float":
@@ -168,7 +224,7 @@ public class CommandParser {
 	
 	private void parseDeleteCommand(){
 		String args = getArgs();
-		setTaskID(args);
+		setTaskID(Integer.parseInt(args));
 	}
 	
 	private void parseDisplayCommand(){
@@ -230,7 +286,7 @@ public class CommandParser {
 		this.command = inputArr[0].trim();  
 	}
 	private void setArgs(){
-		if(!this.command.equals("undo") ){
+		if(!this.command.equals("undo") && !this.command.equals("help")){
 			String[] inputArr = this.userInput.split(" ", 2);
 			this.args = inputArr[1];
 		}
@@ -253,15 +309,17 @@ public class CommandParser {
 	private void setEndDate(String date) {
 		this.endDate = date.trim();
 	}
-	private void setTaskID(String id) {
-		int taskID = Integer.parseInt(id);
-		this.taskID = taskID;
+	private void setTaskID(int id) {
+		this.taskID = id;
 	}
 	private void setSearchDate(String date) {
 		this.searchDate = date;
 	}	
 	private void setSearchWord(String word) {
 		this.searchWord = word;
+	}
+	private void setStoragePath(String path){
+		this.storagePath = path;
 	}
 	
 	static void print(String[] str){
@@ -270,9 +328,11 @@ public class CommandParser {
 		}
 	}
 	public static void main(String[] args) {
-		CommandParser cp2 = new CommandParser("display archived");
-		String str = "display archived";
-		System.out.println(cp2.getCommandType());
+//		CommandParser cp2 = new CommandParser("display archived");
+		String str = "2 meeting with boss by 2015-02-03 1259";
+		String[] strArr = str.split(" ", 2);
+		print(strArr);
+//		System.out.println(cp2.getCommandType());
 		
 	}
 	

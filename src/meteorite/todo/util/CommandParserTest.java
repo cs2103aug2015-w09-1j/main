@@ -49,6 +49,39 @@ public class CommandParserTest {
 		CommandParser cp7 = new CommandParser("search on 2015-10-03");
 		assertEquals("search", cp7.getCommandType());
 		
+		//undo
+		CommandParser cp8 = new CommandParser("undo");
+		assertEquals("undo", cp8.getCommandType());
+		
+		//help
+		CommandParser cp9 = new CommandParser("help");
+		assertEquals("help", cp9.getCommandType());
+		
+		//complete
+		CommandParser cp10 = new CommandParser("complete 10");
+		assertEquals("complete", cp10.getCommandType());
+		
+		//archive 
+		CommandParser cp11 = new CommandParser("archive 11");
+		assertEquals("archive", cp11.getCommandType());
+		
+		//set
+		CommandParser cp12 = new CommandParser("set C:/Program/SilentJarvis/Data");
+		assertEquals("set", cp12.getCommandType());
+		
+		//edit
+		CommandParser cp13 = new CommandParser("edit 2");
+		assertEquals("edit", cp13.getCommandType());
+		
+		CommandParser cp14 = new CommandParser("edit 2 meeting with boss by 2015-03-04 1259");
+		assertEquals("edit", cp14.getCommandType());
+		
+	}
+	
+	@Test
+	public void testGetStoragePath(){
+		CommandParser cp1 = new CommandParser("set C:/Program/SilentJarvis/Data");
+		assertEquals("C:/Program/SilentJarvis/Data", cp1.getStoragePath());
 	}
 
 	@Test
@@ -64,6 +97,10 @@ public class CommandParserTest {
 		//float task
 		CommandParser cp3 = new CommandParser("add visit uncle Lee");
 		assertEquals("visit uncle Lee", cp3.getTaskName());
+		
+		//edit
+		CommandParser cp4 = new CommandParser("edit 2 meeting with boss by 2015-03-04 1259");
+		assertEquals("meeting with boss", cp4.getTaskName());
 
 	}
 	
@@ -97,8 +134,21 @@ public class CommandParserTest {
 	@Test
 	public void testGetId() {
 		int id = 2;
-		CommandParser cp = new CommandParser("delete 2");
-		assertEquals(id, cp.getId());
+		//delete
+		CommandParser cp1 = new CommandParser("delete 2");
+		assertEquals(id, cp1.getId());
+		
+		//complete
+		CommandParser cp2 = new CommandParser("complete 2");
+		assertEquals(id, cp2.getId());
+		
+		//archive
+		CommandParser cp3 = new CommandParser("archive 2");
+		assertEquals(id, cp3.getId());
+		
+		//edit
+		CommandParser cp4 = new CommandParser("edit 2");
+		assertEquals(id, cp4.getId());
 
 	}
 
@@ -131,6 +181,10 @@ public class CommandParserTest {
 		//deadline task
 		CommandParser cp2 = new CommandParser("add finish project manual by 2015-10-03 0900");
 		assertEquals("2015-10-03", cp2.getEndDate());
+		
+		//edit
+		CommandParser cp3 = new CommandParser("edit 2 meeting with boss by 2015-03-04 1259");
+		assertEquals("2015-03-04", cp3.getEndDate());
 	}
 
 	@Test
@@ -152,6 +206,10 @@ public class CommandParserTest {
 		//deadline task
 		CommandParser cp2 = new CommandParser("add finish project manual by 2015-10-03 0900");
 		assertEquals("0900", cp2.getEndTime());
+		
+		//edit
+		CommandParser cp3 = new CommandParser("edit 2 meeting with boss by 2015-03-04 1259");
+		assertEquals("1259", cp3.getEndTime());
 	}
 
 }
