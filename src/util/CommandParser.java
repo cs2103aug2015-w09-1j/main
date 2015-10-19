@@ -50,7 +50,7 @@
 //		save
 
 
-package meteorite.todo.util;
+package util;
 
 public class CommandParser {
 	//Attribute

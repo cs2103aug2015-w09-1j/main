@@ -1,4 +1,4 @@
-package meteorite.todo;
+package main;
 
 import java.io.IOException;
 
@@ -10,15 +10,12 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import meteorite.todo.model.Logic;
-import meteorite.todo.model.Task;
-import meteorite.todo.view.TaskViewController;
 
 public class MainApp extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
-    private static Logic logic = new Logic();
+
     
 
     /**
@@ -26,12 +23,7 @@ public class MainApp extends Application {
      */
     public MainApp() {
         // Add some sample data
-        getLogic().addTask(new Task("CS2103T Do GUI"));
-        getLogic().addTask(new Task("CS2103T Push code to repo"));
-        getLogic().addTask(new Task("CS2010 Do Problem Set 3"));
-        getLogic().addTask(new Task("ST2334 Revise for midterm"));
-        getLogic().addTask(new Task("CS2106 Revise for midterm"));
-        getLogic().addTask(new Task("Misc Finish web portfolio"));
+
     }
 
     /**
@@ -39,18 +31,10 @@ public class MainApp extends Application {
      * @return
      */
     public ObservableList<Task> getTaskData() {
-        return getLogic().getTaskLst();
+        return ;
     }
 
-    // ... THE REST OF THE CLASS ...
 
-    public static Logic getLogic() {
-		return logic;
-	}
-
-	public void setLogic(Logic logic) {
-		this.logic = logic;
-	}
 
 	@Override
     public void start(Stage primaryStage) {

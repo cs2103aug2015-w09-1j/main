@@ -2,35 +2,37 @@ package model;
 
 import java.util.*;
 
+import javafx.beans.property.StringProperty;
+
 /**
  * @author Sim Thiam Guan, Calvin
  */
 
 public abstract class Task {
-	private String task_name;
-	private String task_type;
+	private StringProperty task_name;
+	private StringProperty task_type;
 	public Task() {
 
 	}
 
-	public Task(String task_name, String task_type) {
+	public Task(StringProperty task_name, StringProperty task_type) {
 		this.task_name = task_name;
 		this.task_type = task_type;
 	}
 
-	public String getTaskName() {
+	public StringProperty getTaskName() {
 		return this.task_name;
 	}
 
-	public void setTaskName(String task_name) {
+	public void setTaskName(StringProperty task_name) {
 		this.task_name = task_name;
 	}
 	
-	public String getTaskType(){
+	public StringProperty getTaskType(){
 		return this.task_type;
 	}
 	
-	public void setTaskType(String task_type){
+	public void setTaskType(StringProperty task_type){
 		this.task_type = task_type;
 	}
 

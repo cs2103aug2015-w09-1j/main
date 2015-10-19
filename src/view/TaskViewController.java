@@ -1,4 +1,4 @@
-package meteorite.todo.view;
+package view;
 
 import java.time.LocalDate;
 
@@ -7,10 +7,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import meteorite.todo.MainApp;
-import meteorite.todo.model.Logic;
-import meteorite.todo.model.Task;
-import meteorite.todo.util.CommandParser;
+import main.MainApp;
+import model.Task;
 
 public class TaskViewController {
     @FXML
@@ -48,7 +46,7 @@ public class TaskViewController {
     @FXML
     private void initialize() {
         // Initialize the person table with the two columns.
-        taskNameColumn.setCellValueFactory(cellData -> cellData.getValue().taskNameProperty());
+        taskNameColumn.setCellValueFactory(cellData -> cellData.getValue().getTaskName());
         taskIdColumn.setCellValueFactory(cellData -> cellData.getValue().taskIdProperty().asObject());
         startTimeColumn.setCellValueFactory(cellData -> cellData.getValue().startTimeProperty());
         endTimeColumn.setCellValueFactory(cellData -> cellData.getValue().endTimeProperty());
@@ -58,11 +56,6 @@ public class TaskViewController {
     
     public void onEnter() {
     	String input = textField.getText();
-    	CommandParser cp = new CommandParser(input);
-    	String cmdType = cp.getCommandType();
-    	Logic lg = MainApp.getLogic();
-    	lg.setParser(cp);
-    	lg.executeCmd(cmdType);
     	
     	textField.clear();
     }

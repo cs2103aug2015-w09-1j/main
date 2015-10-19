@@ -103,7 +103,7 @@ public class Logic {
 			ArrayList<Task> taskList = currentList;
 			for (Task t : taskList) {
 				if (t.getTaskName() != null
-						&& t.getTaskName().contains(keyword)) {
+						&& t.getTaskName().toString().contains(keyword)) {
 					taskOfSearchedList.add(t);
 				}
 			}
