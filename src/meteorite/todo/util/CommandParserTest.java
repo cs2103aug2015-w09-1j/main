@@ -76,6 +76,14 @@ public class CommandParserTest {
 		CommandParser cp14 = new CommandParser("edit 2 meeting with boss by 2015-03-04 1259");
 		assertEquals("edit", cp14.getCommandType());
 		
+		//save
+		CommandParser cp15 = new CommandParser("save");
+		assertEquals("save", cp15.getCommandType());
+		
+		//load
+		CommandParser cp16 = new CommandParser("load");
+		assertEquals("load", cp16.getCommandType());
+		
 	}
 	
 	@Test

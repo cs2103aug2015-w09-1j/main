@@ -16,7 +16,7 @@
 //		b. search by task name
 //			search <keyword>
 //	
-//	4) display
+//	4) display / showall
 //		a. display archived tasks
 //			display archived
 //		b. display all incomplete tasks
@@ -42,6 +42,12 @@
 //	
 //	10) help
 //		help
+//	
+//	11) load
+//		load
+//		
+//	12) save
+//		save
 
 
 package meteorite.todo.util;
@@ -154,9 +160,23 @@ public class CommandParser {
 			case "edit":
 				parseEditCommand();
 				break;
+			case "save":
+				parseSaveCommand();
+				break;
+			case "load":
+				parseLoadCommand();
+				break;
 			default:
 				throw new Error("command not recognised: "+cmdType);
 		}
+	}
+	
+	private void parseSaveCommand(){
+		
+	}
+	
+	private void parseLoadCommand(){
+		
 	}
 	
 	private void parseEditCommand(){
@@ -286,7 +306,8 @@ public class CommandParser {
 		this.command = inputArr[0].trim();  
 	}
 	private void setArgs(){
-		if(!this.command.equals("undo") && !this.command.equals("help")){
+		if(!this.command.equals("undo") && !this.command.equals("help")
+				&& !this.command.equals("load") && !this.command.equals("save")){
 			String[] inputArr = this.userInput.split(" ", 2);
 			this.args = inputArr[1];
 		}
