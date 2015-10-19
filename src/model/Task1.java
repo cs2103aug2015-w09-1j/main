@@ -1,4 +1,6 @@
-package meteorite.todo.model;
+package model;
+
+
 
 import java.time.LocalDate;
 
@@ -15,7 +17,7 @@ import meteorite.todo.util.DateUtil;
  *
  * @author Jason
  */
-public class Task {
+public class Task1 {
 	
 	private final StringProperty taskName;
     private final ObjectProperty<LocalDate> endDate;
