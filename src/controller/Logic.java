@@ -87,9 +87,8 @@ public class Logic {
 	public Task updateTask(ArrayList<Task> currentList, int index) {
 		Task task = null;
 		try {
-			// 1.do a search to find out which task i want to update.
+			// do a search to find out which task i want to update.
 			task = getSearchTaskById(currentList, index-1);
-			// 2.delete this particular task and create the edited task.
 			
 		} catch (Exception e) {
 			System.out.println(UPDATETASK_MESSAGE);
