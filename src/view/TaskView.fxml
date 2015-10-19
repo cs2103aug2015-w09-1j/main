@@ -18,10 +18,24 @@
         <columns>
           <TableColumn fx:id="taskIdColumn" prefWidth="41.0" text="Id" />
           <TableColumn fx:id="taskNameColumn" prefWidth="109.0" text="TaskName" />
+<<<<<<< HEAD:src/view/TaskView.fxml
             <TableColumn fx:id="startTimeColumn" prefWidth="95.0" text="Start Time" />
             <TableColumn fx:id="endTimeColumn" prefWidth="103.0" text="End Time" />
             <TableColumn fx:id="startDateColumn" prefWidth="149.0" text="Start Date" />
             <TableColumn fx:id="endDateColumn" prefWidth="137.0" text="End Date" />
+=======
+<<<<<<< HEAD
+            <TableColumn fx:id="startTimeColumn" prefWidth="95.0" text="Start Time" />
+            <TableColumn fx:id="endTimeColumn" prefWidth="103.0" text="End Time" />
+            <TableColumn fx:id="startDateColumn" prefWidth="149.0" text="Start Date" />
+            <TableColumn fx:id="endDateColumn" prefWidth="137.0" text="End Date" />
+=======
+            <TableColumn fx:id="descriptionColumn" prefWidth="137.0" text="Description" />
+            <TableColumn fx:id="startTimeColumn" prefWidth="95.0" text="Start Time" />
+            <TableColumn fx:id="endTimeColumn" prefWidth="103.0" text="End Time" />
+            <TableColumn fx:id="dueDateColumn" prefWidth="149.0" text="Due Date" />
+>>>>>>> feature-UI
+>>>>>>> develop:src/meteorite/todo/view/TaskView.fxml
         </columns>
       </TableView>
    </children>
