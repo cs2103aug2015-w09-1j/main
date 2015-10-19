@@ -9,30 +9,30 @@ import javafx.beans.property.StringProperty;
  */
 
 public abstract class Task {
-	private StringProperty task_name;
-	private StringProperty task_type;
+	private String task_name;
+	private String task_type;
 	public Task() {
 
 	}
 
-	public Task(StringProperty task_name, StringProperty task_type) {
+	public Task(String task_name, String task_type) {
 		this.task_name = task_name;
 		this.task_type = task_type;
 	}
 
-	public StringProperty getTaskName() {
+	public String getTaskName() {
 		return this.task_name;
 	}
 
-	public void setTaskName(StringProperty task_name) {
+	public void setTaskName(String task_name) {
 		this.task_name = task_name;
 	}
 	
-	public StringProperty getTaskType(){
+	public String getTaskType(){
 		return this.task_type;
 	}
 	
-	public void setTaskType(StringProperty task_type){
+	public void setTaskType(String task_type){
 		this.task_type = task_type;
 	}
 
