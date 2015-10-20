@@ -24,8 +24,8 @@ public class Storage {
 	}
 	
 	public void reset(){
-		path="";
-		fileName=null;
+		path="C:\\Users\\calvin\\Documents\\2103T\\";
+		fileName="todolist.txt";
 		return;
 	}
 
@@ -78,33 +78,33 @@ public class Storage {
 		return null;
 	}
 	
-	public static void main(String args[]) throws Exception {
-		Storage test=Storage.getInstance();
-
-		ArrayList<Task> listToSave = new ArrayList<Task>();
-
-		FloatingTask A = new FloatingTask();
-		A.setTaskName("name");
-		listToSave.add(A);
-
-		DeadlineTask B = new DeadlineTask();
-		B.setDeadlineDate("ddl date");
-		listToSave.add(B);
-
-		EventTask C = new EventTask();
-		C.setEndTime("end time");
-		listToSave.add(C);
-
-		test.reset();
-		test.setPath("..\\");
-		test.setfileName("test.fxml");
-		test.save(listToSave);
-		test.setPath("doncare\\");
-		test.setfileName("test.fxml");
-		test.save(listToSave);
-		ArrayList<Task> loadedList = test.load();
-
-		return;
-
-	}
+//	public static void main(String args[]) throws Exception {
+//		Storage test=Storage.getInstance();
+//
+//		ArrayList<Task> listToSave = new ArrayList<Task>();
+//
+//		FloatingTask A = new FloatingTask();
+//		A.setTaskName("name");
+//		listToSave.add(A);
+//
+//		DeadlineTask B = new DeadlineTask();
+//		B.setDeadlineDate("ddl date");
+//		listToSave.add(B);
+//
+//		EventTask C = new EventTask();
+//		C.setEndTime("end time");
+//		listToSave.add(C);
+//
+//		test.reset();
+//		test.setPath("..\\");
+//		test.setfileName("test.fxml");
+//		test.save(listToSave);
+//		test.setPath("doncare\\");
+//		test.setfileName("test.fxml");
+//		test.save(listToSave);
+//		ArrayList<Task> loadedList = test.load();
+//
+//		return;
+//
+//	}
 }

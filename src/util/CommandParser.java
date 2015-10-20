@@ -348,14 +348,14 @@ public class CommandParser {
 			System.out.println("Index "+i+" : "+ str[i]);
 		}
 	}
-	public static void main(String[] args) {
-//		CommandParser cp2 = new CommandParser("display archived");
-		String str = "2 meeting with boss by 2015-02-03 1259";
-		String[] strArr = str.split(" ", 2);
-		print(strArr);
-//		System.out.println(cp2.getCommandType());
-		
-	}
+//	public static void main(String[] args) {
+////		CommandParser cp2 = new CommandParser("display archived");
+//		String str = "2 meeting with boss by 2015-02-03 1259";
+//		String[] strArr = str.split(" ", 2);
+//		print(strArr);
+////		System.out.println(cp2.getCommandType());
+//		
+//	}
 	
 
 }

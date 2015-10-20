@@ -36,8 +36,9 @@ public class Logic {
 	public Task buildTask(String task_name, String start_date, String end_date,
 			String start_time, String end_time) {
 		Task task = null;
+		
 		try {
-			if (task_name == null) {
+			if (task_name.isEmpty()) {
 				return null; // fail to add task.
 			} else {
 
@@ -59,7 +60,7 @@ public class Logic {
 
 			}
 		} catch (Exception e) {
-			System.out.println(BUILDTASK_MESSAGE);
+			return null;
 		}
 		return task;
 	}
@@ -78,7 +79,8 @@ public class Logic {
 			
 			
 		} catch (Exception e) {
-			System.out.println(DELETETASK_MESSAGE);
+			//System.out.println(DELETETASK_MESSAGE);
+			return null;
 		}
 		return task;
 	}

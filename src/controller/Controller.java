@@ -3,6 +3,8 @@ package controller;
 import java.util.*;
 import java.io.IOException;
 
+import util.CommandParser;
+import util.Storage;
 import command.*;
 import model.*;
 
@@ -14,8 +16,13 @@ import model.*;
 public class Controller {
 	private static Controller _instance;
 	private static Logic logic = new Logic();
-	//private static ArrayList<Task> taskList = TaskMemory.getInstance().getTaskList();
-	private static ArrayList<Task> displayList = TaskMemory.getInstance().getTaskList();
+	// private static ArrayList<Task> taskList =
+	// TaskMemory.getInstance().getTaskList();
+	private static ArrayList<Task> displayList = TaskMemory.getInstance()
+			.getTaskList();
+	private static CommandParser parser = null;
+	private static Storage storage = null;
+
 	public static Controller getInstance() {
 		if (_instance == null) {
 			_instance = new Controller();
@@ -30,14 +37,23 @@ public class Controller {
 
 	public static void executeCMD(String input) throws IOException {
 		// Parser : get from parser(input)
-		String cmdType = input;
+		parser = new CommandParser(input.trim());
+
+		String cmdType = parser.getCommandType();
+		String task_name = parser.getTaskName();
+		String start_date = parser.getStartDate();
+		String start_time = parser.getStartTime();
+		String end_date = parser.getEndDate();
+		String end_time = parser.getEndTime();
+		int task_index = parser.getId();
+		String search_word = parser.getSearchWord();
 		Task task = null;
-		
-		String task_name = "Need to do business";
+
 		// other parameter
 		switch (cmdType) {
 		case "add": {
-			task = logic.buildTask(task_name, null, null, null, null);
+			task = logic.buildTask(task_name, start_date, end_date, start_time,
+					end_time);
 			CreateTask create = new CreateTask(task);
 			create.execute();
 			logic.pushToProcessStack(create);
@@ -45,7 +61,7 @@ public class Controller {
 			break;
 		}
 		case "delete": {
-			task = logic.deleteTask(displayList, 3);
+			task = logic.deleteTask(displayList, task_index);
 			DeleteTask delete = new DeleteTask(task);
 			delete.execute();
 			logic.pushToProcessStack(delete);
@@ -53,10 +69,9 @@ public class Controller {
 			break;
 		}
 		case "edit": {
-			Task deleteTask = logic.updateTask(displayList, 1);
-			task_name = "Starbucks";
-			Task updateTask = logic
-					.buildTask(task_name, null, null, null, null);
+			Task deleteTask = logic.updateTask(displayList, task_index);
+			Task updateTask = logic.buildTask(task_name, start_date, end_date,
+					start_time, end_time);
 
 			UpdateTask update = new UpdateTask(deleteTask, updateTask);
 			update.execute();
@@ -66,14 +81,14 @@ public class Controller {
 		}
 		case "search": {
 			ArrayList<Task> taskList = TaskMemory.getInstance().getTaskList();
-			displayList = logic.searchTask(taskList, "2103");
-			
+			displayList = logic.searchTask(taskList, search_word);
+
 			break;
 		}
-		case "showall":{
+		case "display": {
 			ArrayList<Task> taskList = TaskMemory.getInstance().getTaskList();
 			displayList = taskList;
-			
+
 			break;
 		}
 		case "undo": {
@@ -81,17 +96,37 @@ public class Controller {
 			displayList = TaskMemory.getInstance().getTaskList();
 			break;
 		}
+		case "load": {
+//			storage = new Storage();
+//			storage.reset();
+//			storage.setPath("C:\\Users\\calvin\\Documents\\2103T\\");
+//			storage.setfileName("silentjarvis.fxml");
+//		
+//			if(storage.getInstance().load() != null){
+//				TaskMemory.getInstance().setTaskList(storage.load());
+//			}else{
+//				
+//			}
+//			
+//			displayList = TaskMemory.getInstance().getTaskList();
+			break;
+		}
+		case "save": {
+			break;
+		}
 		case "exit": {
 			break;
 		}
 		}
-		//displayList = taskList;
 	}
 
 	public static ArrayList<Task> getTaskList() {
 		return displayList;
 	}
 
+	public static int getSize() {
+		return displayList.size();
+	}
 	// public static void inputCommand() throws IOException {
 	// System.out.print("command: ");
 	// String command = scanner.nextLine();

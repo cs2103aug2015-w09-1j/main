@@ -2,6 +2,7 @@ package command;
 
 import java.util.ArrayList;
 
+import util.Storage;
 import model.DeadlineTask;
 import model.EventTask;
 import model.FloatingTask;
@@ -19,6 +20,7 @@ public class TaskMemory {
 
 	public TaskMemory() {
 		//load from the Storage
+		//this.taskList = Storage.getInstance().load();
 		this.taskList = new ArrayList<Task>();
 		taskList.add(taskA);
 		taskList.add(taskB);
