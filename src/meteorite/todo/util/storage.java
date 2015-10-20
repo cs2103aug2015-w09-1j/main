@@ -108,7 +108,7 @@ public class Storage {
 		return null;
 	}
 
-	public static void main(String args[]) throws Exception {
+	/*public static void main(String args[]) throws Exception {
 		Storage test = Storage.getInstance();
 
 		ArrayList<Task> listToSave = new ArrayList<Task>();
@@ -138,5 +138,5 @@ public class Storage {
 
 		return;
 
-	}
+	}*/
 }
