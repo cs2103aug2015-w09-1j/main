@@ -97,7 +97,7 @@ public class Controller {
 			break;
 		}
 		case "load": {
-			//storage.setPath("C:\\Users\\calvin\\Documents\\2103T\\");
+			//Storage.getInstance().setPath("C:\\");
 			Storage.getInstance().setfileName("silentjarvis.fxml");
 			displayList = Storage.getInstance().load();
 			TaskMemory.getInstance().setTaskList(displayList);

@@ -31,12 +31,10 @@ public class Storage {
 
 	public void setPath(String path) {
 		this.path = path;
-		return;
 	}
 
 	public void setfileName(String fileName) {
 		this.fileName = fileName;
-		return;
 	}
 	
 	public static Storage getInstance(){

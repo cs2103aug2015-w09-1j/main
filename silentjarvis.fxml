@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<java version="1.8.0_31" class="java.beans.XMLDecoder">
+<java version="1.8.0_60" class="java.beans.XMLDecoder">
  <object class="java.util.ArrayList">
   <void method="add">
    <object class="model.FloatingTask">
@@ -68,47 +68,7 @@
   <void method="add">
    <object class="model.FloatingTask">
     <void property="taskName">
-     <string>abcd</string>
-    </void>
-    <void property="taskType">
-     <string>FloatingTask</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="model.FloatingTask">
-    <void property="taskName">
-     <string>abce</string>
-    </void>
-    <void property="taskType">
-     <string>FloatingTask</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="model.FloatingTask">
-    <void property="taskName">
-     <string>abcg</string>
-    </void>
-    <void property="taskType">
-     <string>FloatingTask</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="model.FloatingTask">
-    <void property="taskName">
-     <string>abch</string>
-    </void>
-    <void property="taskType">
-     <string>FloatingTask</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="model.FloatingTask">
-    <void property="taskName">
-     <string>i changed the index 1 task</string>
+     <string>meeting with boss</string>
     </void>
     <void property="taskType">
      <string>FloatingTask</string>

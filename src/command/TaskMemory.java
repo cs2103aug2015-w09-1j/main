@@ -22,10 +22,12 @@ public class TaskMemory {
 
 		this.taskList = new ArrayList<Task>();
 		//load from the Storage
+		/*
 		taskList.add(taskA);
 		taskList.add(taskB);
 		taskList.add(taskC);
 		taskList.add(taskD);
+		*/
 		
 		//this.taskList = Storage.getInstance().load();
 		

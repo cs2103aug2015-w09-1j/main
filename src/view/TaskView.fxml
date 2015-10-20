@@ -16,12 +16,12 @@
       <TextField fx:id="textField" layoutX="15.0" layoutY="395.0" onAction="#onEnter" prefHeight="26.0" prefWidth="635.0" />
       <TableView fx:id="taskTable" layoutX="14.0" layoutY="63.0" prefHeight="308.0" prefWidth="635.0">
         <columns>
-          <TableColumn fx:id="taskIdColumn" prefWidth="41.0" text="Id" />
-          <TableColumn fx:id="taskNameColumn" prefWidth="109.0" text="TaskName" />
-          <TableColumn fx:id="startTimeColumn" prefWidth="95.0" text="Start Time" />
-          <TableColumn fx:id="endTimeColumn" prefWidth="103.0" text="End Time" />
-          <TableColumn fx:id="startDateColumn" prefWidth="149.0" text="Start Date" />
-          <TableColumn fx:id="endDateColumn" prefWidth="137.0" text="End Date" />
+          <TableColumn fx:id="taskIdColumn" prefWidth="31.0" text="Id" />
+          <TableColumn fx:id="taskNameColumn" prefWidth="301.0" text="TaskName" />
+          <TableColumn fx:id="startTimeColumn" prefWidth="74.0" text="Start Time" />
+          <TableColumn fx:id="endTimeColumn" prefWidth="73.0" text="End Time" />
+          <TableColumn fx:id="startDateColumn" text="Start Date" />
+          <TableColumn fx:id="endDateColumn" prefWidth="75.0" text="End Date" />
         </columns>
       </TableView>
    </children>
