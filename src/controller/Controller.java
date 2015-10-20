@@ -97,21 +97,15 @@ public class Controller {
 			break;
 		}
 		case "load": {
-//			storage = new Storage();
-//			storage.reset();
-//			storage.setPath("C:\\Users\\calvin\\Documents\\2103T\\");
-//			storage.setfileName("silentjarvis.fxml");
-//		
-//			if(storage.getInstance().load() != null){
-//				TaskMemory.getInstance().setTaskList(storage.load());
-//			}else{
-//				
-//			}
-//			
-//			displayList = TaskMemory.getInstance().getTaskList();
+			//storage.setPath("C:\\Users\\calvin\\Documents\\2103T\\");
+			Storage.getInstance().setfileName("silentjarvis.fxml");
+			displayList = Storage.getInstance().load();
+			TaskMemory.getInstance().setTaskList(displayList);
 			break;
 		}
 		case "save": {
+			Storage.getInstance().setfileName("silentjarvis.fxml");
+			Storage.getInstance().save(displayList);
 			break;
 		}
 		case "exit": {

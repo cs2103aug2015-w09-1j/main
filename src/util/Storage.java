@@ -24,8 +24,8 @@ public class Storage {
 	}
 	
 	public void reset(){
-		path="C:\\Users\\calvin\\Documents\\2103T\\";
-		fileName="todolist.txt";
+		path="";
+		fileName="";
 		return;
 	}
 

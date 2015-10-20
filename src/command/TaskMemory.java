@@ -19,13 +19,17 @@ public class TaskMemory {
 	Task taskD = new DeadlineTask("2103 project.", "16-10-2015", "2359");
 
 	public TaskMemory() {
-		//load from the Storage
-		//this.taskList = Storage.getInstance().load();
+
 		this.taskList = new ArrayList<Task>();
+		//load from the Storage
 		taskList.add(taskA);
 		taskList.add(taskB);
 		taskList.add(taskC);
 		taskList.add(taskD);
+		
+		//this.taskList = Storage.getInstance().load();
+		
+		
 	}
 
 	public ArrayList<Task> getTaskList() {
