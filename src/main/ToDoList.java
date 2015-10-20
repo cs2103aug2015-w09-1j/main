@@ -12,8 +12,9 @@ import model.*;
 public class ToDoList {
 
 	public static void main(String[] args) throws IOException {
+//		Controller.executeCMD("load");
 //		Controller.executeCMD("add I am at starbucks now doing 2103T from 2015-10-20 1600 to 2015-10-20 1800"); //event task
-//		Controller.executeCMD("add going home by 2015-10-20 2200"); // dealine task
+		Controller.executeCMD("add       going home      by 2015-10-20 2200"); // dealine task
 //		Controller.executeCMD("add abc"); // floating
 //		Controller.executeCMD("add abcd");
 //		Controller.executeCMD("add abce");
@@ -22,10 +23,10 @@ public class ToDoList {
 //		Controller.executeCMD("add abcg");
 //		Controller.executeCMD("add abch");
 //		Controller.executeCMD("edit 1 i changed the index 1 task"); // edit
-		Controller.executeCMD("load");
+//		Controller.executeCMD("load");
 //		Controller.executeCMD("search abc"); //search 
 //		Controller.executeCMD("delete 4");
-//		Controller.executeCMD("search abc"); //search 
+//		Controller.executeCMD("search                 abc                  "); //search 
 //		Controller.executeCMD("delete 1");
 //		Controller.executeCMD("save");
 //		Controller.executeCMD("display all"); //display all : not filtered

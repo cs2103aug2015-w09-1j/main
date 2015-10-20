@@ -50,9 +50,9 @@ public class Controller {
 		Task task = null;
 
 		// other parameter
-		switch (cmdType) {
+		switch (cmdType.trim()) {
 		case "add": {
-			task = logic.buildTask(task_name, start_date, end_date, start_time,
+			task = logic.buildTask(task_name.trim(), start_date, end_date, start_time,
 					end_time);
 			CreateTask create = new CreateTask(task);
 			create.execute();
@@ -70,8 +70,8 @@ public class Controller {
 		}
 		case "edit": {
 			Task deleteTask = logic.updateTask(displayList, task_index);
-			Task updateTask = logic.buildTask(task_name, start_date, end_date,
-					start_time, end_time);
+			Task updateTask = logic.buildTask(task_name.trim(), start_date.trim(), end_date.trim(),
+					start_time.trim(), end_time.trim());
 
 			UpdateTask update = new UpdateTask(deleteTask, updateTask);
 			update.execute();
@@ -81,7 +81,7 @@ public class Controller {
 		}
 		case "search": {
 			ArrayList<Task> taskList = TaskMemory.getInstance().getTaskList();
-			displayList = logic.searchTask(taskList, search_word);
+			displayList = logic.searchTask(taskList, search_word.trim());
 
 			break;
 		}
