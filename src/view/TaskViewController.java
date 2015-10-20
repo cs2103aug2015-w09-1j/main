@@ -1,5 +1,6 @@
 package view;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import controller.Controller;
@@ -61,12 +62,10 @@ public class TaskViewController {
         endDateColumn.setCellValueFactory(cellData -> cellData.getValue().getEnd_date());
     }
     
-    public void onEnter() {
-    	//String input = textField.getText();
-    	ArrayList<Task> temp = Controller.getTaskList();
-    	temp.add(new FloatingTask("meeting with boss"));
-    	temp.add(new EventTask("Travel with friends", "29-11-2015", "15-12-2015", "7:00", "10:00"));
-    	MainApp.setTaskData(temp);
+    public void onEnter() throws IOException {
+    	String input = textField.getText();
+    	Controller.executeCMD(input);
+    	MainApp.setTaskData(Controller.getTaskList());
     	
     	textField.clear();
     }

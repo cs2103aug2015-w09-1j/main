@@ -40,7 +40,8 @@ public class MainApp extends Application {
     }
     
     public static void setTaskData(ArrayList<Task> data) {
-        for (Task t:data) {
+        taskList.clear();
+    	for (Task t:data) {
         	taskList.add(new TaskBean(t));
         }
         rearrId();
