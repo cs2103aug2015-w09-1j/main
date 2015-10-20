@@ -1,8 +1,10 @@
 package view;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javafx.application.Application;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -10,11 +12,14 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import model.Task;
 
 public class MainApp extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
+    
+    private static ObservableList<TaskBean> taskList = FXCollections.observableArrayList();
 
     
 
@@ -30,8 +35,21 @@ public class MainApp extends Application {
      * Returns the data as an observable list of Tasks. 
      * @return
      */
-    public ObservableList<Task> getTaskData() {
-        return ;
+    public ObservableList<TaskBean> getTaskData() {
+        return taskList;
+    }
+    
+    public static void setTaskData(ArrayList<Task> data) {
+        for (Task t:data) {
+        	taskList.add(new TaskBean(t));
+        }
+        rearrId();
+    }
+    
+    private static void rearrId() {
+    	for(int i = 0;i<taskList.size();i++) {
+    		taskList.get(i).setTaskId(new SimpleIntegerProperty(i + 1));
+    	}
     }
 
 
@@ -39,7 +57,7 @@ public class MainApp extends Application {
 	@Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("ToDoApp");
+        this.primaryStage.setTitle("SJ");
 
         initRootLayout();
 
@@ -53,7 +71,7 @@ public class MainApp extends Application {
         try {
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view/RootLayout.fxml"));
+            loader.setLocation(MainApp.class.getResource("RootLayout.fxml"));
             rootLayout = (BorderPane) loader.load();
 
             // Show the scene containing the root layout.
@@ -72,7 +90,7 @@ public class MainApp extends Application {
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view/TaskView.fxml"));
+            loader.setLocation(MainApp.class.getResource("TaskView.fxml"));
             AnchorPane taskOverview = (AnchorPane) loader.load();
 
             // Set person overview into the center of root layout.

@@ -1,29 +1,37 @@
 package view;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
+
+import controller.Controller;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+//import java.time.LocalDate;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import model.EventTask;
+import model.FloatingTask;
 import model.Task;
 
 public class TaskViewController {
     @FXML
-    private TableView<Task> taskTable;
+    private TableView<TaskBean> taskTable;
     @FXML
-    private TableColumn<Task, String> taskNameColumn;
+    private TableColumn<TaskBean, String> taskNameColumn;
     @FXML
-    private TableColumn<Task, Integer> taskIdColumn;
+    private TableColumn<TaskBean, Integer> taskIdColumn;
     @FXML
-    private TableColumn<Task, String> startTimeColumn;
+    private TableColumn<TaskBean, String> startTimeColumn;
     @FXML
-    private TableColumn<Task, String> endTimeColumn;
+    private TableColumn<TaskBean, String> endTimeColumn;
     @FXML
-    private TableColumn<Task, LocalDate> startDateColumn;
+    private TableColumn<TaskBean, String> startDateColumn;
     @FXML
-    private TableColumn<Task, LocalDate> endDateColumn;
+    private TableColumn<TaskBean, String> endDateColumn;
     
     @FXML
     private TextField textField;
@@ -45,16 +53,20 @@ public class TaskViewController {
     @FXML
     private void initialize() {
         // Initialize the person table with the two columns.
-        taskNameColumn.setCellValueFactory(cellData -> cellData.getValue().getTaskName());
-        taskIdColumn.setCellValueFactory(cellData -> cellData.getValue().taskIdProperty().asObject());
-        startTimeColumn.setCellValueFactory(cellData -> cellData.getValue().startTimeProperty());
-        endTimeColumn.setCellValueFactory(cellData -> cellData.getValue().endTimeProperty());
-        startDateColumn.setCellValueFactory(cellData -> cellData.getValue().startDateProperty());
-        endDateColumn.setCellValueFactory(cellData -> cellData.getValue().endDateProperty());
+        taskNameColumn.setCellValueFactory(cellData -> cellData.getValue().getName());
+        taskIdColumn.setCellValueFactory(cellData -> cellData.getValue().getTaskId().asObject());
+        startTimeColumn.setCellValueFactory(cellData -> cellData.getValue().getStart_time());
+        endTimeColumn.setCellValueFactory(cellData -> cellData.getValue().getEnd_time());
+        startDateColumn.setCellValueFactory(cellData -> cellData.getValue().getStart_date());
+        endDateColumn.setCellValueFactory(cellData -> cellData.getValue().getEnd_date());
     }
     
     public void onEnter() {
-    	String input = textField.getText();
+    	//String input = textField.getText();
+    	ArrayList<Task> temp = Controller.getTaskList();
+    	temp.add(new FloatingTask("meeting with boss"));
+    	temp.add(new EventTask("Travel with friends", "29-11-2015", "15-12-2015", "7:00", "10:00"));
+    	MainApp.setTaskData(temp);
     	
     	textField.clear();
     }
