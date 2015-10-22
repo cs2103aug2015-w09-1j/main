@@ -31,7 +31,7 @@ public class Logic {
 			processStack.pop().undo();
 		}
 	}
-
+	
 	// Building a task
 	public Task buildTask(String task_name, String start_date, String end_date,
 			String start_time, String end_time) {
@@ -75,9 +75,7 @@ public class Logic {
 				if(task.equals(t)){
 					task = t;
 				}
-			}
-			
-			
+			}	
 		} catch (Exception e) {
 			//System.out.println(DELETETASK_MESSAGE);
 			return null;
@@ -93,7 +91,7 @@ public class Logic {
 			task = getSearchTaskById(currentList, index-1);
 			
 		} catch (Exception e) {
-			System.out.println(UPDATETASK_MESSAGE);
+			return null;
 		}
 		return task;
 	}
@@ -133,6 +131,8 @@ public class Logic {
 		}
 		return results;
 	}
+
+	
 
 	// public String displayTask(ArrayList<Task> listOfTask) {
 	// String output = "";

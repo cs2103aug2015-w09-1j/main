@@ -12,11 +12,11 @@ public class TaskMemory {
 	private static TaskMemory _instance;
 	private ArrayList<Task> taskList;
 
-	Task taskA = new EventTask("Have Meeting With Kiwi 2103", "15-10-2015",
-			"15-10-2015", "1200", "1500");
-	Task taskB = new FloatingTask("Eating Dinner w Kenneth.");
-	Task taskC = new DeadlineTask("Finish 2103 project.", "16-10-2015", "2359");
-	Task taskD = new DeadlineTask("2103 project.", "16-10-2015", "2359");
+//	Task taskA = new EventTask("Have Meeting With Kiwi 2103", "15-10-2015",
+//			"15-10-2015", "1200", "1500");
+//	Task taskB = new FloatingTask("Eating Dinner w Kenneth.");
+//	Task taskC = new DeadlineTask("Finish 2103 project.", "16-10-2015", "2359");
+//	Task taskD = new DeadlineTask("2103 project.", "16-10-2015", "2359");
 
 	public TaskMemory() {
 

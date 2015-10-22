@@ -16,12 +16,10 @@ import model.*;
 public class Controller {
 	private static Controller _instance;
 	private static Logic logic = new Logic();
-	// private static ArrayList<Task> taskList =
-	// TaskMemory.getInstance().getTaskList();
+
 	private static ArrayList<Task> displayList = TaskMemory.getInstance()
 			.getTaskList();
 	private static CommandParser parser = null;
-	private static Storage storage = null;
 
 	public static Controller getInstance() {
 		if (_instance == null) {
@@ -29,11 +27,6 @@ public class Controller {
 		}
 		return _instance;
 	}
-
-	// private static final String MESSAGE_ERROR_COMMAND =
-	// "Unrecongnised command entered";
-
-	// private static ArrayList<String> content = new ArrayList<String>();
 
 	public static void executeCMD(String input) throws IOException {
 		// Parser : get from parser(input)
@@ -45,72 +38,81 @@ public class Controller {
 		String start_time = parser.getStartTime();
 		String end_date = parser.getEndDate();
 		String end_time = parser.getEndTime();
+		String keyword = "all";
 		int task_index = parser.getId();
 		String search_word = parser.getSearchWord();
 		Task task = null;
 
 		// other parameter
 		switch (cmdType.trim()) {
-		case "add": {
-			task = logic.buildTask(task_name.trim(), start_date, end_date, start_time,
-					end_time);
+		case "add":
+			task = logic.buildTask(task_name.trim(), start_date, end_date,
+					start_time, end_time);
 			CreateTask create = new CreateTask(task);
 			create.execute();
 			logic.pushToProcessStack(create);
 			displayList = TaskMemory.getInstance().getTaskList();
 			break;
-		}
-		case "delete": {
-			task = logic.deleteTask(displayList, task_index);
-			DeleteTask delete = new DeleteTask(task);
-			delete.execute();
-			logic.pushToProcessStack(delete);
+		case "delete":
+
+			if (keyword.equals("all") || keyword == "all") {
+				ArrayList<Task> deleteBulkArray = displayList;
+				DeleteBulkTask deletebulk = new DeleteBulkTask(deleteBulkArray);
+				deletebulk.execute();
+				logic.pushToProcessStack(deletebulk);
+			} else {
+				task = logic.deleteTask(displayList, task_index);
+				DeleteTask delete = new DeleteTask(task);
+				delete.execute();
+				logic.pushToProcessStack(delete);
+			}
+
 			displayList = TaskMemory.getInstance().getTaskList();
 			break;
-		}
-		case "edit": {
+
+		case "edit":
 			Task deleteTask = logic.updateTask(displayList, task_index);
-			Task updateTask = logic.buildTask(task_name.trim(), start_date.trim(), end_date.trim(),
-					start_time.trim(), end_time.trim());
+			Task updateTask = logic.buildTask(task_name.trim(), start_date,
+					end_date, start_time, end_time);
 
 			UpdateTask update = new UpdateTask(deleteTask, updateTask);
 			update.execute();
 			logic.pushToProcessStack(update);
 			displayList = TaskMemory.getInstance().getTaskList();
 			break;
-		}
-		case "search": {
+
+		case "search":
 			ArrayList<Task> taskList = TaskMemory.getInstance().getTaskList();
 			displayList = logic.searchTask(taskList, search_word.trim());
 
 			break;
-		}
-		case "display": {
-			ArrayList<Task> taskList = TaskMemory.getInstance().getTaskList();
-			displayList = taskList;
+
+		case "display":
+			ArrayList<Task> list = TaskMemory.getInstance().getTaskList();
+			displayList = list;
 
 			break;
-		}
-		case "undo": {
+
+		case "undo":
 			logic.undo();
 			displayList = TaskMemory.getInstance().getTaskList();
 			break;
-		}
+
 		case "load": {
-			//Storage.getInstance().setPath("C:\\");
+			// Storage.getInstance().setPath("C:\\");
 			Storage.getInstance().setfileName("silentjarvis.fxml");
 			displayList = Storage.getInstance().load();
 			TaskMemory.getInstance().setTaskList(displayList);
 			break;
 		}
-		case "save": {
+		case "save":
 			Storage.getInstance().setfileName("silentjarvis.fxml");
 			Storage.getInstance().save(displayList);
 			break;
-		}
-		case "exit": {
+
+		case "exit":
 			break;
-		}
+
 		}
 	}
 
