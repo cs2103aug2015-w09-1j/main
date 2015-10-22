@@ -8,7 +8,10 @@
 //			add <task name>
 //	
 //	2) delete
-//		delete <id>
+//		a. delete single task
+//			delete <id>
+//		b. delete all tasks
+//			delete all
 //	
 //	3) search
 //		a. search tasks on a certain date
@@ -27,6 +30,8 @@
 //			edit <id>
 //	    b. edit the whole task
 //	    	edit <id> <all information>
+//		c. edit a specific attribute
+//			edit <id> <attribute> <info>
 //	
 //	6) undo
 //		undo
@@ -67,7 +72,10 @@ public class CommandParser {
 	private String searchWord;
 	private String searchDate;
 	private String displayMode;
+	private String deleteMode;
 	private String storagePath;
+	private String editAttribute;
+	private String editInfo;
 	
 	CommandChecker cc;
 	
@@ -123,7 +131,15 @@ public class CommandParser {
 	public String getStoragePath(){
 		return this.storagePath;
 	}
-	
+	public String getDeleteMode(){
+		return this.deleteMode;
+	}
+	public String getEditAttribute(){
+		return this.editAttribute;
+	}
+	public String getEditInfo(){
+		return this.editInfo;
+	}
 	
 	
 	//private methods
@@ -185,9 +201,16 @@ public class CommandParser {
 		if(argArray.length == 1) {
 			setTaskID(Integer.parseInt(args));
 		} else {
-			String id = argArray[0];
-			setTaskID(Integer.parseInt(id));
-			parseAddCommand(argArray[1]);
+			argArray = args.split(" ");
+			if(argArray.length == 3){
+				setTaskID(Integer.parseInt(argArray[0]));
+				setEditAttribute(argArray[1]);
+				setEditInfo(argArray[2]);
+			} else {
+				String id = argArray[0];
+				setTaskID(Integer.parseInt(id));
+				parseAddCommand(argArray[1]);
+			}
 		}
 	}
 	
@@ -244,7 +267,11 @@ public class CommandParser {
 	
 	private void parseDeleteCommand(){
 		String args = getArgs();
-		setTaskID(Integer.parseInt(args));
+		if(args.equals("all")) {
+			setDeleteMode("all");
+		} else {
+			setTaskID(Integer.parseInt(args));
+		}
 	}
 	
 	private void parseDisplayCommand(){
@@ -339,8 +366,18 @@ public class CommandParser {
 	private void setSearchWord(String word) {
 		this.searchWord = word;
 	}
-	private void setStoragePath(String path){
+	private void setStoragePath(String path) {
 		this.storagePath = path;
+	}
+	private void setEditAttribute(String attribute) {
+		this.editAttribute = attribute;
+	}
+	private void setEditInfo(String info) {
+		this.editInfo = info;
+	}
+	
+	private void setDeleteMode(String mode){
+		this.deleteMode = mode;
 	}
 	
 	static void print(String[] str){
@@ -348,14 +385,15 @@ public class CommandParser {
 			System.out.println("Index "+i+" : "+ str[i]);
 		}
 	}
-//	public static void main(String[] args) {
-////		CommandParser cp2 = new CommandParser("display archived");
-//		String str = "2 meeting with boss by 2015-02-03 1259";
-//		String[] strArr = str.split(" ", 2);
+
+	public static void main(String[] args) {
+		CommandParser cp2 = new CommandParser("edit 2 startDate 2015-10-23");
+//		String str = "edit 2 startDate 2015-10-23";
+//		String[] strArr = str.split(" ");
 //		print(strArr);
-////		System.out.println(cp2.getCommandType());
-//		
-//	}
+		System.out.println(cp2.getEditAttribute());
+		
+	}
 	
 
 }

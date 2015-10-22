@@ -219,5 +219,23 @@ public class CommandParserTest {
 		CommandParser cp3 = new CommandParser("edit 2 meeting with boss by 2015-03-04 1259");
 		assertEquals("1259", cp3.getEndTime());
 	}
+	
+	@Test
+	public void testGetDeleteMode(){
+		CommandParser cp1 = new CommandParser("delete all");
+		assertEquals("all", cp1.getDeleteMode());
+	}
+	
+	@Test
+	public void testGetEditAttribute(){
+		CommandParser cp1 = new CommandParser("edit 1 startDate 2015-10-23");
+		assertEquals("startDate", cp1.getEditAttribute());
+	}
+	
+	@Test
+	public void testGetEditInfo(){
+		CommandParser cp1 = new CommandParser("edit 1 startDate 2015-10-23");
+		assertEquals("2015-10-23", cp1.getEditInfo());
+	}
 
 }
