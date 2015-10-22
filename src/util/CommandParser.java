@@ -59,6 +59,8 @@
 
 package util;
 
+import java.util.LinkedList;
+
 public class CommandParser {
 	//Attribute
 	private String userInput;
@@ -78,6 +80,7 @@ public class CommandParser {
 	private String storagePath;
 	private String editAttribute;
 	private String editInfo;
+	private int[] deleteIDs;
 	
 	CommandChecker cc;
 	
@@ -141,6 +144,9 @@ public class CommandParser {
 	}
 	public String getEditInfo(){
 		return this.editInfo;
+	}
+	public int[] getDeleteIDs(){
+		return this.deleteIDs;
 	}
 	
 	
@@ -271,8 +277,47 @@ public class CommandParser {
 		if(args.equals("all")) {
 			setDeleteMode("all");
 		} else {
-			setTaskID(Integer.parseInt(args));
+			String[] argsArray = args.split(",");
+			for(int i=0; i<argsArray.length; i++){
+				argsArray[i] = argsArray[i].trim();
+			}
+			if (argsArray.length == 1) {
+				setTaskID(Integer.parseInt(args));
+			} else {
+				parseMultipleIDs(argsArray);
+			}
 		}
+	}
+	
+	private void parseMultipleIDs(String[] argsArray){
+		LinkedList<Integer> l = new LinkedList<Integer>();
+		int[] idArr;
+		for(int i=0; i<argsArray.length;i++){
+			String[] indexArr = argsArray[i].split("-");
+			if(indexArr.length == 1) {
+				l.add(Integer.parseInt(indexArr[0]));
+			} else {
+				int startIndex = Integer.parseInt(indexArr[0]);
+				int endIndex = Integer.parseInt(indexArr[1]);
+				
+				if(startIndex>endIndex){
+					throw new Error("delete index invalid");
+				}
+				
+				while(startIndex <= endIndex) {
+					if(!l.contains(startIndex)) {
+						l.add(startIndex);
+					}
+					startIndex++;
+				}
+				
+			}
+		}
+		idArr = new int[l.size()];
+		for(int k=0; k<l.size(); k++){
+			idArr[k] = l.get(k);
+		}
+		setDeleteIDs(idArr);
 	}
 	
 	private void parseDisplayCommand(){
@@ -380,22 +425,32 @@ public class CommandParser {
 	private void setDeleteMode(String mode){
 		this.deleteMode = mode;
 	}
+	private void setDeleteIDs(int[] ids){
+		this.deleteIDs = ids;
+	}
 	
 	static void print(String[] str){
 		for(int i=0;i<str.length;i++){
 			System.out.println("Index "+i+" : "+ str[i]);
 		}
 	}
+	
+	static void print(int[] str){
+		for(int i=0;i<str.length;i++){
+			System.out.println("Index "+i+" : "+ str[i]);
+		}
+	}
 
 	public static void main(String[] args) {
-//		CommandParser cp2 = new CommandParser("edit 2 startDate 2015-10-23");
-		String str = "1, 2, 3, 4-6";
-		String[] strArr = str.split(",");
-		for(int i=0; i<strArr.length; i++){
-			strArr[i] = strArr[i].trim();
-		}
-		print(strArr);
-//		System.out.println(cp2.getEditAttribute());
+		CommandParser cp2 = new CommandParser("delete 1, 2, 4-8");
+//		String str = "1-10";
+//		String[] strArr = str.split("-");
+//		for(int i=0; i<strArr.length; i++){
+//			strArr[i] = strArr[i].trim();
+//		}
+//		print(strArr);
+//		System.out.println(cp2.getDeleteIDs());
+		System.out.print(cp2.getDeleteIDs().toString());
 		
 	}
 	

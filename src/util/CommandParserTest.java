@@ -237,5 +237,15 @@ public class CommandParserTest {
 		CommandParser cp1 = new CommandParser("edit 1 startDate 2015-10-23");
 		assertEquals("2015-10-23", cp1.getEditInfo());
 	}
+	
+	@Test
+	public void TestGetDeleteIDs(){
+		CommandParser cp1 = new CommandParser("delete 1, 2,3, 10-12");
+		int[] target = {1, 2, 3, 10, 11, 12};
+		int[] actual = cp1.getDeleteIDs();
+		assertArrayEquals(target, actual);
+		
+
+	}
 
 }
