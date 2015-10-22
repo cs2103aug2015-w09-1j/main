@@ -48,6 +48,13 @@ public class LogicTest {
 		if (task instanceof FloatingTask) {
 			assertEquals("Task3", ((FloatingTask) task).getTaskName());
 		}
+		
+		/* This is a boundary case for add floating task with white spaces for task name*/
+		String task4 = "      Task4      ";
+		task = logic.buildTask(task4.trim(), null, null, null, null);
+		if (task instanceof FloatingTask) {
+			assertEquals("Task4", ((FloatingTask) task).getTaskName());
+		}
 
 	}
 

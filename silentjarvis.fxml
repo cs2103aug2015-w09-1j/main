@@ -1,32 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<java version="1.8.0_60" class="java.beans.XMLDecoder">
+<java version="1.8.0_31" class="java.beans.XMLDecoder">
  <object class="java.util.ArrayList">
-  <void method="add">
-   <object class="model.FloatingTask">
-    <void property="taskName">
-     <string>Eating Dinner w Kenneth.</string>
-    </void>
-    <void property="taskType">
-     <string>FloatingTask</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="model.DeadlineTask">
-    <void property="deadlineDate">
-     <string>16-10-2015</string>
-    </void>
-    <void property="deadlineTime">
-     <string>2359</string>
-    </void>
-    <void property="taskName">
-     <string>Finish 2103 project.</string>
-    </void>
-    <void property="taskType">
-     <string>DeadlineTask</string>
-    </void>
-   </object>
-  </void>
   <void method="add">
    <object class="model.EventTask">
     <void property="endDate">
@@ -68,7 +42,27 @@
   <void method="add">
    <object class="model.FloatingTask">
     <void property="taskName">
-     <string>meeting with boss</string>
+     <string>abc</string>
+    </void>
+    <void property="taskType">
+     <string>FloatingTask</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.FloatingTask">
+    <void property="taskName">
+     <string>abcd</string>
+    </void>
+    <void property="taskType">
+     <string>FloatingTask</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.FloatingTask">
+    <void property="taskName">
+     <string>abce</string>
     </void>
     <void property="taskType">
      <string>FloatingTask</string>
