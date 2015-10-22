@@ -12,6 +12,8 @@
 //			delete <id>
 //		b. delete all tasks
 //			delete all
+//		c. delete multiple tasks
+//			delete <index>,<index>,<startIndex-EndIndex>
 //	
 //	3) search
 //		a. search tasks on a certain date
@@ -198,19 +200,18 @@ public class CommandParser {
 	private void parseEditCommand(){
 		String args = getArgs();
 		String[] argArray = args.split(" ", 2);
+		String[] argArray2 = args.split(" ");
 		if(argArray.length == 1) {
 			setTaskID(Integer.parseInt(args));
+		} else if(argArray2.length == 3){
+			setTaskID(Integer.parseInt(argArray2[0]));
+			setEditAttribute(argArray2[1]);
+			setEditInfo(argArray2[2]);
 		} else {
-			argArray = args.split(" ");
-			if(argArray.length == 3){
-				setTaskID(Integer.parseInt(argArray[0]));
-				setEditAttribute(argArray[1]);
-				setEditInfo(argArray[2]);
-			} else {
-				String id = argArray[0];
-				setTaskID(Integer.parseInt(id));
-				parseAddCommand(argArray[1]);
-			}
+			String id = argArray[0];
+			setTaskID(Integer.parseInt(id));
+			parseAddCommand(argArray[1]);
+			
 		}
 	}
 	
@@ -387,11 +388,14 @@ public class CommandParser {
 	}
 
 	public static void main(String[] args) {
-		CommandParser cp2 = new CommandParser("edit 2 startDate 2015-10-23");
-//		String str = "edit 2 startDate 2015-10-23";
-//		String[] strArr = str.split(" ");
-//		print(strArr);
-		System.out.println(cp2.getEditAttribute());
+//		CommandParser cp2 = new CommandParser("edit 2 startDate 2015-10-23");
+		String str = "1, 2, 3, 4-6";
+		String[] strArr = str.split(",");
+		for(int i=0; i<strArr.length; i++){
+			strArr[i] = strArr[i].trim();
+		}
+		print(strArr);
+//		System.out.println(cp2.getEditAttribute());
 		
 	}
 	
