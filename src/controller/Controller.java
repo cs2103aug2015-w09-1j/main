@@ -57,7 +57,7 @@ public class Controller {
 
 			if (keyword.equals("all") || keyword == "all") {
 				ArrayList<Task> deleteBulkArray = new ArrayList<Task>();
-				for (Task t:displayList) {
+				for (Task t : displayList) {
 					deleteBulkArray.add(t);
 				}
 				DeleteBulkTask deletebulk = new DeleteBulkTask(deleteBulkArray);

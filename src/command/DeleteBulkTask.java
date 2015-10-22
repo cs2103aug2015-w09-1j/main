@@ -14,7 +14,7 @@ public class DeleteBulkTask extends DeleteCommand {
 	@Override
 	public void execute() {
 		// Firstly, delete into the local memory
-		 for(Task t:tasks) {
+		 for(Task t: this.tasks) {
 			 TaskMemory.getInstance().Remove(t);
 		 }
 	}

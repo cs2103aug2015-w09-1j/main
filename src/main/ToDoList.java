@@ -19,13 +19,13 @@ public class ToDoList {
 //		Controller.executeCMD("add abcd");
 //		Controller.executeCMD("add abce");
 //		Controller.executeCMD("add abcf");
-		Controller.executeCMD("delete 4"); //delete
-		Controller.executeCMD("undo");
+//		Controller.executeCMD("delete 4"); //delete
+//		Controller.executeCMD("undo");
 //		Controller.executeCMD("add abch");
 //		Controller.executeCMD("save");
 //		Controller.executeCMD("load");
-//		Controller.executeCMD("search abc"); //search 
-//		Controller.executeCMD("delete 4");
+		Controller.executeCMD("search abc"); //search 
+		Controller.executeCMD("delete 4");
 //		Controller.executeCMD("search                 abc                  "); //search 
 //		Controller.executeCMD("delete 1");
 //		Controller.executeCMD("save");

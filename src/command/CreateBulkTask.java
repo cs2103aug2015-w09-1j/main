@@ -13,8 +13,8 @@ public class CreateBulkTask extends CreateBulkCommand {
 
 	@Override
 	public void execute() {
-		for (int i = 0; i < this.tasks.size(); i++) {
-			TaskMemory.getInstance().Add(this.tasks.get(i));
+		for (Task t : this.tasks) {
+			TaskMemory.getInstance().Add(t);
 		}
 	}
 
