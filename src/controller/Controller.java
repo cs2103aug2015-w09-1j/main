@@ -56,7 +56,10 @@ public class Controller {
 		case "delete":
 
 			if (keyword.equals("all") || keyword == "all") {
-				ArrayList<Task> deleteBulkArray = displayList;
+				ArrayList<Task> deleteBulkArray = new ArrayList<Task>();
+				for (Task t:displayList) {
+					deleteBulkArray.add(t);
+				}
 				DeleteBulkTask deletebulk = new DeleteBulkTask(deleteBulkArray);
 				deletebulk.execute();
 				logic.pushToProcessStack(deletebulk);

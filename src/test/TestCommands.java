@@ -14,6 +14,8 @@ public class TestCommands {
 	private CreateTask crTest;
 	private DeleteTask delTest;
 	private UpdateTask updTest;
+	private CreateBulkTask crBTest;
+	private DeleteBulkTask delBTest;
 	private ArrayList<Task> test = TaskMemory.getInstance().getTaskList();
 	
 	@Before
@@ -62,6 +64,33 @@ public class TestCommands {
 		updTest.undo();
 		assertSame(test.get(0), t);
 		
+	}
+	
+	@Test
+	public void createBulkTaskTest() {
+		ArrayList<Task> temp = new ArrayList<Task>();
+		temp.add(new FloatingTask("meeting"));
+		temp.add(new FloatingTask("abcd"));
+		crBTest = new CreateBulkTask(temp);
+		crBTest.execute();
+		assertEquals(2, test.size());
+		crBTest.execute();
+		assertEquals(4, test.size());
+	}
+	
+	@Test
+	public void deleteBulkTaskTest() {
+		ArrayList<Task> temp = new ArrayList<Task>();
+		Task a = new FloatingTask("meeting");
+		Task b = new FloatingTask("abcd");
+		test.add(a);
+		test.add(b);
+		temp = test;
+		delBTest = new DeleteBulkTask(temp);
+		delBTest.execute();
+		assertEquals(0, test.size());
+		delBTest.undo();
+		assertEquals(2, test.size());
 	}
 
 }

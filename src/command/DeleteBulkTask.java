@@ -14,16 +14,15 @@ public class DeleteBulkTask extends DeleteCommand {
 	@Override
 	public void execute() {
 		// Firstly, delete into the local memory
-		 System.out.println(tasks.size());
-		 for(int i = this.tasks.size(); i > 0; i--){
-			 TaskMemory.getInstance().Remove(this.tasks.get(i-1));
+		 for(Task t:tasks) {
+			 TaskMemory.getInstance().Remove(t);
 		 }
 	}
 
 	@Override
 	public void undo() {
 		if (this.undoable()) {
-			System.out.println(this.tasks.size());
+			//System.out.println(this.tasks.size());
 				CreateBulkTask createbulk = new CreateBulkTask(this.tasks);
 				createbulk.execute();
 		}
