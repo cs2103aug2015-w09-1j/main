@@ -38,7 +38,7 @@ public class Controller {
 		String start_time = parser.getStartTime();
 		String end_date = parser.getEndDate();
 		String end_time = parser.getEndTime();
-		String keyword = "all";
+		String keyword = parser.getDeleteMode();
 		int task_index = parser.getId();
 		String search_word = parser.getSearchWord();
 		Task task = null;
@@ -55,7 +55,7 @@ public class Controller {
 			break;
 		case "delete":
 
-			if (keyword.equals("all") || keyword == "all") {
+			if (keyword != null) {
 				ArrayList<Task> deleteBulkArray = new ArrayList<Task>();
 				for (Task t : displayList) {
 					deleteBulkArray.add(t);
