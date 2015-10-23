@@ -16,7 +16,6 @@ import model.*;
 public class Controller {
 	private static Controller _instance;
 	private static Logic logic = new Logic();
-
 	private static ArrayList<Task> displayList = TaskMemory.getInstance()
 			.getTaskList();
 	private static CommandParser parser = null;
@@ -40,53 +39,50 @@ public class Controller {
 		String end_time = parser.getEndTime();
 		String keyword = parser.getDeleteMode();
 		int task_index = parser.getId();
+		int[] _listIndex = parser.getDeleteIDs();
 		String search_word = parser.getSearchWord();
-		Task task = null;
+		String path = parser.getStoragePath();
+		String editAttr = parser.getEditAttribute();
+		String editInfo = parser.getEditInfo();
+		// Task task = null;
 
 		// other parameter
 		switch (cmdType.trim()) {
 		case "add":
-			task = logic.buildTask(task_name.trim(), start_date, end_date,
-					start_time, end_time);
-			CreateTask create = new CreateTask(task);
-			create.execute();
-			logic.pushToProcessStack(create);
+			logic.executeCreateTask(task_name, start_date, start_time,
+					end_date, end_time);
 			displayList = TaskMemory.getInstance().getTaskList();
 			break;
 		case "delete":
 
 			if (keyword != null) {
-				ArrayList<Task> deleteBulkArray = new ArrayList<Task>();
-				for (Task t : displayList) {
-					deleteBulkArray.add(t);
-				}
-				DeleteBulkTask deletebulk = new DeleteBulkTask(deleteBulkArray);
-				deletebulk.execute();
-				logic.pushToProcessStack(deletebulk);
+				logic.executeDeleteBulkTask(displayList);
 			} else {
-				task = logic.deleteTask(displayList, task_index);
-				DeleteTask delete = new DeleteTask(task);
-				delete.execute();
-				logic.pushToProcessStack(delete);
+				if (_listIndex != null) {
+					logic.executeDeleteBulkTasksById(displayList, _listIndex);
+				} else {
+					logic.executeDeleteTask(displayList, task_index);
+				}
 			}
 
 			displayList = TaskMemory.getInstance().getTaskList();
 			break;
 
 		case "edit":
-			Task deleteTask = logic.updateTask(displayList, task_index);
-			Task updateTask = logic.buildTask(task_name.trim(), start_date,
-					end_date, start_time, end_time);
+			if (editAttr != null && editInfo != null) {
+				logic.executeUpdateTaskByAttribute(displayList, task_index, editAttr, editInfo);
 
-			UpdateTask update = new UpdateTask(deleteTask, updateTask);
-			update.execute();
-			logic.pushToProcessStack(update);
+			} else {
+				logic.executeUpdateTask(displayList, task_name, start_date, start_time, end_date,
+						end_time, task_index);
+			}
 			displayList = TaskMemory.getInstance().getTaskList();
 			break;
 
 		case "search":
 			ArrayList<Task> taskList = TaskMemory.getInstance().getTaskList();
-			displayList = logic.searchTask(taskList, search_word.trim());
+			displayList = logic.searchTaskByKeyword(taskList,
+					search_word.trim());
 
 			break;
 
@@ -101,13 +97,17 @@ public class Controller {
 			displayList = TaskMemory.getInstance().getTaskList();
 			break;
 
-		case "load": {
-			// Storage.getInstance().setPath("C:\\");
+		case "set":
+			Storage.getInstance().setPath(path);
 			Storage.getInstance().setfileName("silentjarvis.fxml");
+			break;
+
+		case "load":
+
 			displayList = Storage.getInstance().load();
 			TaskMemory.getInstance().setTaskList(displayList);
 			break;
-		}
+
 		case "save":
 			Storage.getInstance().setfileName("silentjarvis.fxml");
 			Storage.getInstance().save(displayList);

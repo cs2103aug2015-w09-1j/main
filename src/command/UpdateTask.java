@@ -25,6 +25,7 @@ public class UpdateTask extends UpdateCommand {
 	@Override
 	public void undo() {
 		if (this.undoable()) {
+			
 			CreateTask create = new CreateTask(this.thisTask);
 			create.execute();
 			DeleteTask delete = new DeleteTask(this.newTask);

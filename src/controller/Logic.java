@@ -2,14 +2,15 @@ package controller;
 
 import java.util.*;
 
+import command.CreateTask;
+import command.DeleteBulkTask;
+import command.DeleteTask;
 import command.ICommand;
 import command.TaskMemory;
+import command.UpdateTask;
 import model.*;
 
 public class Logic {
-	private static String BUILDTASK_MESSAGE = "Unable to add task.";
-	private static String DELETETASK_MESSAGE = "Unable to delete task";
-	private static String UPDATETASK_MESSAGE = "Unable to update task";
 	// whoever inherit interface, is able to add in to the stack. It is for Undo
 	// purposes
 	private static Stack<ICommand> processStack = null;
@@ -18,7 +19,7 @@ public class Logic {
 		processStack = new Stack<ICommand>();
 	}
 
-	public void pushToProcessStack(ICommand command) {
+	private void pushToProcessStack(ICommand command) {
 		if (command.undoable()) {
 			processStack.push(command);
 		}
@@ -32,8 +33,52 @@ public class Logic {
 		}
 	}
 	
+	// execute create task
+	public void executeCreateTask(String task_name, String start_date,
+			String start_time, String end_date, String end_time) {
+		Task task;
+		task = buildTask(task_name.trim(), start_date, end_date,
+				start_time, end_time);
+		CreateTask create = new CreateTask(task);
+		create.execute();
+		pushToProcessStack(create);
+	}
+	
+	// execute delete task
+	public void executeDeleteTask(ArrayList<Task> displayList,int task_index) {
+		Task task;
+		task = deleteTask(displayList, task_index);
+		DeleteTask delete = new DeleteTask(task);
+		delete.execute();
+		pushToProcessStack(delete);
+	}
+	
+	// execute deleting tasks with multiple id
+	public void executeDeleteBulkTasksById(ArrayList<Task> currentList, int[] _listIndex) {
+		ArrayList<Task> deleteBulkArray = new ArrayList<Task>();
+		deleteBulkArray = searchTaskByMutlipleId(currentList,
+				_listIndex);
+		DeleteBulkTask deletebulk = new DeleteBulkTask(
+				deleteBulkArray);
+		deletebulk.execute();
+		pushToProcessStack(deletebulk);
+	}
+
+	// execute deleting all tasks in the current view list
+	public  void executeDeleteBulkTask(ArrayList<Task> currentList) {
+		ArrayList<Task> deleteBulkArray = new ArrayList<Task>();
+		
+		for (Task t : currentList) {
+			deleteBulkArray.add(t);
+		}
+		DeleteBulkTask deletebulk = new DeleteBulkTask(deleteBulkArray);
+		deletebulk.execute();
+		pushToProcessStack(deletebulk);
+	}
+
+	
 	// Building a task
-	public Task buildTask(String task_name, String start_date, String end_date,
+	private Task buildTask(String task_name, String start_date, String end_date,
 			String start_time, String end_time) {
 		Task task = null;
 		
@@ -66,7 +111,7 @@ public class Logic {
 	}
 
 	// Deleting a task
-	public Task deleteTask(ArrayList<Task> currentList, int index) {
+	private Task deleteTask(ArrayList<Task> currentList, int index) {
 		Task task = null;
 		try {
 			ArrayList<Task> taskList = TaskMemory.getInstance().getTaskList();
@@ -82,22 +127,84 @@ public class Logic {
 		}
 		return task;
 	}
+	
+	// excute update task
+	public void executeUpdateTask(ArrayList<Task> currentList,String task_name, String start_date,
+			String start_time, String end_date, String end_time, int task_index) {
+		Task deleteTask = SearchTaskById(currentList, task_index);
+		Task updateTask = buildTask(task_name.trim(), start_date,
+				end_date, start_time, end_time);
 
-	// Updating a task
-	public Task updateTask(ArrayList<Task> currentList, int index) {
-		Task task = null;
-		try {
-			// do a search to find out which task i want to update.
-			task = getSearchTaskById(currentList, index-1);
+		UpdateTask update = new UpdateTask(deleteTask, updateTask);
+		update.execute();
+		pushToProcessStack(update);
+	}
+	
+	// execute update task by certain attribute
+	public void executeUpdateTaskByAttribute(ArrayList<Task> currentList, int task_index,
+			String editAttr, String editInfo) {
+		Task task = SearchTaskById(currentList, task_index);
+		String task_name = null;
+		String start_date = null;
+		String end_date = null;
+		String start_time = null;
+		String end_time = null;
+		
+		if (task instanceof EventTask) {
+			task_name = task.getTaskName();
+			start_date = ((EventTask) task).getStartDate();
+			end_date = ((EventTask) task).getEndDate();
+			start_time = ((EventTask) task).getStartTime();
+			end_time = ((EventTask) task).getEndTime();
+			if (editAttr.equalsIgnoreCase("startDate")) {
+				start_date = editInfo;
+			}else if(editAttr.equalsIgnoreCase("endDate")){
+				end_date = editInfo;
+			}else if(editAttr.equalsIgnoreCase("startTime")){
+				start_time = editInfo;
+			}else if(editAttr.equalsIgnoreCase("endTime")){
+				end_time = editInfo;
+			}else if(editAttr.equalsIgnoreCase("taskName")){
+				task_name = editInfo;
+			}
+		} else if (task instanceof DeadlineTask) {
+			task_name = task.getTaskName();
+			end_date = ((DeadlineTask) task).getDeadlineDate();
+			end_time = ((DeadlineTask) task).getDeadlineTime();
 			
-		} catch (Exception e) {
-			return null;
+			if (editAttr.equalsIgnoreCase("endDate")) {
+				end_date = editInfo;
+			}else if(editAttr.equalsIgnoreCase("endTime")){
+				end_time = editInfo;
+			}else if(editAttr.equalsIgnoreCase("taskName")){
+				task_name = editInfo;
+			}
+		} else if (task instanceof FloatingTask) {
+			task_name = task.getTaskName();
+			if (editAttr.equalsIgnoreCase("taskName")) {
+				task_name = editInfo;
+			}
 		}
-		return task;
+		
+		executeUpdateTask(currentList, task_name, start_date, start_time, end_date, end_time, task_index);	
+	}
+	
+	// Search for tasks by a number of index, return arraylist<task>
+	public ArrayList<Task> searchTaskByMutlipleId(ArrayList<Task> currentList, int[] index){
+		ArrayList<Task> taskOfSearcedList = new ArrayList<Task>();
+		try{
+			for(int i = 0; i < index.length; i++){
+				taskOfSearcedList.add(currentList.get(index[i] -1));
+			}
+			
+		} catch (Exception e){
+			
+		}
+		return taskOfSearcedList;
 	}
 
 	// Searching for tasks , return the filtered arraylist based on the keyword
-	public ArrayList<Task> searchTask(ArrayList<Task> currentList, String keyword) {
+	public ArrayList<Task> searchTaskByKeyword(ArrayList<Task> currentList, String keyword) {
 		ArrayList<Task> taskOfSearchedList = new ArrayList<Task>();
 		try {
 			ArrayList<Task> taskList = currentList;
@@ -117,12 +224,12 @@ public class Logic {
 	
 	// Search for specific task based on the index of the current display list and return the same task from the Task List
 	// return int
-	public Task getSearchTaskById(ArrayList<Task> currentList, int index){
+	public Task SearchTaskById(ArrayList<Task> currentList, int index){
 		Task results = null;
 		try{
 			ArrayList<Task> TaskList = TaskMemory.getInstance().getTaskList();
 			for(int i = 0; i < TaskList.size() ; i++){
-				if(currentList.get(index).equals(TaskList.get(i))){
+				if(currentList.get(index-1).equals(TaskList.get(i))){
 					results = TaskList.get(i);
 				}
 			}
