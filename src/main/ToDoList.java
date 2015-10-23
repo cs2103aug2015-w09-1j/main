@@ -17,23 +17,23 @@ public class ToDoList {
 		// //event task
 		// Controller.executeCMD("add       going home      by 2015-10-20 2200");
 		// // dealine task
-		// Controller.executeCMD("edit 2 taskname 1000"); // floating
-		// Controller.executeCMD("edit 1 u are a dog from 2015-10-20 1530 to 2015-10-20 1400");
-		// Controller.executeCMD("add abce");
+		 Controller.executeCMD("edit 2 taskname 1000"); // floating
+		 Controller.executeCMD("edit 1 u are a dog from 2015-10-20 1530 to 2015-10-20 1400");
+		 Controller.executeCMD("add abce");
 		// Controller.executeCMD("add abcf");
-		// Controller.executeCMD("delete 2"); //delete
+		 Controller.executeCMD("delete 2"); //delete
 		// Controller.executeCMD("undo");
-		// Controller.executeCMD("add abch");
+		Controller.executeCMD("add abch");
 		// Controller.executeCMD("save");
 		// Controller.executeCMD("load");
-		// Controller.executeCMD("search abc"); //search
+		 Controller.executeCMD("search abc"); //search
 		//Controller.executeCMD("set C:/Users/calvin/Desktop/products/");
 		//Controller.executeCMD("save");
 		// Controller.executeCMD("delete all");
-		// Controller.executeCMD("search                 abc                  ");
+		 Controller.executeCMD("search abc");
 		// //search
-		// Controller.executeCMD("undo");
-		// Controller.executeCMD("save");
+		// Controller.executeCMD("search h");
+		// Controller.executeCMD("delete 1");
 		// Controller.executeCMD("display all"); //display all : not filtered
 
 		// Controller.executeCMD("load");
@@ -44,7 +44,7 @@ public class ToDoList {
 		// Controller.executeCMD("edit 4 drink coffee from 2015-10-20 1500 to 2015-10-20 1700");
 		// Controller.executeCMD("showall");
 		// Controller.executeCMD("delete");
-		// Controller.executeCMD("undo");
+		 //Controller.executeCMD("undo");
 		// Controller.executeCMD("add");
 		// Controller.getInstance();
 		// System.out.println(Controller.getSize());

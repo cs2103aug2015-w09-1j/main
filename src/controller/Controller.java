@@ -80,8 +80,8 @@ public class Controller {
 			break;
 
 		case "search":
-			ArrayList<Task> taskList = TaskMemory.getInstance().getTaskList();
-			displayList = logic.searchTaskByKeyword(taskList,
+			//ArrayList<Task> taskList = TaskMemory.getInstance().getTaskList();
+			displayList = logic.searchTaskByKeyword(displayList,
 					search_word.trim());
 
 			break;
