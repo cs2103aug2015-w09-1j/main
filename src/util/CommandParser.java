@@ -60,6 +60,12 @@
 package util;
 
 import java.util.LinkedList;
+import java.util.Date;
+import java.util.List;
+
+import org.ocpsoft.prettytime.PrettyTime;
+import org.ocpsoft.prettytime.nlp.PrettyTimeParser;
+import org.ocpsoft.prettytime.nlp.parse.DateGroup;
 
 public class CommandParser {
 	//Attribute
@@ -442,7 +448,7 @@ public class CommandParser {
 	}
 
 	public static void main(String[] args) {
-		CommandParser cp2 = new CommandParser("delete 1, 2, 4-8");
+//		CommandParser cp2 = new CommandParser("delete 1, 2, 4-8");
 //		String str = "1-10";
 //		String[] strArr = str.split("-");
 //		for(int i=0; i<strArr.length; i++){
@@ -450,7 +456,20 @@ public class CommandParser {
 //		}
 //		print(strArr);
 //		System.out.println(cp2.getDeleteIDs());
-		System.out.print(cp2.getDeleteIDs().toString());
+//		System.out.print(cp2.getDeleteIDs().toString());
+		
+		PrettyTime p = new PrettyTime();
+		System.out.println(p.format(new Date()));
+		//prints: “moments from now”
+
+		System.out.println(p.format(new Date(System.currentTimeMillis() + 1000*60*10)));
+		//prints: “10 minutes from now”
+		
+	     List<Date> dates = new PrettyTimeParser().parse("buy october tenth");
+	     System.out.println(dates);
+	     
+	     List<DateGroup> parse = new PrettyTimeParser().parseSyntax("I eat fish every three days");
+	     System.out.println(parse.get(0).getDates().get(0));
 		
 	}
 	
