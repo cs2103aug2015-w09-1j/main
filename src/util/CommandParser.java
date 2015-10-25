@@ -62,10 +62,12 @@ package util;
 import java.util.LinkedList;
 import java.util.Date;
 import java.util.List;
+import java.time.*;
 
 import org.ocpsoft.prettytime.PrettyTime;
 import org.ocpsoft.prettytime.nlp.PrettyTimeParser;
 import org.ocpsoft.prettytime.nlp.parse.DateGroup;
+import org.ocpsoft.prettytime.shade.org.antlr.runtime.debug.Profiler.DecisionDescriptor;
 
 public class CommandParser {
 	//Attribute
@@ -78,6 +80,10 @@ public class CommandParser {
 	private String endTime;
 	private String startDate;
 	private String endDate;
+	
+	private LocalDateTime start;
+	private LocalDateTime end;
+	
 	private int taskID;
 	private String searchWord;
 	private String searchDate;
@@ -86,6 +92,7 @@ public class CommandParser {
 	private String storagePath;
 	private String editAttribute;
 	private String editInfo;
+	private LocalDateTime editDate;
 	private int[] deleteIDs;
 	
 	CommandChecker cc;
@@ -151,8 +158,17 @@ public class CommandParser {
 	public String getEditInfo(){
 		return this.editInfo;
 	}
+	public LocalDateTime getEditDate() {
+		return this.editDate;
+	}
 	public int[] getDeleteIDs(){
 		return this.deleteIDs;
+	}
+	public LocalDateTime getEndDateTime(){
+		return this.end;
+	}
+	public LocalDateTime getStartDateTime(){
+		return this.start;
 	}
 	
 	
@@ -214,11 +230,18 @@ public class CommandParser {
 		String[] argArray = args.split(" ", 2);
 		String[] argArray2 = args.split(" ");
 		if(argArray.length == 1) {
+			//edit <id>
 			setTaskID(Integer.parseInt(args));
 		} else if(argArray2.length == 3){
+			//edit <id> <attribute> <info>
+			Date date = new PrettyTimeParser().parse(argArray2[2]).get(0);
 			setTaskID(Integer.parseInt(argArray2[0]));
 			setEditAttribute(argArray2[1]);
-			setEditInfo(argArray2[2]);
+			LocalDateTime editDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+			setEditInfo(editDate.toLocalDate().toString());
+			setEditDate(editDate);
+			
+			
 		} else {
 			String id = argArray[0];
 			setTaskID(Integer.parseInt(id));
@@ -253,8 +276,9 @@ public class CommandParser {
 	private void parseSearchCommand() {
 		String args = getArgs();
 		if(args.contains("on")) {
-			String date = args.substring(3);
-			setSearchDate(date);
+			Date date = new PrettyTimeParser().parse(args).get(0);
+			LocalDateTime searchDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+			setSearchDate(searchDate.toLocalDate().toString());
 		} else {
 			setSearchWord(args);
 		}
@@ -355,26 +379,52 @@ public class CommandParser {
 	}
 	
 	private void parseEventTask(String args) {
-		//add meeting from 2015-10-03 0900 to 2015-10-04 0900
-		String[] argsArray = args.split("from |to");
-		String[] startArr = argsArray[1].split(" ");
-		String[] endArr = argsArray[2].trim().split(" ");
+		String[] argsArray = args.split("from | to");
+		String startStr = argsArray[1];
+		String endStr = argsArray[2];
 		
 		setTaskName(argsArray[0]);
-		setStartDate(startArr[0]);
-		setStartTime(startArr[1]);
-		setEndDate(endArr[0]);
-		setEndTime(endArr[1]);
+		Date start = new PrettyTimeParser().parse(startStr).get(0);		
+		Date end = new PrettyTimeParser().parse(endStr).get(0);
+		LocalDateTime startLdt = start.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+		LocalDateTime endLdt = end.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+		setStartDateTime(startLdt);
+		setEndDateTime(endLdt);
+		setStartDate(getDateString(startLdt));
+		setStartTime(getTimeString(startLdt));
+		setEndDate(getDateString(endLdt));
+		setEndTime(getTimeString(endLdt));
+
+
+	}
+	private String getDateString(LocalDateTime ldt) {
+		String date = ""+ldt.getYear()+"-"+format(ldt.getMonthValue())+"-"+format(ldt.getDayOfMonth());
+		return date;
+
+	}
+	private String getTimeString(LocalDateTime ldt) {
+		String time = ""+format(ldt.getHour())+":"+format(ldt.getMinute());
+		return time;
 
 	}
 	
 	private void parseDeadlineTask(String args) {
 		//add finish project manual by 2015-10-03 0900
 		String[] argsArray = args.split(" by ");
-		String[] endArr = argsArray[1].split(" ");
+		String endStr = argsArray[1];
+		
 		setTaskName(argsArray[0]);
-		setEndDate(endArr[0]);
-		setEndTime(endArr[1]);
+		
+		Date end = new PrettyTimeParser().parse(endStr).get(0);
+		LocalDateTime ldt = end.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+		setEndDateTime(ldt);
+		
+		String endDate = ""+ldt.getYear()+"-"+format(ldt.getMonthValue())+"-"+format(ldt.getDayOfMonth());
+		String endTime = ""+format(ldt.getHour())+":"+format(ldt.getMinute());
+		setEndDate(endDate);
+		setEndTime(endTime);
+
+
 	}
 	
 	private void setUserInput(String userInput){
@@ -427,12 +477,20 @@ public class CommandParser {
 	private void setEditInfo(String info) {
 		this.editInfo = info;
 	}
-	
 	private void setDeleteMode(String mode){
 		this.deleteMode = mode;
 	}
 	private void setDeleteIDs(int[] ids){
 		this.deleteIDs = ids;
+	}
+	private void setEndDateTime(LocalDateTime end) {
+		this.end = end;
+	}
+	private void setStartDateTime(LocalDateTime start) {
+		this.start = start;
+	}
+	private void setEditDate(LocalDateTime date) {
+		this.editDate = date;
 	}
 	
 	static void print(String[] str){
@@ -446,9 +504,28 @@ public class CommandParser {
 			System.out.println("Index "+i+" : "+ str[i]);
 		}
 	}
+	
+	static String format(int value){
+		String str = "" + value;
+		if(str.split("").length == 1) {
+			str = "0"+str;
+		}
+		return str;
+	}
+
 
 	public static void main(String[] args) {
-//		CommandParser cp2 = new CommandParser("delete 1, 2, 4-8");
+//		CommandParser cp2 = new CommandParser("add attend tutorial from 2015-10-03 to 2015-10-23");
+//		System.out.println(cp2.getStartDateTime());
+//		System.out.println(cp2.getStartTime());
+		String arg = "attend tutorial from 2015-10-03 to 2015-10-23";
+		String[] argsArray = arg.split("from | to");
+		String startStr = argsArray[1];
+		String endStr = argsArray[2];
+		System.out.print(startStr);
+		System.out.print(endStr);
+		print(argsArray);
+		
 //		String str = "1-10";
 //		String[] strArr = str.split("-");
 //		for(int i=0; i<strArr.length; i++){
@@ -458,19 +535,31 @@ public class CommandParser {
 //		System.out.println(cp2.getDeleteIDs());
 //		System.out.print(cp2.getDeleteIDs().toString());
 		
-		PrettyTime p = new PrettyTime();
-		System.out.println(p.format(new Date()));
+//		PrettyTime p = new PrettyTime();
+//		System.out.println(p.format(new Date()));
 		//prints: “moments from now”
 
-		System.out.println(p.format(new Date(System.currentTimeMillis() + 1000*60*10)));
+//		System.out.println(p.format(new Date(System.currentTimeMillis() + 1000*60*10)));
 		//prints: “10 minutes from now”
 		
-	     List<Date> dates = new PrettyTimeParser().parse("buy october tenth");
-	     System.out.println(dates);
+//	     List<Date> dates = new PrettyTimeParser().parse("buy october tenth");
+//	     System.out.println(dates);
 	     
-	     List<DateGroup> parse = new PrettyTimeParser().parseSyntax("I eat fish every three days");
-	     System.out.println(parse.get(0).getDates().get(0));
+//	     List<Date> dates = new PrettyTimeParser().parse("add finish report by tonight");
+//	     System.out.println(dates.get(0));
+//	     System.out.println(dates.get(0).getDay());
+	     
+//	     List<DateGroup> parse = new PrettyTimeParser().parseSyntax("I eat fish every three days");
+//	     System.out.println(parse.get(0).getDates().get(0));
 		
+//		String endStr = "tomorrow night";
+//		Date end = new PrettyTimeParser().parse(endStr).get(0);
+//		LocalDateTime ldt = end.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+//		System.out.println(ldt.getDayOfMonth());
+//		System.out.println(ldt.getDayOfWeek());
+//		System.out.println(ldt.getDayOfYear());
+//		System.out.println(ldt.getYear());
+//		
 	}
 	
 

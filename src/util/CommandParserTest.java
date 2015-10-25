@@ -5,6 +5,15 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+
+
+import static org.junit.Assert.*;
+
+import java.text.SimpleDateFormat;
+import java.util.*;
+import org.junit.*;
+import org.ocpsoft.prettytime.*;
+
 public class CommandParserTest {
 
 	@Before
@@ -187,8 +196,8 @@ public class CommandParserTest {
 		assertEquals("2015-10-04", cp1.getEndDate());
 		
 		//deadline task
-		CommandParser cp2 = new CommandParser("add finish project manual by 2015-10-03 0900");
-		assertEquals("2015-10-03", cp2.getEndDate());
+		CommandParser cp2 = new CommandParser("add finish project manual by oct 9 9am");
+		assertEquals("2015-10-09", cp2.getEndDate());
 		
 		//edit
 		CommandParser cp3 = new CommandParser("edit 2 meeting with boss by 2015-03-04 1259");
@@ -199,7 +208,7 @@ public class CommandParserTest {
 	public void testGetStartTime() {
 		//event task
 		CommandParser cp = new CommandParser("add meeting from 2015-10-03 0900 to 2015-10-04 0900");
-		assertEquals("0900", cp.getStartTime());
+		assertEquals("09:00", cp.getStartTime());
 		
 		//deadline task
 		CommandParser cp2 = new CommandParser("add finish project manual by 2015-10-03 0900");
@@ -209,15 +218,15 @@ public class CommandParserTest {
 	@Test
 	public void testGetEndTime() {
 		CommandParser cp = new CommandParser("add meeting from 2015-10-03 0900 to 2015-10-04 0900");
-		assertEquals("0900", cp.getEndTime());
+		assertEquals("09:00", cp.getEndTime());
 		
 		//deadline task
 		CommandParser cp2 = new CommandParser("add finish project manual by 2015-10-03 0900");
-		assertEquals("0900", cp2.getEndTime());
+		assertEquals("09:00", cp2.getEndTime());
 		
 		//edit
 		CommandParser cp3 = new CommandParser("edit 2 meeting with boss by 2015-03-04 1259");
-		assertEquals("1259", cp3.getEndTime());
+		assertEquals("12:59", cp3.getEndTime());
 	}
 	
 	@Test
@@ -237,6 +246,11 @@ public class CommandParserTest {
 		CommandParser cp1 = new CommandParser("edit 1 startDate 2015-10-23");
 		assertEquals("2015-10-23", cp1.getEditInfo());
 	}
+	@Test
+	public void testGetEditDate(){
+		CommandParser cp1 = new CommandParser("edit 1 start 2015-10-03");
+		assertEquals("2015-10-03", cp1.getEditDate().toLocalDate().toString());
+	}
 	
 	@Test
 	public void TestGetDeleteIDs(){
@@ -247,5 +261,17 @@ public class CommandParserTest {
 		
 
 	}
+	@Test
+	public void TestGetStart() {
+		CommandParser cp1 = new CommandParser("add attend tutorial from 2015-10-03 to 2015-10-23");
+		assertEquals("2015-10-03", cp1.getStartDateTime().toLocalDate().toString());
+	}
+	
+	@Test
+	public void TestGetEnd() {
+		CommandParser cp1 = new CommandParser("add finish report by 2015-10-23");
+		assertEquals("2015-10-23", cp1.getEndDateTime().toLocalDate().toString());
+	}
+	
 
 }
