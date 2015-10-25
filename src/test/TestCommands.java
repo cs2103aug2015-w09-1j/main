@@ -85,7 +85,8 @@ public class TestCommands {
 		Task b = new FloatingTask("abcd");
 		test.add(a);
 		test.add(b);
-		temp = test;
+		temp.add(a);
+		temp.add(b);
 		delBTest = new DeleteBulkTask(temp);
 		delBTest.execute();
 		assertEquals(0, test.size());

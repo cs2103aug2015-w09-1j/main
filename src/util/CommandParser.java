@@ -60,6 +60,9 @@
 package util;
 
 import java.util.LinkedList;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
@@ -459,17 +462,21 @@ public class CommandParser {
 //		System.out.print(cp2.getDeleteIDs().toString());
 		
 		PrettyTime p = new PrettyTime();
-		System.out.println(p.format(new Date()));
+		//System.out.println(p.format(new Date()));
 		//prints: “moments from now”
 
-		System.out.println(p.format(new Date(System.currentTimeMillis() + 1000*60*10)));
+		//System.out.println(p.format(new Date(System.currentTimeMillis() + 1000*60*10)));
 		//prints: “10 minutes from now”
 		
-	     List<Date> dates = new PrettyTimeParser().parse("buy october tenth");
+	     List<Date> dates = new PrettyTimeParser().parse("by october eleventh noon");
+	     LocalDateTime ld = dates.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+	     System.out.println(ld.getDayOfWeek());
+
+	     
 	     System.out.println(dates);
 	     
 	     List<DateGroup> parse = new PrettyTimeParser().parseSyntax("I eat fish every three days");
-	     System.out.println(parse.get(0).getDates().get(0));
+	     //System.out.println(parse.get(0).getDates().get(0));
 		
 	}
 	

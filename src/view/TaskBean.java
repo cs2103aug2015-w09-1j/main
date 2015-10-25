@@ -1,5 +1,6 @@
 package view;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
 import model.DeadlineTask;
 import model.EventTask;
@@ -111,5 +112,18 @@ public class TaskBean {
 
 	public void setTaskId(IntegerProperty taskId) {
 		this.taskId = taskId;
+	}
+	
+
+	public StringProperty getStart() {
+		StringProperty start = new SimpleStringProperty();
+		start.bind(Bindings.concat(this.getStart_date(), " ", this.getStart_time()));
+		return start;
+	}
+
+	public StringProperty getEnd() {
+		StringProperty end = new SimpleStringProperty();
+		end.bind(Bindings.concat(this.getEnd_date()," ", this.getEnd_time()));
+		return end;
 	}
 }

@@ -6,22 +6,20 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="448.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TaskViewController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TaskViewController">
    <children>
-      <Text layoutX="27.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Task">
+      <Text fx:id="text" layoutX="27.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Task">
          <font>
             <Font name="DejaVu Sans Bold" size="39.0" />
          </font>
       </Text>
-      <TextField fx:id="textField" layoutX="15.0" layoutY="395.0" onAction="#onEnter" prefHeight="26.0" prefWidth="635.0" />
-      <TableView fx:id="taskTable" layoutX="14.0" layoutY="63.0" prefHeight="308.0" prefWidth="635.0">
+      <TextField fx:id="textField" layoutX="14.0" layoutY="551.0" onAction="#onEnter" prefHeight="26.0" prefWidth="764.0" />
+      <TableView fx:id="taskTable" layoutX="14.0" layoutY="63.0" prefHeight="471.0" prefWidth="764.0">
         <columns>
           <TableColumn fx:id="taskIdColumn" prefWidth="31.0" text="Id" />
-          <TableColumn fx:id="taskNameColumn" prefWidth="301.0" text="TaskName" />
-          <TableColumn fx:id="startTimeColumn" prefWidth="74.0" text="Start Time" />
-          <TableColumn fx:id="endTimeColumn" prefWidth="73.0" text="End Time" />
-          <TableColumn fx:id="startDateColumn" text="Start Date" />
-          <TableColumn fx:id="endDateColumn" prefWidth="75.0" text="End Date" />
+          <TableColumn fx:id="taskNameColumn" prefWidth="362.0" text="TaskName" />
+          <TableColumn fx:id="startColumn" prefWidth="185.0" text="Start" />
+          <TableColumn fx:id="endColumn" prefWidth="185.0" text="End" />
         </columns>
       </TableView>
    </children>
