@@ -382,7 +382,7 @@ public class CommandParser {
 	}
 	
 	private void parseEventTask(String args) {
-		String[] argsArray = args.split("from | to");
+		String[] argsArray = args.split("from | to ");
 		String startStr = argsArray[1];
 		String endStr = argsArray[2];
 		
@@ -518,15 +518,15 @@ public class CommandParser {
 
 
 	public static void main(String[] args) {
-//		CommandParser cp2 = new CommandParser("add attend tutorial from 2015-10-03 to 2015-10-23");
+//		CommandParser cp2 = new CommandParser("add 2103 tutorial from tomorrow morning 9am to tomorrow morning 10 am");
 //		System.out.println(cp2.getStartDateTime());
 //		System.out.println(cp2.getStartTime());
-		String arg = "attend tutorial from 2015-10-03 to 2015-10-23";
-		String[] argsArray = arg.split("from | to");
-		String startStr = argsArray[1];
-		String endStr = argsArray[2];
-		System.out.print(startStr);
-		System.out.print(endStr);
+		String arg = "add 2103 tutorial from tomorrow morning 9am to tomorrow morning 10 am";
+		String[] argsArray = arg.split("from | to ");
+//		String startStr = argsArray[1];
+//		String endStr = argsArray[2];
+//		System.out.print(startStr);
+//		System.out.print(endStr);
 		print(argsArray);
 		
 //		String str = "1-10";
