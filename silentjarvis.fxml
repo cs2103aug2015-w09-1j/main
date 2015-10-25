@@ -4,42 +4,6 @@
   <void method="add">
    <object class="model.DeadlineTask">
     <void property="deadlineDate">
-     <string>2015-10-21</string>
-    </void>
-    <void property="deadlineTime">
-     <string>0900</string>
-    </void>
-    <void property="taskName">
-     <string>abcd</string>
-    </void>
-    <void property="taskType">
-     <string>DeadlineTask</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="model.FloatingTask">
-    <void property="taskName">
-     <string>bbbbb</string>
-    </void>
-    <void property="taskType">
-     <string>FloatingTask</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="model.FloatingTask">
-    <void property="taskName">
-     <string>ccc</string>
-    </void>
-    <void property="taskType">
-     <string>FloatingTask</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="model.DeadlineTask">
-    <void property="deadlineDate">
      <string>2015-10-26</string>
     </void>
     <void property="deadlineTime">
@@ -86,25 +50,9 @@
    </object>
   </void>
   <void method="add">
-   <object class="model.DeadlineTask">
-    <void property="deadlineDate">
-     <string>2015-10-26</string>
-    </void>
-    <void property="deadlineTime">
-     <string>0700</string>
-    </void>
-    <void property="taskName">
-     <string>test</string>
-    </void>
-    <void property="taskType">
-     <string>DeadlineTask</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
    <object class="model.FloatingTask">
     <void property="taskName">
-     <string>zzzzzz</string>
+     <string>meeting with boss</string>
     </void>
     <void property="taskType">
      <string>FloatingTask</string>

@@ -14,6 +14,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.Reflection;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import model.EventTask;
 import model.FloatingTask;
@@ -35,7 +39,7 @@ public class TaskViewController {
     private TextField textField;
     
     @FXML
-    private Text text;
+    private Text text = new Text();
 
     // Reference to the main application.
     private MainApp mainApp;
@@ -58,15 +62,25 @@ public class TaskViewController {
         taskIdColumn.setCellValueFactory(cellData -> cellData.getValue().getTaskId().asObject());
         startColumn.setCellValueFactory(cellData -> cellData.getValue().getStart());
         endColumn.setCellValueFactory(cellData -> cellData.getValue().getEnd());
+        text.setFill(Color.RED);
+    	text.setX(10.0f);
+    	text.setY(-15.0f);
+    	text.setCache(true);
+    	
+    	text.setFont(Font.font(null, FontWeight.BOLD, 20));
+    	
+    	Reflection r = new Reflection();
+    	r.setFraction(0.7f);
+    	 
+    	text.setEffect(r);
     }
     
     public void onEnter() throws IOException {
     	String input = textField.getText();
-    	String firstWord = getFirstWord(input);
+    	String feedback = feedbackMsg(input);
     	Controller.executeCMD(input);
     	MainApp.setTaskData(Controller.getTaskList());
-    	text.setText(firstWord);
-    	
+    	text.setText(feedback);    	
     	
     	textField.clear();
     }
@@ -77,6 +91,24 @@ public class TaskViewController {
         } else {
           return text; // Text is the first word itself.
         }
+    }
+    
+    private String feedbackMsg(String input) {
+    	String firstWord = getFirstWord(input);
+    	String answer = "";
+    	switch(firstWord) {
+    	case "add": answer = "New Task added";
+    	            break;
+    	case "delete": answer = "Task delete";
+    				break;
+    	case "search": answer = "Search for " + input.substring(input.indexOf(" "));
+    				break;
+    	case "load": answer = "Loaded from the default fxml";
+    				break;
+    	case "save": answer = "Saved into silentjarvis.fxml";
+    				break;
+    	}
+    	return answer;
     }
 
     /**
