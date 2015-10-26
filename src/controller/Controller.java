@@ -129,6 +129,20 @@ public class Controller {
 			
 		case "show":
 			
+			if(showByDate != null){
+				displayList = logic.searchTaskByDate(displayList, showByDate);
+			}else if(showDate != null){
+				displayList = logic.searchTaskOnDate(displayList, showDate);
+			}else if(showStartDate != null && showEndDate !=null){
+				displayList = logic.searchTaskBetweenDate(displayList, showStartDate, showEndDate);
+			}else if(showOption != null){
+				if(showOption.equalsIgnoreCase("floating")){
+					displayList = getFloatingTaskList();
+				}else if(showOption.equalsIgnoreCase("archived")){
+					displayList = getArchivedList();
+				}
+			}
+			
 			
 			break;
 
@@ -167,6 +181,10 @@ public class Controller {
 	
 	public static ArrayList<Task> getOtherTaskList(){
 		return TaskMemory.getInstance().getOtherTask();
+	}
+	
+	public static ArrayList<Task> getArchivedList(){
+		return TaskMemory.getInstance().getArchivedList();
 	}
 	// public static void inputCommand() throws IOException {
 	// System.out.print("command: ");

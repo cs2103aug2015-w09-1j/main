@@ -107,6 +107,20 @@ public class TaskMemory {
 		}
 	}
 	
+	public ArrayList<Task> getArchivedList(){
+		ArrayList<Task> archivedList = new ArrayList<Task>();
+		try{
+			for (Task t : this.taskList) {
+				if(t.getTaskType() == "Archived"){
+					archivedList.add(t);
+				}
+			}
+			
+			return archivedList;
+		}catch(Exception e){
+			return null;
+		}
+	}
 
 	public void setTaskList(ArrayList<Task> taskList) {
 		this.taskList = taskList;

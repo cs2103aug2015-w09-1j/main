@@ -79,7 +79,8 @@ public class Logic {
 
 	// Building a task
 	private Task buildTask(String task_name, String start_date,
-			String end_date, String start_time, String end_time, String task_type) {
+			String end_date, String start_time, String end_time,
+			String task_type) {
 		Task task = null;
 
 		try {
@@ -99,7 +100,8 @@ public class Logic {
 						task = new FloatingTask(task_name, task_type);
 					} else {
 						// deadline task
-						task = new DeadlineTask(task_name, end_date, end_time, task_type);
+						task = new DeadlineTask(task_name, end_date, end_time,
+								task_type);
 					}
 				}
 
@@ -159,7 +161,7 @@ public class Logic {
 			start_time = ((EventTask) task).getStartTime();
 			end_time = ((EventTask) task).getEndTime();
 			task_type = task.getTaskType();
-			
+
 			if (editAttr.equalsIgnoreCase("startDate")) {
 				start_date = editInfo;
 			} else if (editAttr.equalsIgnoreCase("endDate")) {
@@ -170,7 +172,7 @@ public class Logic {
 				end_time = editInfo;
 			} else if (editAttr.equalsIgnoreCase("taskName")) {
 				task_name = editInfo;
-			} else if(editAttr.equalsIgnoreCase("taskType")){
+			} else if (editAttr.equalsIgnoreCase("taskType")) {
 				task_type = editInfo;
 			}
 		} else if (task instanceof DeadlineTask) {
@@ -178,23 +180,23 @@ public class Logic {
 			end_date = ((DeadlineTask) task).getDeadlineDate();
 			end_time = ((DeadlineTask) task).getDeadlineTime();
 			task_type = task.getTaskType();
-			
+
 			if (editAttr.equalsIgnoreCase("endDate")) {
 				end_date = editInfo;
 			} else if (editAttr.equalsIgnoreCase("endTime")) {
 				end_time = editInfo;
 			} else if (editAttr.equalsIgnoreCase("taskName")) {
 				task_name = editInfo;
-			} else if(editAttr.equalsIgnoreCase("taskType")){
+			} else if (editAttr.equalsIgnoreCase("taskType")) {
 				task_type = editInfo;
 			}
 		} else if (task instanceof FloatingTask) {
 			task_name = task.getTaskName();
 			task_type = task.getTaskType();
-			
+
 			if (editAttr.equalsIgnoreCase("taskName")) {
 				task_name = editInfo;
-			} else if(editAttr.equalsIgnoreCase("taskType")){
+			} else if (editAttr.equalsIgnoreCase("taskType")) {
 				task_type = editInfo;
 			}
 		}
@@ -217,6 +219,32 @@ public class Logic {
 		}
 		return taskOfSearcedList;
 	}
+	
+	// search between dates
+	public ArrayList<Task> searchTaskBetweenDate(ArrayList<Task> currentList, String first_date, String second_date){
+		ArrayList<Task> taskOfSearchedList = new ArrayList<Task>();
+		try {
+			for (Task t : currentList) {
+				if (t.getTaskType() != "Archived") {
+					if (t instanceof DeadlineTask) {
+						if (((DeadlineTask) t).getDeadlineDate().compareTo(
+								first_date) >= 0 && ((DeadlineTask) t).getDeadlineDate().compareTo(
+										second_date) <= 0) {
+							taskOfSearchedList.add(t);
+						}
+					} else if (t instanceof EventTask) {
+						if (((EventTask) t).getEndDate().compareTo(first_date) >= 0 && ((EventTask) t).getEndDate().compareTo(second_date) <= 0) {
+							taskOfSearchedList.add(t);
+						}
+					}
+				}
+			}
+
+		} catch (Exception e) {
+
+		}
+		return taskOfSearchedList;
+	}
 
 	// Search on date
 	public ArrayList<Task> searchTaskOnDate(ArrayList<Task> currentList,
@@ -225,14 +253,16 @@ public class Logic {
 		try {
 			// get all task on the search date.
 			for (Task t : currentList) {
-				if (t instanceof DeadlineTask) {
-					if (((DeadlineTask) t).getDeadlineDate()
-							.compareTo(end_date) == 0) {
-						taskOfSearchedList.add(t);
-					}
-				} else if (t instanceof EventTask) {
-					if (((EventTask) t).getEndTime().compareTo(end_date) == 0) {
-						taskOfSearchedList.add(t);
+				if (t.getTaskType() != "Archived") {
+					if (t instanceof DeadlineTask) {
+						if (((DeadlineTask) t).getDeadlineDate().compareTo(
+								end_date) == 0) {
+							taskOfSearchedList.add(t);
+						}
+					} else if (t instanceof EventTask) {
+						if (((EventTask) t).getEndDate().compareTo(end_date) == 0) {
+							taskOfSearchedList.add(t);
+						}
 					}
 				}
 			}
@@ -252,16 +282,20 @@ public class Logic {
 			// search by tomorrow |search by 2015-10-10
 			String dateNow = LocalDate.now().toString();
 			for (Task t : currentList) {
-				if (t instanceof DeadlineTask) {
-					if (((DeadlineTask) t).getDeadlineDate().compareTo(dateNow) >= 0
-							&& ((DeadlineTask) t).getDeadlineDate().compareTo(
-									end_date) <= 0) {
-						taskOfSearchedList.add(t);
-					}
-				} else if (t instanceof EventTask) {
-					if (((EventTask) t).getEndTime().compareTo(dateNow) >= 0
-							&& ((EventTask) t).getEndTime().compareTo(end_date) <= 0) {
-						taskOfSearchedList.add(t);
+				if (t.getTaskType() != "Archived") {
+					if (t instanceof DeadlineTask) {
+						if (((DeadlineTask) t).getDeadlineDate().compareTo(
+								dateNow) >= 0
+								&& ((DeadlineTask) t).getDeadlineDate()
+										.compareTo(end_date) <= 0) {
+							taskOfSearchedList.add(t);
+						}
+					} else if (t instanceof EventTask) {
+						if (((EventTask) t).getEndDate().compareTo(dateNow) >= 0
+								&& ((EventTask) t).getEndDate().compareTo(
+										end_date) <= 0) {
+							taskOfSearchedList.add(t);
+						}
 					}
 				}
 			}
@@ -279,7 +313,8 @@ public class Logic {
 			ArrayList<Task> taskList = currentList;
 			for (Task t : taskList) {
 				if (t.getTaskName() != null
-						&& t.getTaskName().toString().contains(keyword)) {
+						&& t.getTaskName().toString().contains(keyword)
+						&& t.getTaskType() != "Archived") {
 					taskOfSearchedList.add(t);
 				}
 			}
