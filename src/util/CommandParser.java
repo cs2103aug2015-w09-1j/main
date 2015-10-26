@@ -94,6 +94,8 @@ public class CommandParser {
 	private String editAttribute;
 	private String editInfo;
 	private LocalDateTime editDate;
+	private String searchOnDate;
+	private String searchByDate;
 	private int[] deleteIDs;
 	
 	CommandChecker cc;
@@ -170,6 +172,12 @@ public class CommandParser {
 	}
 	public LocalDateTime getStartDateTime(){
 		return this.start;
+	}
+	public String getSearchOnDate() {
+		return this.searchOnDate;
+	}
+	public String getSearchByDate() {
+		return this.searchByDate;
 	}
 	
 	
@@ -289,7 +297,11 @@ public class CommandParser {
 		if(args.contains("on")) {
 			Date date = new PrettyTimeParser().parse(args).get(0);
 			LocalDateTime searchDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-			setSearchDate(searchDate.toLocalDate().toString());
+			setSearchOnDate(searchDate.toLocalDate().toString());
+		} else if(args.contains("by")) {
+			Date date = new PrettyTimeParser().parse(args).get(0);
+			LocalDateTime searchDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+			setSearchByDate(searchDate.toLocalDate().toString());
 		} else {
 			setSearchWord(args);
 		}
@@ -503,6 +515,12 @@ public class CommandParser {
 	private void setEditDate(LocalDateTime date) {
 		this.editDate = date;
 	}
+	private void setSearchOnDate(String date) {
+		this.searchOnDate = date;
+	}
+	private void setSearchByDate(String date) {
+		this.searchByDate = date;
+	}
 	
 	static void print(String[] str){
 		for(int i=0;i<str.length;i++){
@@ -526,9 +544,9 @@ public class CommandParser {
 
 
 	public static void main(String[] args) {
-		CommandParser cp2 = new CommandParser("edit 2 startTime 2pm");
-		System.out.println(cp2.getEditAttribute());
-		System.out.println(cp2.getEditInfo());
+		CommandParser cp2 = new CommandParser("search by tomorrow");
+		System.out.println(cp2.getSearchOnDate());
+		System.out.println(cp2.getSearchByDate());
 //		String arg = "edit 2 startDate sad";
 //		String[] argsArray = arg.split("from | to ");
 		

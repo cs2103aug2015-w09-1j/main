@@ -137,13 +137,6 @@ public class CommandParserTest {
 
 	}
 	
-	@Test
-	public void testGetSearchDate() {
-		CommandParser cp1 = new CommandParser("search on 2015-10-03");
-		assertEquals("2015-10-03", cp1.getSearchDate());
-
-	}
-	
 	
 	@Test
 	public void testGetId() {
@@ -261,6 +254,20 @@ public class CommandParserTest {
 	public void TestGetEnd() {
 		CommandParser cp1 = new CommandParser("add finish report by 2015-10-23");
 		assertEquals("2015-10-23", cp1.getEndDateTime().toLocalDate().toString());
+	}
+	
+	@Test
+	public void TestSearchOnDate() {
+		CommandParser cp1 = new CommandParser("search on December 29");
+		assertEquals("2015-12-29", cp1.getSearchOnDate());
+		assertEquals(null, cp1.getSearchByDate());
+	}
+	
+	@Test
+	public void TestSearchByDate() {
+		CommandParser cp1 = new CommandParser("search by December 9");
+		assertEquals(null, cp1.getSearchOnDate());
+		assertEquals("2015-12-09", cp1.getSearchByDate());
 	}
 	
 
