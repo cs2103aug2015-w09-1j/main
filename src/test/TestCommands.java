@@ -29,7 +29,7 @@ public class TestCommands {
 	 * @author Jason
 	 */
 	public void createTaskTest() {
-		Task t = new FloatingTask("meeting with boss");
+		Task t = new FloatingTask("meeting with boss", null);
 		crTest = new CreateTask(t);
 		crTest.execute();
 		assertSame(t, test.get(0));
@@ -42,7 +42,7 @@ public class TestCommands {
 	 * @author Jason
 	 */
 	public void deleteTaskTest() {
-		Task t = new FloatingTask("Meeting with boss");
+		Task t = new FloatingTask("Meeting with boss", null);
 		crTest = new CreateTask(t);
 		crTest.execute();
 		delTest = new DeleteTask(t);
@@ -55,10 +55,10 @@ public class TestCommands {
 	 * @author Jason
 	 */
 	public void updateTaskTest() {
-		Task t = new FloatingTask("Meeting with boss");
+		Task t = new FloatingTask("Meeting with boss", null);
 		crTest = new CreateTask(t);
 		crTest.execute();
-		Task new_t = new FloatingTask("Change subject");
+		Task new_t = new FloatingTask("Change subject", null);
 		updTest = new UpdateTask(t, new_t);
 		updTest.execute();
 		assertSame(test.get(0), new_t);
@@ -70,8 +70,8 @@ public class TestCommands {
 	@Test
 	public void createBulkTaskTest() {
 		ArrayList<Task> temp = new ArrayList<Task>();
-		temp.add(new FloatingTask("meeting"));
-		temp.add(new FloatingTask("abcd"));
+		temp.add(new FloatingTask("meeting", null));
+		temp.add(new FloatingTask("abcd", null));
 		crBTest = new CreateBulkTask(temp);
 		crBTest.execute();
 		assertEquals(2, test.size());
@@ -82,8 +82,8 @@ public class TestCommands {
 	@Test
 	public void deleteBulkTaskTest() {
 		ArrayList<Task> temp = new ArrayList<Task>();
-		Task a = new FloatingTask("meeting");
-		Task b = new FloatingTask("abcd");
+		Task a = new FloatingTask("meeting", null);
+		Task b = new FloatingTask("abcd", null);
 		test.add(a);
 		test.add(b);
 		temp.add(a);

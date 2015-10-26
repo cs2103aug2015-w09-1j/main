@@ -28,7 +28,6 @@ public class Controller {
 	}
 
 	public static void executeCMD(String input) throws IOException {
-		// Parser : get from parser(input)
 		parser = new CommandParser(input.trim());
 
 		String cmdType = parser.getCommandType();
@@ -46,9 +45,13 @@ public class Controller {
 		String path = parser.getStoragePath();
 		String editAttr = parser.getEditAttribute();
 		String editInfo = parser.getEditInfo();
-		// Task task = null;
-
-		// other parameter
+		String showOption = parser.getShowOption();
+		String showByDate = parser.getShowByDate();
+		String showDate = parser.getShowDate();
+		String showEndDate = parser.getShowEndDate();
+		String showStartDate = parser.getShowStartDate();
+		
+		
 		switch (cmdType.trim()) {
 		case "add":
 			logic.executeCreateTask(task_name, start_date, start_time,
@@ -122,6 +125,11 @@ public class Controller {
 			editInfo = "Completed";
 			logic.executeUpdateTaskByAttribute(displayList, task_index, editAttr, editInfo);
 			displayList = TaskMemory.getInstance().getTaskList();
+			break;
+			
+		case "show":
+			
+			
 			break;
 
 		case "load":
