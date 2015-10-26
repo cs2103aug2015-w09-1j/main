@@ -125,6 +125,9 @@ public class CommandParser {
 	private String showStartDate;
 	private String showEndDate;
 	
+	private int unarchivedID;
+	private int uncompleteID;
+	
 	CommandChecker cc;
 	
 	//Constructor
@@ -221,7 +224,12 @@ public class CommandParser {
 	public String getShowEndDate() {
 		return this.showEndDate;
 	}
-	
+	public int getUncompleteID() {
+		return this.uncompleteID;
+	}
+	public int getUnarchivedID() {
+		return this.unarchivedID;
+	}
 	//private methods
 	private void parse(){
 		String cmdType = getCommandType();
@@ -268,6 +276,12 @@ public class CommandParser {
 			case "home":
 				parseHomeCommand();
 				break;
+			case "unarchived":
+				parseUnarchivedCommand();
+				break;
+			case "uncomplete":
+				parseUncompleteCommand();
+				break;
 			default:
 				throw new Error("command not recognised: "+cmdType);
 		}
@@ -283,6 +297,15 @@ public class CommandParser {
 	
 	private void parseHomeCommand() {
 		
+	}
+	private void parseUnarchivedCommand() {
+		String args = getArgs();
+		setUnarchivedID(Integer.parseInt(args));
+	}
+	
+	private void parseUncompleteCommand() {
+		String args = getArgs();
+		setUncompleteID(Integer.parseInt(args));
 	}
 	
 	private void parseShowCommand(){
@@ -612,6 +635,12 @@ public class CommandParser {
 	private void setShowEndDate(String date) {
 		this.showEndDate = date;
 	}
+	private void setUncompleteID(int id) {
+		this.uncompleteID = id;
+	}
+	private void setUnarchivedID(int id) {
+		this.unarchivedID = id;
+	}
 	static void print(String[] str){
 		for(int i=0;i<str.length;i++){
 			System.out.println("Index "+i+" : "+ str[i]);
@@ -634,9 +663,9 @@ public class CommandParser {
 
 
 	public static void main(String[] args) {
-		CommandParser cp2 = new CommandParser("home");
+		CommandParser cp2 = new CommandParser("uncomplete 1");
 //		print(cp2.getDeleteIDs());
-		System.out.print(cp2.getCommandType());
+		System.out.print(cp2.getUncompleteID());
 //		String arg = "edit 2 startDate sad";
 //		String[] argsArray = arg.split("from | to ");
 		

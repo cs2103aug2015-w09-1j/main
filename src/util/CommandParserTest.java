@@ -314,5 +314,17 @@ public class CommandParserTest {
 		CommandParser cp1 = new CommandParser("show from December 12 to December 20 ");
 		assertEquals("2015-12-20", cp1.getShowEndDate());
 	}
+	@Test
+	public void TestGetUnarchivedID(){
+		int id = 1;
+		CommandParser cp1 = new CommandParser("unarchived 1");
+		assertEquals(id, cp1.getUnarchivedID());
+	}
+	@Test
+	public void TestGetUncompleteID(){
+		int id = 1;
+		CommandParser cp1 = new CommandParser("uncomplete 1");
+		assertEquals(id, cp1.getUncompleteID());
+	}
 	
 }
