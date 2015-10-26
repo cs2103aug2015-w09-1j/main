@@ -1,6 +1,7 @@
 package main;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.*;
 
 import command.CreateTask;
@@ -12,33 +13,37 @@ import model.*;
 public class ToDoList {
 
 	public static void main(String[] args) throws IOException {
-		// Controller.executeCMD("load");
-		// Controller.executeCMD("add I am at starbucks now doing 2103T from 2015-10-20 1600 to 2015-10-20 1800");
+		// Controller.executeCMD("search on 2015-10-30");
+		 Controller.executeCMD("add I am at starbucks now doing 2103T from 2015-10-20 1600 to 2015-10-31 1800");
+		 Controller.executeCMD("add lecture from 2015-10-20 1600 to 2015-11-05 1800");
+		 Controller.executeCMD("add floatingtask1");
 		// //event task
-		// Controller.executeCMD("add       going home      by 2015-10-20 2200");
+		 Controller.executeCMD("add going shopping by 2015-11-02 2200");
+		Controller.executeCMD("add going home by 2015-11-03 2200");
+		Controller.executeCMD("add going home by 2015-11-01 2200");
 		// // dealine task
-		 Controller.executeCMD("edit 2 taskname 1000"); // floating
-		 Controller.executeCMD("edit 1 u are a dog from 2015-10-20 1530 to 2015-10-20 1400");
-		 Controller.executeCMD("add abce");
+		// Controller.executeCMD("edit 4 "); // floating
+		 //Controller.executeCMD("edit 1 u are a dog from 2015-10-20 1530 to 2015-10-20 1400");
+		 //Controller.executeCMD("add abce");
 		// Controller.executeCMD("add abcf");
-		 Controller.executeCMD("delete 2"); //delete
+		 //Controller.executeCMD("delete 2"); //delete
 		// Controller.executeCMD("undo");
-		Controller.executeCMD("add abch");
+		//Controller.executeCMD("add abch");
 		// Controller.executeCMD("save");
 		// Controller.executeCMD("load");
-		 Controller.executeCMD("search abc"); //search
+		// Controller.executeCMD("search abc"); //search
 		//Controller.executeCMD("set C:/Users/calvin/Desktop/products/");
 		//Controller.executeCMD("save");
 		// Controller.executeCMD("delete all");
-		 Controller.executeCMD("search abc");
+		// Controller.executeCMD("search abc");
 		// //search
 		// Controller.executeCMD("search h");
-		// Controller.executeCMD("delete 1");
+		// Controller.executeCMD("delete 4");
 		// Controller.executeCMD("display all"); //display all : not filtered
 
 		// Controller.executeCMD("load");
 		// Controller.executeCMD("delete 10     ");
-		// Controller.executeCMD("add helloworld");
+		
 		// Controller.executeCMD("search 2103");
 		// Controller.executeCMD("delete 1");
 		// Controller.executeCMD("edit 4 drink coffee from 2015-10-20 1500 to 2015-10-20 1700");
@@ -47,9 +52,15 @@ public class ToDoList {
 		 //Controller.executeCMD("undo");
 		// Controller.executeCMD("add");
 		// Controller.getInstance();
-		// System.out.println(Controller.getSize());
-		printout(Controller.getTaskList());
-		// Logic logic = new Logic();
+//		// System.out.println(Controller.getSize());
+		 printout(Controller.getTaskList());
+		 System.out.println("---------------------------------------");
+		printout(Controller.getFloatingTaskList());
+		System.out.println("----------------------------------------");
+		printout(Controller.getFollowingWeekTaskList());
+		System.out.println("----------------------------------------");
+		printout(Controller.getOtherTaskList());
+		//		// Logic logic = new Logic();
 		//
 		// Task task = logic.buildTask("Going home to eat.", null, null, null,
 		// null);

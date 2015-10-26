@@ -1,5 +1,6 @@
 package command;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,20 +15,63 @@ public class TaskMemory {
 	private static TaskMemory _instance;
 	private ArrayList<Task> taskList;
 
-//	Task taskA = new EventTask("Have Meeting With Kiwi 2103", "15-10-2015",
-//			"15-10-2015", "1200", "1500");
-//	Task taskB = new FloatingTask("Eating Dinner w Kenneth.");
-//	Task taskC = new DeadlineTask("Finish 2103 project.", "16-10-2015", "2359");
-//	Task taskD = new DeadlineTask("2103 project.", "16-10-2015", "2359");
-
 	public TaskMemory() {
 		Storage.getInstance().setfileName("silentjarvis.fxml");
 		this.taskList = Storage.getInstance().load();
 	}
 
 	public ArrayList<Task> getTaskList() {
-		Collections.sort(this.taskList, new CustomComparator());
+		//Collections.sort(this.taskList, new CustomComparator());
 		return this.taskList;
+	}
+	
+	public ArrayList<Task> getFloatingTask(){
+		ArrayList<Task> floatingTaskList = new ArrayList<Task>();
+		for(Task floatingTask : this.taskList){
+			if(floatingTask instanceof FloatingTask){
+				floatingTaskList.add((FloatingTask) floatingTask);
+			}
+		}
+		Collections.sort(floatingTaskList, new TaskNameComparator());
+		return floatingTaskList;
+	}
+	
+	public ArrayList<Task> getFollowingWeekTask(){
+		ArrayList<Task> followingWeekList = new ArrayList<Task>();
+		String followWeekDate = LocalDate.now().plusDays(7).toString();
+		String dateNow = LocalDate.now().toString();
+		for(Task t : this.taskList){
+			if(t instanceof DeadlineTask){
+				if(((DeadlineTask) t).getDeadlineDate().compareTo(dateNow) >= 0 && ((DeadlineTask) t).getDeadlineDate().compareTo(followWeekDate) <= 0){					
+					followingWeekList.add(t);
+				}
+			}else if(t instanceof EventTask){
+				if(((EventTask) t).getEndDate().compareTo(dateNow) >= 0 && ((EventTask) t).getEndDate().compareTo(followWeekDate) <= 0){
+					followingWeekList.add(t);
+				}
+			}
+		}
+		Collections.sort(followingWeekList, new DateComparator());
+		return followingWeekList;
+	}
+	
+	public ArrayList<Task> getOtherTask(){
+		ArrayList<Task> otherTaskList = new ArrayList<Task>();
+		String followWeekDate = LocalDate.now().plusDays(7).toString();
+		String dateNow = LocalDate.now().toString();
+		for(Task t : this.taskList){
+			if(t instanceof DeadlineTask){
+				if(((DeadlineTask) t).getDeadlineDate().compareTo(dateNow) >= 0 && ((DeadlineTask) t).getDeadlineDate().compareTo(followWeekDate) > 0){					
+					otherTaskList.add(t);
+				}
+			}else if(t instanceof EventTask){
+				if(((EventTask) t).getEndDate().compareTo(dateNow) >= 0 && ((EventTask) t).getEndDate().compareTo(followWeekDate) > 0){
+					otherTaskList.add(t);
+				}
+			}
+		}
+		Collections.sort(otherTaskList, new DateComparator());
+		return otherTaskList;
 	}
 
 	public void setTaskList(ArrayList<Task> taskList) {
