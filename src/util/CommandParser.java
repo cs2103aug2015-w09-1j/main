@@ -28,11 +28,9 @@
 //			display all
 //	
 //	5) edit
-//		a. reset a task. all attribute will be set as null
-//			edit <id>
-//	    b. edit the whole task
+//	    a. edit the whole task
 //	    	edit <id> <all information>
-//		c. edit a specific attribute
+//		b. edit a specific attribute
 //			edit <id> <attribute> <info>
 //	
 //	6) undo
@@ -230,27 +228,37 @@ public class CommandParser {
 	
 	private void parseEditCommand(){
 		String args = getArgs();
-		String[] argArray = args.split(" ", 2);
-		String[] argArray2 = args.split(" ");
-		if(argArray.length == 1) {
-			//edit <id>
-			setTaskID(Integer.parseInt(args));
-		} else if(argArray2.length == 3){
+		String[] argArray = args.split(" ");
+		String[] argArray2 = args.split(" ", 2);
+		setTaskID(Integer.parseInt(argArray[0]));
+		if(isAttribute(argArray[1])) {
 			//edit <id> <attribute> <info>
-			Date date = new PrettyTimeParser().parse(argArray2[2]).get(0);
-			setTaskID(Integer.parseInt(argArray2[0]));
-			setEditAttribute(argArray2[1]);
-			LocalDateTime editDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-			setEditInfo(editDate.toLocalDate().toString());
-			setEditDate(editDate);
-			
-			
+			setEditAttribute(argArray[1]);
+			List<Date> dates = new PrettyTimeParser().parse(argArray2[1]);
+			if (dates.size() == 0) {
+				setEditInfo(argArray[2]);
+			} else if(argArray[1].contains("Time")) {
+				String time = dates.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().toLocalTime().toString();
+				setEditInfo(time);
+			} else if(argArray[1].contains("Date")) {
+				String date = dates.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().toLocalDate().toString();
+				setEditInfo(date);
+			}
 		} else {
-			String id = argArray[0];
-			setTaskID(Integer.parseInt(id));
-			parseAddCommand(argArray[1]);
-			
+			//edit <id> <all info>
+			parseAddCommand(argArray2[1]);
 		}
+
+	}
+	
+	private boolean isAttribute(String str) {
+		LinkedList<String> ls = new LinkedList<String>();
+		ls.add("startDate");
+		ls.add("startTime");
+		ls.add("endDate");
+		ls.add("endTime");
+		ls.add("taskName");
+		return ls.contains(str);
 	}
 	
 	private void parseSetCommand(){
@@ -518,16 +526,18 @@ public class CommandParser {
 
 
 	public static void main(String[] args) {
-//		CommandParser cp2 = new CommandParser("add 2103 tutorial from tomorrow morning 9am to tomorrow morning 10 am");
-//		System.out.println(cp2.getStartDateTime());
-//		System.out.println(cp2.getStartTime());
-		String arg = "add 2103 tutorial from tomorrow morning 9am to tomorrow morning 10 am";
-		String[] argsArray = arg.split("from | to ");
+		CommandParser cp2 = new CommandParser("edit 2 startTime 2pm");
+		System.out.println(cp2.getEditAttribute());
+		System.out.println(cp2.getEditInfo());
+//		String arg = "edit 2 startDate sad";
+//		String[] argsArray = arg.split("from | to ");
+		
+//		String[] argsArray = arg.split(" ");
 //		String startStr = argsArray[1];
 //		String endStr = argsArray[2];
 //		System.out.print(startStr);
 //		System.out.print(endStr);
-		print(argsArray);
+//		print(argsArray);
 		
 //		String str = "1-10";
 //		String[] strArr = str.split("-");

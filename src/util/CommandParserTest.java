@@ -79,9 +79,6 @@ public class CommandParserTest {
 		assertEquals("set", cp12.getCommandType());
 		
 		//edit
-		CommandParser cp13 = new CommandParser("edit 2");
-		assertEquals("edit", cp13.getCommandType());
-		
 		CommandParser cp14 = new CommandParser("edit 2 meeting with boss by 2015-03-04 1259");
 		assertEquals("edit", cp14.getCommandType());
 		
@@ -163,9 +160,6 @@ public class CommandParserTest {
 		CommandParser cp3 = new CommandParser("archive 2");
 		assertEquals(id, cp3.getId());
 		
-		//edit
-		CommandParser cp4 = new CommandParser("edit 2");
-		assertEquals(id, cp4.getId());
 
 	}
 
@@ -246,11 +240,7 @@ public class CommandParserTest {
 		CommandParser cp1 = new CommandParser("edit 1 startDate 2015-10-23");
 		assertEquals("2015-10-23", cp1.getEditInfo());
 	}
-	@Test
-	public void testGetEditDate(){
-		CommandParser cp1 = new CommandParser("edit 1 start 2015-10-03");
-		assertEquals("2015-10-03", cp1.getEditDate().toLocalDate().toString());
-	}
+
 	
 	@Test
 	public void TestGetDeleteIDs(){
