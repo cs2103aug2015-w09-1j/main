@@ -4,6 +4,22 @@
   <void method="add">
    <object class="model.DeadlineTask">
     <void property="deadlineDate">
+     <string>2015-10-30</string>
+    </void>
+    <void property="deadlineTime">
+     <string>10:02</string>
+    </void>
+    <void property="taskName">
+     <string>dinner</string>
+    </void>
+    <void property="taskType">
+     <string>DeadlineTask</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.DeadlineTask">
+    <void property="deadlineDate">
      <string>2015-10-26</string>
     </void>
     <void property="deadlineTime">
