@@ -3,7 +3,7 @@ import java.util.Comparator;
 
 import model.*;
 
-public class CustomComparator implements Comparator<Task> {
+public class TaskNameComparator implements Comparator<Task> {
 
 	@Override
 	public int compare(Task arg0, Task arg1) {
