@@ -79,9 +79,6 @@ public class CommandParserTest {
 		assertEquals("set", cp12.getCommandType());
 		
 		//edit
-		CommandParser cp13 = new CommandParser("edit 2");
-		assertEquals("edit", cp13.getCommandType());
-		
 		CommandParser cp14 = new CommandParser("edit 2 meeting with boss by 2015-03-04 1259");
 		assertEquals("edit", cp14.getCommandType());
 		
@@ -92,6 +89,14 @@ public class CommandParserTest {
 		//load
 		CommandParser cp16 = new CommandParser("load");
 		assertEquals("load", cp16.getCommandType());
+		
+		//home
+		CommandParser cp17 = new CommandParser("home");
+		assertEquals("home", cp17.getCommandType());
+		
+		//show
+		CommandParser cp18 = new CommandParser("show this week");
+		assertEquals("show", cp18.getCommandType());
 		
 	}
 	
@@ -140,13 +145,6 @@ public class CommandParserTest {
 
 	}
 	
-	@Test
-	public void testGetSearchDate() {
-		CommandParser cp1 = new CommandParser("search on 2015-10-03");
-		assertEquals("2015-10-03", cp1.getSearchDate());
-
-	}
-	
 	
 	@Test
 	public void testGetId() {
@@ -163,9 +161,6 @@ public class CommandParserTest {
 		CommandParser cp3 = new CommandParser("archive 2");
 		assertEquals(id, cp3.getId());
 		
-		//edit
-		CommandParser cp4 = new CommandParser("edit 2");
-		assertEquals(id, cp4.getId());
 
 	}
 
@@ -246,11 +241,7 @@ public class CommandParserTest {
 		CommandParser cp1 = new CommandParser("edit 1 startDate 2015-10-23");
 		assertEquals("2015-10-23", cp1.getEditInfo());
 	}
-	@Test
-	public void testGetEditDate(){
-		CommandParser cp1 = new CommandParser("edit 1 start 2015-10-03");
-		assertEquals("2015-10-03", cp1.getEditDate().toLocalDate().toString());
-	}
+
 	
 	@Test
 	public void TestGetDeleteIDs(){
@@ -259,6 +250,10 @@ public class CommandParserTest {
 		int[] actual = cp1.getDeleteIDs();
 		assertArrayEquals(target, actual);
 		
+		CommandParser cp2 = new CommandParser("delete 10-12");
+		int[] target2 = {10, 11, 12};
+		int[] actual2 = cp2.getDeleteIDs();
+		assertArrayEquals(target2, actual2);
 
 	}
 	@Test
@@ -273,5 +268,51 @@ public class CommandParserTest {
 		assertEquals("2015-10-23", cp1.getEndDateTime().toLocalDate().toString());
 	}
 	
-
+	@Test
+	public void TestSearchOnDate() {
+		CommandParser cp1 = new CommandParser("search on December 29");
+		assertEquals("2015-12-29", cp1.getSearchOnDate());
+		assertEquals(null, cp1.getSearchByDate());
+	}
+	
+	@Test
+	public void TestSearchByDate() {
+		CommandParser cp1 = new CommandParser("search by December 9");
+		assertEquals(null, cp1.getSearchOnDate());
+		assertEquals("2015-12-09", cp1.getSearchByDate());
+	}
+	
+	@Test
+	public void TestGetShowOption() {
+		CommandParser cp1 = new CommandParser("show archived");
+		assertEquals("archived", cp1.getShowOption());
+		
+		CommandParser cp2 = new CommandParser("show floating");
+		assertEquals("floating", cp2.getShowOption());
+	}
+	
+	@Test
+	public void TestGetShowByDate() {
+		CommandParser cp1 = new CommandParser("show by December 12");
+		assertEquals("2015-12-12", cp1.getShowByDate());
+	}
+	
+	@Test
+	public void TestGetShowDate() {
+		CommandParser cp1 = new CommandParser("show December 12");
+		assertEquals("2015-12-12", cp1.getShowDate());
+	}
+	
+	@Test
+	public void TestGetShowStartDate() {
+		CommandParser cp1 = new CommandParser("show from December 12 to December 20");
+		assertEquals("2015-12-12", cp1.getShowStartDate());
+	}
+	
+	@Test
+	public void TestGetShowEndDate() {
+		CommandParser cp1 = new CommandParser("show from December 12 to December 20 ");
+		assertEquals("2015-12-20", cp1.getShowEndDate());
+	}
+	
 }
