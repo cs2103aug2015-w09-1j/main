@@ -31,7 +31,8 @@ public class ToDoList {
 		// Controller.executeCMD("undo");
 		//Controller.executeCMD("add abch");
 		// Controller.executeCMD("save");
-		 Controller.executeCMD("archive 6");
+		 Controller.executeCMD("archive 5");
+		 Controller.executeCMD("archive 1");
 		// Controller.executeCMD("search abc"); //search
 		//Controller.executeCMD("set C:/Users/calvin/Desktop/products/");
 		//Controller.executeCMD("save");

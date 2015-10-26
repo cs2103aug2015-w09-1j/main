@@ -60,19 +60,19 @@ public class LogicTest {
 
 	@Test
 	public void DeleteTaskTest() {
-		Task task;
-		Logic logic = new Logic();
-		ArrayList<Task> taskList = new ArrayList<Task>();
-		Task taskA = new EventTask("Have Meeting With Kiwi 2103", "15-10-2015",
-				"15-10-2015", "1200", "1500");
-		Task taskB = new FloatingTask("Eating Dinner w Kenneth.");
-		Task taskC = new DeadlineTask("Finish 2103 project.", "16-10-2015", "2359");
-		Task taskD = new DeadlineTask("2103 project.", "16-10-2015", "2359");
-		
-		taskList.add(taskA);
-		taskList.add(taskB);
-		taskList.add(taskC);
-		taskList.add(taskD);
+//		Task task;
+//		Logic logic = new Logic();
+//		ArrayList<Task> taskList = new ArrayList<Task>();
+//		Task taskA = new EventTask("Have Meeting With Kiwi 2103", "15-10-2015",
+//				"15-10-2015", "1200", "1500");
+//		Task taskB = new FloatingTask("Eating Dinner w Kenneth.");
+//		Task taskC = new DeadlineTask("Finish 2103 project.", "16-10-2015", "2359");
+//		Task taskD = new DeadlineTask("2103 project.", "16-10-2015", "2359");
+//		
+//		taskList.add(taskA);
+//		taskList.add(taskB);
+//		taskList.add(taskC);
+//		taskList.add(taskD);
 		
 		/* This is a boundary case for delete event task */
 //		task = logic.deleteTask(taskList, 1);
