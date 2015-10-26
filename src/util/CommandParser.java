@@ -334,7 +334,7 @@ public class CommandParser {
 			for(int i=0; i<argsArray.length; i++){
 				argsArray[i] = argsArray[i].trim();
 			}
-			if (argsArray.length == 1) {
+			if (argsArray.length == 1 && !argsArray[0].contains("-")) {
 				setTaskID(Integer.parseInt(args));
 			} else {
 				parseMultipleIDs(argsArray);
@@ -544,9 +544,8 @@ public class CommandParser {
 
 
 	public static void main(String[] args) {
-		CommandParser cp2 = new CommandParser("search by tomorrow");
-		System.out.println(cp2.getSearchOnDate());
-		System.out.println(cp2.getSearchByDate());
+		CommandParser cp2 = new CommandParser("delete 2-5");
+		print(cp2.getDeleteIDs());
 //		String arg = "edit 2 startDate sad";
 //		String[] argsArray = arg.split("from | to ");
 		

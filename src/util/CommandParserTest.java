@@ -242,6 +242,10 @@ public class CommandParserTest {
 		int[] actual = cp1.getDeleteIDs();
 		assertArrayEquals(target, actual);
 		
+		CommandParser cp2 = new CommandParser("delete 10-12");
+		int[] target2 = {10, 11, 12};
+		int[] actual2 = cp2.getDeleteIDs();
+		assertArrayEquals(target2, actual2);
 
 	}
 	@Test
