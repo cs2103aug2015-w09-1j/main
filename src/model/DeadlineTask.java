@@ -11,8 +11,8 @@ public class DeadlineTask extends Task {
 		super();
 	}
 	
-	public DeadlineTask(String task_name, String deadline_date, String deadline_time){
-		super(task_name, "DeadlineTask");
+	public DeadlineTask(String task_name, String deadline_date, String deadline_time, String task_type){
+		super(task_name, task_type);
 		this.deadline_date = deadline_date;
 		this.deadline_time = deadline_time;
 	}

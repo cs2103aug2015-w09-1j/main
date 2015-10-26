@@ -13,24 +13,25 @@ import model.*;
 public class ToDoList {
 
 	public static void main(String[] args) throws IOException {
-		// Controller.executeCMD("search on 2015-10-30");
-		 Controller.executeCMD("add I am at starbucks now doing 2103T from 2015-10-20 1600 to 2015-10-31 1800");
-		 Controller.executeCMD("add lecture from 2015-10-20 1600 to 2015-11-05 1800");
-		 Controller.executeCMD("add floatingtask1");
-		// //event task
-		 Controller.executeCMD("add going shopping by 2015-11-02 2200");
-		Controller.executeCMD("add going home by 2015-11-03 2200");
-		Controller.executeCMD("add going home by 2015-11-01 2200");
-		// // dealine task
-		// Controller.executeCMD("edit 4 "); // floating
-		 //Controller.executeCMD("edit 1 u are a dog from 2015-10-20 1530 to 2015-10-20 1400");
-		 //Controller.executeCMD("add abce");
+		
+//		 Controller.executeCMD("add I am at starbucks now doing 2103T from 2015-10-20 1600 to 2015-10-31 1800");
+//		 Controller.executeCMD("add lecture from 2015-10-20 1600 to 2015-11-05 1800");
+		Controller.executeCMD("add floatingtask1");
+//		// //event task
+//		 Controller.executeCMD("add going shopping by 2015-11-02 2200");
+//		Controller.executeCMD("add going home by 2015-11-03 2200");
+//		Controller.executeCMD("search by 2015-10-30");
+////		Controller.executeCMD("add going home by 2015-11-01 2200");
+//		// // dealine task
+//		// Controller.executeCMD("edit 4 "); // floating
+//		 Controller.executeCMD("edit 1 u are a dog from 2015-10-20 1530 to 2015-10-20 1400");
+//		 Controller.executeCMD("edit 1 startDate tomorrow");
 		// Controller.executeCMD("add abcf");
 		 //Controller.executeCMD("delete 2"); //delete
 		// Controller.executeCMD("undo");
 		//Controller.executeCMD("add abch");
 		// Controller.executeCMD("save");
-		// Controller.executeCMD("load");
+		 Controller.executeCMD("archive 6");
 		// Controller.executeCMD("search abc"); //search
 		//Controller.executeCMD("set C:/Users/calvin/Desktop/products/");
 		//Controller.executeCMD("save");
@@ -99,20 +100,24 @@ public class ToDoList {
 	}
 
 	private static void printout(ArrayList<Task> taskList) {
-		for (int i = 0; i < taskList.size(); i++) {
-			if (taskList.get(i) instanceof EventTask) {
-				EventTask et = (EventTask) taskList.get(i);
-				System.out.println(et.getTaskName() + " from "
-						+ et.getStartTime() + " " + et.getStartDate() + " to "
-						+ et.getEndTime() + " " + et.getEndDate());
-			} else if (taskList.get(i) instanceof DeadlineTask) {
-				DeadlineTask dl = (DeadlineTask) taskList.get(i);
-				System.out.println(dl.getTaskName() + " by "
-						+ dl.getDeadlineTime() + " " + dl.getDeadlineDate());
-			} else if (taskList.get(i) instanceof FloatingTask) {
-				FloatingTask fl = (FloatingTask) taskList.get(i);
-				System.out.println(fl.getTaskName());
+		try{
+			for (int i = 0; i < taskList.size(); i++) {
+				if (taskList.get(i) instanceof EventTask) {
+					EventTask et = (EventTask) taskList.get(i);
+					System.out.println(et.getTaskName() + " from "
+							+ et.getStartTime() + " " + et.getStartDate() + " to "
+							+ et.getEndTime() + " " + et.getEndDate());
+				} else if (taskList.get(i) instanceof DeadlineTask) {
+					DeadlineTask dl = (DeadlineTask) taskList.get(i);
+					System.out.println(dl.getTaskName() + " by "
+							+ dl.getDeadlineTime() + " " + dl.getDeadlineDate());
+				} else if (taskList.get(i) instanceof FloatingTask) {
+					FloatingTask fl = (FloatingTask) taskList.get(i);
+					System.out.println(fl.getTaskName());
+				}
 			}
+		}catch(Exception e){
+			
 		}
 	}
 

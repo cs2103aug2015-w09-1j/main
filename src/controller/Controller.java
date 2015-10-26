@@ -41,8 +41,8 @@ public class Controller {
 		int task_index = parser.getId();
 		int[] _listIndex = parser.getDeleteIDs();
 		String search_word = parser.getSearchWord();
-		String search_date = parser.getSearchDate();
-		
+		String search_byDate = parser.getSearchByDate();
+		String search_onDate = parser.getSearchOnDate();
 		String path = parser.getStoragePath();
 		String editAttr = parser.getEditAttribute();
 		String editInfo = parser.getEditInfo();
@@ -76,18 +76,20 @@ public class Controller {
 
 			} else {
 				logic.executeUpdateTask(displayList, task_name, start_date, start_time, end_date,
-						end_time, task_index);
+						end_time, null, task_index);
 			}
 			displayList = TaskMemory.getInstance().getTaskList();
 			break;
 
 		case "search":
-			//ArrayList<Task> taskList = TaskMemory.getInstance().getTaskList();
+			
 			if(search_word != null){
 			displayList = logic.searchTaskByKeyword(displayList,
 					search_word.trim());
-			}else if(search_date != null){
-				displayList = logic.searchTaskByDate(displayList, search_date.trim());
+			}else if(search_byDate != null){				
+				displayList = logic.searchTaskByDate(displayList, search_byDate.trim());
+			}else if(search_onDate != null){
+				displayList = logic.searchTaskOnDate(displayList, search_onDate.trim());
 			}
 
 			break;
@@ -106,6 +108,20 @@ public class Controller {
 		case "set":
 			Storage.getInstance().setPath(path);
 			Storage.getInstance().setfileName("silentjarvis.fxml");
+			break;
+			
+		case "archive":
+			editAttr = "taskType";
+			editInfo = "Archived";
+			logic.executeUpdateTaskByAttribute(displayList, task_index, editAttr, editInfo);
+			displayList = TaskMemory.getInstance().getTaskList();
+			break;
+			
+		case "complete":
+			editAttr = "taskType";
+			editInfo = "Completed";
+			logic.executeUpdateTaskByAttribute(displayList, task_index, editAttr, editInfo);
+			displayList = TaskMemory.getInstance().getTaskList();
 			break;
 
 		case "load":

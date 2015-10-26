@@ -40,7 +40,7 @@ public class Logic {
 			String start_time, String end_date, String end_time) {
 		Task task;
 		task = buildTask(task_name.trim(), start_date, end_date, start_time,
-				end_time);
+				end_time, null);
 		CreateTask create = new CreateTask(task);
 		create.execute();
 		pushToProcessStack(create);
@@ -79,7 +79,7 @@ public class Logic {
 
 	// Building a task
 	private Task buildTask(String task_name, String start_date,
-			String end_date, String start_time, String end_time) {
+			String end_date, String start_time, String end_time, String task_type) {
 		Task task = null;
 
 		try {
@@ -91,15 +91,15 @@ public class Logic {
 						&& start_time != null && end_time != null) {
 					// event task
 					task = new EventTask(task_name, start_date, end_date,
-							start_time, end_time);
+							start_time, end_time, task_type);
 				} else {
 					if (start_date == null && end_date == null
 							&& start_time == null && end_time == null) {
 						// floating task
-						task = new FloatingTask(task_name);
+						task = new FloatingTask(task_name, task_type);
 					} else {
 						// deadline task
-						task = new DeadlineTask(task_name, end_date, end_time);
+						task = new DeadlineTask(task_name, end_date, end_time, task_type);
 					}
 				}
 
@@ -131,10 +131,10 @@ public class Logic {
 	// excute update task
 	public void executeUpdateTask(ArrayList<Task> currentList,
 			String task_name, String start_date, String start_time,
-			String end_date, String end_time, int task_index) {
+			String end_date, String end_time, String task_type, int task_index) {
 		Task deleteTask = SearchTaskById(currentList, task_index);
 		Task updateTask = buildTask(task_name.trim(), start_date, end_date,
-				start_time, end_time);
+				start_time, end_time, task_type);
 
 		UpdateTask update = new UpdateTask(deleteTask, updateTask);
 		update.execute();
@@ -150,6 +150,7 @@ public class Logic {
 		String end_date = null;
 		String start_time = null;
 		String end_time = null;
+		String task_type = null;
 
 		if (task instanceof EventTask) {
 			task_name = task.getTaskName();
@@ -157,6 +158,8 @@ public class Logic {
 			end_date = ((EventTask) task).getEndDate();
 			start_time = ((EventTask) task).getStartTime();
 			end_time = ((EventTask) task).getEndTime();
+			task_type = task.getTaskType();
+			
 			if (editAttr.equalsIgnoreCase("startDate")) {
 				start_date = editInfo;
 			} else if (editAttr.equalsIgnoreCase("endDate")) {
@@ -167,28 +170,37 @@ public class Logic {
 				end_time = editInfo;
 			} else if (editAttr.equalsIgnoreCase("taskName")) {
 				task_name = editInfo;
+			} else if(editAttr.equalsIgnoreCase("taskType")){
+				task_type = editInfo;
 			}
 		} else if (task instanceof DeadlineTask) {
 			task_name = task.getTaskName();
 			end_date = ((DeadlineTask) task).getDeadlineDate();
 			end_time = ((DeadlineTask) task).getDeadlineTime();
-
+			task_type = task.getTaskType();
+			
 			if (editAttr.equalsIgnoreCase("endDate")) {
 				end_date = editInfo;
 			} else if (editAttr.equalsIgnoreCase("endTime")) {
 				end_time = editInfo;
 			} else if (editAttr.equalsIgnoreCase("taskName")) {
 				task_name = editInfo;
+			} else if(editAttr.equalsIgnoreCase("taskType")){
+				task_type = editInfo;
 			}
 		} else if (task instanceof FloatingTask) {
 			task_name = task.getTaskName();
+			task_type = task.getTaskType();
+			
 			if (editAttr.equalsIgnoreCase("taskName")) {
 				task_name = editInfo;
+			} else if(editAttr.equalsIgnoreCase("taskType")){
+				task_type = editInfo;
 			}
 		}
 
 		executeUpdateTask(currentList, task_name, start_date, start_time,
-				end_date, end_time, task_index);
+				end_date, end_time, task_type, task_index);
 	}
 
 	// get tasks by a number of index, return arraylist<task>
