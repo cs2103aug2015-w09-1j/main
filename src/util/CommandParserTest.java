@@ -90,6 +90,14 @@ public class CommandParserTest {
 		CommandParser cp16 = new CommandParser("load");
 		assertEquals("load", cp16.getCommandType());
 		
+		//home
+		CommandParser cp17 = new CommandParser("home");
+		assertEquals("home", cp17.getCommandType());
+		
+		//show
+		CommandParser cp18 = new CommandParser("show this week");
+		assertEquals("show", cp18.getCommandType());
+		
 	}
 	
 	@Test
@@ -274,5 +282,37 @@ public class CommandParserTest {
 		assertEquals("2015-12-09", cp1.getSearchByDate());
 	}
 	
-
+	@Test
+	public void TestGetShowOption() {
+		CommandParser cp1 = new CommandParser("show archived");
+		assertEquals("archived", cp1.getShowOption());
+		
+		CommandParser cp2 = new CommandParser("show floating");
+		assertEquals("floating", cp2.getShowOption());
+	}
+	
+	@Test
+	public void TestGetShowByDate() {
+		CommandParser cp1 = new CommandParser("show by December 12");
+		assertEquals("2015-12-12", cp1.getShowByDate());
+	}
+	
+	@Test
+	public void TestGetShowDate() {
+		CommandParser cp1 = new CommandParser("show December 12");
+		assertEquals("2015-12-12", cp1.getShowDate());
+	}
+	
+	@Test
+	public void TestGetShowStartDate() {
+		CommandParser cp1 = new CommandParser("show from December 12 to December 20");
+		assertEquals("2015-12-12", cp1.getShowStartDate());
+	}
+	
+	@Test
+	public void TestGetShowEndDate() {
+		CommandParser cp1 = new CommandParser("show from December 12 to December 20 ");
+		assertEquals("2015-12-20", cp1.getShowEndDate());
+	}
+	
 }

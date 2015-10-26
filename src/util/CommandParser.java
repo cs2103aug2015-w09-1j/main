@@ -53,6 +53,27 @@
 //		
 //	12) save
 //		save
+//  
+//	13) return to starting view
+//      home
+	
+//	14) show
+//		a. show all floating tasks
+//			show floating  
+//
+//		b. show a certain date
+//			show <date>
+// 
+//		c. show everything before a date
+//			show by <date>
+//
+//		d. show a period
+//			show from <date> to <date>
+//
+//		e. show archived
+//			show archived
+
+
 
 
 package util;
@@ -97,6 +118,12 @@ public class CommandParser {
 	private String searchOnDate;
 	private String searchByDate;
 	private int[] deleteIDs;
+	
+	private String showOption;
+	private String showByDate;
+	private String showDate;
+	private String showStartDate;
+	private String showEndDate;
 	
 	CommandChecker cc;
 	
@@ -179,7 +206,21 @@ public class CommandParser {
 	public String getSearchByDate() {
 		return this.searchByDate;
 	}
-	
+	public String getShowOption() {
+		return this.showOption;
+	}
+	public String getShowByDate() {
+		return this.showByDate;
+	}
+	public String getShowDate() {
+		return this.showDate;
+	}
+	public String getShowStartDate() {
+		return this.showStartDate;
+	}
+	public String getShowEndDate() {
+		return this.showEndDate;
+	}
 	
 	//private methods
 	private void parse(){
@@ -221,17 +262,52 @@ public class CommandParser {
 			case "load":
 				parseLoadCommand();
 				break;
+			case "show":
+				parseShowCommand();
+				break;
+			case "home":
+				parseHomeCommand();
+				break;
 			default:
 				throw new Error("command not recognised: "+cmdType);
 		}
 	}
 	
-	private void parseSaveCommand(){
+	private void parseSaveCommand() { 
 		
 	}
 	
-	private void parseLoadCommand(){
+	private void parseLoadCommand() {
 		
+	}
+	
+	private void parseHomeCommand() {
+		
+	}
+	
+	private void parseShowCommand(){
+		String args = getArgs();
+		if(args.contains("archived")) {
+			setShowOption("archived");
+		} else if (args.contains("floating")) {
+			setShowOption("floating");
+		} else if (args.contains("by")){
+			String date = args.split(" ", 2)[1];
+			List<Date> dates = new PrettyTimeParser().parse(date);
+			date = dates.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().toLocalDate().toString();
+			setShowByDate(date);
+		} else {
+			List<Date> dates = new PrettyTimeParser().parse(args);
+			if(dates.size() == 1) {
+				String date = dates.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().toLocalDate().toString();
+				setShowDate(date);
+			} else {
+				String startDate = dates.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().toLocalDate().toString();
+				setShowStartDate(startDate);
+				String endDate = dates.get(1).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().toLocalDate().toString();
+				setShowEndDate(endDate);
+			}
+		}
 	}
 	
 	private void parseEditCommand(){
@@ -459,7 +535,7 @@ public class CommandParser {
 	}
 	private void setArgs(){
 		if(!this.command.equals("undo") && !this.command.equals("help")
-				&& !this.command.equals("load") && !this.command.equals("save")){
+				&& !this.command.equals("load") && !this.command.equals("save") && !this.command.equals("home")){
 			String[] inputArr = this.userInput.split(" ", 2);
 			this.args = inputArr[1];
 		}
@@ -521,7 +597,21 @@ public class CommandParser {
 	private void setSearchByDate(String date) {
 		this.searchByDate = date;
 	}
-	
+	private void setShowOption(String option) {
+		this.showOption = option;
+	}
+	private void setShowByDate(String date) {
+		this.showByDate = date;
+	}
+	private void setShowDate(String date) {
+		this.showDate = date;
+	}
+	private void setShowStartDate(String date) {
+		this.showStartDate = date;
+	}
+	private void setShowEndDate(String date) {
+		this.showEndDate = date;
+	}
 	static void print(String[] str){
 		for(int i=0;i<str.length;i++){
 			System.out.println("Index "+i+" : "+ str[i]);
@@ -544,8 +634,9 @@ public class CommandParser {
 
 
 	public static void main(String[] args) {
-		CommandParser cp2 = new CommandParser("delete 2-5");
-		print(cp2.getDeleteIDs());
+		CommandParser cp2 = new CommandParser("home");
+//		print(cp2.getDeleteIDs());
+		System.out.print(cp2.getCommandType());
 //		String arg = "edit 2 startDate sad";
 //		String[] argsArray = arg.split("from | to ");
 		
@@ -566,32 +657,6 @@ public class CommandParser {
 //		System.out.print(cp2.getDeleteIDs().toString());
 		
 
-//		PrettyTime p = new PrettyTime();
-//		System.out.println(p.format(new Date()));
-		//prints: “moments from now”
-
-//		System.out.println(p.format(new Date(System.currentTimeMillis() + 1000*60*10)));
-		//prints: “10 minutes from now”
-		
-//	     List<Date> dates = new PrettyTimeParser().parse("buy october tenth");
-//	     System.out.println(dates);
-	     
-//	     List<Date> dates = new PrettyTimeParser().parse("add finish report by tonight");
-//	     System.out.println(dates.get(0));
-//	     System.out.println(dates.get(0).getDay());
-	     
-//	     List<DateGroup> parse = new PrettyTimeParser().parseSyntax("I eat fish every three days");
-//	     System.out.println(parse.get(0).getDates().get(0));
-
-		
-//		String endStr = "tomorrow night";
-//		Date end = new PrettyTimeParser().parse(endStr).get(0);
-//		LocalDateTime ldt = end.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-//		System.out.println(ldt.getDayOfMonth());
-//		System.out.println(ldt.getDayOfWeek());
-//		System.out.println(ldt.getDayOfYear());
-//		System.out.println(ldt.getYear());
-//		
 	}
 	
 
