@@ -120,9 +120,25 @@ public class Controller {
 			displayList = TaskMemory.getInstance().getTaskList();
 			break;
 			
+		case "unarchived":
+			task_index = parser.getUnarchivedID();
+			editAttr = "taskType";
+			editInfo = null;
+			logic.executeUpdateTaskByAttribute(displayList, task_index, editAttr, editInfo);
+			displayList = TaskMemory.getInstance().getTaskList();
+			break;
+			
 		case "complete":
 			editAttr = "taskType";
 			editInfo = "Completed";
+			logic.executeUpdateTaskByAttribute(displayList, task_index, editAttr, editInfo);
+			displayList = TaskMemory.getInstance().getTaskList();
+			break;
+			
+		case "uncomplete":
+			task_index = parser.getUncompleteID();
+			editAttr = "taskType";
+			editInfo = null;
 			logic.executeUpdateTaskByAttribute(displayList, task_index, editAttr, editInfo);
 			displayList = TaskMemory.getInstance().getTaskList();
 			break;

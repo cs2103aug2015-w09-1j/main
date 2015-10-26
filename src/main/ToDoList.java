@@ -32,9 +32,11 @@ public class ToDoList {
 		//Controller.executeCMD("add abch");
 		 //Controller.executeCMD("archive 1");
 		 Controller.executeCMD("show by 2015-10-31");
-		 //Controller.executeCMD("archive 3");
-		 Controller.executeCMD("show from 2015-10-29 to 2015-10-31");
-		// Controller.executeCMD("archive 5");
+		 Controller.executeCMD("archive 3");
+		 Controller.executeCMD("archive 1");
+		 Controller.executeCMD("show archived");
+		 //Controller.executeCMD("show from 2015-10-29 to 2015-10-31");
+		 Controller.executeCMD("unarchived 2");
 		
 		// Controller.executeCMD("search abc"); //search
 		//Controller.executeCMD("set C:/Users/calvin/Desktop/products/");
