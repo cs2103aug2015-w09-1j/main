@@ -41,6 +41,8 @@ public class Controller {
 		int task_index = parser.getId();
 		int[] _listIndex = parser.getDeleteIDs();
 		String search_word = parser.getSearchWord();
+		String search_date = parser.getSearchDate();
+		
 		String path = parser.getStoragePath();
 		String editAttr = parser.getEditAttribute();
 		String editInfo = parser.getEditInfo();
@@ -81,8 +83,12 @@ public class Controller {
 
 		case "search":
 			//ArrayList<Task> taskList = TaskMemory.getInstance().getTaskList();
+			if(search_word != null){
 			displayList = logic.searchTaskByKeyword(displayList,
 					search_word.trim());
+			}else if(search_date != null){
+				displayList = logic.searchTaskByDate(displayList, search_date.trim());
+			}
 
 			break;
 
@@ -125,6 +131,18 @@ public class Controller {
 
 	public static int getSize() {
 		return displayList.size();
+	}
+	
+	public static ArrayList<Task> getFloatingTaskList(){
+		return TaskMemory.getInstance().getFloatingTask();
+	}
+	
+	public static ArrayList<Task> getFollowingWeekTaskList(){
+		return TaskMemory.getInstance().getFollowingWeekTask();
+	}
+	
+	public static ArrayList<Task> getOtherTaskList(){
+		return TaskMemory.getInstance().getOtherTask();
 	}
 	// public static void inputCommand() throws IOException {
 	// System.out.print("command: ");
