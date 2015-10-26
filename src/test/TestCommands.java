@@ -2,6 +2,7 @@ package test;
 
 import static org.junit.Assert.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import org.junit.Before;
@@ -92,6 +93,12 @@ public class TestCommands {
 		assertEquals(0, test.size());
 		delBTest.undo();
 		assertEquals(2, test.size());
+	}
+	
+	@Test
+	public void compareDate() {
+		assertEquals(true, "2016-1-25".compareTo("2015-12-25") > 0);
+		assertEquals("2015-10-26", LocalDate.now().toString());
 	}
 
 }

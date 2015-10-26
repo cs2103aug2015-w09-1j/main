@@ -58,6 +58,7 @@ public class TaskViewController {
     @FXML
     private void initialize() {
         // Initialize the person table with the two columns.
+    	MainApp.setTaskData(Controller.getTaskList());
         taskNameColumn.setCellValueFactory(cellData -> cellData.getValue().getName());
         taskIdColumn.setCellValueFactory(cellData -> cellData.getValue().getTaskId().asObject());
         startColumn.setCellValueFactory(cellData -> cellData.getValue().getStart());

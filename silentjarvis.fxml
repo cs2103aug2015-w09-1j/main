@@ -75,5 +75,59 @@
     </void>
    </object>
   </void>
+  <void method="add">
+   <object class="model.DeadlineTask">
+    <void property="deadlineDate">
+     <string>2015-11-16</string>
+    </void>
+    <void property="deadlineTime">
+     <string>11:05</string>
+    </void>
+    <void property="taskName">
+     <string>test</string>
+    </void>
+    <void property="taskType">
+     <string>DeadlineTask</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.DeadlineTask">
+    <void property="deadlineDate">
+     <string>2015-11-17</string>
+    </void>
+    <void property="deadlineTime">
+     <string>20:00</string>
+    </void>
+    <void property="taskName">
+     <string>test</string>
+    </void>
+    <void property="taskType">
+     <string>DeadlineTask</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.EventTask">
+    <void property="endDate">
+     <string>2015-10-26</string>
+    </void>
+    <void property="endTime">
+     <string>15:00</string>
+    </void>
+    <void property="startDate">
+     <string>2015-10-26</string>
+    </void>
+    <void property="startTime">
+     <string>14:00</string>
+    </void>
+    <void property="taskName">
+     <string>test</string>
+    </void>
+    <void property="taskType">
+     <string>EventTask</string>
+    </void>
+   </object>
+  </void>
  </object>
 </java>
