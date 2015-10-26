@@ -62,6 +62,7 @@ public class TaskViewController {
         taskIdColumn.setCellValueFactory(cellData -> cellData.getValue().getTaskId().asObject());
         startColumn.setCellValueFactory(cellData -> cellData.getValue().getStart());
         endColumn.setCellValueFactory(cellData -> cellData.getValue().getEnd());
+        text.setText("Welcome to SilentJarvis");
         text.setFill(Color.RED);
     	text.setX(10.0f);
     	text.setY(-15.0f);
@@ -99,13 +100,17 @@ public class TaskViewController {
     	switch(firstWord) {
     	case "add": answer = "New Task added";
     	            break;
-    	case "delete": answer = "Task delete";
+    	case "delete": answer = "Task deleted";
     				break;
     	case "search": answer = "Search for " + input.substring(input.indexOf(" "));
     				break;
     	case "load": answer = "Loaded from the default fxml";
     				break;
     	case "save": answer = "Saved into silentjarvis.fxml";
+    				break;
+    	case "display": answer = "All tasks displayed";
+    				break;
+    	case "edit": answer = "Task edited";
     				break;
     	}
     	return answer;
