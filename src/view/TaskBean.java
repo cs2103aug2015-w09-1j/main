@@ -32,6 +32,7 @@ public class TaskBean {
 		this.setTask(task);
 		this.setName(new SimpleStringProperty(task.getTaskName()));
 		this.setTaskId(new SimpleIntegerProperty(-1));
+		this.setType(new SimpleStringProperty(task.getTaskType()));
 		if (task instanceof FloatingTask) { //floating
 			this.setStart_time(new SimpleStringProperty(""));
 			this.setEnd_time(new SimpleStringProperty(""));

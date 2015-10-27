@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import controller.Controller;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -11,6 +14,7 @@ import javafx.collections.ObservableList;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -19,6 +23,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.util.Callback;
 import model.EventTask;
 import model.FloatingTask;
 import model.Task;
@@ -77,12 +82,54 @@ public class TaskViewController {
     	text.setEffect(r);
     }
     
+    private void updateColumn(TableColumn<TaskBean, String> col) {
+        col.setCellFactory(new Callback<TableColumn<TaskBean, String>, 
+                TableCell<TaskBean, String>>()
+                {
+                    @Override
+                    public TableCell<TaskBean, String> call(
+                            TableColumn<TaskBean, String> param)
+                    {
+                        return new TableCell<TaskBean, String>()
+                        {
+                            @Override
+                            protected void updateItem(String item, boolean empty)
+                            {
+                            	super.updateItem(item, empty);
+                                if (!empty)
+                                {
+                                    int currentIndex = indexProperty().getValue();
+                                    StringProperty type = param
+                                            .getTableView().getItems()
+                                            .get(currentIndex).getType();
+                                    String temp = type.toString();
+                                    String taskType = temp.substring(23, temp.length() - 1); 
+                                    
+                                    if (taskType.equals("Completed") || taskType == "Completed") {
+                                        setTextFill(Color.GREEN);
+                                        setText(item);
+                                    } else if(taskType.equals("Archived") || taskType == "Archived") {
+                                    	setTextFill(Color.RED);
+                                    	setText(item);
+                                    } else {
+                                        setTextFill(Color.BLACK);
+                                        setText(item);
+                                    }
+                                    
+                                }
+                            }
+                        };
+                    }
+                });
+    }
+    
     public void onEnter() throws IOException {
     	String input = textField.getText();
     	String feedback = feedbackMsg(input);
     	Controller.executeCMD(input);
     	MainApp.setTaskData(Controller.getTaskList());
-    	text.setText(feedback);    	
+    	text.setText(feedback);
+    	updateColumn(taskNameColumn);
     	
     	textField.clear();
     }
@@ -97,13 +144,13 @@ public class TaskViewController {
     
     private String feedbackMsg(String input) {
     	String firstWord = getFirstWord(input);
-    	String answer = "";
+    	String answer = "Tasks";
     	switch(firstWord) {
     	case "add": answer = "New Task added";
     	            break;
     	case "delete": answer = "Task deleted";
     				break;
-    	case "search": answer = "Search for " + input.substring(input.indexOf(" "));
+    	case "search": answer = "Search for " + input.substring(input.indexOf(" ")).trim();
     				break;
     	case "load": answer = "Loaded from the default fxml";
     				break;
@@ -113,6 +160,14 @@ public class TaskViewController {
     				break;
     	case "edit": answer = "Task edited";
     				break;
+    	case "complete": answer = "Task completed";
+					break;
+    	case "archive": answer = "Task archived";
+					break;
+    	case "show": answer = "All " + input.substring(input.indexOf(" ")).trim() + " tasks shown";
+					break;
+    	case "unarchive": answer = "Task unarchived";
+					break;
     	}
     	return answer;
     }
