@@ -71,7 +71,8 @@ public class TaskMemory {
 					if (((DeadlineTask) t).getDeadlineDate().compareTo(dateNow) >= 0
 							&& ((DeadlineTask) t).getDeadlineDate().compareTo(
 									followWeekDate) <= 0) {
-						if(t.getTaskType() != "Archived"){
+						if(!t.getTaskType().contains("Archived")){
+							System.out.println("ARRRCHIVED");
 							followingWeekList.add(t);
 						}
 					}
@@ -79,7 +80,8 @@ public class TaskMemory {
 					if (((EventTask) t).getEndDate().compareTo(dateNow) >= 0
 							&& ((EventTask) t).getEndDate().compareTo(
 									followWeekDate) <= 0) {
-						if(t.getTaskType() != "Archived"){
+						if(!t.getTaskType().contains("Archived")){
+							
 							followingWeekList.add(t);
 						}
 					}

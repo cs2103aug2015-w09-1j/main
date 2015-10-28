@@ -162,7 +162,7 @@ public class Controller {
 
 		case "load":
 
-			displayList = Storage.getInstance().load();
+			displayList = TaskMemory.getInstance().getNoArchivedList();
 			TaskMemory.getInstance().setTaskList(displayList);
 			break;
 

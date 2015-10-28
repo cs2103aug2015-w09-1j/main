@@ -2,6 +2,22 @@
 <java version="1.8.0_31" class="java.beans.XMLDecoder">
  <object class="java.util.ArrayList">
   <void method="add">
+   <object class="model.DeadlineTask">
+    <void property="deadlineDate">
+     <string>2015-11-11</string>
+    </void>
+    <void property="deadlineTime">
+     <string>12:38</string>
+    </void>
+    <void property="taskName">
+     <string>2103T HELLO</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
    <object class="model.EventTask">
     <void property="endDate">
      <string>2015-10-30</string>
@@ -27,6 +43,32 @@
    <object class="model.FloatingTask">
     <void property="taskName">
      <string>abc</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.FloatingTask">
+    <void property="taskName">
+     <string>efg</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.DeadlineTask">
+    <void property="deadlineDate">
+     <string>2015-11-10</string>
+    </void>
+    <void property="deadlineTime">
+     <string>12:36</string>
+    </void>
+    <void property="taskName">
+     <string>hijjjj</string>
     </void>
     <void property="taskType">
      <string>null</string>

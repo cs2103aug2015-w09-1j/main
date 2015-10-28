@@ -153,7 +153,7 @@ public class Logic {
 		String start_time = null;
 		String end_time = null;
 		String task_type = null;
-
+		
 		if (task instanceof EventTask) {
 			task_name = task.getTaskName();
 			start_date = ((EventTask) task).getStartDate();
