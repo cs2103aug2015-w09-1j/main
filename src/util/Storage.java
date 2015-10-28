@@ -19,6 +19,7 @@ public class Storage {
 	private String path = "";
 	private String fileName = "SilentJarvis.fxml";
 	private static Storage theOne = null;
+	private String tempStore;
 
 	public Storage() {
 		reset();
@@ -30,15 +31,24 @@ public class Storage {
 		return;
 	}
 
-	public void setPath(String path) {
-
-		this.path = path;
+	public boolean setPath(String path) {
+		tempStore=this.path;
+		this.path = path.trim();
+		if(existFolder()){
+			return true;
+		}
+		this.path=tempStore;
+		return false;
 	}
 
-	public void setfileName(String fileName) {
-		this.fileName = fileName;
-		this.path = path.trim();
-		return;
+	public boolean setfileName(String fileName) {
+		tempStore=this.fileName;
+		this.fileName = fileName.trim().split("\\.")[0].concat(".fxml");
+		if(existFile()){
+			return true;
+		}
+		this.fileName=tempStore;
+		return false;
 	}
 
 	public static Storage getInstance() {
