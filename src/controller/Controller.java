@@ -53,6 +53,9 @@ public class Controller {
 		String showStartDate = parser.getShowStartDate();
 		
 		
+		
+		
+		
 		switch (cmdType.trim()) {
 		case "add":
 			logic.executeCreateTask(task_name, start_date, start_time,
@@ -75,12 +78,13 @@ public class Controller {
 			break;
 
 		case "edit":
+			int[] index = {task_index};
 			if (editAttr != null && editInfo != null) {
-				logic.executeUpdateTaskByAttribute(displayList, task_index, editAttr, editInfo);
+				logic.executeUpdateTaskByAttribute(displayList, index, editAttr, editInfo);
 
 			} else {
 				logic.executeUpdateTask(displayList, task_name, start_date, start_time, end_date,
-						end_time, null, task_index);
+						end_time, "null", task_index);
 			}
 			displayList = TaskMemory.getInstance().getNoArchivedList();
 			break;
@@ -115,32 +119,33 @@ public class Controller {
 			break;
 			
 		case "archive":
+			int[] _archiveIndex = parser.getArchivedIDs();
 			editAttr = "taskType";
 			editInfo = "Archived";
-			logic.executeUpdateTaskByAttribute(displayList, task_index, editAttr, editInfo);
+			logic.executeUpdateTaskByAttribute(displayList, _archiveIndex, editAttr, editInfo);
 			displayList = TaskMemory.getInstance().getNoArchivedList();
 			break;
 			
 		case "unarchived":
-			task_index = parser.getUnarchivedID();
+			int[] _unarchiveIndex = parser.getUnarchivedIDs();
 			editAttr = "taskType";
 			editInfo = "null";
-			logic.executeUpdateTaskByAttribute(displayList, task_index, editAttr, editInfo);
+			logic.executeUpdateTaskByAttribute(displayList, _unarchiveIndex, editAttr, editInfo);
 			displayList = TaskMemory.getInstance().getNoArchivedList();
 			break;
 			
 		case "complete":
 			editAttr = "taskType";
 			editInfo = "Completed";
-			logic.executeUpdateTaskByAttribute(displayList, task_index, editAttr, editInfo);
+			//logic.executeUpdateTaskByAttribute(displayList, task_index, editAttr, editInfo);
 			displayList = TaskMemory.getInstance().getNoArchivedList();
 			break;
 			
 		case "uncomplete":
-			task_index = parser.getUncompleteID();
+			int[] _uncompleteIndex = parser.getUncompleteIDs();
 			editAttr = "taskType";
 			editInfo = "null";
-			logic.executeUpdateTaskByAttribute(displayList, task_index, editAttr, editInfo);
+			logic.executeUpdateTaskByAttribute(displayList, _uncompleteIndex, editAttr, editInfo);
 			displayList = TaskMemory.getInstance().getNoArchivedList();
 			break;
 			

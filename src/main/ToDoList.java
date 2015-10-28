@@ -24,7 +24,8 @@ public class ToDoList {
 		
 //		Controller.executeCMD("edit 1 taskName aaa");
 //		Controller.executeCMD("show archived");
-//		Controller.executeCMD("archive 2");
+		Controller.executeCMD("edit 2 taskName aaa");
+//		Controller.executeCMD("undo");
 //		
 //		 Controller.executeCMD("archive 1");
 //		Controller.executeCMD("complete 1");

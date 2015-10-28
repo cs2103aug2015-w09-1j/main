@@ -2,12 +2,15 @@ package controller;
 
 import java.time.LocalDate;
 import java.util.*;
+
 import util.Storage;
 import command.CreateTask;
 import command.DeleteBulkTask;
 import command.DeleteTask;
 import command.ICommand;
 import command.TaskMemory;
+import command.UpdateBulkCommand;
+import command.UpdateBulkTask;
 import command.UpdateTask;
 import model.*;
 
@@ -68,8 +71,7 @@ public class Logic {
 	}
 
 	// execute deleting tasks with multiple id
-	public void deleteMultipleTask(ArrayList<Task> currentList,
-			int[] _listIndex) {
+	public void deleteMultipleTask(ArrayList<Task> currentList, int[] _listIndex) {
 		ArrayList<Task> deleteBulkArray = new ArrayList<Task>();
 		deleteBulkArray = getTaskByMutlipleId(currentList, _listIndex);
 		DeleteBulkTask deletebulk = new DeleteBulkTask(deleteBulkArray);
@@ -221,71 +223,79 @@ public class Logic {
 
 	// execute update task by certain attribute
 	public void executeUpdateTaskByAttribute(ArrayList<Task> currentList,
-			int task_index, String editAttr, String editInfo) {
+			int[] task_index, String editAttr, String editInfo) {
 		try {
+			ArrayList<Task> oldTask = new ArrayList<Task>();
+			ArrayList<Task> newTask = new ArrayList<Task>();
+				
+			oldTask = getTaskByMutlipleId(currentList, task_index);
 
-			Task task = SearchTaskById(currentList, task_index);
-			String task_name = null;
-			String start_date = null;
-			String end_date = null;
-			String start_time = null;
-			String end_time = null;
-			String task_type = null;
-			boolean check = checkTaskType(task, editInfo);
+			for (Task task : oldTask) {
+				String task_name = null;
+				String start_date = null;
+				String end_date = null;
+				String start_time = null;
+				String end_time = null;
+				String task_type = null;
+				boolean check = checkTaskType(task, editInfo);
 
-			if (task instanceof EventTask) {
-				task_name = task.getTaskName();
-				start_date = ((EventTask) task).getStartDate();
-				end_date = ((EventTask) task).getEndDate();
-				start_time = ((EventTask) task).getStartTime();
-				end_time = ((EventTask) task).getEndTime();
-				task_type = task.getTaskType();
+				if (task instanceof EventTask) {
+					task_name = task.getTaskName();
+					start_date = ((EventTask) task).getStartDate();
+					end_date = ((EventTask) task).getEndDate();
+					start_time = ((EventTask) task).getStartTime();
+					end_time = ((EventTask) task).getEndTime();
+					task_type = task.getTaskType();
 
-				if (editAttr.equalsIgnoreCase("startDate")) {
-					start_date = editInfo;
-				} else if (editAttr.equalsIgnoreCase("endDate")) {
-					end_date = editInfo;
-				} else if (editAttr.equalsIgnoreCase("startTime")) {
-					start_time = editInfo;
-				} else if (editAttr.equalsIgnoreCase("endTime")) {
-					end_time = editInfo;
-				} else if (editAttr.equalsIgnoreCase("taskName")) {
-					task_name = editInfo;
-				} else if (editAttr.equalsIgnoreCase("taskType")
-						&& check == true) {
-					task_type = editInfo;
+					if (editAttr.equalsIgnoreCase("startDate")) {
+						start_date = editInfo;
+					} else if (editAttr.equalsIgnoreCase("endDate")) {
+						end_date = editInfo;
+					} else if (editAttr.equalsIgnoreCase("startTime")) {
+						start_time = editInfo;
+					} else if (editAttr.equalsIgnoreCase("endTime")) {
+						end_time = editInfo;
+					} else if (editAttr.equalsIgnoreCase("taskName")) {
+						task_name = editInfo;
+					} else if (editAttr.equalsIgnoreCase("taskType")
+							&& check == true) {
+						task_type = editInfo;
+					}
+				} else if (task instanceof DeadlineTask) {
+					task_name = task.getTaskName();
+					end_date = ((DeadlineTask) task).getDeadlineDate();
+					end_time = ((DeadlineTask) task).getDeadlineTime();
+					task_type = task.getTaskType();
+
+					if (editAttr.equalsIgnoreCase("endDate")) {
+						end_date = editInfo;
+					} else if (editAttr.equalsIgnoreCase("endTime")) {
+						end_time = editInfo;
+					} else if (editAttr.equalsIgnoreCase("taskName")) {
+						task_name = editInfo;
+					} else if (editAttr.equalsIgnoreCase("taskType")
+							&& check == true) {
+						task_type = editInfo;
+					}
+				} else if (task instanceof FloatingTask) {
+					task_name = task.getTaskName();
+					task_type = task.getTaskType();
+
+					if (editAttr.equalsIgnoreCase("taskName")) {
+						task_name = editInfo;
+					} else if (editAttr.equalsIgnoreCase("taskType")
+							&& check == true) {
+						task_type = editInfo;
+					}
+
 				}
-			} else if (task instanceof DeadlineTask) {
-				task_name = task.getTaskName();
-				end_date = ((DeadlineTask) task).getDeadlineDate();
-				end_time = ((DeadlineTask) task).getDeadlineTime();
-				task_type = task.getTaskType();
-
-				if (editAttr.equalsIgnoreCase("endDate")) {
-					end_date = editInfo;
-				} else if (editAttr.equalsIgnoreCase("endTime")) {
-					end_time = editInfo;
-				} else if (editAttr.equalsIgnoreCase("taskName")) {
-					task_name = editInfo;
-				} else if (editAttr.equalsIgnoreCase("taskType")
-						&& check == true) {
-					task_type = editInfo;
-				}
-			} else if (task instanceof FloatingTask) {
-				task_name = task.getTaskName();
-				task_type = task.getTaskType();
-
-				if (editAttr.equalsIgnoreCase("taskName")) {
-					task_name = editInfo;
-				} else if (editAttr.equalsIgnoreCase("taskType")
-						&& check == true) {
-					task_type = editInfo;
-				}
+				Task t = buildTask(task_name, start_date, end_date, start_time, end_time, task_type);
+				newTask.add(t);
 			}
-
-			executeUpdateTask(currentList, task_name, start_date, start_time,
-					end_date, end_time, task_type, task_index);
-
+			UpdateBulkTask update = new UpdateBulkTask(oldTask, newTask);
+			update.execute();
+			pushToProcessStack(update);
+			
 		} catch (Exception e) {
 
 		}
