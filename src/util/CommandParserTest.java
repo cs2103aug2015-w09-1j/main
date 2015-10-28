@@ -321,15 +321,15 @@ public class CommandParserTest {
 	}
 	@Test
 	public void TestGetUnarchivedID(){
-		int id = 1;
+		int[] id = {1};
 		CommandParser cp1 = new CommandParser("unarchived 1");
-		assertEquals(id, cp1.getUnarchivedID());
+		assertArrayEquals(id, cp1.getUnarchivedIDs());
 	}
 	@Test
 	public void TestGetUncompleteID(){
-		int id = 1;
+		int[] id1 = {1};
 		CommandParser cp1 = new CommandParser("uncomplete 1");
-		assertEquals(id, cp1.getUncompleteID());
+		assertArrayEquals(id1, cp1.getUncompleteIDs());
 	}
 	
 	@Test

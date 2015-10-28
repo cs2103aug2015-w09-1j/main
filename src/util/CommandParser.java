@@ -128,8 +128,8 @@ public class CommandParser {
 	private String showStartDate;
 	private String showEndDate;
 	
-	private int unarchivedID;
-	private int uncompleteID;
+	private int[] unarchivedIDs;
+	private int[] uncompleteIDs;
 	
 	
 	CommandChecker cc;
@@ -228,11 +228,11 @@ public class CommandParser {
 	public String getShowEndDate() {
 		return this.showEndDate;
 	}
-	public int getUncompleteID() {
-		return this.uncompleteID;
+	public int[] getUncompleteIDs() {
+		return this.uncompleteIDs;
 	}
-	public int getUnarchivedID() {
-		return this.unarchivedID;
+	public int[] getUnarchivedIDs() {
+		return this.unarchivedIDs;
 	}
 	public int[] getArchivedIDs() {
 		return this.archivedIDs;
@@ -317,12 +317,22 @@ public class CommandParser {
 	}
 	private void parseUnarchivedCommand() {
 		String args = getArgs();
-		setUnarchivedID(Integer.parseInt(args));
+		String[] argsArray = args.split(",");
+		for(int i=0; i<argsArray.length; i++){
+			argsArray[i] = argsArray[i].trim();
+		}
+		int[] idArr = parseMultipleIDs(argsArray);
+		setUnarchivedIDs(idArr);
 	}
 	
 	private void parseUncompleteCommand() {
 		String args = getArgs();
-		setUncompleteID(Integer.parseInt(args));
+		String[] argsArray = args.split(",");
+		for(int i=0; i<argsArray.length; i++){
+			argsArray[i] = argsArray[i].trim();
+		}
+		int[] idArr = parseMultipleIDs(argsArray);
+		setUncompleteIDs(idArr);
 	}
 	
 	private void parseShowCommand(){
@@ -664,11 +674,11 @@ public class CommandParser {
 	private void setShowEndDate(String date) {
 		this.showEndDate = date;
 	}
-	private void setUncompleteID(int id) {
-		this.uncompleteID = id;
+	private void setUncompleteIDs(int[] IDs) {
+		this.uncompleteIDs = IDs;
 	}
-	private void setUnarchivedID(int id) {
-		this.unarchivedID = id;
+	private void setUnarchivedIDs(int[] IDs) {
+		this.unarchivedIDs = IDs;
 	}
 	private void setArchivedIDs(int[] IDs) {
 		this.archivedIDs = IDs;
@@ -700,7 +710,7 @@ public class CommandParser {
 	public static void main(String[] args) {
 		CommandParser cp2 = new CommandParser("uncomplete 1");
 //		print(cp2.getDeleteIDs());
-		System.out.print(cp2.getUncompleteID());
+//		System.out.print(cp2.getUncompleteID());
 //		String arg = "edit 2 startDate sad";
 //		String[] argsArray = arg.split("from | to ");
 		
