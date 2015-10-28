@@ -15,13 +15,13 @@ public class ToDoList {
 	public static void main(String[] args) throws IOException {
 		
 //		 Controller.executeCMD("add I am at starbucks now doing 2103T from 2015-10-20 1600 to 2015-10-30 1800");
-		 Controller.executeCMD("add lecture from 2015-10-20 1600 to 2015-10-30 1800");
+//		 Controller.executeCMD("add lecture from 2015-10-20 1600 to 2015-10-30 1800");
 //		Controller.executeCMD("add floatingtask1");
 //		// //event task
 //		 Controller.executeCMD("add going shopping by 2015-11-02 2200");
 //		Controller.executeCMD("add going home by 2015-11-03 2200");
 //		Controller.executeCMD("search by 2015-10-30");
-		Controller.executeCMD("add going home by 2015-10-30 2200");
+//		Controller.executeCMD("add going home by 2015-10-30 2200");
 //		// // dealine task
 //		// Controller.executeCMD("edit 4 "); // floating
 //		 Controller.executeCMD("edit 1 u are a dog from 2015-10-20 1530 to 2015-10-20 1400");
@@ -30,13 +30,13 @@ public class ToDoList {
 		 //Controller.executeCMD("delete 2"); //delete
 		// Controller.executeCMD("undo");
 		//Controller.executeCMD("add abch");
-		 //Controller.executeCMD("archive 1");
-		 Controller.executeCMD("show by 2015-10-31");
-		 Controller.executeCMD("archive 3");
 		 Controller.executeCMD("archive 1");
-		 Controller.executeCMD("show archived");
+		 //Controller.executeCMD("show by 2015-10-31");
+		 //Controller.executeCMD("archive 3");
+		 //Controller.executeCMD("archive 1");
+		 //Controller.executeCMD("show archived");
 		 //Controller.executeCMD("show from 2015-10-29 to 2015-10-31");
-		 Controller.executeCMD("unarchived 2");
+		// Controller.executeCMD("unarchived 2");
 		
 		// Controller.executeCMD("search abc"); //search
 		//Controller.executeCMD("set C:/Users/calvin/Desktop/products/");

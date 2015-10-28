@@ -21,8 +21,18 @@ public class TaskMemory {
 	}
 
 	public ArrayList<Task> getTaskList() {
-		Collections.sort(this.taskList, new TaskNameComparator());
-		return this.taskList;
+		ArrayList<Task> allTask = new ArrayList<Task>();
+		try{
+			for(Task t : this.taskList){
+				if(t.getTaskType() != "Archived"){
+					allTask.add(t);
+				}
+			}
+		}catch (Exception e){
+			
+		}
+		Collections.sort(allTask, new TaskNameComparator());
+		return allTask;
 	}
 
 	public ArrayList<Task> getFloatingTask() {

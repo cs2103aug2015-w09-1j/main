@@ -157,9 +157,7 @@ public class Controller {
 				}else if(showOption.equalsIgnoreCase("archived")){
 					displayList = getArchivedList();
 				}
-			}
-			
-			
+			}			
 			break;
 
 		case "load":
@@ -202,12 +200,5 @@ public class Controller {
 	public static ArrayList<Task> getArchivedList(){
 		return TaskMemory.getInstance().getArchivedList();
 	}
-	// public static void inputCommand() throws IOException {
-	// System.out.print("command: ");
-	// String command = scanner.nextLine();
-	// parser.Parser parse = new Parser(command);
-	// String cmdType = parse.getCommandType();
-	// executeCMD(cmdType);
-	// }
 
 }
