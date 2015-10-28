@@ -163,7 +163,7 @@ public class Controller {
 		case "load":
 
 			displayList = TaskMemory.getInstance().getNoArchivedList();
-			TaskMemory.getInstance().setTaskList(displayList);
+			//TaskMemory.getInstance().setTaskList(displayList);
 			break;
 
 		case "save":

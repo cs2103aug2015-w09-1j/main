@@ -20,7 +20,7 @@ public class ToDoList {
 		
 //		Controller.executeCMD("add efg");
 //		Controller.executeCMD("add hijjjj by 2015-11-10");
-		Controller.executeCMD("add 2103T HELLO by 2015-11-11");
+//		Controller.executeCMD("add 2103T HELLO by 2015-11-11");
 		
 //		Controller.executeCMD("edit 1 taskName aaa");
 //		Controller.executeCMD("show archived");
@@ -28,7 +28,7 @@ public class ToDoList {
 //		
 //		 Controller.executeCMD("archive 1");
 //		Controller.executeCMD("complete 1");
-	 Controller.executeCMD("save");
+		//Controller.executeCMD("save");
 		//Controller.executeCMD("set C:/Users/calvin/Desktop/products/");
 		//System.out.println(Controller.getSize());
 		printout(Controller.getNoArchivedList());
