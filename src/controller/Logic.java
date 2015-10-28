@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
+import util.Storage;
 import command.CreateTask;
 import command.DeleteBulkTask;
 import command.DeleteTask;
@@ -33,6 +34,11 @@ public class Logic {
 		} else {
 			processStack.pop().undo();
 		}
+	}
+	// execute save
+	public void save() {
+		Storage.getInstance().setfileName("silentjarvis.fxml");
+		Storage.getInstance().save(TaskMemory.getInstance().getTaskList());
 	}
 
 	// execute create task
@@ -146,6 +152,8 @@ public class Logic {
 	// execute update task by certain attribute
 	public void executeUpdateTaskByAttribute(ArrayList<Task> currentList,
 			int task_index, String editAttr, String editInfo) {
+		try{
+			
 		Task task = SearchTaskById(currentList, task_index);
 		String task_name = null;
 		String start_date = null;
@@ -153,6 +161,8 @@ public class Logic {
 		String start_time = null;
 		String end_time = null;
 		String task_type = null;
+		boolean check = checkTaskType(task, editInfo);
+		
 		
 		if (task instanceof EventTask) {
 			task_name = task.getTaskName();
@@ -172,7 +182,7 @@ public class Logic {
 				end_time = editInfo;
 			} else if (editAttr.equalsIgnoreCase("taskName")) {
 				task_name = editInfo;
-			} else if (editAttr.equalsIgnoreCase("taskType")) {
+			} else if (editAttr.equalsIgnoreCase("taskType") && check== true) {
 				task_type = editInfo;
 			}
 		} else if (task instanceof DeadlineTask) {
@@ -182,27 +192,40 @@ public class Logic {
 			task_type = task.getTaskType();
 
 			if (editAttr.equalsIgnoreCase("endDate")) {
-				end_date = editInfo;
-			} else if (editAttr.equalsIgnoreCase("endTime")) {
-				end_time = editInfo;
-			} else if (editAttr.equalsIgnoreCase("taskName")) {
-				task_name = editInfo;
-			} else if (editAttr.equalsIgnoreCase("taskType")) {
-				task_type = editInfo;
-			}
-		} else if (task instanceof FloatingTask) {
-			task_name = task.getTaskName();
-			task_type = task.getTaskType();
+					end_date = editInfo;
+				} else if (editAttr.equalsIgnoreCase("endTime")) {
+					end_time = editInfo;
+				} else if (editAttr.equalsIgnoreCase("taskName")) {
+					task_name = editInfo;
+				} else if (editAttr.equalsIgnoreCase("taskType") && check== true) {
+					task_type = editInfo;
+				}
+			} else if (task instanceof FloatingTask) {
+				task_name = task.getTaskName();
+				task_type = task.getTaskType();
 
-			if (editAttr.equalsIgnoreCase("taskName")) {
-				task_name = editInfo;
-			} else if (editAttr.equalsIgnoreCase("taskType")) {
-				task_type = editInfo;
+				if (editAttr.equalsIgnoreCase("taskName")) {
+					task_name = editInfo;
+				} else if (editAttr.equalsIgnoreCase("taskType") && check== true) {
+					task_type = editInfo;
+				}
 			}
+
+			executeUpdateTask(currentList, task_name, start_date, start_time,
+					end_date, end_time, task_type, task_index);
+
+		}catch (Exception e){
+			
 		}
-
-		executeUpdateTask(currentList, task_name, start_date, start_time,
-				end_date, end_time, task_type, task_index);
+	}
+	
+	private boolean checkTaskType(Task task, String input){
+		if(task.getTaskType().contains("Completed") && !input.equals("null")){
+			return false;
+		} else if(task.getTaskType().contains("Archived") && !input.equals("null")){
+			return false;
+		}
+		return true;
 	}
 
 	// get tasks by a number of index, return arraylist<task>

@@ -3,6 +3,7 @@ package controller;
 import java.util.*;
 import java.io.IOException;
 
+import javafx.application.Platform;
 import util.CommandParser;
 import util.Storage;
 import command.*;
@@ -165,17 +166,23 @@ public class Controller {
 			displayList = TaskMemory.getInstance().getNoArchivedList();
 			//TaskMemory.getInstance().setTaskList(displayList);
 			break;
-
+		case "help":
+			
+			break;
 		case "save":
-			Storage.getInstance().setfileName("silentjarvis.fxml");
-			Storage.getInstance().save(TaskMemory.getInstance().getTaskList());
+			logic.save();
 			break;
 
 		case "exit":
+			logic.save();
+			//close program
+			//Platform.exit(0);
 			break;
 
 		}
 	}
+
+	
 
 	public static ArrayList<Task> getTaskList() {
 		
