@@ -135,9 +135,10 @@ public class Controller {
 			break;
 			
 		case "complete":
+			int[] _completeIndex = parser.getCompleteIDs();
 			editAttr = "taskType";
 			editInfo = "Completed";
-			//logic.executeUpdateTaskByAttribute(displayList, task_index, editAttr, editInfo);
+			logic.executeUpdateTaskByAttribute(displayList, _completeIndex, editAttr, editInfo);
 			displayList = TaskMemory.getInstance().getNoArchivedList();
 			break;
 			
@@ -168,7 +169,7 @@ public class Controller {
 
 		case "load":
 			displayList = TaskMemory.getInstance().getNoArchivedList();
-			//TaskMemory.getInstance().setTaskList(displayList);
+			
 			break;
 		case "help":
 			

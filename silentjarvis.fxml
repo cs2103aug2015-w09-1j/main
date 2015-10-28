@@ -13,7 +13,7 @@
      <string>2103T HELLO</string>
     </void>
     <void property="taskType">
-     <string>null</string>
+     <string>Archived</string>
     </void>
    </object>
   </void>
@@ -35,7 +35,7 @@
      <string>I am at starbucks now doing 2103T</string>
     </void>
     <void property="taskType">
-     <string>null</string>
+     <string>Archived</string>
     </void>
    </object>
   </void>
@@ -45,7 +45,7 @@
      <string>abc</string>
     </void>
     <void property="taskType">
-     <string>null</string>
+     <string>Archived</string>
     </void>
    </object>
   </void>
@@ -61,7 +61,7 @@
      <string>calvinsim</string>
     </void>
     <void property="taskType">
-     <string>null</string>
+     <string>Completed</string>
     </void>
    </object>
   </void>
