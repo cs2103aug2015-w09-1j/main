@@ -130,7 +130,7 @@ public class CommandParser {
 	
 	private int[] unarchivedIDs;
 	private int[] uncompleteIDs;
-	
+	private int[] completeIDs;
 	
 	CommandChecker cc;
 	
@@ -236,6 +236,9 @@ public class CommandParser {
 	}
 	public int[] getArchivedIDs() {
 		return this.archivedIDs;
+	}
+	public int[] getCompleteIDs() {
+		return this.completeIDs;
 	}
 	public String getStorageFileName() {
 		return this.storageFileName;
@@ -417,7 +420,12 @@ public class CommandParser {
 	}
 	private void parseCompleteCommand() {
 		String args = getArgs();
-		setTaskID(Integer.parseInt(args));
+		String[] argsArray = args.split(",");
+		for(int i=0; i<argsArray.length; i++){
+			argsArray[i] = argsArray[i].trim();
+		}
+		int[] idArr = parseMultipleIDs(argsArray);
+		setCompleteIDs(idArr);
 		
 	}
 	private void parseHelpCommand(){
@@ -685,6 +693,9 @@ public class CommandParser {
 	}
 	private void setStorageFileName(String filename) {
 		this.storageFileName = filename;
+	}
+	private void setCompleteIDs(int[] IDs) {
+		this.completeIDs = IDs;
 	}
 	static void print(String[] str){
 		for(int i=0;i<str.length;i++){

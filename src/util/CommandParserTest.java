@@ -163,10 +163,6 @@ public class CommandParserTest {
 		CommandParser cp1 = new CommandParser("delete 2");
 		assertEquals(id, cp1.getId());
 		
-		//complete
-		CommandParser cp2 = new CommandParser("complete 2");
-		assertEquals(id, cp2.getId());
-
 	}
 
 	@Test
@@ -345,6 +341,21 @@ public class CommandParserTest {
 		int[] id3 = {1,2,3,5,6};
 		CommandParser cp3 = new CommandParser("archive 1-3, 5-6");
 		assertArrayEquals(id3, cp3.getArchivedIDs());
+	}
+	
+	@Test
+	public void TestGetCompleteIDs() {
+		int[] id1 = {1};
+		CommandParser cp1 = new CommandParser("complete 1");
+		assertArrayEquals(id1, cp1.getCompleteIDs());
+		
+		int[] id2 = {1,2,3};
+		CommandParser cp2 = new CommandParser("complete 1-3");
+		assertArrayEquals(id2, cp2.getCompleteIDs());
+		
+		int[] id3 = {1,2,3,5,6};
+		CommandParser cp3 = new CommandParser("complete 1-3, 5-6");
+		assertArrayEquals(id3, cp3.getCompleteIDs());
 	}
 	
 	
