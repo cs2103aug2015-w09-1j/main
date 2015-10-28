@@ -62,10 +62,10 @@ public class Controller {
 		case "delete":
 
 			if (keyword != null) {
-				logic.executeDeleteBulkTask(displayList);
+				logic.deleteAllTask(displayList);
 			} else {
 				if (_listIndex != null) {
-					logic.executeDeleteBulkTasksById(displayList, _listIndex);
+					logic.deleteMultipleTask(displayList, _listIndex);
 				} else {
 					logic.executeDeleteTask(displayList, task_index);
 				}
@@ -162,7 +162,6 @@ public class Controller {
 			break;
 
 		case "load":
-
 			displayList = TaskMemory.getInstance().getNoArchivedList();
 			//TaskMemory.getInstance().setTaskList(displayList);
 			break;
@@ -176,7 +175,7 @@ public class Controller {
 		case "exit":
 			logic.save();
 			//close program
-			//Platform.exit(0);
+			Platform.exit();
 			break;
 
 		}

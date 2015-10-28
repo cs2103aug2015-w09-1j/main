@@ -3,7 +3,6 @@ package command;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import util.Storage;
 import model.DeadlineTask;
@@ -11,6 +10,16 @@ import model.EventTask;
 import model.FloatingTask;
 import model.Task;
 
+/**
+ * This is a Task Memory Class. The controller and logic can interact with this
+ * class. The purpose of this class is to call Storage load api. In this class,
+ * its manipulate the loaded data to different array list.
+ * 
+ * There are 10 public API can be used.
+ * 
+ * @author calvin sim
+ *
+ */
 public class TaskMemory {
 	private static TaskMemory _instance;
 	private ArrayList<Task> taskList;
@@ -18,6 +27,14 @@ public class TaskMemory {
 	public TaskMemory() {
 		Storage.getInstance().setfileName("silentjarvis.fxml");
 		this.taskList = Storage.getInstance().load();
+	}
+
+	// Singleton
+	public static TaskMemory getInstance() {
+		if (_instance == null) {
+			_instance = new TaskMemory();
+		}
+		return _instance;
 	}
 
 	public ArrayList<Task> getNoArchivedList() {
@@ -145,17 +162,6 @@ public class TaskMemory {
 
 	public void setTaskList(ArrayList<Task> taskList) {
 		this.taskList = taskList;
-	}
-
-	public void sort(ArrayList<Task> taskList) {
-
-	}
-
-	public static TaskMemory getInstance() {
-		if (_instance == null) {
-			_instance = new TaskMemory();
-		}
-		return _instance;
 	}
 
 	public void Add(Task task) {
