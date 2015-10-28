@@ -43,7 +43,8 @@
 //		archive <id>
 //	
 //	9) set storage path
-//		set <storage path>
+//		set path <storage path>
+//		set name <file name>
 //	
 //	10) help
 //		help
@@ -112,12 +113,14 @@ public class CommandParser {
 	private String displayMode;
 	private String deleteMode;
 	private String storagePath;
+	private String storageFileName;
 	private String editAttribute;
 	private String editInfo;
 	private LocalDateTime editDate;
 	private String searchOnDate;
 	private String searchByDate;
 	private int[] deleteIDs;
+	private int[] archivedIDs;
 	
 	private String showOption;
 	private String showByDate;
@@ -127,6 +130,7 @@ public class CommandParser {
 	
 	private int unarchivedID;
 	private int uncompleteID;
+	
 	
 	CommandChecker cc;
 	
@@ -230,6 +234,12 @@ public class CommandParser {
 	public int getUnarchivedID() {
 		return this.unarchivedID;
 	}
+	public int[] getArchivedIDs() {
+		return this.archivedIDs;
+	}
+	public String getStorageFileName() {
+		return this.storageFileName;
+	}
 	//private methods
 	private void parse(){
 		String cmdType = getCommandType();
@@ -256,7 +266,7 @@ public class CommandParser {
 				parseCompleteCommand();
 				break;
 			case "archive":
-				parserArchiveCommand();
+				parseArchiveCommand();
 				break;
 			case "set":
 				parseSetCommand();
@@ -282,6 +292,9 @@ public class CommandParser {
 			case "uncomplete":
 				parseUncompleteCommand();
 				break;
+			case "exit":
+				parseExitCommand();
+				break;
 			default:
 				throw new Error("command not recognised: "+cmdType);
 		}
@@ -296,6 +309,10 @@ public class CommandParser {
 	}
 	
 	private void parseHomeCommand() {
+		
+	}
+	
+	private void parseExitCommand() {
 		
 	}
 	private void parseUnarchivedCommand() {
@@ -369,13 +386,23 @@ public class CommandParser {
 	}
 	
 	private void parseSetCommand(){
-		String args = getArgs();
-		setStoragePath(args);
+		String[] args = getArgs().split(" ", 2);
+		String type = args[0];
+		if(type.equals("filename")) {
+			setStorageFileName(args[1]);
+		} else if(type.equals("path")) {
+			setStoragePath(args[1]);
+		}
 	}
 	
-	private void parserArchiveCommand() {
+	private void parseArchiveCommand() {
 		String args = getArgs();
-		setTaskID(Integer.parseInt(args));
+		String[] argsArray = args.split(",");
+		for(int i=0; i<argsArray.length; i++){
+			argsArray[i] = argsArray[i].trim();
+		}
+		int[] idArr = parseMultipleIDs(argsArray);
+		setArchivedIDs(idArr);
 		
 	}
 	private void parseCompleteCommand() {
@@ -436,12 +463,13 @@ public class CommandParser {
 			if (argsArray.length == 1 && !argsArray[0].contains("-")) {
 				setTaskID(Integer.parseInt(args));
 			} else {
-				parseMultipleIDs(argsArray);
+				int[] idArr = parseMultipleIDs(argsArray);
+				setDeleteIDs(idArr);
 			}
 		}
 	}
 	
-	private void parseMultipleIDs(String[] argsArray){
+	private int[] parseMultipleIDs(String[] argsArray){
 		LinkedList<Integer> l = new LinkedList<Integer>();
 		int[] idArr;
 		for(int i=0; i<argsArray.length;i++){
@@ -469,7 +497,7 @@ public class CommandParser {
 		for(int k=0; k<l.size(); k++){
 			idArr[k] = l.get(k);
 		}
-		setDeleteIDs(idArr);
+		return idArr;
 	}
 	
 	private void parseDisplayCommand(){
@@ -558,7 +586,8 @@ public class CommandParser {
 	}
 	private void setArgs(){
 		if(!this.command.equals("undo") && !this.command.equals("help")
-				&& !this.command.equals("load") && !this.command.equals("save") && !this.command.equals("home")){
+				&& !this.command.equals("load") && !this.command.equals("save") && !this.command.equals("home")
+				&& !this.command.equals("exit")){
 			String[] inputArr = this.userInput.split(" ", 2);
 			this.args = inputArr[1];
 		}
@@ -640,6 +669,12 @@ public class CommandParser {
 	}
 	private void setUnarchivedID(int id) {
 		this.unarchivedID = id;
+	}
+	private void setArchivedIDs(int[] IDs) {
+		this.archivedIDs = IDs;
+	}
+	private void setStorageFileName(String filename) {
+		this.storageFileName = filename;
 	}
 	static void print(String[] str){
 		for(int i=0;i<str.length;i++){
