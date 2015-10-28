@@ -15,7 +15,7 @@ import model.Task;
  * class. The purpose of this class is to call Storage load api. In this class,
  * its manipulate the loaded data to different array list.
  * 
- * There are 10 public API can be used.
+ * There are 11 public API can be used.
  * 
  * @author calvin sim
  *
@@ -53,6 +53,30 @@ public class TaskMemory {
 			return null;
 		}
 
+	}
+	
+	public ArrayList<Task> getTodayTaskList(){
+		ArrayList<Task> todayList = new ArrayList<Task>();
+		try{
+			
+			String dateNow = LocalDate.now().toString();
+			for(Task t: this.taskList){
+				if(t instanceof DeadlineTask){
+					if(((DeadlineTask) t).getDeadlineDate().compareTo(dateNow) == 0 && !t.getTaskType().contains("Archived")){
+						todayList.add(t);
+					}
+				}else if(t instanceof EventTask){
+					if(((EventTask) t).getEndDate().compareTo(dateNow)== 0 && !t.getTaskType().contains("Archived")){
+						todayList.add(t);
+					}
+				}
+			}
+			
+			Collections.sort(todayList, new TimeComparator());
+			return todayList;
+		}catch(Exception ex){
+			return null;
+		}
 	}
 
 	public ArrayList<Task> getTaskList() {

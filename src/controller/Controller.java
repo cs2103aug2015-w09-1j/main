@@ -217,5 +217,9 @@ public class Controller {
 	public static ArrayList<Task> getNoArchivedList(){
 		return TaskMemory.getInstance().getNoArchivedList();
 	}
+	
+	public static ArrayList<Task> getTodayTaskList(){
+		return TaskMemory.getInstance().getTodayTaskList();
+	}
 
 }

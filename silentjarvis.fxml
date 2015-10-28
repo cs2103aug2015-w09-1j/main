@@ -13,7 +13,7 @@
      <string>2103T HELLO</string>
     </void>
     <void property="taskType">
-     <string>Archived</string>
+     <string>null</string>
     </void>
    </object>
   </void>
@@ -35,7 +35,7 @@
      <string>I am at starbucks now doing 2103T</string>
     </void>
     <void property="taskType">
-     <string>Archived</string>
+     <string>null</string>
     </void>
    </object>
   </void>
@@ -45,7 +45,7 @@
      <string>abc</string>
     </void>
     <void property="taskType">
-     <string>Archived</string>
+     <string>null</string>
     </void>
    </object>
   </void>
@@ -61,7 +61,7 @@
      <string>calvinsim</string>
     </void>
     <void property="taskType">
-     <string>Completed</string>
+     <string>Archived</string>
     </void>
    </object>
   </void>
@@ -71,7 +71,7 @@
      <string>efg</string>
     </void>
     <void property="taskType">
-     <string>null</string>
+     <string>Archived</string>
     </void>
    </object>
   </void>
@@ -87,7 +87,7 @@
      <string>hijjjj</string>
     </void>
     <void property="taskType">
-     <string>null</string>
+     <string>Archived</string>
     </void>
    </object>
   </void>
@@ -110,6 +110,54 @@
     </void>
     <void property="taskType">
      <string>Archived</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.DeadlineTask">
+    <void property="deadlineDate">
+     <string>2015-10-28</string>
+    </void>
+    <void property="deadlineTime">
+     <string>17:14</string>
+    </void>
+    <void property="taskName">
+     <string>testing</string>
+    </void>
+    <void property="taskType">
+     <string>Archived</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.DeadlineTask">
+    <void property="deadlineDate">
+     <string>2015-10-28</string>
+    </void>
+    <void property="deadlineTime">
+     <string>17:16</string>
+    </void>
+    <void property="taskName">
+     <string>testing high hello</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.DeadlineTask">
+    <void property="deadlineDate">
+     <string>2015-10-28</string>
+    </void>
+    <void property="deadlineTime">
+     <string>17:15</string>
+    </void>
+    <void property="taskName">
+     <string>testingabc</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
     </void>
    </object>
   </void>
