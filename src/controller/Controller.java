@@ -17,7 +17,7 @@ public class Controller {
 	private static Controller _instance;
 	private static Logic logic = new Logic();
 	private static ArrayList<Task> displayList = TaskMemory.getInstance()
-			.getTaskList();
+			.getNoArchivedList();
 	private static CommandParser parser = null;
 
 	public static Controller getInstance() {
@@ -56,7 +56,7 @@ public class Controller {
 		case "add":
 			logic.executeCreateTask(task_name, start_date, start_time,
 					end_date, end_time);
-			displayList = TaskMemory.getInstance().getTaskList();
+			displayList = TaskMemory.getInstance().getNoArchivedList();
 			break;
 		case "delete":
 
@@ -70,7 +70,7 @@ public class Controller {
 				}
 			}
 
-			displayList = TaskMemory.getInstance().getTaskList();
+			displayList = TaskMemory.getInstance().getNoArchivedList();
 			break;
 
 		case "edit":
@@ -81,7 +81,7 @@ public class Controller {
 				logic.executeUpdateTask(displayList, task_name, start_date, start_time, end_date,
 						end_time, null, task_index);
 			}
-			displayList = TaskMemory.getInstance().getTaskList();
+			displayList = TaskMemory.getInstance().getNoArchivedList();
 			break;
 
 		case "search":
@@ -98,14 +98,14 @@ public class Controller {
 			break;
 
 		case "display":
-			ArrayList<Task> list = TaskMemory.getInstance().getTaskList();
+			ArrayList<Task> list = TaskMemory.getInstance().getNoArchivedList();
 			displayList = list;
 
 			break;
 
 		case "undo":
 			logic.undo();
-			displayList = TaskMemory.getInstance().getTaskList();
+			displayList = TaskMemory.getInstance().getNoArchivedList();
 			break;
 
 		case "set":
@@ -117,30 +117,30 @@ public class Controller {
 			editAttr = "taskType";
 			editInfo = "Archived";
 			logic.executeUpdateTaskByAttribute(displayList, task_index, editAttr, editInfo);
-			displayList = TaskMemory.getInstance().getTaskList();
+			displayList = TaskMemory.getInstance().getNoArchivedList();
 			break;
 			
 		case "unarchived":
 			task_index = parser.getUnarchivedID();
 			editAttr = "taskType";
-			editInfo = null;
+			editInfo = "null";
 			logic.executeUpdateTaskByAttribute(displayList, task_index, editAttr, editInfo);
-			displayList = TaskMemory.getInstance().getTaskList();
+			displayList = TaskMemory.getInstance().getNoArchivedList();
 			break;
 			
 		case "complete":
 			editAttr = "taskType";
 			editInfo = "Completed";
 			logic.executeUpdateTaskByAttribute(displayList, task_index, editAttr, editInfo);
-			displayList = TaskMemory.getInstance().getTaskList();
+			displayList = TaskMemory.getInstance().getNoArchivedList();
 			break;
 			
 		case "uncomplete":
 			task_index = parser.getUncompleteID();
 			editAttr = "taskType";
-			editInfo = null;
+			editInfo = "null";
 			logic.executeUpdateTaskByAttribute(displayList, task_index, editAttr, editInfo);
-			displayList = TaskMemory.getInstance().getTaskList();
+			displayList = TaskMemory.getInstance().getNoArchivedList();
 			break;
 			
 		case "show":
@@ -153,7 +153,7 @@ public class Controller {
 				displayList = logic.searchTaskBetweenDate(displayList, showStartDate, showEndDate);
 			}else if(showOption != null){
 				if(showOption.equalsIgnoreCase("floating")){
-					displayList = getFloatingTaskList();
+					displayList = TaskMemory.getInstance().getFloatingTask();
 				}else if(showOption.equalsIgnoreCase("archived")){
 					displayList = getArchivedList();
 				}
@@ -168,7 +168,7 @@ public class Controller {
 
 		case "save":
 			Storage.getInstance().setfileName("silentjarvis.fxml");
-			Storage.getInstance().save(displayList);
+			Storage.getInstance().save(TaskMemory.getInstance().getTaskList());
 			break;
 
 		case "exit":
@@ -178,6 +178,7 @@ public class Controller {
 	}
 
 	public static ArrayList<Task> getTaskList() {
+		
 		return displayList;
 	}
 
@@ -199,6 +200,10 @@ public class Controller {
 	
 	public static ArrayList<Task> getArchivedList(){
 		return TaskMemory.getInstance().getArchivedList();
+	}
+	
+	public static ArrayList<Task> getNoArchivedList(){
+		return TaskMemory.getInstance().getNoArchivedList();
 	}
 
 }

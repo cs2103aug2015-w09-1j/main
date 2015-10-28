@@ -40,7 +40,7 @@ public class Logic {
 			String start_time, String end_date, String end_time) {
 		Task task;
 		task = buildTask(task_name.trim(), start_date, end_date, start_time,
-				end_time, null);
+				end_time, "null");
 		CreateTask create = new CreateTask(task);
 		create.execute();
 		pushToProcessStack(create);
@@ -311,11 +311,18 @@ public class Logic {
 		ArrayList<Task> taskOfSearchedList = new ArrayList<Task>();
 		try {
 			ArrayList<Task> taskList = currentList;
-			for (Task t : taskList) {
-				if (t.getTaskName() != null
-						&& t.getTaskName().toString().contains(keyword)
-						&& t.getTaskType() != "Archived") {
-					taskOfSearchedList.add(t);
+
+			// Tokenize the String with a regular expression in Split.
+			String[] tokens = keyword.split("[,\\ ]");
+			for (String token : tokens) {
+				for (Task t : taskList) {
+					if(!taskOfSearchedList.contains(t)){
+						if (t.getTaskName() != null
+								&& t.getTaskName().toString().contains(token)
+								&& t.getTaskType() != "Archived") {
+							taskOfSearchedList.add(t);
+						}
+					}
 				}
 			}
 

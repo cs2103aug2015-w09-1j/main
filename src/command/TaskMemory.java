@@ -19,20 +19,27 @@ public class TaskMemory {
 		Storage.getInstance().setfileName("silentjarvis.fxml");
 		this.taskList = Storage.getInstance().load();
 	}
-
-	public ArrayList<Task> getTaskList() {
-		ArrayList<Task> allTask = new ArrayList<Task>();
+	public ArrayList<Task> getNoArchivedList(){
+		ArrayList<Task> noArchivedList = new ArrayList<Task>();
 		try{
+			String a = "Archived";
 			for(Task t : this.taskList){
-				if(t.getTaskType() != "Archived"){
-					allTask.add(t);
+				if(!t.getTaskType().contains(a)){
+					
+					noArchivedList.add(t);
 				}
 			}
+			Collections.sort(noArchivedList, new TaskNameComparator());
+			return noArchivedList;
 		}catch (Exception e){
-			
+			return null;
 		}
-		Collections.sort(allTask, new TaskNameComparator());
-		return allTask;
+	
+	}
+
+	public ArrayList<Task> getTaskList() {
+		Collections.sort(this.taskList, new TaskNameComparator());
+		return this.taskList;		
 	}
 
 	public ArrayList<Task> getFloatingTask() {
@@ -121,7 +128,8 @@ public class TaskMemory {
 		ArrayList<Task> archivedList = new ArrayList<Task>();
 		try{
 			for (Task t : this.taskList) {
-				if(t.getTaskType() == "Archived"){
+				if(t.getTaskType().contains("Archived")){
+					
 					archivedList.add(t);
 				}
 			}
