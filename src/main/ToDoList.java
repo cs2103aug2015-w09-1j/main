@@ -34,8 +34,6 @@ public class ToDoList {
 		//Controller.executeCMD("save");
 		//Controller.executeCMD("set C:/Users/calvin/Desktop/products/");
 		//System.out.println(Controller.getSize());
-		printout(Controller.getNoArchivedList());
-		 System.out.println("---------------------------------------");
 		printout(Controller.getTaskList());
 		 System.out.println("---------------------------------------");
 		printout(Controller.getFloatingTaskList());

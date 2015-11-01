@@ -2,6 +2,7 @@ package controller;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.regex.Pattern;
 
 import util.Storage;
 import command.CreateTask;
@@ -46,7 +47,7 @@ public class Logic {
 
 	// execute save
 	public void save() {
-		Storage.getInstance().setfileName("silentjarvis.fxml");
+		//Storage.getInstance().setfileName("silentjarvis.fxml");
 		Storage.getInstance().save(TaskMemory.getInstance().getTaskList());
 	}
 
@@ -188,12 +189,12 @@ public class Logic {
 			ArrayList<Task> taskList = currentList;
 
 			// Tokenize the String with a regular expression in Split.
-			String[] tokens = keyword.split("[,\\ ]");
+			String[] tokens = keyword.split("[\\ ]");
 			for (String token : tokens) {
 				for (Task t : taskList) {
 					if (!taskOfSearchedList.contains(t)) {
 						if (t.getTaskName() != null
-								&& t.getTaskName().toString().contains(token)
+								&& Pattern.compile(Pattern.quote(token), Pattern.CASE_INSENSITIVE).matcher(t.getTaskName()).find()
 								&& t.getTaskType() != "Archived") {
 							taskOfSearchedList.add(t);
 						}

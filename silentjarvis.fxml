@@ -2,6 +2,16 @@
 <java version="1.8.0_31" class="java.beans.XMLDecoder">
  <object class="java.util.ArrayList">
   <void method="add">
+   <object class="model.FloatingTask">
+    <void property="taskName">
+     <string>123444</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
    <object class="model.DeadlineTask">
     <void property="deadlineDate">
      <string>2015-11-11</string>
@@ -61,7 +71,7 @@
      <string>calvinsim</string>
     </void>
     <void property="taskType">
-     <string>Archived</string>
+     <string>null</string>
     </void>
    </object>
   </void>
@@ -71,7 +81,17 @@
      <string>efg</string>
     </void>
     <void property="taskType">
-     <string>Archived</string>
+     <string>null</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.FloatingTask">
+    <void property="taskName">
+     <string>helloworld</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
     </void>
    </object>
   </void>
@@ -87,7 +107,7 @@
      <string>hijjjj</string>
     </void>
     <void property="taskType">
-     <string>Archived</string>
+     <string>null</string>
     </void>
    </object>
   </void>
@@ -109,7 +129,17 @@
      <string>lecture</string>
     </void>
     <void property="taskType">
-     <string>Archived</string>
+     <string>null</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.FloatingTask">
+    <void property="taskName">
+     <string>scroll down</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
     </void>
    </object>
   </void>
@@ -125,7 +155,7 @@
      <string>testing</string>
     </void>
     <void property="taskType">
-     <string>Archived</string>
+     <string>null</string>
     </void>
    </object>
   </void>
@@ -155,6 +185,36 @@
     </void>
     <void property="taskName">
      <string>testingabc</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.FloatingTask">
+    <void property="taskName">
+     <string>testingabccccdddeee</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.FloatingTask">
+    <void property="taskName">
+     <string>this is a test</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.FloatingTask">
+    <void property="taskName">
+     <string>what?</string>
     </void>
     <void property="taskType">
      <string>null</string>
