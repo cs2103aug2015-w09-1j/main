@@ -64,6 +64,7 @@ public class TaskViewController {
     private void initialize() {
         // Initialize the person table with the two columns.
     	MainApp.setTaskData(Controller.getTaskList());
+    	updateColumn(taskNameColumn);
         taskNameColumn.setCellValueFactory(cellData -> cellData.getValue().getName());
         taskIdColumn.setCellValueFactory(cellData -> cellData.getValue().getTaskId().asObject());
         startColumn.setCellValueFactory(cellData -> cellData.getValue().getStart());
@@ -106,13 +107,13 @@ public class TaskViewController {
                                     String taskType = temp.substring(23, temp.length() - 1); 
                                     
                                     if (taskType.equals("Completed") || taskType == "Completed") {
-                                        setTextFill(Color.GREEN);
+                                        setTextFill(Color.GRAY);
                                         setText(item);
                                     } else if(taskType.equals("Archived") || taskType == "Archived") {
                                     	setTextFill(Color.RED);
                                     	setText(item);
                                     } else {
-                                        setTextFill(Color.BLACK);
+                                        setTextFill(Color.GREEN);
                                         setText(item);
                                     }
                                     

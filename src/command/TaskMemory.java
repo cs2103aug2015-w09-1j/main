@@ -3,7 +3,6 @@ package command;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import util.Storage;
 import model.DeadlineTask;
@@ -11,6 +10,16 @@ import model.EventTask;
 import model.FloatingTask;
 import model.Task;
 
+/**
+ * This is a Task Memory Class. The controller and logic can interact with this
+ * class. The purpose of this class is to call Storage load api. In this class,
+ * its manipulate the loaded data to different array list.
+ * 
+ * There are 11 public API can be used.
+ * 
+ * @author calvin sim
+ *
+ */
 public class TaskMemory {
 	private static TaskMemory _instance;
 	private ArrayList<Task> taskList;
@@ -20,6 +29,56 @@ public class TaskMemory {
 		this.taskList = Storage.getInstance().load();
 	}
 
+	// Singleton
+	public static TaskMemory getInstance() {
+		if (_instance == null) {
+			_instance = new TaskMemory();
+		}
+		return _instance;
+	}
+
+	public ArrayList<Task> getNoArchivedList() {
+		ArrayList<Task> noArchivedList = new ArrayList<Task>();
+		try {
+			String a = "Archived";
+			for (Task t : this.taskList) {
+				if (!t.getTaskType().contains(a)) {
+
+					noArchivedList.add(t);
+				}
+			}
+			Collections.sort(noArchivedList, new TaskNameComparator());
+			return noArchivedList;
+		} catch (Exception e) {
+			return null;
+		}
+
+	}
+	
+	public ArrayList<Task> getTodayTaskList(){
+		ArrayList<Task> todayList = new ArrayList<Task>();
+		try{
+			
+			String dateNow = LocalDate.now().toString();
+			for(Task t: this.taskList){
+				if(t instanceof DeadlineTask){
+					if(((DeadlineTask) t).getDeadlineDate().compareTo(dateNow) == 0 && !t.getTaskType().contains("Archived")){
+						todayList.add(t);
+					}
+				}else if(t instanceof EventTask){
+					if(((EventTask) t).getEndDate().compareTo(dateNow)== 0 && !t.getTaskType().contains("Archived")){
+						todayList.add(t);
+					}
+				}
+			}
+			
+			Collections.sort(todayList, new TimeComparator());
+			return todayList;
+		}catch(Exception ex){
+			return null;
+		}
+	}
+
 	public ArrayList<Task> getTaskList() {
 		Collections.sort(this.taskList, new TaskNameComparator());
 		return this.taskList;
@@ -27,26 +86,26 @@ public class TaskMemory {
 
 	public ArrayList<Task> getFloatingTask() {
 		ArrayList<Task> floatingTaskList = new ArrayList<Task>();
-		try{
+		try {
 			for (Task floatingTask : this.taskList) {
 				if (floatingTask instanceof FloatingTask) {
-					if(floatingTask.getTaskType() != "Archived"){
+					if (floatingTask.getTaskType() != "Archived") {
 						floatingTaskList.add((FloatingTask) floatingTask);
 					}
 				}
 			}
 			Collections.sort(floatingTaskList, new TaskNameComparator());
 			return floatingTaskList;
-		}catch(Exception e){
+		} catch (Exception e) {
 			return null;
 		}
-		
+
 	}
 
 	public ArrayList<Task> getFollowingWeekTask() {
-		
+
 		ArrayList<Task> followingWeekList = new ArrayList<Task>();
-		try{
+		try {
 			String followWeekDate = LocalDate.now().plusDays(7).toString();
 			String dateNow = LocalDate.now().toString();
 			for (Task t : this.taskList) {
@@ -54,7 +113,8 @@ public class TaskMemory {
 					if (((DeadlineTask) t).getDeadlineDate().compareTo(dateNow) >= 0
 							&& ((DeadlineTask) t).getDeadlineDate().compareTo(
 									followWeekDate) <= 0) {
-						if(t.getTaskType() != "Archived"){
+						if (!t.getTaskType().contains("Archived")) {
+
 							followingWeekList.add(t);
 						}
 					}
@@ -62,7 +122,8 @@ public class TaskMemory {
 					if (((EventTask) t).getEndDate().compareTo(dateNow) >= 0
 							&& ((EventTask) t).getEndDate().compareTo(
 									followWeekDate) <= 0) {
-						if(t.getTaskType() != "Archived"){
+						if (!t.getTaskType().contains("Archived")) {
+
 							followingWeekList.add(t);
 						}
 					}
@@ -70,14 +131,14 @@ public class TaskMemory {
 			}
 			Collections.sort(followingWeekList, new DateComparator());
 			return followingWeekList;
-		}catch(Exception e){
+		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	public ArrayList<Task> getOtherTask() {
 		ArrayList<Task> otherTaskList = new ArrayList<Task>();
-		try{
+		try {
 			String followWeekDate = LocalDate.now().plusDays(7).toString();
 			String dateNow = LocalDate.now().toString();
 			for (Task t : this.taskList) {
@@ -85,16 +146,16 @@ public class TaskMemory {
 					if (((DeadlineTask) t).getDeadlineDate().compareTo(dateNow) >= 0
 							&& ((DeadlineTask) t).getDeadlineDate().compareTo(
 									followWeekDate) > 0) {
-						if(t.getTaskType() != "Archived"){
+						if (!t.getTaskType().contains("Archived")) {
 							otherTaskList.add(t);
 						}
-						
+
 					}
 				} else if (t instanceof EventTask) {
 					if (((EventTask) t).getEndDate().compareTo(dateNow) >= 0
 							&& ((EventTask) t).getEndDate().compareTo(
 									followWeekDate) > 0) {
-						if(t.getTaskType() != "Archived"){
+						if (!t.getTaskType().contains("Archived")) {
 							otherTaskList.add(t);
 						}
 					}
@@ -102,39 +163,29 @@ public class TaskMemory {
 			}
 			Collections.sort(otherTaskList, new DateComparator());
 			return otherTaskList;
-		}catch(Exception e){
+		} catch (Exception e) {
 			return null;
 		}
 	}
-	
-	public ArrayList<Task> getArchivedList(){
+
+	public ArrayList<Task> getArchivedList() {
 		ArrayList<Task> archivedList = new ArrayList<Task>();
-		try{
+		try {
 			for (Task t : this.taskList) {
-				if(t.getTaskType() == "Archived"){
+				if (t.getTaskType().contains("Archived")) {
+
 					archivedList.add(t);
 				}
 			}
-			
+
 			return archivedList;
-		}catch(Exception e){
+		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	public void setTaskList(ArrayList<Task> taskList) {
 		this.taskList = taskList;
-	}
-
-	public void sort(ArrayList<Task> taskList) {
-
-	}
-
-	public static TaskMemory getInstance() {
-		if (_instance == null) {
-			_instance = new TaskMemory();
-		}
-		return _instance;
 	}
 
 	public void Add(Task task) {

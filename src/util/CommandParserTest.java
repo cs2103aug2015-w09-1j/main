@@ -98,14 +98,24 @@ public class CommandParserTest {
 		CommandParser cp18 = new CommandParser("show this week");
 		assertEquals("show", cp18.getCommandType());
 		
+		//exit
+		CommandParser cp19 = new CommandParser("exit");
+		assertEquals("exit", cp19.getCommandType());
+		
 	}
 	
 	@Test
 	public void testGetStoragePath(){
-		CommandParser cp1 = new CommandParser("set C:/Program/SilentJarvis/Data");
+		CommandParser cp1 = new CommandParser("set path C:/Program/SilentJarvis/Data");
 		assertEquals("C:/Program/SilentJarvis/Data", cp1.getStoragePath());
 	}
 
+	@Test
+	public void testGetStorageFileName() {
+		CommandParser cp1 = new CommandParser("set filename mytext.txt");
+		assertEquals("mytext.txt", cp1.getStorageFileName());
+	}
+	
 	@Test
 	public void testGetTaskName() {
 		//event task
@@ -153,15 +163,6 @@ public class CommandParserTest {
 		CommandParser cp1 = new CommandParser("delete 2");
 		assertEquals(id, cp1.getId());
 		
-		//complete
-		CommandParser cp2 = new CommandParser("complete 2");
-		assertEquals(id, cp2.getId());
-		
-		//archive
-		CommandParser cp3 = new CommandParser("archive 2");
-		assertEquals(id, cp3.getId());
-		
-
 	}
 
 	@Test
@@ -316,15 +317,46 @@ public class CommandParserTest {
 	}
 	@Test
 	public void TestGetUnarchivedID(){
-		int id = 1;
+		int[] id = {1};
 		CommandParser cp1 = new CommandParser("unarchived 1");
-		assertEquals(id, cp1.getUnarchivedID());
+		assertArrayEquals(id, cp1.getUnarchivedIDs());
 	}
 	@Test
 	public void TestGetUncompleteID(){
-		int id = 1;
+		int[] id1 = {1};
 		CommandParser cp1 = new CommandParser("uncomplete 1");
-		assertEquals(id, cp1.getUncompleteID());
+		assertArrayEquals(id1, cp1.getUncompleteIDs());
 	}
+	
+	@Test
+	public void TestGetArchivedIDs() {
+		int[] id1 = {1};
+		CommandParser cp1 = new CommandParser("archive 1");
+		assertArrayEquals(id1, cp1.getArchivedIDs());
+		
+		int[] id2 = {1,2,3};
+		CommandParser cp2 = new CommandParser("archive 1-3");
+		assertArrayEquals(id2, cp2.getArchivedIDs());
+		
+		int[] id3 = {1,2,3,5,6};
+		CommandParser cp3 = new CommandParser("archive 1-3, 5-6");
+		assertArrayEquals(id3, cp3.getArchivedIDs());
+	}
+	
+	@Test
+	public void TestGetCompleteIDs() {
+		int[] id1 = {1};
+		CommandParser cp1 = new CommandParser("complete 1");
+		assertArrayEquals(id1, cp1.getCompleteIDs());
+		
+		int[] id2 = {1,2,3};
+		CommandParser cp2 = new CommandParser("complete 1-3");
+		assertArrayEquals(id2, cp2.getCompleteIDs());
+		
+		int[] id3 = {1,2,3,5,6};
+		CommandParser cp3 = new CommandParser("complete 1-3, 5-6");
+		assertArrayEquals(id3, cp3.getCompleteIDs());
+	}
+	
 	
 }
