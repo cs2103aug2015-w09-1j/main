@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<java version="1.8.0_65" class="java.beans.XMLDecoder">
+<java version="1.8.0_31" class="java.beans.XMLDecoder">
  <object class="java.util.ArrayList">
   <void method="add">
    <object class="model.FloatingTask">
-<<<<<<< HEAD
-=======
     <void property="taskName">
      <string>123444</string>
     </void>
@@ -21,9 +19,40 @@
     <void property="deadlineTime">
      <string>12:38</string>
     </void>
->>>>>>> 8ff5835146c001144620915519ab7b57a5bc09e4
     <void property="taskName">
-     <string>abcd</string>
+     <string>2103T HELLO</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.EventTask">
+    <void property="endDate">
+     <string>2015-10-30</string>
+    </void>
+    <void property="endTime">
+     <string>18:00</string>
+    </void>
+    <void property="startDate">
+     <string>2015-10-20</string>
+    </void>
+    <void property="startTime">
+     <string>16:00</string>
+    </void>
+    <void property="taskName">
+     <string>I am at starbucks now doing 2103T</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.FloatingTask">
+    <void property="taskName">
+     <string>abc</string>
     </void>
     <void property="taskType">
      <string>null</string>
@@ -42,7 +71,7 @@
      <string>calvinsim</string>
     </void>
     <void property="taskType">
-     <string>Archived</string>
+     <string>null</string>
     </void>
    </object>
   </void>
@@ -52,64 +81,14 @@
      <string>efg</string>
     </void>
     <void property="taskType">
-     <string>Archived</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="model.DeadlineTask">
-    <void property="deadlineDate">
-     <string>2015-11-01</string>
-    </void>
-    <void property="deadlineTime">
-     <string>13:00</string>
-    </void>
-    <void property="taskName">
-     <string>email</string>
-    </void>
-    <void property="taskType">
      <string>null</string>
     </void>
    </object>
   </void>
   <void method="add">
-   <object class="model.EventTask">
-    <void property="endDate">
-     <string>2015-11-15</string>
-    </void>
-    <void property="endTime">
-     <string>11:16</string>
-    </void>
-    <void property="startDate">
-     <string>2015-11-08</string>
-    </void>
-    <void property="startTime">
-     <string>08:00</string>
-    </void>
-    <void property="taskName">
-     <string>go overseas with girfriend</string>
-    </void>
-    <void property="taskType">
-     <string>null</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-<<<<<<< HEAD
-   <object class="model.DeadlineTask">
-    <void property="deadlineDate">
-     <string>2015-11-02</string>
-    </void>
-    <void property="deadlineTime">
-     <string>11:22</string>
-    </void>
-    <void property="taskName">
-     <string>hgsjkdfhg</string>
-=======
    <object class="model.FloatingTask">
     <void property="taskName">
      <string>helloworld</string>
->>>>>>> 8ff5835146c001144620915519ab7b57a5bc09e4
     </void>
     <void property="taskType">
      <string>null</string>
@@ -167,23 +146,13 @@
   <void method="add">
    <object class="model.DeadlineTask">
     <void property="deadlineDate">
-     <string>2015-11-01</string>
+     <string>2015-10-28</string>
     </void>
     <void property="deadlineTime">
-     <string>11:22</string>
+     <string>17:14</string>
     </void>
     <void property="taskName">
-     <string>random</string>
-    </void>
-    <void property="taskType">
-     <string>null</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="model.FloatingTask">
-    <void property="taskName">
-     <string>taskname</string>
+     <string>testing</string>
     </void>
     <void property="taskType">
      <string>null</string>
@@ -196,13 +165,29 @@
      <string>2015-10-28</string>
     </void>
     <void property="deadlineTime">
-     <string>17:14</string>
+     <string>17:16</string>
     </void>
     <void property="taskName">
-     <string>testing</string>
+     <string>testing high hello</string>
     </void>
     <void property="taskType">
-     <string>Archived</string>
+     <string>null</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.DeadlineTask">
+    <void property="deadlineDate">
+     <string>2015-10-28</string>
+    </void>
+    <void property="deadlineTime">
+     <string>17:15</string>
+    </void>
+    <void property="taskName">
+     <string>testingabc</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
     </void>
    </object>
   </void>
