@@ -114,8 +114,14 @@ public class Controller {
 			break;
 
 		case "set":
-			Storage.getInstance().setPath(path);
-			Storage.getInstance().setfileName("silentjarvis.fxml");
+			String _path = parser.getStoragePath();
+			String _filename = parser.getStorageFileName();
+			if(_path != null){
+				Storage.getInstance().setPath(_path);
+			}
+			else if(_filename != null){
+				Storage.getInstance().setfileName(_filename);
+			}
 			break;
 			
 		case "archive":

@@ -25,7 +25,7 @@ public class TaskMemory {
 	private ArrayList<Task> taskList;
 
 	public TaskMemory() {
-		Storage.getInstance().setfileName("silentjarvis.fxml");
+		//Storage.getInstance().setfileName("silentjarvis.fxml");
 		this.taskList = Storage.getInstance().load();
 	}
 
