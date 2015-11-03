@@ -113,15 +113,21 @@ public class SystematicTest {
 		assertTrue(taskList.get(0).getTaskName().equals("A"));
 		
 		Controller.executeCMD("show archived");
-		Controller.executeCMD("unarchive 1");
+		Controller.executeCMD("unarchived 1");
 		taskList=Controller.getTaskList();
 		assertTrue((taskList.get(0))instanceof FloatingTask);
 		assertTrue(taskList.get(0).getTaskName().equals("A"));
 		
 		Controller.executeCMD("save");
+		assertTrue((new File("silentjarvis.fxml")).exists());
+		
+		Controller.executeCMD("set filename test");
+		Controller.executeCMD("save");
+		assertTrue((new File("test.fxml")).exists());
+		
 		Controller.executeCMD("set path newfolder\\");
 		Controller.executeCMD("save");
 		assertTrue((new File("newfolder\\")).exists());
-		assertTrue((new File("newfolder\\silentjarvis.fxml")).exists());
+		assertTrue((new File("newfolder\\test.fxml")).exists());
 	}
 }
