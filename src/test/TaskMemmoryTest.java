@@ -8,16 +8,11 @@ import command.TaskMemory;
 import util.Storage;
 
 public class TaskMemmoryTest {
+	private TaskMemory tm = new TaskMemory();
 
 	@Test
 	public void testTaskMemory() {
-		TaskMemory tm = new TaskMemory();
 		assertEquals(Storage.getInstance().load(), tm.getTaskList());
-	}
-
-	@Test
-	public void testGetInstance() {
-		fail("Not yet implemented"); // TODO
 	}
 
 	@Test
