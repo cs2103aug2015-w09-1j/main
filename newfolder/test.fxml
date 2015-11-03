@@ -79,7 +79,7 @@
      <string>2015-11-01</string>
     </void>
     <void property="deadlineTime">
-     <string>15:00</string>
+     <string>16:00</string>
     </void>
     <void property="taskName">
      <string>C</string>
@@ -134,28 +134,6 @@
     </void>
     <void property="taskType">
      <string>Archived</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="model.EventTask">
-    <void property="endDate">
-     <string>2015-11-16</string>
-    </void>
-    <void property="endTime">
-     <string>19:00</string>
-    </void>
-    <void property="startDate">
-     <string>2015-11-15</string>
-    </void>
-    <void property="startTime">
-     <string>08:00</string>
-    </void>
-    <void property="taskName">
-     <string>event</string>
-    </void>
-    <void property="taskType">
-     <string>null</string>
     </void>
    </object>
   </void>

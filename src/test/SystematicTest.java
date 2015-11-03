@@ -3,7 +3,6 @@ package test;
 import static org.junit.Assert.*;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import org.junit.Test;
@@ -16,6 +15,15 @@ public class SystematicTest {
 	
 	@Test
 	public void test() throws Exception{
+		Controller.executeCMD("set filename test");
+		Controller.executeCMD("save");
+		assertTrue((new File("test.fxml")).exists());
+		
+		Controller.executeCMD("set path newfolder\\");
+		Controller.executeCMD("save");
+		assertTrue((new File("newfolder\\")).exists());
+		assertTrue((new File("newfolder\\test.fxml")).exists());
+		
 		Controller.executeCMD("delete all");
 		Controller.executeCMD("add floating");
 
@@ -37,6 +45,7 @@ public class SystematicTest {
 		assertTrue((taskList.get(0))instanceof EventTask);
 		assertTrue(taskList.get(0).getTaskName().equals("event"));
 		
+		Controller.executeCMD("delete 1");
 		Controller.executeCMD("add A");
 		Controller.executeCMD("add D from 2014-11-20 1800 to 2014-12-01 0700");
 		Controller.executeCMD("add C by 2015-11-01 1500");
@@ -107,6 +116,12 @@ public class SystematicTest {
 		assertTrue((taskList.get(0))instanceof FloatingTask);
 		assertTrue(taskList.get(0).getTaskName().equals("A"));
 		
+		Controller.executeCMD("edit 4 endTime 1600");
+		taskList=Controller.getTaskList();
+		temp2=(DeadlineTask) taskList.get(3);
+		assertTrue((taskList.get(3))instanceof DeadlineTask);
+		assertTrue(temp2.getDeadlineTime().equals("16:00"));
+		
 		Controller.executeCMD("archive 1");
 		taskList=Controller.getArchivedList();
 		assertTrue((taskList.get(0))instanceof FloatingTask);
@@ -118,8 +133,7 @@ public class SystematicTest {
 		assertTrue((taskList.get(0))instanceof FloatingTask);
 		assertTrue(taskList.get(0).getTaskName().equals("A"));
 		
-		Controller.executeCMD("save");
-		assertTrue((new File("silentjarvis.fxml")).exists());
+		Controller.executeCMD("display all");
 		
 		Controller.executeCMD("set filename test");
 		Controller.executeCMD("save");
