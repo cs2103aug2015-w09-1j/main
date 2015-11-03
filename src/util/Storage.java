@@ -15,7 +15,10 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 public class Storage {
-
+    /**
+     *This is a class to deal with all operations relative to local date
+     *
+     * @author Liang Yuan*/
 	private String path = "";
 	private String fileName = "SilentJarvis.fxml";
 	private static Storage theOne = null;
