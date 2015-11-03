@@ -46,7 +46,7 @@
   <void method="add">
    <object class="model.DeadlineTask">
     <void property="deadlineDate">
-     <string>2015-11-03</string>
+     <string>2015-11-01</string>
     </void>
     <void property="deadlineTime">
      <string>15:00</string>
