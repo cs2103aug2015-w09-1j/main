@@ -1,4 +1,4 @@
-package meteorite.todo.util;
+package test;
 
 import static org.junit.Assert.*;
 
@@ -12,8 +12,9 @@ import model.DeadlineTask;
 import model.EventTask;
 import model.FloatingTask;
 import model.Task;
+import util.Storage;
 
-public class Storagetest {
+public class TestStorage {
 	Storage test = Storage.getInstance();
 
 	@Test
