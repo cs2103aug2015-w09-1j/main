@@ -27,6 +27,7 @@ import javafx.util.Callback;
 import model.EventTask;
 import model.FloatingTask;
 import model.Task;
+import util.Storage;
 
 public class TaskViewController {
     @FXML
@@ -155,7 +156,7 @@ public class TaskViewController {
     				break;
     	case "load": answer = "Loaded from the default fxml";
     				break;
-    	case "save": answer = "Saved into silentjarvis.fxml";
+    	case "save": answer = "Saved into " + Storage.getInstance().getfileName();
     				break;
     	case "display": answer = "All tasks displayed";
     				break;
@@ -169,6 +170,11 @@ public class TaskViewController {
 					break;
     	case "unarchive": answer = "Task unarchived";
 					break;
+    	case "set" : 
+    		String[] temp = input.split(" ", 2);
+    		String[] temp1 = temp[1].trim().split(" ", 2);
+    		answer = temp1[0].trim().toUpperCase() + " set to " + temp1[1].trim();
+    		break;
     	}
     	return answer;
     }

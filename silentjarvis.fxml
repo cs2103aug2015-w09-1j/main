@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<java version="1.8.0_31" class="java.beans.XMLDecoder">
+<java version="1.8.0_65" class="java.beans.XMLDecoder">
  <object class="java.util.ArrayList">
+  <void method="add">
+   <object class="model.FloatingTask">
+    <void property="taskName">
+     <string>123444</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
+    </void>
+   </object>
+  </void>
   <void method="add">
    <object class="model.DeadlineTask">
     <void property="deadlineDate">
@@ -45,7 +55,7 @@
      <string>abc</string>
     </void>
     <void property="taskType">
-     <string>null</string>
+     <string>Archived</string>
     </void>
    </object>
   </void>
@@ -71,7 +81,55 @@
      <string>efg</string>
     </void>
     <void property="taskType">
-     <string>Archived</string>
+     <string>null</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.DeadlineTask">
+    <void property="deadlineDate">
+     <string>2015-11-02</string>
+    </void>
+    <void property="deadlineTime">
+     <string>13:00</string>
+    </void>
+    <void property="taskName">
+     <string>email</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.EventTask">
+    <void property="endDate">
+     <string>2015-11-15</string>
+    </void>
+    <void property="endTime">
+     <string>22:32</string>
+    </void>
+    <void property="startDate">
+     <string>2015-11-08</string>
+    </void>
+    <void property="startTime">
+     <string>08:00</string>
+    </void>
+    <void property="taskName">
+     <string>going overseas with friend</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.FloatingTask">
+    <void property="taskName">
+     <string>helloworld</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
     </void>
    </object>
   </void>
@@ -87,7 +145,7 @@
      <string>hijjjj</string>
     </void>
     <void property="taskType">
-     <string>Archived</string>
+     <string>null</string>
     </void>
    </object>
   </void>
@@ -109,7 +167,17 @@
      <string>lecture</string>
     </void>
     <void property="taskType">
-     <string>Archived</string>
+     <string>null</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.FloatingTask">
+    <void property="taskName">
+     <string>scroll down</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
     </void>
    </object>
   </void>
@@ -125,7 +193,7 @@
      <string>testing</string>
     </void>
     <void property="taskType">
-     <string>Archived</string>
+     <string>null</string>
     </void>
    </object>
   </void>
@@ -155,6 +223,36 @@
     </void>
     <void property="taskName">
      <string>testingabc</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.FloatingTask">
+    <void property="taskName">
+     <string>testingabccccdddeee</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.FloatingTask">
+    <void property="taskName">
+     <string>this is a test</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.FloatingTask">
+    <void property="taskName">
+     <string>what?</string>
     </void>
     <void property="taskType">
      <string>null</string>
