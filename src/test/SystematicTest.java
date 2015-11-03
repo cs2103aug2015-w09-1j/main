@@ -13,6 +13,9 @@ import model.*;
 public class SystematicTest {
 	ArrayList<Task> taskList;
 	
+	/** Systematic Test to test flow work
+	 * @author Liang Yuan
+	 */
 	@Test
 	public void test() throws Exception{
 		Controller.executeCMD("set filename test");
