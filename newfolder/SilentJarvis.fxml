@@ -7,7 +7,27 @@
      <string>A</string>
     </void>
     <void property="taskType">
-     <string>null</string>
+     <string>Archived</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.FloatingTask">
+    <void property="taskName">
+     <string>A</string>
+    </void>
+    <void property="taskType">
+     <string>Archived</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.FloatingTask">
+    <void property="taskName">
+     <string>A</string>
+    </void>
+    <void property="taskType">
+     <string>Archived</string>
     </void>
    </object>
   </void>

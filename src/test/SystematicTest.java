@@ -92,12 +92,32 @@ public class SystematicTest {
 		assertTrue((taskList.get(0))instanceof FloatingTask);
 		assertTrue(taskList.get(0).getTaskName().equals("A"));
 		
-		Controller.executeCMD("search A");
-		Controller.executeCMD("display all");
 		Controller.executeCMD("delete 1-3");
+		taskList=Controller.getTaskList();
+		assertTrue((taskList.get(0))instanceof DeadlineTask);
+		assertTrue(taskList.get(0).getTaskName().equals("C"));
+
 		Controller.executeCMD("delete all");
+		taskList=Controller.getTaskList();
+		assertTrue(taskList.isEmpty());
+		
 		Controller.executeCMD("undo");
 		Controller.executeCMD("undo");
+		taskList=Controller.getTaskList();
+		assertTrue((taskList.get(0))instanceof FloatingTask);
+		assertTrue(taskList.get(0).getTaskName().equals("A"));
+		
+		Controller.executeCMD("archive 1");
+		taskList=Controller.getArchivedList();
+		assertTrue((taskList.get(0))instanceof FloatingTask);
+		assertTrue(taskList.get(0).getTaskName().equals("A"));
+		
+		Controller.executeCMD("show archived");
+		Controller.executeCMD("unarchive 1");
+		taskList=Controller.getTaskList();
+		assertTrue((taskList.get(0))instanceof FloatingTask);
+		assertTrue(taskList.get(0).getTaskName().equals("A"));
+		
 		Controller.executeCMD("save");
 		Controller.executeCMD("set path newfolder\\");
 		Controller.executeCMD("save");
