@@ -1,8 +1,11 @@
 package view;
 
-
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.logging.Level;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -13,6 +16,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -46,15 +51,15 @@ public class GUIMain extends Application {
 	private static Label line_2;
 	private static Label line_3;
 	private static Label signal;
-	
+
 	public static void main(String args[]) {
-		
+
 		launch(args);
 	}
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		
+
 		loadImage();
 
 		initialStage(primaryStage);
@@ -63,25 +68,26 @@ public class GUIMain extends Application {
 
 		buildView(primaryStage);
 
-		showSetFilename();
-		//GUIController.start();
+		//GUIController.showRecentList();;
+
+		//getCommand();
 	}
 
 	private void loadImage() {
-		
+
 		backgroundImage = new Image(getClass().getResourceAsStream("back3.png"));
 		iconImage = new Image(getClass().getResourceAsStream("icon.png"));
 	}
 
 	private void initialStage(Stage primaryStage) {
-		
+
 		primaryStage.setTitle(title);
 		primaryStage.initStyle(StageStyle.UNDECORATED);
 		primaryStage.getIcons().add(iconImage);
 	}
 
 	private void buildView(Stage primaryStage) {
-		
+
 		grid = new GridPane();
 		grid.setHgap(5);
 		grid.setVgap(20);
@@ -110,17 +116,17 @@ public class GUIMain extends Application {
 	}
 
 	private void buildSysMsgBlk() {
-		
+
 		SystemMessageBlock.setPrefSize(300, 120);
-		
+
 		line_1 = new Label();
 		line_2 = new Label();
 		line_3 = new Label();
-		
-		signal =new Label();
+
+		signal = new Label();
 		signal.setFont(signalFont);
 		signal.setTextFill(safeColor);
-		
+
 		SystemMessageBlock.getChildren().add(line_1);
 		StackPane.setAlignment(line_1, Pos.TOP_CENTER);
 
@@ -129,23 +135,45 @@ public class GUIMain extends Application {
 
 		SystemMessageBlock.getChildren().add(line_3);
 		StackPane.setAlignment(line_3, Pos.BOTTOM_CENTER);
-		
+
 		SystemMessageBlock.getChildren().add(signal);
 		StackPane.setAlignment(signal, Pos.BOTTOM_RIGHT);
-		
+
 		showWelcome();
 	}
 
 	private void buildTskDisBlk() {
-		
+
 		TaskDisplayBlock.setPrefSize(300, 420);
 		TaskDisplayBlock.setOpacity(0.9);
 		TaskDisplayBlock.setHbarPolicy(ScrollBarPolicy.NEVER);
 
 	}
 
+	private static void getCommand() {
+		userCommandBlock.setOnKeyPressed(new EventHandler<KeyEvent>(){
+	    	   @Override
+	    	   public void handle(KeyEvent event) {
+	    		   if(event.getCode().equals(KeyCode.ENTER)){
+	    			   command = userCommandBlock.getText();
+	    			   userCommandBlock.clear();
+	    			   if(!command.equals("")){
+	    				   GUIController.execute(command);
+	    			   }
+	    		   }
+
+	    		   if(event.getCode().equals(KeyCode.UP)){
+	    			   TaskDisplayBlock.setVvalue(TaskDisplayBlock.getVvalue() - 0.3f);
+	    		   }
+	    		   if(event.getCode().equals(KeyCode.DOWN)){
+	    			   TaskDisplayBlock.setVvalue(TaskDisplayBlock.getVvalue() + 0.3f);
+	    		   }
+	    	   }
+
+	});}
+
 	private void showWelcome() {
-		
+
 		line_1.setText("Welcome to SilentJarvis!");
 		line_1.setFont(commonFont);
 		line_1.setTextFill(commonColor);
@@ -157,7 +185,7 @@ public class GUIMain extends Application {
 		line_3.setText("tasks are listed below");
 		line_3.setFont(commonFont);
 		line_3.setTextFill(commonColor);
-		
+
 		signal.setText("");
 	}
 
@@ -169,7 +197,7 @@ public class GUIMain extends Application {
 		signal.setText("");
 	}
 
-	protected static void showToday(){	
+	protected static void showToday() {
 		line_1.setText("");
 
 		line_2.setText("Today's");
@@ -179,11 +207,11 @@ public class GUIMain extends Application {
 		line_3.setText("tasks are listed below");
 		line_3.setFont(commonFont);
 		line_3.setTextFill(commonColor);
-		
+
 		signal.setText("");
 	}
-	
-	protected static void showSetFilename(){
+
+	protected static void showSetFilename() {
 		line_1.setText("new filename");
 		line_1.setFont(littleFont);
 		line_1.setTextFill(commonColor);
@@ -193,11 +221,11 @@ public class GUIMain extends Application {
 		line_2.setTextFill(commonColor);
 
 		line_3.setText("");
-		
+
 		signal.setText("Set successfully!");
 	}
-	
-	protected static void showSetPath(){
+
+	protected static void showSetPath() {
 		line_1.setText("new path");
 		line_1.setFont(littleFont);
 		line_1.setTextFill(commonColor);
@@ -207,11 +235,11 @@ public class GUIMain extends Application {
 		line_2.setTextFill(commonColor);
 
 		line_3.setText("");
-		
+
 		signal.setText("Set successfully!");
 	}
-	
-	protected static void showAll(){		
+
+	protected static void showAll() {
 		line_1.setText("");
 
 		line_2.setText("All");
@@ -221,11 +249,11 @@ public class GUIMain extends Application {
 		line_3.setText("tasks are listed below");
 		line_3.setFont(commonFont);
 		line_3.setTextFill(commonColor);
-		
+
 		signal.setText("");
 	}
-	
-	protected static void showArchived(){	
+
+	protected static void showArchived() {
 		line_1.setText("");
 
 		line_2.setText("Archived");
@@ -235,11 +263,11 @@ public class GUIMain extends Application {
 		line_3.setText("tasks are listed below");
 		line_3.setFont(commonFont);
 		line_3.setTextFill(commonColor);
-		
+
 		signal.setText("");
 	}
-	
-	protected static void showSearch(){	
+
+	protected static void showSearch() {
 		line_1.setText("");
 
 		line_2.setText("Search results");
@@ -249,61 +277,61 @@ public class GUIMain extends Application {
 		line_3.setText("tasks are listed below");
 		line_3.setFont(commonFont);
 		line_3.setTextFill(commonColor);
-		
+
 		signal.setText("");
 	}
-	
-	protected static void showSave(){
+
+	protected static void showSave() {
 		line_3.setText("");
-		
-		signal.setText("Saved to "+Storage.getInstance().getPath()+Storage.getInstance().getfileName());
+
+		signal.setText("Saved to " + Storage.getInstance().getPath() + Storage.getInstance().getfileName());
 	}
-	
-	protected static void showAdd(){
+
+	protected static void showAdd() {
 		line_3.setText("");
-		
+
 		signal.setText("New task added!");
 	}
-	
-	protected static void showDelete(){
+
+	protected static void showDelete() {
 		line_3.setText("");
-		
+
 		signal.setText("Task Deleted!");
 	}
-	
-	protected static void showUpdate(){
+
+	protected static void showUpdate() {
 		line_3.setText("");
-		
+
 		signal.setText("Task Edited!");
 	}
-	
-	protected static void showUndo(){
+
+	protected static void showUndo() {
 		line_3.setText("");
-		
+
 		signal.setText("Undo successfully!");
 	}
-	
-	protected static void showLoad(){
+
+	protected static void showLoad() {
 		line_3.setText("");
-		
-		signal.setText("Loaded from "+Storage.getInstance().getPath()+Storage.getInstance().getfileName());
+
+		signal.setText("Loaded from " + Storage.getInstance().getPath() + Storage.getInstance().getfileName());
 	}
-	
-	protected static void showComplete(){
+
+	protected static void showComplete() {
 		line_3.setText("");
-		
+
 		signal.setText("Task complete!");
 	}
-	
-	protected static void showUnComOrArc(){
+
+	protected static void showUnComOrArc() {
 		line_3.setText("");
-		
+
 		signal.setText("Task recoverd!");
 	}
-	
-	protected static void showArchive(){
+
+	protected static void showArchive() {
 		line_3.setText("");
-		
+
 		signal.setText("Task archived!");
 	}
 }

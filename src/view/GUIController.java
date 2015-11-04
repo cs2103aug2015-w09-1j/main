@@ -1,77 +1,139 @@
 package view;
 
 import java.util.ArrayList;
-
 import controller.Controller;
 import model.*;
 
 public class GUIController {
 	static ArrayList<Task> TaskList;
 
-	public static void start() {
-		showRecentList();
+	protected static void showRecentList() {
+		TaskList = Controller.getTodayTaskList();		
 	}
 
-	private static void showRecentList() {
-		TaskList = Controller.getTodayTaskList();
-		
+	private static String getCommandType(String command, int i) {
+		return command.trim().split("\\s+")[i];
 	}
+	
 
-	private void showFeedback(String command) {
+
+
+	public static void execute(String command) {
 		String commandType = getCommandType(command, 0);
 		switch (commandType) {
 		case "add":
-			GUIMain.showAdd();
+			executeAdd(command);
 			break;
 		case "delete":
-			GUIMain.showDelete();
+			executeDelete(command);
 			break;
 		case "search":
-			GUIMain.showSearch();
+			executeSearch(command);
 			break;
 		case "load":
-			GUIMain.showLoad();
+			executeLoad(command);
 			break;
 		case "save":
-			GUIMain.showSave();
+			executeSave(command);
 			break;
 		case "display":
-			GUIMain.showAll();
+			executeAll(command);
 			break;
 		case "edit":
-			GUIMain.showUpdate();
+			executeUpdate(command);
 			break;
 		case "complete":
-			GUIMain.showComplete();
+			executeComplete(command);
 			break;
 		case "archive":
-			GUIMain.showArchive();
+			executeArchive(command);
 			break;
 		case "unarchive":
-			GUIMain.showUnComOrArc();
+			executeUnarchive(command);
 			break;
 		case "uncomplete":
-			GUIMain.showUnComOrArc();
+			executeUncomplete(command);
 			break;
 		case "set":
-			switch (getCommandType(command, 1)) {
-			case "path":
-				GUIMain.showSetPath();
-				break;
-			case "filename":
-				GUIMain.showSetFilename();
-				break;
-			}
+			executeSet(command);
 			break;
 		case "show":
-			GUIMain.showArchived();
+			executeShowArchived(command);
+			break;
 		default:
 			break;
 		}
 	}
 
-	private String getCommandType(String command, int i) {
-		return command.trim().split("\\s+")[i];
+	private static void executeUncomplete(String command) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private static void executeUnarchive(String command) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private static void executeArchive(String command) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private static void executeComplete(String command) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private static void executeUpdate(String command) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private static void executeAll(String command) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private static void executeSave(String command) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private static void executeLoad(String command) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private static void executeSearch(String command) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private static void executeDelete(String command) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private static void executeShowArchived(String command) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private static void executeSet(String command) {
+		switch (getCommandType(command, 1)) {
+		case "path":
+			GUIMain.showSetPath();
+			break;
+		case "filename":
+			GUIMain.showSetFilename();
+			break;
+		}
+	}
+
+	private static void executeAdd(String command) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
