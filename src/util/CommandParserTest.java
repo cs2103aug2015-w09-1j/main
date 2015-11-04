@@ -1,6 +1,9 @@
+//@@author A0133976U
+
 package util;
 
 import static org.junit.Assert.*;
+
 
 import org.junit.Before;
 import org.junit.Test;
@@ -356,6 +359,13 @@ public class CommandParserTest {
 		int[] id3 = {1,2,3,5,6};
 		CommandParser cp3 = new CommandParser("complete 1-3, 5-6");
 		assertArrayEquals(id3, cp3.getCompleteIDs());
+	}
+	
+	@Test
+	public void TestGetHelpString() {
+		CommandParser cp1 = new CommandParser("help");
+		String help = "add <name>\nadd <name> from <time> to <time>\nadd <name> by   <deadline>\ndelete  <id>\nsearch  <id>\narchive <id>\nedit <id> <attribute> <info>\nset  path     <storage path>\nset  filename <filename>\nundo\n";
+		assertEquals(help, cp1.getHelpString());
 	}
 	
 	
