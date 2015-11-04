@@ -52,6 +52,9 @@ public class Controller {
 			String _showDate = parser.getShowDate();
 			String _showEndDate = parser.getShowEndDate();
 			String _showStartDate = parser.getShowStartDate();
+			String _searchStartDate = parser.getSearchStartDate();
+			String _searchEndDate = parser.getSearchEndDate();
+			String _displayMode = parser.getDisplayMode();
 
 			switch (_cmdType.trim()) {
 			case "add":
@@ -98,14 +101,20 @@ public class Controller {
 				} else if (_searchOnDate != null) {
 					displayList = logic.searchTaskOnDate(displayList,
 							_searchOnDate.trim());
+				} else if (_searchStartDate != null && _searchEndDate != null) {
+					displayList = logic.searchTaskBetweenDate(displayList,
+							_searchStartDate, _searchEndDate);
 				}
 
 				break;
 
 			case "display":
-				ArrayList<Task> list = TaskMemory.getInstance()
-						.getNoArchivedList();
-				displayList = list;
+
+				if (_displayMode == null) {
+					ArrayList<Task> list = TaskMemory.getInstance()
+							.getNoArchivedList();
+					displayList = list;
+				}
 
 				break;
 
@@ -166,7 +175,8 @@ public class Controller {
 					displayList = logic.searchTaskByDate(displayList,
 							_showByDate);
 				} else if (_showDate != null) {
-					displayList = logic.searchTaskOnDate(displayList, _showDate);
+					displayList = logic
+							.searchTaskOnDate(displayList, _showDate);
 				} else if (_showStartDate != null && _showEndDate != null) {
 					displayList = logic.searchTaskBetweenDate(displayList,
 							_showStartDate, _showEndDate);
@@ -185,10 +195,17 @@ public class Controller {
 
 				break;
 			case "help":
-
+				String _helpString = parser.getHelpString();
+				getHelpString(_helpString);
 				break;
+
 			case "save":
 				logic.save();
+				break;
+				
+			case "clear":
+				logic.deleteAllTask(displayList);
+				displayList = TaskMemory.getInstance().getNoArchivedList();
 				break;
 
 			case "exit":
@@ -210,6 +227,10 @@ public class Controller {
 
 	public static int getSize() {
 		return displayList.size();
+	}
+
+	public static String getHelpString(String helpMessage) {
+		return helpMessage;
 	}
 
 	public static ArrayList<Task> getFloatingTaskList() {
@@ -235,7 +256,8 @@ public class Controller {
 	public static ArrayList<Task> getTodayTaskList() {
 		return TaskMemory.getInstance().getTodayTaskList();
 	}
-	public static ArrayList<Task> getDueTaskList(){
+
+	public static ArrayList<Task> getDueTaskList() {
 		return TaskMemory.getInstance().getDueTask();
 	}
 

@@ -48,7 +48,7 @@ public class TaskMemory {
 					noArchivedList.add(t);
 				}
 			}
-			Collections.sort(noArchivedList, new TaskNameComparator());
+			Collections.sort(noArchivedList, new DateComparator());
 			return noArchivedList;
 		} catch (Exception e) {
 			return null;
