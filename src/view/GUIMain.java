@@ -1,9 +1,5 @@
 package view;
 
-import java.io.IOException;
-import java.text.ParseException;
-import java.util.logging.Level;
-
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -35,8 +31,10 @@ public class GUIMain extends Application {
 	protected static double yOffset = 0;
 	protected static Image backgroundImage;
 	protected static Image iconImage;
+	protected static Image taskImage;
 	protected static String title = "Silent Jarvis";
 	protected static GridPane grid;
+	protected static GridPane TaskDisplayGrid;
 	protected static StackPane SystemMessageBlock;
 	protected static ScrollPane TaskDisplayBlock;
 	protected static TextField userCommandBlock;
@@ -67,16 +65,17 @@ public class GUIMain extends Application {
 		primaryStage.show();
 
 		buildView(primaryStage);
+		
+		GUIController.showRecentList();;
 
-		//GUIController.showRecentList();;
-
-		//getCommand();
+		getCommand();
 	}
 
 	private void loadImage() {
 
 		backgroundImage = new Image(getClass().getResourceAsStream("back3.png"));
 		iconImage = new Image(getClass().getResourceAsStream("icon.png"));
+		taskImage = new Image(getClass().getResourceAsStream("task.png"));
 	}
 
 	private void initialStage(Stage primaryStage) {
@@ -148,6 +147,12 @@ public class GUIMain extends Application {
 		TaskDisplayBlock.setOpacity(0.9);
 		TaskDisplayBlock.setHbarPolicy(ScrollBarPolicy.NEVER);
 
+	    TaskDisplayGrid = new GridPane();
+	    TaskDisplayGrid.setHgap(5);
+	    TaskDisplayGrid.setVgap(5);
+	    TaskDisplayGrid.setPadding(new Insets(5, 5, 5, 5));
+	    
+	    TaskDisplayBlock.setContent(TaskDisplayGrid);
 	}
 
 	private static void getCommand() {
