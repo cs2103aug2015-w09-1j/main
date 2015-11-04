@@ -646,7 +646,7 @@ public class CommandParser {
 		this.storagePath = path;
 	}
 	private void setEditAttribute(String attribute) {
-		this.editAttribute = attribute;
+		this.editAttribute = attribute.toLowerCase();
 	}
 	private void setEditInfo(String info) {
 		this.editInfo = info;
