@@ -3,16 +3,22 @@ package view;
 import java.io.IOException;
 import java.util.ArrayList;
 import controller.Controller;
-import javafx.geometry.Pos;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import model.*;
 
 public class GUIController {
 	static ArrayList<Task> TaskList;
-
+	private static Font taskNameFont = Font.font("Stencil Std", FontWeight.BOLD, FontPosture.REGULAR, 12);
+	private static Font taskInfoFont = Font.font("Stencil Std", FontWeight.NORMAL, FontPosture.REGULAR, 12);
+	
 	protected static void showRecentList() {
 		TaskList = Controller.getTaskList();
 		showList();
@@ -37,40 +43,48 @@ public class GUIController {
 	}
 
 	private static void displayAEventTask(int i, EventTask task) {
-		StackPane event =new StackPane();
+		GridPane event =new GridPane();
 		event.setPrefSize(140, 45);
-		
-		
+		event.setHgap(1);
+		event.setVgap(1);
+		event.setPadding(new Insets(1, 1, 1, 1));
+
 		ImageView backgroung = new ImageView(GUIMain.taskImage);
 		Group back = new Group();
 		back.getChildren().addAll(backgroung, event);
 		
 		String temp;
 		
-		Label name = new Label();
+		Text name = new Text();
 		temp=" "+Integer.valueOf(i+1).toString()+". "+task.getTaskName();
 		name.setText(temp);
+		name.setFont(taskNameFont);
+		name.setFill(GUIMain.commonColor);
+		event.add(name, 0, 0);
 		
-		event.getChildren().add(name);
-		StackPane.setAlignment(name, Pos.TOP_LEFT);
-		
-		Label info1 = new Label();
-		temp="     S: "+task.getStartDate()+" "+task.getStartTime();
+		temp="    S: "+task.getStartDate()+" "+task.getStartTime();
+		Text info1 = new Text(temp);
 		info1.setText(temp);
-		event.getChildren().add(info1);
-		StackPane.setAlignment(info1, Pos.CENTER_LEFT);
+		info1.setFont(taskInfoFont);
+		info1.setFill(GUIMain.commonColor);
+		event.add(info1, 0, 1);
 		
-		Label info2 = new Label();
-		temp="     E: "+task.getEndDate()+" "+task.getEndTime();
+		temp="    E: "+task.getEndDate()+" "+task.getEndTime();
+		Text info2 = new Text(temp);
 		info2.setText(temp);
-		event.getChildren().add(info2);
-		StackPane.setAlignment(info2, Pos.BOTTOM_LEFT);
-		GUIMain.TaskDisplayGrid.add(event, i%2, i/2);
+		info2.setFont(taskInfoFont);
+		info2.setFill(GUIMain.commonColor);
+		event.add(info2, 0, 2);
+		
+		GUIMain.TaskDisplayGrid.add(back, i%2, i/2);
 	}
 
 	private static void displayAFloatingTask(int i, FloatingTask task) {
-		StackPane floating =new StackPane();
+		GridPane floating =new GridPane();
 		floating.setPrefSize(140, 15);
+		floating.setHgap(1);
+		floating.setVgap(1);
+		floating.setPadding(new Insets(2, 2, 2, 2));
 		
 		ImageView backgroung = new ImageView(GUIMain.taskImage);
 		Group back = new Group();
@@ -78,19 +92,22 @@ public class GUIController {
 		
 		String temp;
 		
-		Label name = new Label();
 		temp=" "+Integer.valueOf(i+1).toString()+". "+task.getTaskName();
-		name.setText(temp);
+		Text name = new Text(temp);
+		name.setFont(taskNameFont);
+		name.setFill(GUIMain.commonColor);
+		floating.add(name, 0, 0);
 		
-		floating.getChildren().add(name);
-		StackPane.setAlignment(name, Pos.TOP_LEFT);
-		
-		GUIMain.TaskDisplayGrid.add(floating, i%2, i/2);
+		GUIMain.TaskDisplayGrid.add(back, i%2, i/2);
 	}
 
 	private static void displayADeadlineTask(int i, DeadlineTask task) {
-		StackPane deadline =new StackPane();
+		GridPane deadline =new GridPane();
 		deadline.setPrefSize(140, 45);
+		deadline.setHgap(1);
+		deadline.setVgap(1);
+		deadline.setPadding(new Insets(2, 2, 2, 2));
+		
 		
 		ImageView backgroung = new ImageView(GUIMain.taskImage);
 		Group back = new Group();
@@ -98,20 +115,20 @@ public class GUIController {
 		
 		String temp;
 		
-		Label name = new Label();
 		temp=" "+Integer.valueOf(i+1).toString()+". "+task.getTaskName();
-		name.setText(temp);
+		Text name = new Text(temp);
+		name.setFont(taskNameFont);
+		name.setFill(GUIMain.commonColor);
+		deadline.add(name, 0, 0);
 		
-		deadline.getChildren().add(name);
-		StackPane.setAlignment(name, Pos.TOP_LEFT);
-		
-		Label info = new Label();
-		temp="     By: "+task.getDeadlineDate()+" "+task.getDeadlineTime();
+		temp="    By: "+task.getDeadlineDate()+" "+task.getDeadlineTime();
+		Text info = new Text(temp);
 		info.setText(temp);
-		deadline.getChildren().add(info);
-		StackPane.setAlignment(info, Pos.BOTTOM_LEFT);
+		info.setFont(taskInfoFont);
+		info.setFill(GUIMain.commonColor);
+		deadline.add(info, 0, 1);
 		
-		GUIMain.TaskDisplayGrid.add(deadline, i%2, i/2);
+		GUIMain.TaskDisplayGrid.add(back, i%2, i/2);
 		
 	}
 

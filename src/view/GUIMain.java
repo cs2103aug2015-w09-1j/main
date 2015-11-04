@@ -42,7 +42,7 @@ public class GUIMain extends Application {
 	private static Font highlightFont = Font.font("Stencil Std", FontWeight.BOLD, FontPosture.REGULAR, 30);
 	private static Font littleFont = Font.font("Stencil Std", FontWeight.LIGHT, FontPosture.REGULAR, 20);
 	private static Font signalFont = Font.font("Stencil Std", FontWeight.LIGHT, FontPosture.REGULAR, 14);
-	private static Color commonColor = Color.web("#039ed3");
+	protected static Color commonColor = Color.web("#039ed3");
 	private static Color warningColor = Color.web("#ff0000");
 	private static Color safeColor = Color.web("#94df11");
 	private static Label line_1;
@@ -148,9 +148,9 @@ public class GUIMain extends Application {
 		TaskDisplayBlock.setHbarPolicy(ScrollBarPolicy.NEVER);
 
 	    TaskDisplayGrid = new GridPane();
-	    TaskDisplayGrid.setHgap(5);
-	    TaskDisplayGrid.setVgap(5);
-	    TaskDisplayGrid.setPadding(new Insets(5, 5, 5, 5));
+	    TaskDisplayGrid.setHgap(3);
+	    TaskDisplayGrid.setVgap(3);
+	    TaskDisplayGrid.setPadding(new Insets(3, 3, 3, 3));
 	    
 	    TaskDisplayBlock.setContent(TaskDisplayGrid);
 	}
