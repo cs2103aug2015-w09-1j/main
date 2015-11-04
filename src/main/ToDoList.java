@@ -15,9 +15,12 @@ public class ToDoList {
 	public static void main(String[] args) throws IOException {
 //	Controller.executeCMD("delete all");
 //		 Controller.executeCMD("add I am at starbucks now doing 2103T from 2015-10-20 1600 to 2015-10-30 1800");
-//		 Controller.executeCMD("add lecture from 2015-10-20 1600 to 2015-10-30 1800");
-//		 Controller.executeCMD("add abc by today");
-//		 Controller.executeCMD("add abc by today 5.11pm");
+		 Controller.executeCMD("add lecture");
+		 Controller.executeCMD("add abc by today");
+		 Controller.executeCMD("add efg by tomorrow 8.21pm");
+		 Controller.executeCMD("add hij from 2015-11-03 5.11pm to tomorrow 2359");
+		 Controller.executeCMD("add klm from 2015-11-04 5.11pm to today 2359");
+		 Controller.executeCMD("add opq from today 5.11pm to 2 weeks 2359");
 //		 Controller.executeCMD("add abc by today 5.09pm");
 //		Controller.executeCMD("add calvinsim by 2015-10-29 2159");
 //		Controller.executeCMD("add calvinsim by 2015-10-29 2201");
@@ -35,15 +38,15 @@ public class ToDoList {
 		//Controller.executeCMD("set C:/Users/calvin/Desktop/products/");
 		//System.out.println(Controller.getSize());
 		printout(Controller.getTaskList());
-		 System.out.println("---------------------------------------");
+		 System.out.println("F---------------------------------------");
 		printout(Controller.getFloatingTaskList());
-		System.out.println("----------------------------------------");
+		System.out.println("FW----------------------------------------");
 		printout(Controller.getFollowingWeekTaskList());
-		System.out.println("----------------------------------------");
+		System.out.println("O----------------------------------------");
 		printout(Controller.getOtherTaskList());
-		System.out.println("----------------------------------------");
+		System.out.println("A----------------------------------------");
 		printout(Controller.getArchivedList());
-		System.out.println("----------------------------------------");
+		System.out.println("T----------------------------------------");
 		printout(Controller.getTodayTaskList());
 		
 	}
@@ -53,16 +56,16 @@ public class ToDoList {
 			for (int i = 0; i < taskList.size(); i++) {
 				if (taskList.get(i) instanceof EventTask) {
 					EventTask et = (EventTask) taskList.get(i);
-					System.out.println(et.getTaskName() + " from "
+					System.out.println(i +" "+ et.getTaskName() + " from "
 							+ et.getStartTime() + " " + et.getStartDate() + " to "
 							+ et.getEndTime() + " " + et.getEndDate() + " " + et.getTaskType());
 				} else if (taskList.get(i) instanceof DeadlineTask) {
 					DeadlineTask dl = (DeadlineTask) taskList.get(i);
-					System.out.println(dl.getTaskName() + " by "
+					System.out.println(i +" "+ dl.getTaskName() + " by "
 							+ dl.getDeadlineTime() + " " + dl.getDeadlineDate() + " " + dl.getTaskType());
 				} else if (taskList.get(i) instanceof FloatingTask) {
 					FloatingTask fl = (FloatingTask) taskList.get(i);
-					System.out.println(fl.getTaskName() + " " + fl.getTaskType());
+					System.out.println(i +" "+ fl.getTaskName() + " " + fl.getTaskType());
 				}
 			}
 		}catch(Exception e){

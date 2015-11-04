@@ -1,6 +1,7 @@
 package command;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -60,19 +61,20 @@ public class TaskMemory {
 		try{
 			
 			String dateNow = LocalDate.now().toString();
+			String timeNow = LocalTime.now().toString();
 			for(Task t: this.taskList){
 				if(t instanceof DeadlineTask){
-					if(((DeadlineTask) t).getDeadlineDate().compareTo(dateNow) == 0 && !t.getTaskType().contains("Archived")){
+					if(((DeadlineTask) t).getDeadlineTime().compareTo(timeNow) >= 0 && ((DeadlineTask) t).getDeadlineDate().compareTo(dateNow) == 0 && !t.getTaskType().contains("Archived")){
 						todayList.add(t);
 					}
 				}else if(t instanceof EventTask){
-					if(((EventTask) t).getEndDate().compareTo(dateNow)== 0 && !t.getTaskType().contains("Archived")){
+					if((((EventTask) t).getEndTime().compareTo(timeNow) >= 0 && ((EventTask) t).getStartDate().compareTo(dateNow) <= 0  && ((EventTask) t).getEndDate().compareTo(dateNow) >= 0) && !t.getTaskType().contains("Archived")){
 						todayList.add(t);
 					}
 				}
 			}
 			
-			Collections.sort(todayList, new TimeComparator());
+			Collections.sort(todayList, new DateComparator());
 			return todayList;
 		}catch(Exception ex){
 			return null;
@@ -106,7 +108,7 @@ public class TaskMemory {
 
 		ArrayList<Task> followingWeekList = new ArrayList<Task>();
 		try {
-			String followWeekDate = LocalDate.now().plusDays(7).toString();
+			String followWeekDate = LocalDate.now().plusDays(3).toString();
 			String dateNow = LocalDate.now().toString();
 			for (Task t : this.taskList) {
 				if (t instanceof DeadlineTask) {
