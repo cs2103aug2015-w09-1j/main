@@ -42,10 +42,10 @@ public class GUI_try extends Application {
 		loadImage();
 		
 		initialStage(primaryStage);
-
-		buildView(primaryStage);
 		
 		primaryStage.show();
+		
+		buildView(primaryStage);
 	}
 	
 	private void loadImage() {
@@ -96,7 +96,7 @@ public class GUI_try extends Application {
 	    line_1.setFont(commonFont);
 	    line_1.setTextFill(commonColor);
 	    
-	    final Label line_2 = new Label("Today's");
+	    final Label line_2 = new Label("Recent");
 	    line_2.setFont(highlightFont);
 	    line_2.setTextFill(commonColor);
 	    
