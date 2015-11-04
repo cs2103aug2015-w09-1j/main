@@ -75,7 +75,7 @@
 //			show archived
 
 
-
+//@@author A0133976U
 
 package util;
 
@@ -131,6 +131,8 @@ public class CommandParser {
 	private int[] unarchivedIDs;
 	private int[] uncompleteIDs;
 	private int[] completeIDs;
+	
+	private static String help = "add <name>\nadd <name> from <time> to <time>\nadd <name> by   <deadline>\ndelete  <id>\nsearch  <id>\narchive <id>\nedit <id> <attribute> <info>\nset  path     <storage path>\nset  filename <filename>\nundo\n";
 	
 	CommandChecker cc;
 	
@@ -242,6 +244,9 @@ public class CommandParser {
 	}
 	public String getStorageFileName() {
 		return this.storageFileName;
+	}
+	public String getHelpString() {
+		return help;
 	}
 	//private methods
 	private void parse(){
@@ -719,7 +724,9 @@ public class CommandParser {
 
 
 	public static void main(String[] args) {
-		CommandParser cp2 = new CommandParser("uncomplete 1");
+//		String help = getHelpString();
+//		System.out.print(getHelpString());
+//		CommandParser cp2 = new CommandParser("uncomplete 1");
 //		print(cp2.getDeleteIDs());
 //		System.out.print(cp2.getUncompleteID());
 //		String arg = "edit 2 startDate sad";
