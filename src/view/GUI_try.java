@@ -34,8 +34,9 @@ public class GUI_try extends Application {
 	protected static TextField userCommandBlock;
 	private Font commonFont = Font.font("Stencil Std", FontWeight.BOLD, FontPosture.REGULAR, 22);
 	private Font highlightFont = Font.font("Stencil Std", FontWeight.BOLD, FontPosture.REGULAR, 30);
-	private Font littleFont = Font.font("Stencil Std", FontWeight.LIGHT, FontPosture.REGULAR, 18);
+	private Font littleFont = Font.font("Stencil Std", FontWeight.LIGHT, FontPosture.REGULAR, 20);
 	private Color commonColor = Color.web("#039ed3");
+	private Color warningColor = Color.web("#ff0000");
 	private Label line_1;
 	private Label line_2;
 	private Label line_3;
@@ -56,9 +57,6 @@ public class GUI_try extends Application {
 
 		buildView(primaryStage);
 
-		showError();
-		
-		showToday();
 	}
 
 	private void loadImage() {
@@ -153,15 +151,16 @@ public class GUI_try extends Application {
 
 		line_2.setText("Error!");
 		line_2.setFont(highlightFont);
-		line_2.setTextFill(commonColor);
+		line_2.setTextFill(warningColor);
 
 		line_3.setText("Check command format.");
 		line_3.setFont(commonFont);
-		line_3.setTextFill(commonColor);
+		line_3.setTextFill(warningColor);
 
 	}
 
 	private void showToday(){
+		
 		line_1.setText("");
 
 		line_2.setText("Today's");
@@ -171,5 +170,80 @@ public class GUI_try extends Application {
 		line_3.setText("tasks are listed below");
 		line_3.setFont(commonFont);
 		line_3.setTextFill(commonColor);
+	}
+	
+	private void showSetFilename(){
+		line_1.setText("new filename");
+		line_1.setFont(littleFont);
+		line_1.setTextFill(commonColor);
+
+		line_2.setText("Storage.getFileName");
+		line_2.setFont(littleFont);
+		line_2.setTextFill(commonColor);
+
+		line_3.setText("");
+	}
+	
+	private void showSetPath(){
+
+		line_1.setText("new path");
+		line_1.setFont(littleFont);
+		line_1.setTextFill(commonColor);
+
+		line_2.setText("Storage.getPath");
+		line_2.setFont(littleFont);
+		line_2.setTextFill(commonColor);
+
+		line_3.setText("");
+	}
+	
+	private void showAll(){
+		
+		line_1.setText("");
+
+		line_2.setText("All");
+		line_2.setFont(highlightFont);
+		line_2.setTextFill(commonColor);
+
+		line_3.setText("tasks are listed below");
+		line_3.setFont(commonFont);
+		line_3.setTextFill(commonColor);
+	}
+	
+	private void showArchived(){
+		
+		line_1.setText("");
+
+		line_2.setText("Archived");
+		line_2.setFont(highlightFont);
+		line_2.setTextFill(commonColor);
+
+		line_3.setText("tasks are listed below");
+		line_3.setFont(commonFont);
+		line_3.setTextFill(commonColor);
+	}
+	
+	private void showSearch(){
+		
+		line_1.setText("");
+
+		line_2.setText("Search results");
+		line_2.setFont(highlightFont);
+		line_2.setTextFill(commonColor);
+
+		line_3.setText("tasks are listed below");
+		line_3.setFont(commonFont);
+		line_3.setTextFill(commonColor);
+	}
+	
+	private void showSaved(){
+		
+		line_1.setText("");
+
+		line_2.setText("Saved!");
+		line_2.setFont(highlightFont);
+		line_2.setTextFill(commonColor);
+
+		line_3.setText("");
 	}
 }
