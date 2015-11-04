@@ -27,12 +27,19 @@ public class GUI_try extends Application {
 	protected static double yOffset = 0;
 	protected static Image backgroundImage;
 	protected static Image iconImage;
-	protected static String title = "Slent Jarvis";
+	protected static String title = "Silent Jarvis";
 	protected static GridPane grid;
 	protected static StackPane SystemMessageBlock;
 	protected static ScrollPane TaskDisplayBlock;
 	protected static TextField userCommandBlock;
-
+	private Font commonFont = Font.font("Stencil Std", FontWeight.BOLD, FontPosture.REGULAR, 22);
+	private Font highlightFont = Font.font("Stencil Std", FontWeight.BOLD, FontPosture.REGULAR, 30);
+	private Font littleFont = Font.font("Stencil Std", FontWeight.LIGHT, FontPosture.REGULAR, 18);
+	private Color commonColor = Color.web("#039ed3");
+	private Label line_1;
+	private Label line_2;
+	private Label line_3;
+	
 	public static void main(String args[]) {
 		
 		launch(args);
@@ -50,6 +57,8 @@ public class GUI_try extends Application {
 		buildView(primaryStage);
 
 		showError();
+		
+		showToday();
 	}
 
 	private void loadImage() {
@@ -97,6 +106,21 @@ public class GUI_try extends Application {
 	private void buildSysMsgBlk() {
 		
 		SystemMessageBlock.setPrefSize(300, 120);
+		
+		line_1 = new Label();
+		line_2 = new Label();
+		line_3 = new Label();
+		
+
+		SystemMessageBlock.getChildren().add(line_1);
+		StackPane.setAlignment(line_1, Pos.TOP_CENTER);
+
+		SystemMessageBlock.getChildren().add(line_2);
+		StackPane.setAlignment(line_2, Pos.CENTER);
+
+		SystemMessageBlock.getChildren().add(line_3);
+		StackPane.setAlignment(line_3, Pos.BOTTOM_CENTER);
+		
 		showWelcome();
 	}
 
@@ -110,53 +134,42 @@ public class GUI_try extends Application {
 
 	private void showWelcome() {
 		
-		Font commonFont = Font.font("Stencil Std", FontWeight.BOLD, FontPosture.REGULAR, 22);
-		Font highlightFont = Font.font("Stencil Std", FontWeight.BOLD, FontPosture.REGULAR, 30);
-		Color commonColor = Color.web("#039ed3");
-
-		final Label line_1 = new Label("Welcome to SilentJarvis!");
+		line_1.setText("Welcome to SilentJarvis!");
 		line_1.setFont(commonFont);
 		line_1.setTextFill(commonColor);
 
-		final Label line_2 = new Label("Recent");
+		line_2.setText("Recent");
 		line_2.setFont(highlightFont);
 		line_2.setTextFill(commonColor);
 
-		final Label line_3 = new Label("tasks are listed below");
+		line_3.setText("tasks are listed below");
 		line_3.setFont(commonFont);
 		line_3.setTextFill(commonColor);
-
-		SystemMessageBlock.getChildren().add(line_1);
-		StackPane.setAlignment(line_1, Pos.TOP_CENTER);
-
-		SystemMessageBlock.getChildren().add(line_2);
-		StackPane.setAlignment(line_2, Pos.CENTER);
-
-		SystemMessageBlock.getChildren().add(line_3);
-		StackPane.setAlignment(line_3, Pos.BOTTOM_CENTER);
 	}
 
 	private void showError() {
 		
-		Font commonFont = Font.font("Stencil Std", FontWeight.BOLD, FontPosture.REGULAR, 22);
-		Font highlightFont = Font.font("Stencil Std", FontWeight.BOLD, FontPosture.REGULAR, 30);
-		Color commonColor = Color.web("#039ed3");
+		line_1.setText("");
 
-		final Label line_1 = new Label("Error!");
-		line_1.setFont(highlightFont);
-		line_1.setTextFill(commonColor);
-
-		final Label line_2 = new Label("Check command format.");
-		line_2.setFont(commonFont);
+		line_2.setText("Error!");
+		line_2.setFont(highlightFont);
 		line_2.setTextFill(commonColor);
 
-		SystemMessageBlock.getChildren().remove(0, 3);
+		line_3.setText("Check command format.");
+		line_3.setFont(commonFont);
+		line_3.setTextFill(commonColor);
 
-		SystemMessageBlock.getChildren().add(line_1);
-		StackPane.setAlignment(line_1, Pos.CENTER);
-
-		SystemMessageBlock.getChildren().add(line_2);
-		StackPane.setAlignment(line_2, Pos.BOTTOM_CENTER);
 	}
 
+	private void showToday(){
+		line_1.setText("");
+
+		line_2.setText("Today's");
+		line_2.setFont(highlightFont);
+		line_2.setTextFill(commonColor);
+
+		line_3.setText("tasks are listed below");
+		line_3.setFont(commonFont);
+		line_3.setTextFill(commonColor);
+	}
 }
