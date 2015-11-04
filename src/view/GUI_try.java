@@ -1,6 +1,10 @@
 package view;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -11,6 +15,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -25,6 +31,7 @@ public class GUI_try extends Application {
 	protected static String returnCommand;
 	protected static double xOffset = 0;
 	protected static double yOffset = 0;
+	private static Logger logger = Logger.getLogger("MotionCatcher");
 	protected Image backgroundImage;
 	protected Image iconImage;
 	protected String title="Slent Jarvis";
@@ -43,18 +50,12 @@ public class GUI_try extends Application {
 		
 		primaryStage.show();
 	}
-	
+
 	private void loadImage() {
 		backgroundImage=new Image(getClass().getResourceAsStream("back3.png"));
 		iconImage=new Image(getClass().getResourceAsStream("icon.png"));
 	}
-	
-	private void initialStage(Stage primaryStage) {
-		primaryStage.setTitle(title);
-		primaryStage.initStyle(StageStyle.UNDECORATED);
-		primaryStage.getIcons().add(iconImage);
-	}
-	
+
 	private void buildView(Stage primaryStage) {
 		GridPane grid = new GridPane();
 		grid.setHgap(5);
@@ -81,6 +82,47 @@ public class GUI_try extends Application {
 
 		Scene scene = new Scene(back, 350, 660);
 		primaryStage.setScene(scene);
+		
+		// catch the motion of users
+		userCommandBlock.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent event) {
+				if (event.getCode().equals(KeyCode.ENTER)) {
+					GUI_try.userCommand = userCommandBlock.getText();
+					// link with logic
+					System.out.print(GUI_try.userCommand);
+					userCommandBlock.clear();
+					// link with logic
+					if (!GUI_try.userCommand.equals("")) {
+
+						logger.log(Level.INFO, "get the output");
+						// Yui_GUI.returnCommand =
+						// ToDoList.implement(Yui_GUI.userCommand);
+						eventGrid.getChildren().clear();
+						// GUILogic.showEvents(eventGrid,deadlineIcon,
+						// eventIcon, floatingIcon);
+						//showBox.appendText(Yui_GUI.returnCommand + "\n" + "\n");
+						// listBk.setImage(listBkImage);
+						logger.log(Level.INFO, "end of processing");
+					}
+				}
+
+				if (event.getCode().equals(KeyCode.UP)) {
+					TaskDisplayBlock.setVvalue(TaskDisplayBlock.getVvalue() - 0.3f);
+				}
+				if (event.getCode().equals(KeyCode.DOWN)) {
+					TaskDisplayBlock.setVvalue(TaskDisplayBlock.getVvalue() + 0.3f);
+				}
+			}
+		});
+	}
+
+	private ScrollPane buildTskDisBlk(ScrollPane TaskDisplayBlock) {
+		TaskDisplayBlock.setPrefSize(300, 420);
+		TaskDisplayBlock.setOpacity(0.9);
+		TaskDisplayBlock.setHbarPolicy(ScrollBarPolicy.NEVER);
+		
+		return TaskDisplayBlock;
 	}
 
 	private StackPane buildSysMsgBlk(StackPane SystemMessageBlock) {
@@ -101,24 +143,19 @@ public class GUI_try extends Application {
 	    line_3.setTextFill(commonColor);
 
 	    SystemMessageBlock.setPrefSize(300, 120);
-	    
 	    SystemMessageBlock.getChildren().add(line_1);
 	    StackPane.setAlignment(line_1, Pos.TOP_CENTER);
-	    
 	    SystemMessageBlock.getChildren().add(line_2);
 	    StackPane.setAlignment(line_2, Pos.CENTER);
-	    
 	    SystemMessageBlock.getChildren().add(line_3);
 	    StackPane.setAlignment(line_3, Pos.BOTTOM_CENTER);
 	    
 		return SystemMessageBlock;
 	}
 
-	private ScrollPane buildTskDisBlk(ScrollPane TaskDisplayBlock) {
-		TaskDisplayBlock.setPrefSize(300, 420);
-		TaskDisplayBlock.setOpacity(0.9);
-		TaskDisplayBlock.setHbarPolicy(ScrollBarPolicy.NEVER);
-		
-		return TaskDisplayBlock;
+	private void initialStage(Stage primaryStage) {
+		primaryStage.setTitle(title);
+		primaryStage.initStyle(StageStyle.UNDECORATED);
+		primaryStage.getIcons().add(iconImage);
 	}
 }
