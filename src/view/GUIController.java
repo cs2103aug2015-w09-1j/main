@@ -14,7 +14,7 @@ public class GUIController {
 
 	private static void showRecentList() {
 		TaskList = Controller.getTodayTaskList();
-
+		
 	}
 
 	private void showFeedback(String command) {
