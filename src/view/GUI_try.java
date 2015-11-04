@@ -28,7 +28,11 @@ public class GUI_try extends Application {
 	protected Image backgroundImage;
 	protected Image iconImage;
 	protected String title="Slent Jarvis";
-
+	GridPane grid;
+	StackPane SystemMessageBlock;
+	ScrollPane TaskDisplayBlock;
+	TextField userCommandBlock;
+	
 	public static void main(String args[]) {
 		launch(args);
 	}
@@ -56,7 +60,7 @@ public class GUI_try extends Application {
 	}
 	
 	private void buildView(Stage primaryStage) {
-		GridPane grid = new GridPane();
+		grid = new GridPane();
 		grid.setHgap(5);
 		grid.setVgap(20);
 		grid.setPadding(new Insets(10, 5, 5, 25));
@@ -65,15 +69,15 @@ public class GUI_try extends Application {
 		Group back = new Group();
 		back.getChildren().addAll(backgroung,grid);
 		
-		StackPane SystemMessageBlock= new StackPane();
+		SystemMessageBlock= new StackPane();
 		SystemMessageBlock=buildSysMsgBlk(SystemMessageBlock);
 	    grid.add(SystemMessageBlock, 0, 1);
 		
-		ScrollPane TaskDisplayBlock = new ScrollPane();
+		TaskDisplayBlock = new ScrollPane();
 		TaskDisplayBlock=buildTskDisBlk(TaskDisplayBlock);
 		grid.add(TaskDisplayBlock, 0, 2);
 
-		TextField userCommandBlock = new TextField();
+		userCommandBlock = new TextField();
 		userCommandBlock.requestFocus();
 		grid.add(userCommandBlock, 0, 3);
 
