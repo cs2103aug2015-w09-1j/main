@@ -80,7 +80,7 @@ public class TaskMemory {
 	}
 
 	public ArrayList<Task> getTaskList() {
-		Collections.sort(this.taskList, new TaskNameComparator());
+		Collections.sort(this.taskList, new DateComparator());
 		return this.taskList;
 	}
 
