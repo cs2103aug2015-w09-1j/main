@@ -9,13 +9,21 @@ public class DateComparator implements Comparator<Task> {
 	@Override
 	public int compare(Task arg0, Task arg1) {
 		if(arg0 instanceof DeadlineTask && arg1 instanceof EventTask){
-			return ((DeadlineTask) arg0).getDeadlineDate().compareTo(((EventTask) arg1).getEndDate());
+			String deadlineDateTime = ((DeadlineTask) arg0).getDeadlineDate() + " " + ((DeadlineTask) arg0).getDeadlineTime();
+			String eventDateTime = ((EventTask) arg1).getEndDate() + " " + ((EventTask) arg1).getEndTime();
+			return deadlineDateTime.compareTo(eventDateTime);
 		} else if(arg0 instanceof DeadlineTask && arg1 instanceof DeadlineTask){
-			return ((DeadlineTask) arg0).getDeadlineDate().compareTo(((DeadlineTask) arg1).getDeadlineDate());
+			String deadlineDateTime = ((DeadlineTask) arg0).getDeadlineDate() + " " + ((DeadlineTask) arg0).getDeadlineTime();
+			String deadlineDateTime2 = ((DeadlineTask) arg1).getDeadlineDate() + " " + ((DeadlineTask) arg1).getDeadlineTime();
+			return deadlineDateTime.compareTo(deadlineDateTime2);
 		} else if(arg0 instanceof EventTask && arg1 instanceof DeadlineTask){
-			return ((EventTask) arg0).getEndDate().compareTo(((DeadlineTask) arg1).getDeadlineDate());
+			String deadlineDateTime = ((DeadlineTask) arg1).getDeadlineDate() + " " + ((DeadlineTask) arg1).getDeadlineTime();
+			String eventDateTime = ((EventTask) arg0).getEndDate() + " " + ((EventTask) arg0).getEndTime();
+			return eventDateTime.compareTo(deadlineDateTime);
 		} else if(arg0 instanceof EventTask && arg1 instanceof EventTask){
-			return ((EventTask) arg0).getEndDate().compareTo(((EventTask) arg1).getEndDate());
+			String eventDateTime = ((EventTask) arg0).getEndDate() + " " + ((EventTask) arg0).getEndTime();
+			String eventDateTime2 = ((EventTask) arg1).getEndDate() + " " + ((EventTask) arg1).getEndTime();
+			return eventDateTime.compareTo(eventDateTime2);
 		}
 		return 0;
 	}

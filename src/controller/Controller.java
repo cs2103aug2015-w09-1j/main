@@ -235,5 +235,8 @@ public class Controller {
 	public static ArrayList<Task> getTodayTaskList() {
 		return TaskMemory.getInstance().getTodayTaskList();
 	}
+	public static ArrayList<Task> getDueTaskList(){
+		return TaskMemory.getInstance().getDueTask();
+	}
 
 }
