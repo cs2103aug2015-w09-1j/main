@@ -46,7 +46,7 @@ public class ToDoList {
 		 System.out.println("F---------------------------------------");
 		printout(Controller.getFloatingTaskList());
 		System.out.println("FW----------------------------------------");
-		printout(Controller.getFollowingWeekTaskList());
+		printout(Controller.getFollowingDayTaskList());
 		System.out.println("O----------------------------------------");
 		//printout(Controller.getOtherTaskList());
 		//System.out.println("A----------------------------------------");

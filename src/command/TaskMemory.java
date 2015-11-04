@@ -111,7 +111,7 @@ public class TaskMemory {
 
 	}
 
-	public ArrayList<Task> getFollowingWeekTask() {
+	public ArrayList<Task> getFollowingDayTask() {
 
 		ArrayList<Task> followingWeekList = new ArrayList<Task>();
 		try {

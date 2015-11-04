@@ -237,8 +237,8 @@ public class Controller {
 		return TaskMemory.getInstance().getFloatingTask();
 	}
 
-	public static ArrayList<Task> getFollowingWeekTaskList() {
-		return TaskMemory.getInstance().getFollowingWeekTask();
+	public static ArrayList<Task> getFollowingDayTaskList() {
+		return TaskMemory.getInstance().getFollowingDayTask();
 	}
 
 	public static ArrayList<Task> getOtherTaskList() {
