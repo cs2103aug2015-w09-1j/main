@@ -105,6 +105,14 @@ public class CommandParserTest {
 		CommandParser cp19 = new CommandParser("exit");
 		assertEquals("exit", cp19.getCommandType());
 		
+		//display
+		CommandParser cp20 = new CommandParser("display");
+		assertEquals("display", cp20.getCommandType());
+		
+		//clear
+		CommandParser cp21 = new CommandParser("clear");
+		assertEquals("clear", cp21.getCommandType());
+		
 	}
 	
 	@Test
@@ -237,7 +245,7 @@ public class CommandParserTest {
 	@Test
 	public void testGetEditAttribute(){
 		CommandParser cp1 = new CommandParser("edit 1 startDate 2015-10-23");
-		assertEquals("startDate", cp1.getEditAttribute());
+		assertEquals("startdate", cp1.getEditAttribute());
 	}
 	
 	@Test
@@ -368,5 +376,16 @@ public class CommandParserTest {
 		assertEquals(help, cp1.getHelpString());
 	}
 	
+	@Test
+	public void TestGetSearchStartDate() {
+		CommandParser cp1 = new CommandParser("search from 2015-10-31 to 2015-11-3");
+		assertEquals("2015-10-31", cp1.getSearchStartDate());
+	}
+	
+	@Test
+	public void TestGetSearchEndDate() {
+		CommandParser cp1 = new CommandParser("search from 2015-10-31 to 2015-11-3");
+		assertEquals("2015-11-03", cp1.getSearchEndDate());
+	}
 	
 }
