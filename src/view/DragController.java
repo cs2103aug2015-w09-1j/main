@@ -12,16 +12,16 @@ public class DragController {
 		grid.setOnMousePressed(new EventHandler<MouseEvent>() {
 	           @Override
 	           public void handle(MouseEvent event) {
-	        	   GUI_try.xOffset = event.getSceneX();
-	        	   GUI_try.yOffset = event.getSceneY();
+	        	   GUIMain.xOffset = event.getSceneX();
+	        	   GUIMain.yOffset = event.getSceneY();
 	           }
 	       });
 
 	       grid.setOnMouseDragged(new EventHandler<MouseEvent>() {
 	           @Override
 	           public void handle(MouseEvent event) {
-	               primaryStage.setX(event.getScreenX() - GUI_try.xOffset);
-	               primaryStage.setY(event.getScreenY() - GUI_try.yOffset);
+	               primaryStage.setX(event.getScreenX() - GUIMain.xOffset);
+	               primaryStage.setY(event.getScreenY() - GUIMain.yOffset);
 	           }
 	       });
 	}
