@@ -32,14 +32,14 @@ public class GUI_try extends Application {
 	protected static StackPane SystemMessageBlock;
 	protected static ScrollPane TaskDisplayBlock;
 	protected static TextField userCommandBlock;
-	private Font commonFont = Font.font("Stencil Std", FontWeight.BOLD, FontPosture.REGULAR, 22);
-	private Font highlightFont = Font.font("Stencil Std", FontWeight.BOLD, FontPosture.REGULAR, 30);
-	private Font littleFont = Font.font("Stencil Std", FontWeight.LIGHT, FontPosture.REGULAR, 20);
-	private Color commonColor = Color.web("#039ed3");
-	private Color warningColor = Color.web("#ff0000");
-	private Label line_1;
-	private Label line_2;
-	private Label line_3;
+	private static Font commonFont = Font.font("Stencil Std", FontWeight.BOLD, FontPosture.REGULAR, 22);
+	private static Font highlightFont = Font.font("Stencil Std", FontWeight.BOLD, FontPosture.REGULAR, 30);
+	private static Font littleFont = Font.font("Stencil Std", FontWeight.LIGHT, FontPosture.REGULAR, 20);
+	private static Color commonColor = Color.web("#039ed3");
+	private static Color warningColor = Color.web("#ff0000");
+	private static Label line_1;
+	private static Label line_2;
+	private static Label line_3;
 	
 	public static void main(String args[]) {
 		
@@ -57,6 +57,7 @@ public class GUI_try extends Application {
 
 		buildView(primaryStage);
 
+		GUIController.start();
 	}
 
 	private void loadImage() {
@@ -145,7 +146,7 @@ public class GUI_try extends Application {
 		line_3.setTextFill(commonColor);
 	}
 
-	private void showError() {
+	protected static void showError() {
 		
 		line_1.setText("");
 
@@ -159,7 +160,7 @@ public class GUI_try extends Application {
 
 	}
 
-	private void showToday(){
+	protected static void showToday(){
 		
 		line_1.setText("");
 
@@ -172,7 +173,7 @@ public class GUI_try extends Application {
 		line_3.setTextFill(commonColor);
 	}
 	
-	private void showSetFilename(){
+	protected static void showSetFilename(){
 		line_1.setText("new filename");
 		line_1.setFont(littleFont);
 		line_1.setTextFill(commonColor);
@@ -184,7 +185,7 @@ public class GUI_try extends Application {
 		line_3.setText("");
 	}
 	
-	private void showSetPath(){
+	protected static void showSetPath(){
 
 		line_1.setText("new path");
 		line_1.setFont(littleFont);
@@ -197,7 +198,7 @@ public class GUI_try extends Application {
 		line_3.setText("");
 	}
 	
-	private void showAll(){
+	protected static void showAll(){
 		
 		line_1.setText("");
 
@@ -210,7 +211,7 @@ public class GUI_try extends Application {
 		line_3.setTextFill(commonColor);
 	}
 	
-	private void showArchived(){
+	protected static void showArchived(){
 		
 		line_1.setText("");
 
@@ -223,7 +224,7 @@ public class GUI_try extends Application {
 		line_3.setTextFill(commonColor);
 	}
 	
-	private void showSearch(){
+	protected static void showSearch(){
 		
 		line_1.setText("");
 
@@ -236,7 +237,7 @@ public class GUI_try extends Application {
 		line_3.setTextFill(commonColor);
 	}
 	
-	private void showSaved(){
+	protected static void showSaved(){
 		
 		line_1.setText("");
 
