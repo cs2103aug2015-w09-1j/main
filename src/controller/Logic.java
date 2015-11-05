@@ -84,10 +84,16 @@ public class Logic {
 	// execute deleting all tasks in the current view list
 	public void deleteAllTask(ArrayList<Task> currentList) {
 		ArrayList<Task> deleteBulkArray = new ArrayList<Task>();
-
-		for (Task t : currentList) {
-			deleteBulkArray.add(t);
+		for(int i = 0 ; i < currentList.size(); i++){
+			if(deleteBulkArray.isEmpty()){
+				deleteBulkArray.add(currentList.get(i));
+			}else{
+				if(!deleteBulkArray.contains(currentList.get(i))){
+					deleteBulkArray.add(currentList.get(i));
+				}
+			}
 		}
+		
 		DeleteBulkTask deletebulk = new DeleteBulkTask(deleteBulkArray);
 		deletebulk.execute();
 		pushToProcessStack(deletebulk);
