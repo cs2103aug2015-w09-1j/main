@@ -15,17 +15,17 @@ public class ToDoList {
 	public static void main(String[] args) throws IOException {
 //	Controller.executeCMD("delete all");
 //		 Controller.executeCMD("add I am at starbucks now doing 2103T from 2015-10-20 1600 to 2015-10-30 1800");
-		 Controller.executeCMD("add lecture");
-		 Controller.executeCMD("add 123 by 2015-11-04 2359");
-		 Controller.executeCMD("add 456 by 2015-11-05");
-		 Controller.executeCMD("add abc by today 2am");
-		 Controller.executeCMD("add abcefg by tomorrow 2359");
-		 Controller.executeCMD("add efg by tomorrow 8.21pm");
-		 Controller.executeCMD("add hij from 2015-11-03 5.11pm to today 2am");
-		 Controller.executeCMD("add klm from 2015-11-01 5.11pm to tomorrow 2359");
-		 Controller.executeCMD("add opq from tomorrow 5.11pm to 2 weeks 2359");
-		 Controller.executeCMD("add rst from tomorrow 5.11pm to 2015-11-08 2359");
-		 Controller.executeCMD("add uvw from 2015-11-03 5.11pm to 2015-11-05 0140");
+//		 Controller.executeCMD("add lecture");
+//		 Controller.executeCMD("add 123 by 2015-11-04 2359");
+//		 Controller.executeCMD("add 456 by 2015-11-05");
+//		 Controller.executeCMD("add abc by today 2am");
+//		 Controller.executeCMD("add abcefg by tomorrow 2359");
+//		 Controller.executeCMD("add efg by tomorrow 8.21pm");
+//		 Controller.executeCMD("add hij from 2015-11-03 5.11pm to today 2am");
+//		 Controller.executeCMD("add klm from 2015-11-01 5.11pm to tomorrow 2359");
+//		 Controller.executeCMD("add opq from tomorrow 5.11pm to 2 weeks 2359");
+//		 Controller.executeCMD("add rst from tomorrow 5.11pm to 2015-11-08 2359");
+//		 Controller.executeCMD("add uvw from 2015-11-03 5.11pm to 2015-11-05 0140");
 //		 Controller.executeCMD("add abc by today 5.09pm");
 //		Controller.executeCMD("add calvinsim by 2015-10-29 2159");
 //		Controller.executeCMD("add calvinsim by 2015-10-29 2201");
@@ -55,6 +55,8 @@ public class ToDoList {
 		printout(Controller.getTodayTaskList());
 		System.out.println("D----------------------------------------");
 		printout(Controller.getDueTaskList());
+		System.out.println("COMB----------------------------------------");
+		printout(Controller.getCombinedTaskList());
 	}
 
 	private static void printout(ArrayList<Task> taskList) {

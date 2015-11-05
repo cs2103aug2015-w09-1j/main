@@ -56,6 +56,35 @@ public class TaskMemory {
 
 	}
 
+	// Today + Following + Floating
+	public ArrayList<Task> getCombinedTaskList() {
+		ArrayList<Task> combinedTaskList = new ArrayList<Task>();
+		try {
+//			int totalSize = getTodayTaskList().size()
+//					+ getFollowingDayTask().size() + getFloatingTask().size();
+			combinedTaskList.addAll(getTodayTaskList());
+			combinedTaskList.addAll(getFollowingDayTask());
+			combinedTaskList.addAll(getFloatingTask());
+			
+			
+//			for (int i = 0; i < totalSize; i++) {
+//				for (int j = 0; j < getTodayTaskList().size(); j++) {
+//					
+//				}
+//				for (int k = 0; k < getFollowingDayTask().size(); k++) {
+//
+//				}
+//				for (int l = 0; l < getFloatingTask().size(); l++) {
+//
+//				}
+//			}
+
+			return combinedTaskList;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
 	public ArrayList<Task> getTodayTaskList() {
 		ArrayList<Task> todayList = new ArrayList<Task>();
 		try {
@@ -122,17 +151,22 @@ public class TaskMemory {
 			String followingDateTime = followWeekDate + " " + timeNow;
 			for (Task t : this.taskList) {
 				if (t instanceof DeadlineTask) {
-					String dateTime = ((DeadlineTask) t).getDeadlineDate() + " " + ((DeadlineTask) t).getDeadlineTime();
-					if (dateTime.compareTo(dateTimeNow) > 0 && dateTime.compareTo(followingDateTime) > 0 ) {
+					String dateTime = ((DeadlineTask) t).getDeadlineDate()
+							+ " " + ((DeadlineTask) t).getDeadlineTime();
+					if (dateTime.compareTo(dateTimeNow) > 0
+							&& dateTime.compareTo(followingDateTime) > 0) {
 						if (!t.getTaskType().contains("Archived")) {
 
 							followingWeekList.add(t);
 						}
 					}
 				} else if (t instanceof EventTask) {
-					String endDateTime = ((EventTask) t).getEndDate() + " " + ((EventTask) t).getEndTime();
-					String startDateTime = ((EventTask) t).getStartDate() + " " + ((EventTask) t).getStartTime();
-					if (endDateTime.compareTo(dateTimeNow) > 0 && endDateTime.compareTo(followingDateTime) > 0) {
+					String endDateTime = ((EventTask) t).getEndDate() + " "
+							+ ((EventTask) t).getEndTime();
+					// String startDateTime = ((EventTask) t).getStartDate() +
+					// " " + ((EventTask) t).getStartTime();
+					if (endDateTime.compareTo(dateTimeNow) > 0
+							&& endDateTime.compareTo(followingDateTime) > 0) {
 						if (!t.getTaskType().contains("Archived")) {
 
 							followingWeekList.add(t);

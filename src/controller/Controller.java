@@ -18,7 +18,7 @@ public class Controller {
 	private static Controller _instance;
 	private static Logic logic = new Logic();
 	private static ArrayList<Task> displayList = TaskMemory.getInstance()
-			.getNoArchivedList();
+			.getCombinedTaskList();
 	private static CommandParser parser = null;
 
 	public static Controller getInstance() {
@@ -60,7 +60,7 @@ public class Controller {
 			case "add":
 				logic.executeCreateTask(_taskName, _startDate, _startTime,
 						_endDate, _endTime);
-				displayList = TaskMemory.getInstance().getNoArchivedList();
+				displayList = TaskMemory.getInstance().getCombinedTaskList();
 				break;
 			case "delete":
 
@@ -74,7 +74,7 @@ public class Controller {
 					}
 				}
 
-				displayList = TaskMemory.getInstance().getNoArchivedList();
+				displayList = TaskMemory.getInstance().getCombinedTaskList();
 				break;
 
 			case "edit":
@@ -111,8 +111,8 @@ public class Controller {
 			case "display":
 
 				if (_displayMode == null) {
-					ArrayList<Task> list = TaskMemory.getInstance()
-							.getNoArchivedList();
+					ArrayList<Task> list = TaskMemory.getInstance().
+							getCombinedTaskList();
 					displayList = list;
 				}
 
@@ -120,7 +120,7 @@ public class Controller {
 
 			case "undo":
 				logic.undo();
-				displayList = TaskMemory.getInstance().getNoArchivedList();
+				displayList = TaskMemory.getInstance().getCombinedTaskList();
 				break;
 
 			case "set":
@@ -139,7 +139,7 @@ public class Controller {
 				_editInfo = "Archived";
 				logic.executeUpdateTaskByAttribute(displayList, _archiveIndex,
 						_editAttr, _editInfo);
-				displayList = TaskMemory.getInstance().getNoArchivedList();
+				displayList = TaskMemory.getInstance().getCombinedTaskList();
 				break;
 
 			case "unarchived":
@@ -148,7 +148,7 @@ public class Controller {
 				_editInfo = "null";
 				logic.executeUpdateTaskByAttribute(displayList,
 						_unarchiveIndex, _editAttr, _editInfo);
-				displayList = TaskMemory.getInstance().getNoArchivedList();
+				displayList = TaskMemory.getInstance().getCombinedTaskList();
 				break;
 
 			case "complete":
@@ -157,7 +157,7 @@ public class Controller {
 				_editInfo = "Completed";
 				logic.executeUpdateTaskByAttribute(displayList, _completeIndex,
 						_editAttr, _editInfo);
-				displayList = TaskMemory.getInstance().getNoArchivedList();
+				displayList = TaskMemory.getInstance().getCombinedTaskList();
 				break;
 
 			case "uncomplete":
@@ -166,7 +166,7 @@ public class Controller {
 				_editInfo = "null";
 				logic.executeUpdateTaskByAttribute(displayList,
 						_uncompleteIndex, _editAttr, _editInfo);
-				displayList = TaskMemory.getInstance().getNoArchivedList();
+				displayList = TaskMemory.getInstance().getCombinedTaskList();
 				break;
 
 			case "show":
@@ -191,7 +191,7 @@ public class Controller {
 				break;
 
 			case "load":
-				displayList = TaskMemory.getInstance().getNoArchivedList();
+				displayList = TaskMemory.getInstance().getCombinedTaskList();
 
 				break;
 			case "help":
@@ -205,7 +205,7 @@ public class Controller {
 				
 			case "clear":
 				logic.deleteAllTask(displayList);
-				displayList = TaskMemory.getInstance().getNoArchivedList();
+				displayList = TaskMemory.getInstance().getCombinedTaskList();
 				break;
 
 			case "exit":
@@ -216,7 +216,8 @@ public class Controller {
 
 			}
 		} catch (Exception e) {
-
+			String msg = "ERROR";
+			getErrorMessage(msg);
 		}
 	}
 
@@ -227,6 +228,10 @@ public class Controller {
 
 	public static int getSize() {
 		return displayList.size();
+	}
+	
+	public static String getErrorMessage(String errorMessage){
+		return errorMessage;
 	}
 
 	public static String getHelpString(String helpMessage) {
@@ -259,6 +264,10 @@ public class Controller {
 
 	public static ArrayList<Task> getDueTaskList() {
 		return TaskMemory.getInstance().getDueTask();
+	}
+	
+	public static ArrayList<Task> getCombinedTaskList(){
+		return TaskMemory.getInstance().getCombinedTaskList();
 	}
 
 }
