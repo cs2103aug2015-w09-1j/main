@@ -53,6 +53,9 @@ public class GUIController {
 		if (task.getTaskType().equals("Completed") || task.getTaskType() == "Completed") {
 			ImageView combackg = new ImageView(GUIMain.completeImage);
 			back.getChildren().addAll(combackg, event);
+		} else if(task.getTaskType().equals("Archived") || task.getTaskType() == "Archived"){
+			ImageView backgroung = new ImageView(GUIMain.archivedImage);
+			back.getChildren().addAll(backgroung, event);
 		} else {
 			ImageView backgroung = new ImageView(GUIMain.eventImage);
 			back.getChildren().addAll(backgroung, event);
@@ -80,6 +83,9 @@ public class GUIController {
 		if (task.getTaskType().equals("Completed") || task.getTaskType() == "Completed") {
 			name.setFill(GUIMain.completeColor);
 			info.setFill(GUIMain.completeColor);
+		}else if(task.getTaskType().equals("Archived") || task.getTaskType() == "Archived"){
+			name.setFill(GUIMain.archivedColor);
+			info.setFill(GUIMain.archivedColor);
 		}
 
 		GUIMain.TaskDisplayGrid.add(back, 0, i);
@@ -96,6 +102,9 @@ public class GUIController {
 		if (task.getTaskType().equals("Completed") || task.getTaskType() == "Completed") {
 			ImageView combackg = new ImageView(GUIMain.completeImage);
 			back.getChildren().addAll(combackg, floating);
+		} else if(task.getTaskType().equals("Archived") || task.getTaskType() == "Archived"){
+			ImageView backgroung = new ImageView(GUIMain.archivedImage);
+			back.getChildren().addAll(backgroung, floating);
 		} else {
 			ImageView backgroung = new ImageView(GUIMain.floatingImage);
 			back.getChildren().addAll(backgroung, floating);
@@ -112,6 +121,8 @@ public class GUIController {
 
 		if (task.getTaskType().equals("Completed") || task.getTaskType() == "Completed") {
 			name.setFill(GUIMain.completeColor);
+		}else if(task.getTaskType().equals("Archived") || task.getTaskType() == "Archived"){
+			name.setFill(GUIMain.archivedColor);
 		}
 
 		GUIMain.TaskDisplayGrid.add(back, 0, i);
@@ -128,6 +139,9 @@ public class GUIController {
 		if (task.getTaskType().equals("Completed") || task.getTaskType() == "Completed") {
 			ImageView combackg = new ImageView(GUIMain.completeImage);
 			back.getChildren().addAll(combackg, deadline);
+		} else if(task.getTaskType().equals("Archived") || task.getTaskType() == "Archived") {
+			ImageView backgroung = new ImageView(GUIMain.archivedImage);
+			back.getChildren().addAll(backgroung, deadline);
 		} else {
 			ImageView backgroung = new ImageView(GUIMain.deadlineImage);
 			back.getChildren().addAll(backgroung, deadline);
@@ -153,6 +167,9 @@ public class GUIController {
 		if (task.getTaskType().equals("Completed") || task.getTaskType() == "Completed") {
 			name.setFill(GUIMain.completeColor);
 			info.setFill(GUIMain.completeColor);
+		}else if(task.getTaskType().equals("Archived") || task.getTaskType() == "Archived"){
+			name.setFill(GUIMain.archivedColor);
+			info.setFill(GUIMain.archivedColor);
 		}
 
 		GUIMain.TaskDisplayGrid.add(back, 0, i);
