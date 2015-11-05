@@ -47,6 +47,10 @@ public class MainApp extends Application {
         rearrId();
     }
     
+    public BorderPane getRoot() {
+    	return rootLayout;
+    }
+    
     private static void rearrId() {
     	for(int i = 0;i<taskList.size();i++) {
     		taskList.get(i).setTaskId(new SimpleIntegerProperty(i + 1));

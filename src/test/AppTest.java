@@ -2,30 +2,59 @@ package test;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.List;
 
-import static org.hamcrest.Matchers.*;
+import org.junit.BeforeClass;
+
+import static org.hamcrest.CoreMatchers.is;
+
 import org.junit.Test;
 
 import com.athaydes.automaton.FXApp;
-import com.athaydes.automaton.FXer;
 
-import javafx.scene.control.TextField;
+import com.athaydes.automaton.cli.AutomatonScriptRunner;
+
 import view.MainApp;
 
 public class AppTest {
 
-	@Test
-	public void test() {
-		FXApp.startApp( new MainApp() );
-		FXApp.initializeIfStageExists();
-		if (FXApp.isInitialized()) {
-		  FXer fxer = FXer.getUserWith( FXApp.getScene().getRoot() );
-		  fxer.clickOn(TextField.class).enterText("add meeting with boss").waitForFxEvents();
-		  assertEquals(1 + 1, 2);
+    static class ScriptOutputCapturer {
+        List<String> strings = new ArrayList<>();
 
-		} else {
-		  throw new RuntimeException( "Could not find a JavaFX Stage" );
-		}
-	}
+        public void write(String s) {
+            strings.add(s);
+        }
+
+        public String lastLine() {
+            return strings.get(strings.size() - 2); // last line is just new-line
+        }
+    }
+
+    @BeforeClass
+    public static void setup() {
+        FXApp.startApp(new MainApp());
+    }
+
+    @Test
+    public void firstTest() {
+        runScript("src/test/groovy/firstAScript.groovy");
+        
+    }
+
+    public static void runScript(String path) {
+        try { // let Scene get started properly, may take some time as Automaton replaces the Scene between tests
+            Thread.sleep(1000L);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        ScriptOutputCapturer writer = new ScriptOutputCapturer();
+        AutomatonScriptRunner.getInstance().run(path, writer);
+
+        System.out.println("Writer: " + writer.strings);
+
+        assertThat(writer.strings.isEmpty(), is(false));
+        assertThat(writer.lastLine(), is("Test PASSED!"));
+    }
 
 }
