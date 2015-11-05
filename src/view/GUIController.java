@@ -210,7 +210,7 @@ public class GUIController {
 		case "archive":
 			executeArchive(command);
 			break;
-		case "unarchive":
+		case "unarchived":
 			executeUnComOrArc(command);
 			break;
 		case "uncomplete":
