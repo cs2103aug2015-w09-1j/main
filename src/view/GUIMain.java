@@ -48,9 +48,9 @@ public class GUIMain extends Application {
 	protected static Color floatingColor = Color.web("#039ed3");
 	protected static Color eventColor = Color.web("#17a42a");
 	protected static Color deadlineColor = Color.web("#b9ac1d");
-	protected static Color completeColor = Color.web("#039ed3");
-	protected static Color archivedColor = Color.web("#039ed3");
-	protected static Color upcomingColor = Color.web("#039ed3");
+	protected static Color completeColor = Color.web("#898989");
+	protected static Color archivedColor = Color.web("#ae31f6");
+	protected static Color upcomingColor = Color.web("#ff0000");
 	private static Color commonColor = Color.web("#039ed3");
 	private static Color safeColor = Color.web("#94df11");
 	private static Label message;
