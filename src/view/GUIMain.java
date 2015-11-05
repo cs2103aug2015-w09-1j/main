@@ -1,7 +1,5 @@
 package view;
 
-import java.io.IOException;
-
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -33,23 +31,29 @@ public class GUIMain extends Application {
 	protected static double yOffset = 0;
 	protected static Image backgroundImage;
 	protected static Image iconImage;
-	protected static Image taskImage;
+	protected static Image deadlineImage;
+	protected static Image eventImage;
+	protected static Image floatingImage;
+	protected static Image completeImage;
+	protected static Image archivedImage;
+	protected static Image upcomingImage;
 	protected static String title = "Silent Jarvis";
 	protected static GridPane grid;
 	protected static GridPane TaskDisplayGrid;
 	protected static StackPane SystemMessageBlock;
 	protected static ScrollPane TaskDisplayBlock;
 	protected static TextField userCommandBlock;
-	private static Font commonFont = Font.font("Stencil Std", FontWeight.BOLD, FontPosture.REGULAR, 22);
-	private static Font highlightFont = Font.font("Stencil Std", FontWeight.BOLD, FontPosture.REGULAR, 30);
-	private static Font littleFont = Font.font("Stencil Std", FontWeight.LIGHT, FontPosture.REGULAR, 20);
-	private static Font signalFont = Font.font("Stencil Std", FontWeight.LIGHT, FontPosture.REGULAR, 14);
-	protected static Color commonColor = Color.web("#039ed3");
-	private static Color warningColor = Color.web("#ff0000");
+	private static Font messageFont = Font.font("Stencil Std", FontWeight.BOLD, FontPosture.REGULAR, 22);
+	private static Font signalFont = Font.font("Stencil Std", FontWeight.BOLD, FontPosture.REGULAR, 14);
+	protected static Color floatingColor = Color.web("#039ed3");
+	protected static Color eventColor = Color.web("#17a42a");
+	protected static Color deadlineColor = Color.web("#b9ac1d");
+	protected static Color completeColor = Color.web("#039ed3");
+	protected static Color archivedColor = Color.web("#039ed3");
+	protected static Color upcomingColor = Color.web("#039ed3");
+	private static Color commonColor = Color.web("#039ed3");
 	private static Color safeColor = Color.web("#94df11");
-	private static Label line_1;
-	private static Label line_2;
-	private static Label line_3;
+	private static Label message;
 	private static Label signal;
 
 	public static void main(String args[]) {
@@ -77,7 +81,12 @@ public class GUIMain extends Application {
 
 		backgroundImage = new Image(getClass().getResourceAsStream("back3.png"));
 		iconImage = new Image(getClass().getResourceAsStream("icon.png"));
-		taskImage = new Image(getClass().getResourceAsStream("task.png"));
+		deadlineImage = new Image(getClass().getResourceAsStream("deadlineTask.png"));;
+		eventImage = new Image(getClass().getResourceAsStream("eventTask.png"));;
+		floatingImage = new Image(getClass().getResourceAsStream("floatingTask.png"));;
+		completeImage = new Image(getClass().getResourceAsStream("completeTask.png"));;
+		archivedImage = new Image(getClass().getResourceAsStream("archivedTask.png"));;
+		upcomingImage = new Image(getClass().getResourceAsStream("upcomingTask.png"));;
 	}
 
 	private void initialStage(Stage primaryStage) {
@@ -112,30 +121,24 @@ public class GUIMain extends Application {
 
 		DragController.dragStage(grid, primaryStage);
 
-		Scene scene = new Scene(back, 350, 660);
+		Scene scene = new Scene(back, 820, 660);
 		primaryStage.setScene(scene);
 	}
 
 	private void buildSysMsgBlk() {
 
-		SystemMessageBlock.setPrefSize(300, 120);
+		SystemMessageBlock.setPrefSize(770, 40);
 
-		line_1 = new Label();
-		line_2 = new Label();
-		line_3 = new Label();
+		message = new Label();
+		message.setFont(messageFont);
+		message.setTextFill(commonColor);
 
 		signal = new Label();
 		signal.setFont(signalFont);
 		signal.setTextFill(safeColor);
 
-		SystemMessageBlock.getChildren().add(line_1);
-		StackPane.setAlignment(line_1, Pos.TOP_CENTER);
-
-		SystemMessageBlock.getChildren().add(line_2);
-		StackPane.setAlignment(line_2, Pos.CENTER);
-
-		SystemMessageBlock.getChildren().add(line_3);
-		StackPane.setAlignment(line_3, Pos.BOTTOM_CENTER);
+		SystemMessageBlock.getChildren().add(message);
+		StackPane.setAlignment(message, Pos.TOP_LEFT);
 
 		SystemMessageBlock.getChildren().add(signal);
 		StackPane.setAlignment(signal, Pos.BOTTOM_RIGHT);
@@ -145,14 +148,14 @@ public class GUIMain extends Application {
 
 	private void buildTskDisBlk() {
 
-		TaskDisplayBlock.setPrefSize(300, 420);
+		TaskDisplayBlock.setPrefSize(770, 500);
 		TaskDisplayBlock.setOpacity(0.9);
 		TaskDisplayBlock.setHbarPolicy(ScrollBarPolicy.NEVER);
 
 	    TaskDisplayGrid = new GridPane();
 	    TaskDisplayGrid.setHgap(3);
 	    TaskDisplayGrid.setVgap(3);
-	    TaskDisplayGrid.setPadding(new Insets(3, 3, 3, 3));
+	    TaskDisplayGrid.setPadding(new Insets(4, 4, 4, 4));
 	    
 	    TaskDisplayBlock.setContent(TaskDisplayGrid);
 	}
@@ -163,14 +166,15 @@ public class GUIMain extends Application {
 	    	   public void handle(KeyEvent event) {
 	    		   if(event.getCode().equals(KeyCode.ENTER)){
 	    			   command = userCommandBlock.getText();
-	    			   userCommandBlock.clear();
+	    			   
 	    			   if(!command.equals("")){
-	    				   try {
-							GUIController.execute(command);
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+							try {
+								GUIController.execute(command);
+								userCommandBlock.clear();
+							} catch (Exception e) {
+								showError();
+							}
+						
 	    			   }
 	    		   }
 
@@ -186,164 +190,86 @@ public class GUIMain extends Application {
 
 	private void showWelcome() {
 
-		line_1.setText("Welcome to SilentJarvis!");
-		line_1.setFont(commonFont);
-		line_1.setTextFill(commonColor);
-
-		line_2.setText("Recent");
-		line_2.setFont(highlightFont);
-		line_2.setTextFill(commonColor);
-
-		line_3.setText("tasks are listed below");
-		line_3.setFont(commonFont);
-		line_3.setTextFill(commonColor);
+		message.setText("Welcome to SilentJarvis! Recent tasks are listed below");
 
 		signal.setText("");
 	}
 
 	protected static void showError() {
-		line_3.setText("Error!");
-		line_3.setFont(littleFont);
-		line_3.setTextFill(warningColor);
-
+		message.setText("Error! Check your command format.");
+		
 		signal.setText("");
 	}
 
 	protected static void showToday() {
-		line_1.setText("");
-
-		line_2.setText("Today's");
-		line_2.setFont(highlightFont);
-		line_2.setTextFill(commonColor);
-
-		line_3.setText("tasks are listed below");
-		line_3.setFont(commonFont);
-		line_3.setTextFill(commonColor);
+		message.setText("Today's tasks are listed below");
 
 		signal.setText("");
 	}
 
 	protected static void showSetFilename() {
-		line_1.setText("new filename");
-		line_1.setFont(littleFont);
-		line_1.setTextFill(commonColor);
-
-		line_2.setText(Storage.getInstance().getfileName());
-		line_2.setFont(littleFont);
-		line_2.setTextFill(commonColor);
-
-		line_3.setText("");
+		message.setText("New filename: "+Storage.getInstance().getfileName());
 
 		signal.setText("Set successfully!");
 	}
 
 	protected static void showSetPath() {
-		line_1.setText("new path");
-		line_1.setFont(littleFont);
-		line_1.setTextFill(commonColor);
-
-		line_2.setText(Storage.getInstance().getPath());
-		line_2.setFont(littleFont);
-		line_2.setTextFill(commonColor);
-
-		line_3.setText("");
+		message.setText("New path: "+Storage.getInstance().getPath());
 
 		signal.setText("Set successfully!");
 	}
 
 	protected static void showAll() {
-		line_1.setText("");
-
-		line_2.setText("All");
-		line_2.setFont(highlightFont);
-		line_2.setTextFill(commonColor);
-
-		line_3.setText("tasks are listed below");
-		line_3.setFont(commonFont);
-		line_3.setTextFill(commonColor);
+		message.setText("All tasks are listed below");
 
 		signal.setText("");
 	}
 
 	protected static void showArchived() {
-		line_1.setText("");
-
-		line_2.setText("Archived");
-		line_2.setFont(highlightFont);
-		line_2.setTextFill(commonColor);
-
-		line_3.setText("tasks are listed below");
-		line_3.setFont(commonFont);
-		line_3.setTextFill(commonColor);
+		message.setText("Archived tasks are listed below");
 
 		signal.setText("");
 	}
 
 	protected static void showSearch() {
-		line_1.setText("");
-
-		line_2.setText("Search results");
-		line_2.setFont(highlightFont);
-		line_2.setTextFill(commonColor);
-
-		line_3.setText("tasks are listed below");
-		line_3.setFont(commonFont);
-		line_3.setTextFill(commonColor);
+		message.setText("Search results");
 
 		signal.setText("");
 	}
 
 	protected static void showSave() {
-		line_3.setText("");
-
 		signal.setText("Saved to " + Storage.getInstance().getPath() + Storage.getInstance().getfileName());
 	}
 
 	protected static void showAdd() {
-		line_3.setText("");
-
 		signal.setText("New task added!");
 	}
 
 	protected static void showDelete() {
-		line_3.setText("");
-
 		signal.setText("Task Deleted!");
 	}
 
 	protected static void showUpdate() {
-		line_3.setText("");
-
 		signal.setText("Task Edited!");
 	}
 
 	protected static void showUndo() {
-		line_3.setText("");
-
 		signal.setText("Undo successfully!");
 	}
 
 	protected static void showLoad() {
-		line_3.setText("");
-
 		signal.setText("Loaded from " + Storage.getInstance().getPath() + Storage.getInstance().getfileName());
 	}
 
 	protected static void showComplete() {
-		line_3.setText("");
-
 		signal.setText("Task complete!");
 	}
 
 	protected static void showUnComOrArc() {
-		line_3.setText("");
-
 		signal.setText("Task recoverd!");
 	}
 
 	protected static void showArchive() {
-		line_3.setText("");
-
 		signal.setText("Task archived!");
 	}
 }
