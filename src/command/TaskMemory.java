@@ -72,15 +72,22 @@ public class TaskMemory {
 		}
 	}
 	
-	private ArrayList<Task> getNonDueDeadlineTask() {
-		ArrayList<Task> noDueTask = new ArrayList<Task>();
-		try {
-			
-
-			Collections.sort(noDueTask, new DateComparator());
-			return noDueTask;
-		} catch (Exception ex) {
-			return null;
+	private boolean checkDue(Task t){
+		try{
+			for(Task dueTask : getDueTask()){
+				if(t instanceof DeadlineTask){
+					if(dueTask.equals(t)){
+						return true;
+					}
+				}else if (t instanceof EventTask){
+					if(dueTask.equals(t)){
+						return true;
+					}
+				}
+			}
+			return false;
+		}catch(Exception e){
+			return true;
 		}
 	}
 
@@ -94,14 +101,14 @@ public class TaskMemory {
 				if (t instanceof DeadlineTask) {
 					if (((DeadlineTask) t).getDeadlineDate().compareTo(
 									dateNow) == 0
-							&& !t.getTaskType().contains("Archived")) {
+							&& !t.getTaskType().contains("Archived") && !checkDue(t)) {
 						todayList.add(t);
 					}
 				} else if (t instanceof EventTask) {
 					if ((((EventTask) t).getStartDate()
 									.compareTo(dateNow) <= 0 && ((EventTask) t)
 							.getEndDate().compareTo(dateNow) >= 0)
-							&& !t.getTaskType().contains("Archived")) {
+							&& !t.getTaskType().contains("Archived")  && !checkDue(t)) {
 						todayList.add(t);
 					}
 				}
