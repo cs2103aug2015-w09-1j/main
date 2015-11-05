@@ -1,31 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <java version="1.8.0_65" class="java.beans.XMLDecoder">
- <object class="java.util.ArrayList">
-  <void method="add">
-   <object class="model.FloatingTask">
-    <void property="taskName">
-     <string>a</string>
-    </void>
-    <void property="taskType">
-     <string>null</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="model.DeadlineTask">
-    <void property="deadlineDate">
-     <string>2015-11-05</string>
-    </void>
-    <void property="deadlineTime">
-     <string>19:58</string>
-    </void>
-    <void property="taskName">
-     <string>a</string>
-    </void>
-    <void property="taskType">
-     <string>null</string>
-    </void>
-   </object>
-  </void>
- </object>
+ <object class="java.util.ArrayList"/>
 </java>
