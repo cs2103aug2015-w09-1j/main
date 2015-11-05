@@ -66,21 +66,20 @@ public class TaskMemory {
 			combinedTaskList.addAll(getFollowingDayTask());
 			combinedTaskList.addAll(getFloatingTask());
 			
-			
-//			for (int i = 0; i < totalSize; i++) {
-//				for (int j = 0; j < getTodayTaskList().size(); j++) {
-//					
-//				}
-//				for (int k = 0; k < getFollowingDayTask().size(); k++) {
-//
-//				}
-//				for (int l = 0; l < getFloatingTask().size(); l++) {
-//
-//				}
-//			}
-
 			return combinedTaskList;
 		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	private ArrayList<Task> getNonDueDeadlineTask() {
+		ArrayList<Task> noDueTask = new ArrayList<Task>();
+		try {
+			
+
+			Collections.sort(noDueTask, new DateComparator());
+			return noDueTask;
+		} catch (Exception ex) {
 			return null;
 		}
 	}
@@ -93,14 +92,15 @@ public class TaskMemory {
 			String timeNow = LocalTime.now().toString();
 			for (Task t : this.taskList) {
 				if (t instanceof DeadlineTask) {
-					if (((DeadlineTask) t).getDeadlineTime().compareTo(timeNow) >= 0
-							&& ((DeadlineTask) t).getDeadlineDate().compareTo(
+					if (((DeadlineTask) t).getDeadlineDate().compareTo(
 									dateNow) == 0
 							&& !t.getTaskType().contains("Archived")) {
 						todayList.add(t);
 					}
 				} else if (t instanceof EventTask) {
-					if (((EventTask) t).getStartDate().compareTo(dateNow) <= 0 && ((EventTask) t).getEndDate().compareTo(dateNow) >= 0
+					if ((((EventTask) t).getStartDate()
+									.compareTo(dateNow) <= 0 && ((EventTask) t)
+							.getEndDate().compareTo(dateNow) >= 0)
 							&& !t.getTaskType().contains("Archived")) {
 						todayList.add(t);
 					}
@@ -139,22 +139,21 @@ public class TaskMemory {
 
 	public ArrayList<Task> getFollowingDayTask() {
 
-		ArrayList<Task> followingWeekList = new ArrayList<Task>();
+		ArrayList<Task> followingDayList = new ArrayList<Task>();
 		try {
-			String followWeekDate = LocalDate.now().plusDays(1).toString();
+			String followDayDate = LocalDate.now().plusDays(1).toString();
 			String dateNow = LocalDate.now().toString();
 			String timeNow = LocalTime.now().toString();
 			String dateTimeNow = dateNow + " " + timeNow;
-			String followingDateTime = followWeekDate + " " + timeNow;
+			String followingDateTime = followDayDate + " " + timeNow;
 			for (Task t : this.taskList) {
 				if (t instanceof DeadlineTask) {
-					String dateTime = ((DeadlineTask) t).getDeadlineDate()
-							+ " " + ((DeadlineTask) t).getDeadlineTime();
-					if (dateTime.compareTo(dateTimeNow) > 0
-							&& dateTime.compareTo(followingDateTime) > 0) {
+//					String dateTime = ((DeadlineTask) t).getDeadlineDate()
+//							+ " " + ((DeadlineTask) t).getDeadlineTime();
+					if (((DeadlineTask) t).getDeadlineDate().compareTo(dateNow) > 0) {
 						if (!t.getTaskType().contains("Archived")) {
 
-							followingWeekList.add(t);
+							followingDayList.add(t);
 						}
 					}
 				} else if (t instanceof EventTask) {
@@ -162,17 +161,17 @@ public class TaskMemory {
 							+ ((EventTask) t).getEndTime();
 					// String startDateTime = ((EventTask) t).getStartDate() +
 					// " " + ((EventTask) t).getStartTime();
-					if (endDateTime.compareTo(dateTimeNow) > 0
-							&& endDateTime.compareTo(followingDateTime) > 0) {
+					if (((EventTask) t).getEndDate().compareTo(dateNow) > 0
+							&& ((EventTask) t).getEndDate().compareTo(followDayDate) >= 0) {
 						if (!t.getTaskType().contains("Archived")) {
 
-							followingWeekList.add(t);
+							followingDayList.add(t);
 						}
 					}
 				}
 			}
-			Collections.sort(followingWeekList, new DateComparator());
-			return followingWeekList;
+			Collections.sort(followingDayList, new DateComparator());
+			return followingDayList;
 		} catch (Exception e) {
 			return null;
 		}
