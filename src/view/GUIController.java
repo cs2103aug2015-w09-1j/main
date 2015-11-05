@@ -192,6 +192,9 @@ public class GUIController {
 		case "delete":
 			GUIMain.showDelete();
 			break;
+		case "clear":
+			GUIMain.showDelete();
+			break;
 		case "edit":
 			GUIMain.showUpdate();
 			break;
