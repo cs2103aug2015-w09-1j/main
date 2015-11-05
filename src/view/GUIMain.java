@@ -37,6 +37,10 @@ public class GUIMain extends Application {
 	protected static Image completeImage;
 	protected static Image archivedImage;
 	protected static Image upcomingImage;
+	protected static Image floating;
+	protected static Image today;
+	protected static Image following;
+	protected static Image seeMore;
 	protected static String title = "Silent Jarvis";
 	protected static GridPane grid;
 	protected static GridPane TaskDisplayGrid;
@@ -72,8 +76,9 @@ public class GUIMain extends Application {
 		primaryStage.show();
 
 		buildView(primaryStage);
-		
-		GUIController.showRecentList();;
+
+		GUIController.showRecentList();
+		;
 
 		getCommand();
 	}
@@ -82,12 +87,16 @@ public class GUIMain extends Application {
 
 		backgroundImage = new Image(getClass().getResourceAsStream("back3.png"));
 		iconImage = new Image(getClass().getResourceAsStream("icon.png"));
-		deadlineImage = new Image(getClass().getResourceAsStream("deadlineTask.png"));;
-		eventImage = new Image(getClass().getResourceAsStream("eventTask.png"));;
-		floatingImage = new Image(getClass().getResourceAsStream("floatingTask.png"));;
-		completeImage = new Image(getClass().getResourceAsStream("completeTask.png"));;
-		archivedImage = new Image(getClass().getResourceAsStream("archivedTask.png"));;
-		upcomingImage = new Image(getClass().getResourceAsStream("upcomingTask.png"));;
+		deadlineImage = new Image(getClass().getResourceAsStream("deadlineTask.png"));
+		eventImage = new Image(getClass().getResourceAsStream("eventTask.png"));
+		floatingImage = new Image(getClass().getResourceAsStream("floatingTask.png"));
+		completeImage = new Image(getClass().getResourceAsStream("completeTask.png"));
+		archivedImage = new Image(getClass().getResourceAsStream("archivedTask.png"));
+		upcomingImage = new Image(getClass().getResourceAsStream("upcomingTask.png"));
+		floating = new Image(getClass().getResourceAsStream("floating.png"));
+		today = new Image(getClass().getResourceAsStream("today.png"));
+		following = new Image(getClass().getResourceAsStream("following.png"));
+		seeMore = new Image(getClass().getResourceAsStream("seeMore.png"));
 	}
 
 	private void initialStage(Stage primaryStage) {
@@ -152,41 +161,42 @@ public class GUIMain extends Application {
 		TaskDisplayBlock.setOpacity(0.9);
 		TaskDisplayBlock.setHbarPolicy(ScrollBarPolicy.NEVER);
 
-	    TaskDisplayGrid = new GridPane();
-	    TaskDisplayGrid.setHgap(3);
-	    TaskDisplayGrid.setVgap(3);
-	    TaskDisplayGrid.setPadding(new Insets(4, 4, 4, 4));
-	    
-	    TaskDisplayBlock.setContent(TaskDisplayGrid);
+		TaskDisplayGrid = new GridPane();
+		TaskDisplayGrid.setHgap(3);
+		TaskDisplayGrid.setVgap(3);
+		TaskDisplayGrid.setPadding(new Insets(4, 4, 4, 4));
+
+		TaskDisplayBlock.setContent(TaskDisplayGrid);
 	}
 
 	private static void getCommand() {
-		userCommandBlock.setOnKeyPressed(new EventHandler<KeyEvent>(){
-	    	   @Override
-	    	   public void handle(KeyEvent event) {
-	    		   if(event.getCode().equals(KeyCode.ENTER)){
-	    			   command = userCommandBlock.getText();
-	    			   
-	    			   if(!command.equals("")){
-							try {
-								GUIController.execute(command);
-							} catch (Exception e) {
-								showError();
-							}
-							userCommandBlock.clear();
-						
-	    			   }
-	    		   }
 
-	    		   if(event.getCode().equals(KeyCode.UP)){
-	    			   TaskDisplayBlock.setVvalue(TaskDisplayBlock.getVvalue() - 0.3f);
-	    		   }
-	    		   if(event.getCode().equals(KeyCode.DOWN)){
-	    			   TaskDisplayBlock.setVvalue(TaskDisplayBlock.getVvalue() + 0.3f);
-	    		   }
-	    	   }
+		userCommandBlock.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent event) {
+				if (event.getCode().equals(KeyCode.ENTER)) {
+					command = userCommandBlock.getText();
 
-	});}
+					if (!command.equals("")) {
+						try {
+							GUIController.execute(command);
+						} catch (Exception e) {
+							showError();
+						}
+
+					}
+				}
+
+				if (event.getCode().equals(KeyCode.UP)) {
+					TaskDisplayBlock.setVvalue(TaskDisplayBlock.getVvalue() - 0.1f);
+				}
+				if (event.getCode().equals(KeyCode.DOWN)) {
+					TaskDisplayBlock.setVvalue(TaskDisplayBlock.getVvalue() + 0.1f);
+				}
+			}
+
+		});
+	}
 
 	private void showWelcome() {
 		message.setTextFill(commonColor);
@@ -211,14 +221,14 @@ public class GUIMain extends Application {
 
 	protected static void showSetFilename() {
 		message.setTextFill(commonColor);
-		message.setText("New filename: "+Storage.getInstance().getfileName());
+		message.setText("New filename: " + Storage.getInstance().getfileName());
 
 		signal.setText("Set successfully!");
 	}
 
 	protected static void showSetPath() {
 		message.setTextFill(commonColor);
-		message.setText("New path: "+Storage.getInstance().getPath());
+		message.setText("New path: " + Storage.getInstance().getPath());
 
 		signal.setText("Set successfully!");
 	}
@@ -281,6 +291,7 @@ public class GUIMain extends Application {
 	}
 
 	protected static void showFloating() {
+		message.setTextFill(commonColor);
 		message.setText("Floating tasks are listed below");
 
 		signal.setText("");
@@ -288,5 +299,31 @@ public class GUIMain extends Application {
 
 	protected static void showClear() {
 		signal.setText("All tasks selected have been cleared.");
+	}
+
+	protected static void showBy() {
+		message.setTextFill(commonColor);
+		message.setText("Tasks before selected date are listed below");
+
+		signal.setText("");
+	}
+
+	protected static void showOn() {
+		message.setText("Tasks on selected date are listed below");
+
+		signal.setText("");
+	}
+
+	protected static void showError(String errorMessage) {
+		message.setTextFill(warningColor);
+		message.setText("Error: " + errorMessage);
+
+		signal.setText("");
+	}
+
+	protected static void showHelp() {
+		message.setTextFill(commonColor);
+		message.setText("");
+		// TODO
 	}
 }
