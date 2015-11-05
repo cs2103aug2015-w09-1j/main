@@ -52,7 +52,8 @@ public class GUIMain extends Application {
 	protected static Color archivedColor = Color.web("#ae31f6");
 	protected static Color upcomingColor = Color.web("#ff0000");
 	private static Color commonColor = Color.web("#039ed3");
-	private static Color safeColor = Color.web("#94df11");
+	private static Color safeColor = Color.web("#17a42a");
+	private static Color warningColor = Color.web("#ff0000");
 	private static Label message;
 	private static Label signal;
 
@@ -131,7 +132,6 @@ public class GUIMain extends Application {
 
 		message = new Label();
 		message.setFont(messageFont);
-		message.setTextFill(commonColor);
 
 		signal = new Label();
 		signal.setFont(signalFont);
@@ -189,49 +189,56 @@ public class GUIMain extends Application {
 	});}
 
 	private void showWelcome() {
-
+		message.setTextFill(commonColor);
 		message.setText("Welcome to SilentJarvis! Recent tasks are listed below");
 
 		signal.setText("");
 	}
 
 	protected static void showError() {
+		message.setTextFill(warningColor);
 		message.setText("Error! Check your command format.");
 		
 		signal.setText("");
 	}
 
 	protected static void showToday() {
+		message.setTextFill(commonColor);
 		message.setText("Today's tasks are listed below");
 
 		signal.setText("");
 	}
 
 	protected static void showSetFilename() {
+		message.setTextFill(commonColor);
 		message.setText("New filename: "+Storage.getInstance().getfileName());
 
 		signal.setText("Set successfully!");
 	}
 
 	protected static void showSetPath() {
+		message.setTextFill(commonColor);
 		message.setText("New path: "+Storage.getInstance().getPath());
 
 		signal.setText("Set successfully!");
 	}
 
 	protected static void showAll() {
+		message.setTextFill(commonColor);
 		message.setText("All tasks are listed below");
 
 		signal.setText("");
 	}
 
 	protected static void showArchived() {
+		message.setTextFill(commonColor);
 		message.setText("Archived tasks are listed below");
 
 		signal.setText("");
 	}
 
 	protected static void showSearch() {
+		message.setTextFill(commonColor);
 		message.setText("Search results");
 
 		signal.setText("");
@@ -271,5 +278,15 @@ public class GUIMain extends Application {
 
 	protected static void showArchive() {
 		signal.setText("Task archived!");
+	}
+
+	protected static void showFloating() {
+		message.setText("Floating tasks are listed below");
+
+		signal.setText("");
+	}
+
+	protected static void showClear() {
+		signal.setText("All tasks selected have been cleared.");
 	}
 }

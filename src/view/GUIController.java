@@ -7,7 +7,6 @@ import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -220,14 +219,41 @@ public class GUIController {
 			executeSet(command);
 			break;
 		case "show":
-			executeShowArchived(command);
+			executeShow(command);
 			break;
 		case "undo":
 			executeUndo(command);
 			break;
+		case "exit":
+			executeExit(command);
+			break;
+		case "help":
+			executeHelp(command);
+			break;
+		case "clear":
+			executeClear(command);
+			break;
 		default:
+			GUIMain.showError();
 			break;
 		}
+	}
+
+	private static void executeClear(String command) {
+		Controller.executeCMD(command);	
+		TaskList = Controller.getTaskList();
+		showList();
+		GUIMain.showAll();
+		GUIMain.showClear();
+	}
+
+	private static void executeHelp(String command) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private static void executeExit(String command) {
+		Controller.executeCMD(command);	
 	}
 
 	private static void executeUndo(String command) throws IOException {
@@ -235,7 +261,7 @@ public class GUIController {
 		TaskList = Controller.getTaskList();
 		showList();
 		GUIMain.showAll();
-		
+		GUIMain.showUndo();
 	}
 
 	private static void executeUnComOrArc(String command) throws IOException {
@@ -244,7 +270,6 @@ public class GUIController {
 		showList();
 		GUIMain.showAll();
 		GUIMain.showUnComOrArc();
-		;
 	}
 
 	private static void executeArchive(String command) throws IOException {
@@ -296,7 +321,6 @@ public class GUIController {
 		TaskList = Controller.getTaskList();
 		showList();
 		GUIMain.showSearch();
-		;
 	}
 
 	private static void executeDelete(String command) throws IOException {
@@ -307,11 +331,20 @@ public class GUIController {
 		GUIMain.showDelete();
 	}
 
-	private static void executeShowArchived(String command) throws IOException {
+	private static void executeShow(String command) throws IOException {
 		Controller.executeCMD(command);
-		TaskList = Controller.getArchivedList();
-		showList();
-		GUIMain.showArchived();
+		switch (getCommandType(command, 1)) {
+		case "archived":
+			TaskList = Controller.getArchivedList();
+			showList();
+			GUIMain.showArchived();
+			break;
+		case "floating":
+			TaskList = Controller.getFloatingTaskList();
+			showList();
+			GUIMain.showFloating();
+			break;
+		}
 	}
 
 	private static void executeSet(String command) throws IOException {
