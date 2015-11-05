@@ -2,12 +2,18 @@
 <java version="1.8.0_31" class="java.beans.XMLDecoder">
  <object class="java.util.ArrayList">
   <void method="add">
-   <object class="model.FloatingTask">
+   <object class="model.DeadlineTask">
+    <void property="deadlineDate">
+     <string>2015-11-04</string>
+    </void>
+    <void property="deadlineTime">
+     <string>23:59</string>
+    </void>
     <void property="taskName">
-     <string>0</string>
+     <string>123</string>
     </void>
     <void property="taskType">
-     <string>null</string>
+     <string>Completed</string>
     </void>
    </object>
   </void>
@@ -52,6 +58,38 @@
     </void>
     <void property="taskType">
      <string>null</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.DeadlineTask">
+    <void property="deadlineDate">
+     <string>2015-11-05</string>
+    </void>
+    <void property="deadlineTime">
+     <string>02:00</string>
+    </void>
+    <void property="taskName">
+     <string>abc</string>
+    </void>
+    <void property="taskType">
+     <string>Completed</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.DeadlineTask">
+    <void property="deadlineDate">
+     <string>2015-11-05</string>
+    </void>
+    <void property="deadlineTime">
+     <string>02:25</string>
+    </void>
+    <void property="taskName">
+     <string>456</string>
+    </void>
+    <void property="taskType">
+     <string>Completed</string>
     </void>
    </object>
   </void>
@@ -159,23 +197,17 @@
      <string>def</string>
     </void>
     <void property="taskType">
-     <string>Completed</string>
+     <string>null</string>
     </void>
    </object>
   </void>
   <void method="add">
-   <object class="model.DeadlineTask">
-    <void property="deadlineDate">
-     <string>2015-11-04</string>
-    </void>
-    <void property="deadlineTime">
-     <string>23:59</string>
-    </void>
+   <object class="model.FloatingTask">
     <void property="taskName">
-     <string>123</string>
+     <string>0</string>
     </void>
     <void property="taskType">
-     <string>Completed</string>
+     <string>null</string>
     </void>
    </object>
   </void>
@@ -185,29 +217,35 @@
      <string>2015-11-05</string>
     </void>
     <void property="deadlineTime">
-     <string>02:00</string>
+     <string>10:53</string>
     </void>
     <void property="taskName">
-     <string>abc</string>
+     <string>8888</string>
     </void>
     <void property="taskType">
-     <string>Completed</string>
+     <string>null</string>
     </void>
    </object>
   </void>
   <void method="add">
-   <object class="model.DeadlineTask">
-    <void property="deadlineDate">
+   <object class="model.EventTask">
+    <void property="endDate">
+     <string>2015-11-06</string>
+    </void>
+    <void property="endTime">
+     <string>10:53</string>
+    </void>
+    <void property="startDate">
      <string>2015-11-05</string>
     </void>
-    <void property="deadlineTime">
-     <string>02:25</string>
+    <void property="startTime">
+     <string>10:53</string>
     </void>
     <void property="taskName">
-     <string>456</string>
+     <string>nnnnn</string>
     </void>
     <void property="taskType">
-     <string>Completed</string>
+     <string>null</string>
     </void>
    </object>
   </void>

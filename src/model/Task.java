@@ -55,4 +55,5 @@ public abstract class Task {
 
 		return (this.getTaskName().equals(comparingTask.getTaskName()));
 	}
+	
 }

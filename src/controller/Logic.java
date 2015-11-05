@@ -231,8 +231,9 @@ public class Logic {
 			ArrayList<Task> newTask = new ArrayList<Task>();
 				
 			oldTask = getTaskByMutlipleId(currentList, task_index);
-
+			
 			for (Task task : oldTask) {
+				
 				String task_name = null;
 				String start_date = null;
 				String end_date = null;
@@ -378,16 +379,22 @@ public class Logic {
 	// get tasks by a number of index, return arraylist<task>
 	private ArrayList<Task> getTaskByMutlipleId(ArrayList<Task> currentList,
 			int[] index) {
-		ArrayList<Task> taskOfSearcedList = new ArrayList<Task>();
+		ArrayList<Task> taskOfSearchedList = new ArrayList<Task>();
 		try {
 			for (int i = 0; i < index.length; i++) {
-				taskOfSearcedList.add(currentList.get(index[i] - 1));
+				if(taskOfSearchedList.isEmpty()){
+					taskOfSearchedList.add(currentList.get(index[i] - 1));
+				}else{
+					if(!taskOfSearchedList.contains(currentList.get(index[i] - 1))){
+						taskOfSearchedList.add(currentList.get(index[i] - 1));
+					}
+				}
 			}
 
 		} catch (Exception e) {
 
 		}
-		return taskOfSearcedList;
+		return taskOfSearchedList;
 	}
 
 	// Search for specific task based on the index of the current display list
