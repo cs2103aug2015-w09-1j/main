@@ -30,6 +30,7 @@ public class Logic {
 	// purposes
 	private static Stack<ICommand> processStack = null;
 
+
 	public Logic() {
 		processStack = new Stack<ICommand>();
 	}

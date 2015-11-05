@@ -19,7 +19,7 @@
 //		a. search tasks on a certain date
 //			search on <date>
 //		b. search by task name
-//			search <keyword>
+//			search by <keyword>
 //	
 //	4) display / showall
 //		a. display archived tasks
@@ -131,6 +131,9 @@ public class CommandParser {
 	private int[] unarchivedIDs;
 	private int[] uncompleteIDs;
 	private int[] completeIDs;
+	
+	private String searchStartDate;
+	private String searchEndDate;
 	
 	private static String help = "add <name>\nadd <name> from <time> to <time>\nadd <name> by   <deadline>\ndelete  <id>\nsearch  <id>\narchive <id>\nedit <id> <attribute> <info>\nset  path     <storage path>\nset  filename <filename>\nundo\n";
 	
@@ -248,6 +251,12 @@ public class CommandParser {
 	public String getHelpString() {
 		return help;
 	}
+	public String getSearchStartDate() {
+		return this.searchStartDate;
+	}
+	public String getSearchEndDate() {
+		return this.searchEndDate;
+	}
 	//private methods
 	private void parse(){
 		String cmdType = getCommandType();
@@ -303,9 +312,16 @@ public class CommandParser {
 			case "exit":
 				parseExitCommand();
 				break;
+			case "clear":
+				parseClearCommand();
+				break;
 			default:
 				throw new Error("command not recognised: "+cmdType);
 		}
+	}
+	
+	private void parseClearCommand(){
+		
 	}
 	
 	private void parseSaveCommand() { 
@@ -451,6 +467,18 @@ public class CommandParser {
 			Date date = new PrettyTimeParser().parse(args).get(0);
 			LocalDateTime searchDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 			setSearchByDate(searchDate.toLocalDate().toString());
+		} else if(args.contains("from")){
+			List<Date> dates = new PrettyTimeParser().parse(args);
+			if(dates.size() == 1) {
+				String date = dates.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().toLocalDate().toString();
+				setShowDate(date);
+			} else {
+				String startDate = dates.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().toLocalDate().toString();
+				setSearchStartDate(startDate);
+				String endDate = dates.get(1).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().toLocalDate().toString();
+				setSearchEndDate(endDate);
+			}
+			
 		} else {
 			setSearchWord(args);
 		}
@@ -525,7 +553,9 @@ public class CommandParser {
 	
 	private void parseDisplayCommand(){
 		String args = getArgs();
-		if(args.equals("archived")) {
+		if(args == null){
+			
+		} else if(args.equals("archived")) {
 			setDisplayMode(args);
 		} else if(args.equals("all")) {
 			setDisplayMode(args);
@@ -612,7 +642,9 @@ public class CommandParser {
 				&& !this.command.equals("load") && !this.command.equals("save") && !this.command.equals("home")
 				&& !this.command.equals("exit")){
 			String[] inputArr = this.userInput.split(" ", 2);
-			this.args = inputArr[1];
+			if(inputArr.length == 2) {
+				this.args = inputArr[1];
+			}
 		}
 	}
 	private String getArgs() {
@@ -646,7 +678,7 @@ public class CommandParser {
 		this.storagePath = path;
 	}
 	private void setEditAttribute(String attribute) {
-		this.editAttribute = attribute;
+		this.editAttribute = attribute.toLowerCase();
 	}
 	private void setEditInfo(String info) {
 		this.editInfo = info;
@@ -702,6 +734,12 @@ public class CommandParser {
 	private void setCompleteIDs(int[] IDs) {
 		this.completeIDs = IDs;
 	}
+	private void setSearchStartDate(String date) {
+		this.searchStartDate = date;
+	}
+	private void setSearchEndDate(String date) {
+		this.searchEndDate = date;
+	}
 	static void print(String[] str){
 		for(int i=0;i<str.length;i++){
 			System.out.println("Index "+i+" : "+ str[i]);
@@ -726,7 +764,8 @@ public class CommandParser {
 	public static void main(String[] args) {
 //		String help = getHelpString();
 //		System.out.print(getHelpString());
-//		CommandParser cp2 = new CommandParser("uncomplete 1");
+		CommandParser cp2 = new CommandParser("clear");
+		System.out.print(cp2.getCommandType());
 //		print(cp2.getDeleteIDs());
 //		System.out.print(cp2.getUncompleteID());
 //		String arg = "edit 2 startDate sad";
