@@ -1,6 +1,7 @@
 package command;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -25,7 +26,7 @@ public class TaskMemory {
 	private ArrayList<Task> taskList;
 
 	public TaskMemory() {
-		//Storage.getInstance().setfileName("silentjarvis.fxml");
+		// Storage.getInstance().setfileName("silentjarvis.fxml");
 		this.taskList = Storage.getInstance().load();
 	}
 
@@ -47,40 +48,77 @@ public class TaskMemory {
 					noArchivedList.add(t);
 				}
 			}
-			Collections.sort(noArchivedList, new TaskNameComparator());
+			Collections.sort(noArchivedList, new DateComparator());
 			return noArchivedList;
 		} catch (Exception e) {
 			return null;
 		}
 
 	}
-	
-	public ArrayList<Task> getTodayTaskList(){
-		ArrayList<Task> todayList = new ArrayList<Task>();
-		try{
+
+	// Today + Following + Floating
+	public ArrayList<Task> getCombinedTaskList() {
+		ArrayList<Task> combinedTaskList = new ArrayList<Task>();
+		try {
+//			int totalSize = getTodayTaskList().size()
+//					+ getFollowingDayTask().size() + getFloatingTask().size();
+			combinedTaskList.addAll(getTodayTaskList());
+			combinedTaskList.addAll(getFollowingDayTask());
+			combinedTaskList.addAll(getFloatingTask());
 			
+			
+//			for (int i = 0; i < totalSize; i++) {
+//				for (int j = 0; j < getTodayTaskList().size(); j++) {
+//					
+//				}
+//				for (int k = 0; k < getFollowingDayTask().size(); k++) {
+//
+//				}
+//				for (int l = 0; l < getFloatingTask().size(); l++) {
+//
+//				}
+//			}
+
+			return combinedTaskList;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	public ArrayList<Task> getTodayTaskList() {
+		ArrayList<Task> todayList = new ArrayList<Task>();
+		try {
+
 			String dateNow = LocalDate.now().toString();
-			for(Task t: this.taskList){
-				if(t instanceof DeadlineTask){
-					if(((DeadlineTask) t).getDeadlineDate().compareTo(dateNow) == 0 && !t.getTaskType().contains("Archived")){
+			String timeNow = LocalTime.now().toString();
+			for (Task t : this.taskList) {
+				if (t instanceof DeadlineTask) {
+					if (((DeadlineTask) t).getDeadlineTime().compareTo(timeNow) >= 0
+							&& ((DeadlineTask) t).getDeadlineDate().compareTo(
+									dateNow) == 0
+							&& !t.getTaskType().contains("Archived")) {
 						todayList.add(t);
 					}
-				}else if(t instanceof EventTask){
-					if(((EventTask) t).getEndDate().compareTo(dateNow)== 0 && !t.getTaskType().contains("Archived")){
+				} else if (t instanceof EventTask) {
+					if ((((EventTask) t).getEndTime().compareTo(timeNow) >= 0
+							&& ((EventTask) t).getStartDate()
+									.compareTo(dateNow) <= 0 && ((EventTask) t)
+							.getEndDate().compareTo(dateNow) >= 0)
+							&& !t.getTaskType().contains("Archived")) {
 						todayList.add(t);
 					}
 				}
 			}
-			
-			Collections.sort(todayList, new TimeComparator());
+
+			Collections.sort(todayList, new DateComparator());
 			return todayList;
-		}catch(Exception ex){
+		} catch (Exception ex) {
 			return null;
 		}
 	}
 
 	public ArrayList<Task> getTaskList() {
-		Collections.sort(this.taskList, new TaskNameComparator());
+		Collections.sort(this.taskList, new DateComparator());
 		return this.taskList;
 	}
 
@@ -102,26 +140,33 @@ public class TaskMemory {
 
 	}
 
-	public ArrayList<Task> getFollowingWeekTask() {
+	public ArrayList<Task> getFollowingDayTask() {
 
 		ArrayList<Task> followingWeekList = new ArrayList<Task>();
 		try {
-			String followWeekDate = LocalDate.now().plusDays(7).toString();
+			String followWeekDate = LocalDate.now().plusDays(1).toString();
 			String dateNow = LocalDate.now().toString();
+			String timeNow = LocalTime.now().toString();
+			String dateTimeNow = dateNow + " " + timeNow;
+			String followingDateTime = followWeekDate + " " + timeNow;
 			for (Task t : this.taskList) {
 				if (t instanceof DeadlineTask) {
-					if (((DeadlineTask) t).getDeadlineDate().compareTo(dateNow) >= 0
-							&& ((DeadlineTask) t).getDeadlineDate().compareTo(
-									followWeekDate) <= 0) {
+					String dateTime = ((DeadlineTask) t).getDeadlineDate()
+							+ " " + ((DeadlineTask) t).getDeadlineTime();
+					if (dateTime.compareTo(dateTimeNow) > 0
+							&& dateTime.compareTo(followingDateTime) > 0) {
 						if (!t.getTaskType().contains("Archived")) {
 
 							followingWeekList.add(t);
 						}
 					}
 				} else if (t instanceof EventTask) {
-					if (((EventTask) t).getEndDate().compareTo(dateNow) >= 0
-							&& ((EventTask) t).getEndDate().compareTo(
-									followWeekDate) <= 0) {
+					String endDateTime = ((EventTask) t).getEndDate() + " "
+							+ ((EventTask) t).getEndTime();
+					// String startDateTime = ((EventTask) t).getStartDate() +
+					// " " + ((EventTask) t).getStartTime();
+					if (endDateTime.compareTo(dateTimeNow) > 0
+							&& endDateTime.compareTo(followingDateTime) > 0) {
 						if (!t.getTaskType().contains("Archived")) {
 
 							followingWeekList.add(t);
@@ -131,6 +176,40 @@ public class TaskMemory {
 			}
 			Collections.sort(followingWeekList, new DateComparator());
 			return followingWeekList;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	public ArrayList<Task> getDueTask() {
+		ArrayList<Task> dueTaskList = new ArrayList<Task>();
+		try {
+
+			String dateNow = LocalDate.now().toString();
+			String timeNow = LocalTime.now().toString();
+			String dateTime = dateNow + " " + timeNow;
+			for (Task t : this.taskList) {
+				if (t instanceof DeadlineTask) {
+					String dateTime2 = ((DeadlineTask) t).getDeadlineDate()
+							+ " " + ((DeadlineTask) t).getDeadlineTime();
+					if (dateTime2.compareTo(dateTime) < 0) {
+						if (!t.getTaskType().contains("Archived")) {
+							dueTaskList.add(t);
+						}
+
+					}
+				} else if (t instanceof EventTask) {
+					String dateTime2 = ((EventTask) t).getEndDate() + " "
+							+ ((EventTask) t).getEndTime();
+					if (dateTime2.compareTo(dateTime) < 0) {
+						if (!t.getTaskType().contains("Archived")) {
+							dueTaskList.add(t);
+						}
+					}
+				}
+			}
+			Collections.sort(dueTaskList, new DateComparator());
+			return dueTaskList;
 		} catch (Exception e) {
 			return null;
 		}
