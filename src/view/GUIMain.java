@@ -170,10 +170,10 @@ public class GUIMain extends Application {
 	    			   if(!command.equals("")){
 							try {
 								GUIController.execute(command);
-								userCommandBlock.clear();
 							} catch (Exception e) {
 								showError();
 							}
+							userCommandBlock.clear();
 						
 	    			   }
 	    		   }
@@ -196,7 +196,7 @@ public class GUIMain extends Application {
 	}
 
 	protected static void showError() {
-		message.setText("Error! Check your command format.");
+		message.setText("Error! Invalid or wrong format of command.");
 		
 		signal.setText("");
 	}

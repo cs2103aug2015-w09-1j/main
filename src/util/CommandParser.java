@@ -316,7 +316,7 @@ public class CommandParser {
 				parseClearCommand();
 				break;
 			default:
-				throw new Error("command not recognised: "+cmdType);
+				break;
 		}
 	}
 	

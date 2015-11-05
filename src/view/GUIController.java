@@ -179,7 +179,58 @@ public class GUIController {
 	private static String getCommandType(String command, int i) {
 		return command.trim().split("\\s+")[i];
 	}
-
+	
+	public static void execute(String command) throws Exception {
+		String commandType = getCommandType(command, 0);
+		Controller.executeCMD(command);
+		TaskList = Controller.getTaskList();
+		showList();
+		GUIMain.showAll();
+		switch(commandType) {
+		case "add":
+			GUIMain.showAdd();
+			break;
+		case "delete":
+			GUIMain.showDelete();
+			break;
+		case "edit":
+			GUIMain.showUpdate();
+			break;
+		case "complete":
+			GUIMain.showComplete();
+			break;
+		case "uncomplete":
+			GUIMain.showUnComOrArc();
+			break;
+		case "archive":
+			GUIMain.showArchive();
+			break;
+		case "unarchived":
+			GUIMain.showUnComOrArc();
+			break;
+		case "undo":
+			GUIMain.showUndo();
+			break;
+		case "search":
+			GUIMain.showSearch();
+			break;
+		case "load":
+			GUIMain.showLoad();
+			break;
+		case "save":
+			GUIMain.showSave();
+			break;
+		case "display":
+			GUIMain.showAll();
+			break;
+		case "show":
+			GUIMain.showArchived();
+			break;
+		default:
+			throw new Exception();
+		}
+	}
+	/*
 	public static void execute(String command) throws Exception {
 		String commandType = getCommandType(command, 0);
 		switch (commandType) {
@@ -333,5 +384,6 @@ public class GUIController {
 		GUIMain.showAll();
 		GUIMain.showAdd();
 	}
+	*/
 
 }
