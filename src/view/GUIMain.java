@@ -1,5 +1,7 @@
 package view;
 
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -163,7 +165,12 @@ public class GUIMain extends Application {
 	    			   command = userCommandBlock.getText();
 	    			   userCommandBlock.clear();
 	    			   if(!command.equals("")){
-	    				   GUIController.execute(command);
+	    				   try {
+							GUIController.execute(command);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 	    			   }
 	    		   }
 

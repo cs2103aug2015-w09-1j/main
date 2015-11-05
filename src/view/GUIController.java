@@ -136,7 +136,7 @@ public class GUIController {
 		return command.trim().split("\\s+")[i];
 	}
 
-	public static void execute(String command) {
+	public static void execute(String command) throws IOException {
 		String commandType = getCommandType(command, 0);
 		switch (commandType) {
 		case "add":
@@ -183,146 +183,98 @@ public class GUIController {
 		}
 	}
 
-	private static void executeUnComOrArc(String command) {
-		try {
-			Controller.executeCMD(command);
-			TaskList = Controller.getTaskList();
-			showList();
-			GUIMain.showAll();
-			GUIMain.showUnComOrArc();;
-		} catch (IOException e) {
-			GUIMain.showError();
+	private static void executeUnComOrArc(String command) throws IOException {
+		Controller.executeCMD(command);
+		TaskList = Controller.getTaskList();
+		showList();
+		GUIMain.showAll();
+		GUIMain.showUnComOrArc();;
+	}
+
+	private static void executeArchive(String command) throws IOException {
+		Controller.executeCMD(command);
+		TaskList = Controller.getTaskList();
+		showList();
+		GUIMain.showAll();
+		GUIMain.showArchive();
+	}
+
+	private static void executeComplete(String command) throws IOException {
+		Controller.executeCMD(command);
+		TaskList = Controller.getTaskList();
+		showList();
+		GUIMain.showAll();
+		GUIMain.showComplete();
+	}
+
+	private static void executeUpdate(String command) throws IOException {
+		Controller.executeCMD(command);
+		TaskList = Controller.getTaskList();
+		showList();
+		GUIMain.showAll();
+		GUIMain.showUpdate();
+	}
+
+	private static void executeAll(String command) throws IOException {
+		Controller.executeCMD(command);
+		TaskList = Controller.getTaskList();
+		showList();
+		GUIMain.showAll();
+	}
+
+	private static void executeSave(String command) throws IOException {
+		Controller.executeCMD(command);
+		GUIMain.showSave();
+	}
+
+	private static void executeLoad(String command) throws IOException {
+		Controller.executeCMD(command);
+		TaskList = Controller.getTaskList();
+		showList();
+		GUIMain.showAll();
+		GUIMain.showLoad();
+	}
+
+	private static void executeSearch(String command) throws IOException {
+		Controller.executeCMD(command);
+		TaskList = Controller.getTaskList();
+		showList();
+		GUIMain.showSearch();;
+	}
+
+	private static void executeDelete(String command) throws IOException {
+		Controller.executeCMD(command);
+		TaskList = Controller.getTaskList();
+		showList();
+		GUIMain.showAll();
+		GUIMain.showDelete();
+	}
+
+	private static void executeShowArchived(String command) throws IOException {
+		Controller.executeCMD(command);
+		TaskList = Controller.getArchivedList();
+		showList();
+		GUIMain.showArchived();
+	}
+
+	private static void executeSet(String command) throws IOException {
+		Controller.executeCMD(command);
+		switch (getCommandType(command, 1)) {
+		case "path":
+			GUIMain.showSetPath();
+			break;
+		case "filename":
+			GUIMain.showSetFilename();
+			break;
 		}
 	}
 
-	private static void executeArchive(String command) {
-		try {
-			Controller.executeCMD(command);
-			TaskList = Controller.getTaskList();
-			showList();
-			GUIMain.showAll();
-			GUIMain.showArchive();
-		} catch (IOException e) {
-			GUIMain.showError();
-		}
-	}
-
-	private static void executeComplete(String command) {
-		try {
-			Controller.executeCMD(command);
-			TaskList = Controller.getTaskList();
-			showList();
-			GUIMain.showAll();
-			GUIMain.showComplete();
-		} catch (IOException e) {
-			GUIMain.showError();
-		}
-	}
-
-	private static void executeUpdate(String command) {
-		try {
-			Controller.executeCMD(command);
-			TaskList = Controller.getTaskList();
-			showList();
-			GUIMain.showAll();
-			GUIMain.showUpdate();
-		} catch (IOException e) {
-			GUIMain.showError();
-		}
-	}
-
-	private static void executeAll(String command) {
-		try {
-			Controller.executeCMD(command);
-			TaskList = Controller.getTaskList();
-			showList();
-			GUIMain.showAll();
-		} catch (IOException e) {
-			GUIMain.showError();
-		}
-	}
-
-	private static void executeSave(String command) {
-		try {
-			Controller.executeCMD(command);
-			GUIMain.showSave();
-		} catch (IOException e) {
-			GUIMain.showError();
-		}
-	}
-
-	private static void executeLoad(String command) {
-		try {
-			Controller.executeCMD(command);
-			TaskList = Controller.getTaskList();
-			showList();
-			GUIMain.showAll();
-			GUIMain.showLoad();
-		} catch (IOException e) {
-			GUIMain.showError();
-		}
-	}
-
-	private static void executeSearch(String command) {
-		try {
-			Controller.executeCMD(command);
-			TaskList = Controller.getTaskList();
-			showList();
-			GUIMain.showSearch();;
-		} catch (IOException e) {
-			GUIMain.showError();
-		}
-	}
-
-	private static void executeDelete(String command) {
-		try {
-			Controller.executeCMD(command);
-			TaskList = Controller.getTaskList();
-			showList();
-			GUIMain.showAll();
-			GUIMain.showDelete();
-		} catch (IOException e) {
-			GUIMain.showError();
-		}
-	}
-
-	private static void executeShowArchived(String command) {
-		try {
-			Controller.executeCMD(command);
-			TaskList = Controller.getArchivedList();
-			showList();
-			GUIMain.showArchived();
-		} catch (IOException e) {
-			GUIMain.showError();
-		}
-	}
-
-	private static void executeSet(String command) {
-		try {
-			Controller.executeCMD(command);
-			switch (getCommandType(command, 1)) {
-			case "path":
-				GUIMain.showSetPath();
-				break;
-			case "filename":
-				GUIMain.showSetFilename();
-				break;
-			}
-		} catch (IOException e) {
-			GUIMain.showError();
-		}
-	}
-
-	private static void executeAdd(String command) {
-		try {
-			Controller.executeCMD(command);
-			TaskList = Controller.getTaskList();
-			showList();
-			GUIMain.showAll();
-			GUIMain.showAdd();
-		} catch (IOException e) {
-			GUIMain.showError();
-		}
+	private static void executeAdd(String command) throws IOException {
+		Controller.executeCMD(command);
+		TaskList = Controller.getTaskList();
+		showList();
+		GUIMain.showAll();
+		GUIMain.showAdd();
 	}
 
 }
