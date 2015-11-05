@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<java version="1.8.0_65" class="java.beans.XMLDecoder">
+<java version="1.8.0_31" class="java.beans.XMLDecoder">
  <object class="java.util.ArrayList">
   <void method="add">
    <object class="model.DeadlineTask">
@@ -34,15 +34,29 @@
    </object>
   </void>
   <void method="add">
-   <object class="model.DeadlineTask">
-    <void property="deadlineDate">
-     <string>2015-11-06</string>
-    </void>
-    <void property="deadlineTime">
-     <string>17:00</string>
-    </void>
+   <object class="model.FloatingTask">
     <void property="taskName">
-     <string>p</string>
+     <string>Floating1</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.FloatingTask">
+    <void property="taskName">
+     <string>Floating2</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.FloatingTask">
+    <void property="taskName">
+     <string>Floating3</string>
     </void>
     <void property="taskType">
      <string>null</string>
@@ -55,10 +69,10 @@
      <string>2015-11-06</string>
     </void>
     <void property="deadlineTime">
-     <string>20:30</string>
+     <string>23:59</string>
     </void>
     <void property="taskName">
-     <string>p</string>
+     <string>Deadline2</string>
     </void>
     <void property="taskType">
      <string>null</string>
@@ -68,131 +82,13 @@
   <void method="add">
    <object class="model.DeadlineTask">
     <void property="deadlineDate">
-     <string>2015-11-06</string>
+     <string>2015-11-07</string>
     </void>
     <void property="deadlineTime">
-     <string>20:31</string>
+     <string>02:04</string>
     </void>
     <void property="taskName">
-     <string>p</string>
-    </void>
-    <void property="taskType">
-     <string>null</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="model.DeadlineTask">
-    <void property="deadlineDate">
-     <string>2015-11-06</string>
-    </void>
-    <void property="deadlineTime">
-     <string>20:31</string>
-    </void>
-    <void property="taskName">
-     <string>b</string>
-    </void>
-    <void property="taskType">
-     <string>null</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="model.DeadlineTask">
-    <void property="deadlineDate">
-     <string>2015-11-06</string>
-    </void>
-    <void property="deadlineTime">
-     <string>20:32</string>
-    </void>
-    <void property="taskName">
-     <string>a</string>
-    </void>
-    <void property="taskType">
-     <string>null</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="model.DeadlineTask">
-    <void property="deadlineDate">
-     <string>2015-11-06</string>
-    </void>
-    <void property="deadlineTime">
-     <string>20:33</string>
-    </void>
-    <void property="taskName">
-     <string>a</string>
-    </void>
-    <void property="taskType">
-     <string>null</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="model.DeadlineTask">
-    <void property="deadlineDate">
-     <string>2015-11-06</string>
-    </void>
-    <void property="deadlineTime">
-     <string>20:34</string>
-    </void>
-    <void property="taskName">
-     <string>a</string>
-    </void>
-    <void property="taskType">
-     <string>null</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="model.DeadlineTask">
-    <void property="deadlineDate">
-     <string>2015-11-06</string>
-    </void>
-    <void property="deadlineTime">
-     <string>20:34</string>
-    </void>
-    <void property="taskName">
-     <string>a</string>
-    </void>
-    <void property="taskType">
-     <string>null</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="model.DeadlineTask">
-    <void property="deadlineDate">
-     <string>2015-11-06</string>
-    </void>
-    <void property="deadlineTime">
-     <string>22:00</string>
-    </void>
-    <void property="taskName">
-     <string>a</string>
-    </void>
-    <void property="taskType">
-     <string>null</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="model.EventTask">
-    <void property="endDate">
-     <string>2015-11-06</string>
-    </void>
-    <void property="endTime">
-     <string>23:00</string>
-    </void>
-    <void property="startDate">
-     <string>2015-11-06</string>
-    </void>
-    <void property="startTime">
-     <string>08:00</string>
-    </void>
-    <void property="taskName">
-     <string>b</string>
+     <string>Deadline1</string>
     </void>
     <void property="taskType">
      <string>null</string>
@@ -205,66 +101,16 @@
      <string>2015-11-07</string>
     </void>
     <void property="endTime">
-     <string>08:00</string>
+     <string>02:05</string>
     </void>
     <void property="startDate">
-     <string>2015-11-05</string>
+     <string>2015-11-06</string>
     </void>
     <void property="startTime">
-     <string>22:00</string>
+     <string>02:05</string>
     </void>
     <void property="taskName">
-     <string>c</string>
-    </void>
-    <void property="taskType">
-     <string>null</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="model.FloatingTask">
-    <void property="taskName">
-     <string>e</string>
-    </void>
-    <void property="taskType">
-     <string>null</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="model.FloatingTask">
-    <void property="taskName">
-     <string>f</string>
-    </void>
-    <void property="taskType">
-     <string>null</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="model.FloatingTask">
-    <void property="taskName">
-     <string>o</string>
-    </void>
-    <void property="taskType">
-     <string>null</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="model.FloatingTask">
-    <void property="taskName">
-     <string>g</string>
-    </void>
-    <void property="taskType">
-     <string>null</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="model.FloatingTask">
-    <void property="taskName">
-     <string>m</string>
+     <string>event1</string>
     </void>
     <void property="taskType">
      <string>null</string>
@@ -274,19 +120,19 @@
   <void method="add">
    <object class="model.EventTask">
     <void property="endDate">
+     <string>2015-11-13</string>
+    </void>
+    <void property="endTime">
+     <string>02:05</string>
+    </void>
+    <void property="startDate">
      <string>2015-11-07</string>
     </void>
-    <void property="endTime">
-     <string>20:00</string>
-    </void>
-    <void property="startDate">
-     <string>2015-11-05</string>
-    </void>
     <void property="startTime">
-     <string>22:00</string>
+     <string>02:05</string>
     </void>
     <void property="taskName">
-     <string>u</string>
+     <string>event2</string>
     </void>
     <void property="taskType">
      <string>null</string>
@@ -294,65 +140,15 @@
    </object>
   </void>
   <void method="add">
-   <object class="model.EventTask">
-    <void property="endDate">
-     <string>2015-11-08</string>
+   <object class="model.DeadlineTask">
+    <void property="deadlineDate">
+     <string>2015-11-13</string>
     </void>
-    <void property="endTime">
-     <string>22:00</string>
-    </void>
-    <void property="startDate">
-     <string>2015-11-05</string>
-    </void>
-    <void property="startTime">
-     <string>22:00</string>
+    <void property="deadlineTime">
+     <string>02:05</string>
     </void>
     <void property="taskName">
-     <string>t</string>
-    </void>
-    <void property="taskType">
-     <string>null</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="model.EventTask">
-    <void property="endDate">
-     <string>2015-11-08</string>
-    </void>
-    <void property="endTime">
-     <string>23:59</string>
-    </void>
-    <void property="startDate">
-     <string>2015-11-05</string>
-    </void>
-    <void property="startTime">
-     <string>23:59</string>
-    </void>
-    <void property="taskName">
-     <string>l</string>
-    </void>
-    <void property="taskType">
-     <string>null</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="model.EventTask">
-    <void property="endDate">
-     <string>2015-11-12</string>
-    </void>
-    <void property="endTime">
-     <string>21:00</string>
-    </void>
-    <void property="startDate">
-     <string>2015-11-05</string>
-    </void>
-    <void property="startTime">
-     <string>22:00</string>
-    </void>
-    <void property="taskName">
-     <string>q</string>
+     <string>deadline3</string>
     </void>
     <void property="taskType">
      <string>null</string>

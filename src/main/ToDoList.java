@@ -32,7 +32,17 @@ public class ToDoList {
 //		Controller.executeCMD("add hijjjj by 2015-11-10");
 //		Controller.executeCMD("add 2103T HELLO by 2015-11-11");
 		Controller.executeCMD("delete all");
-		Controller.executeCMD("add 2103T HELLO from today to 2 day later");
+		Controller.executeCMD("clear");
+		Controller.executeCMD("add FloatingTask1");
+		Controller.executeCMD("add FloatingTask2");
+		Controller.executeCMD("add 1231333 by today");
+		Controller.executeCMD("add 567888 by tomorrow");
+		Controller.executeCMD("add 999999 by 2 day later");
+		//Controller.executeCMD("add 2103T HELLO by tomorrow");
+		Controller.executeCMD("add eventtask0 from 2015-11-04 to 2015-11-05");
+		Controller.executeCMD("add eventtask1 from today to tomorrow");
+		Controller.executeCMD("add eventtask2 from today to 2 day later");
+		Controller.executeCMD("add eventtask3 from today to today 2359");
 //		Controller.executeCMD("edit 1 taskName aaa");
 //		Controller.executeCMD("show archived");
 //		Controller.executeCMD("edit 2 taskName aaa");

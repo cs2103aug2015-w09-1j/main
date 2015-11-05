@@ -17,10 +17,106 @@ public class GUIController {
 	static ArrayList<Task> TaskList;
 	private static Font taskNameFont = Font.font("Stencil Std", FontWeight.BOLD, FontPosture.REGULAR, 17);
 	private static Font taskInfoFont = Font.font("Stencil Std", FontWeight.NORMAL, FontPosture.REGULAR, 17);
-
+	static int taskCount;
+	
 	protected static void showRecentList() {
-		TaskList = Controller.getTaskList();
-		showList();
+		int count = 0;
+		taskCount=0;
+		GridPane todayPane = new GridPane();
+		todayPane.setPrefSize(760, 30);
+		Group todayGroup = new Group();
+		ImageView todayBack = new ImageView(GUIMain.today);
+		todayGroup.getChildren().addAll(todayBack, todayPane);
+		GUIMain.TaskDisplayGrid.add(todayGroup, 0, count);
+		count++;
+
+		ArrayList<Task> TodayList = Controller.getTodayTaskList();
+		for (int i = 0; i < TodayList.size(); i++) {
+			Task task = TodayList.get(i);
+			taskCount++;
+			if (task instanceof DeadlineTask) {
+				displayADeadlineTask(count, (DeadlineTask) task);
+			} else if (task instanceof FloatingTask) {
+				displayAFloatingTask(count, (FloatingTask) task);
+			} else if (task instanceof EventTask) {
+				displayAEventTask(count, (EventTask) task);
+			}
+			count++;
+			if (i == 2) {
+				GridPane seeMorePane = new GridPane();
+				seeMorePane.setPrefSize(760, 30);
+				Group seeMoreGroup = new Group();
+				ImageView seeMoreBack = new ImageView(GUIMain.seeMore);
+				seeMoreGroup.getChildren().addAll(seeMoreBack, seeMorePane);
+				GUIMain.TaskDisplayGrid.add(seeMoreGroup, 0, count);
+				count++;
+				break;
+			}
+		}
+
+		GridPane FollowingPane = new GridPane();
+		FollowingPane.setPrefSize(760, 30);
+		Group FollowingGroup = new Group();
+		ImageView FollowingBack = new ImageView(GUIMain.following);
+		FollowingGroup.getChildren().addAll(FollowingBack, FollowingPane);
+		GUIMain.TaskDisplayGrid.add(FollowingGroup, 0, count);
+		count++;
+
+		ArrayList<Task> FollowingList = Controller.getFollowingDayTaskList();
+		for (int i = 0; i < TodayList.size(); i++) {
+			Task task = FollowingList.get(i);
+			taskCount++;
+			if (task instanceof DeadlineTask) {
+				displayADeadlineTask(count, (DeadlineTask) task);
+			} else if (task instanceof FloatingTask) {
+				displayAFloatingTask(count, (FloatingTask) task);
+			} else if (task instanceof EventTask) {
+				displayAEventTask(count, (EventTask) task);
+			}
+			count++;
+			if (i == 2) {
+				GridPane seeMorePane = new GridPane();
+				seeMorePane.setPrefSize(760, 30);
+				Group seeMoreGroup = new Group();
+				ImageView seeMoreBack = new ImageView(GUIMain.seeMore);
+				seeMoreGroup.getChildren().addAll(seeMoreBack, seeMorePane);
+				GUIMain.TaskDisplayGrid.add(seeMoreGroup, 0, count);
+				count++;
+				break;
+			}
+		}
+		
+		GridPane FloatingPane = new GridPane();
+		FloatingPane.setPrefSize(760, 30);
+		Group FloatingGroup = new Group();
+		ImageView FloatingBack = new ImageView(GUIMain.floating);
+		FloatingGroup.getChildren().addAll(FloatingBack, FloatingPane);
+		GUIMain.TaskDisplayGrid.add(FloatingGroup, 0, count);
+		count++;
+		
+		ArrayList<Task> FloatingList = Controller.getFloatingTaskList();
+		for (int i = 0; i < TodayList.size(); i++) {
+			Task task = FloatingList.get(i);
+			taskCount++;
+			if (task instanceof DeadlineTask) {
+				displayADeadlineTask(count, (DeadlineTask) task);
+			} else if (task instanceof FloatingTask) {
+				displayAFloatingTask(count, (FloatingTask) task);
+			} else if (task instanceof EventTask) {
+				displayAEventTask(count, (EventTask) task);
+			}
+			count++;
+			if (i == 2) {
+				GridPane seeMorePane = new GridPane();
+				seeMorePane.setPrefSize(760, 30);
+				Group seeMoreGroup = new Group();
+				ImageView seeMoreBack = new ImageView(GUIMain.seeMore);
+				seeMoreGroup.getChildren().addAll(seeMoreBack, seeMorePane);
+				GUIMain.TaskDisplayGrid.add(seeMoreGroup, 0, count);
+				count++;
+				break;
+			}
+		}
 	}
 
 	private static void showList() {
@@ -28,9 +124,11 @@ public class GUIController {
 
 		GUIMain.TaskDisplayGrid.getChildren().clear();
 
+		taskCount=0;
+		
 		for (int i = 0; i < Arraysize; i++) {
 			Task task = TaskList.get(i);
-
+			taskCount++;
 			if (task instanceof DeadlineTask) {
 				displayADeadlineTask(i, (DeadlineTask) task);
 			} else if (task instanceof FloatingTask) {
@@ -52,7 +150,7 @@ public class GUIController {
 		if (task.getTaskType().equals("Completed") || task.getTaskType() == "Completed") {
 			ImageView combackg = new ImageView(GUIMain.completeImage);
 			back.getChildren().addAll(combackg, event);
-		} else if(task.getTaskType().equals("Archived") || task.getTaskType() == "Archived"){
+		} else if (task.getTaskType().equals("Archived") || task.getTaskType() == "Archived") {
 			ImageView backgroung = new ImageView(GUIMain.archivedImage);
 			back.getChildren().addAll(backgroung, event);
 		} else {
@@ -64,7 +162,7 @@ public class GUIController {
 		GridPane nameGrid = new GridPane();
 		nameGrid.setPrefSize(375, 25);
 		Text name = new Text();
-		temp = " " + Integer.valueOf(i + 1).toString() + ". " + task.getTaskName();
+		temp = " " + Integer.valueOf(taskCount).toString() + ". " + task.getTaskName();
 		name.setText(temp);
 		name.setFont(taskNameFont);
 		name.setFill(GUIMain.eventColor);
@@ -82,7 +180,7 @@ public class GUIController {
 		if (task.getTaskType().equals("Completed") || task.getTaskType() == "Completed") {
 			name.setFill(GUIMain.completeColor);
 			info.setFill(GUIMain.completeColor);
-		}else if(task.getTaskType().equals("Archived") || task.getTaskType() == "Archived"){
+		} else if (task.getTaskType().equals("Archived") || task.getTaskType() == "Archived") {
 			name.setFill(GUIMain.archivedColor);
 			info.setFill(GUIMain.archivedColor);
 		}
@@ -101,7 +199,7 @@ public class GUIController {
 		if (task.getTaskType().equals("Completed") || task.getTaskType() == "Completed") {
 			ImageView combackg = new ImageView(GUIMain.completeImage);
 			back.getChildren().addAll(combackg, floating);
-		} else if(task.getTaskType().equals("Archived") || task.getTaskType() == "Archived"){
+		} else if (task.getTaskType().equals("Archived") || task.getTaskType() == "Archived") {
 			ImageView backgroung = new ImageView(GUIMain.archivedImage);
 			back.getChildren().addAll(backgroung, floating);
 		} else {
@@ -112,7 +210,7 @@ public class GUIController {
 		String temp;
 
 		Text name = new Text();
-		temp = " " + Integer.valueOf(i + 1).toString() + ". " + task.getTaskName();
+		temp = " " + Integer.valueOf(taskCount).toString() + ". " + task.getTaskName();
 		name.setText(temp);
 		name.setFont(taskNameFont);
 		name.setFill(GUIMain.floatingColor);
@@ -120,7 +218,7 @@ public class GUIController {
 
 		if (task.getTaskType().equals("Completed") || task.getTaskType() == "Completed") {
 			name.setFill(GUIMain.completeColor);
-		}else if(task.getTaskType().equals("Archived") || task.getTaskType() == "Archived"){
+		} else if (task.getTaskType().equals("Archived") || task.getTaskType() == "Archived") {
 			name.setFill(GUIMain.archivedColor);
 		}
 
@@ -138,7 +236,7 @@ public class GUIController {
 		if (task.getTaskType().equals("Completed") || task.getTaskType() == "Completed") {
 			ImageView combackg = new ImageView(GUIMain.completeImage);
 			back.getChildren().addAll(combackg, deadline);
-		} else if(task.getTaskType().equals("Archived") || task.getTaskType() == "Archived") {
+		} else if (task.getTaskType().equals("Archived") || task.getTaskType() == "Archived") {
 			ImageView backgroung = new ImageView(GUIMain.archivedImage);
 			back.getChildren().addAll(backgroung, deadline);
 		} else {
@@ -149,7 +247,7 @@ public class GUIController {
 
 		GridPane nameGrid = new GridPane();
 		nameGrid.setPrefSize(550, 25);
-		temp = " " + Integer.valueOf(i + 1).toString() + ". " + task.getTaskName();
+		temp = " " + Integer.valueOf(taskCount).toString() + ". " + task.getTaskName();
 		Text name = new Text(temp);
 		name.setFont(taskNameFont);
 		name.setFill(GUIMain.deadlineColor);
@@ -166,7 +264,7 @@ public class GUIController {
 		if (task.getTaskType().equals("Completed") || task.getTaskType() == "Completed") {
 			name.setFill(GUIMain.completeColor);
 			info.setFill(GUIMain.completeColor);
-		}else if(task.getTaskType().equals("Archived") || task.getTaskType() == "Archived"){
+		} else if (task.getTaskType().equals("Archived") || task.getTaskType() == "Archived") {
 			name.setFill(GUIMain.archivedColor);
 			info.setFill(GUIMain.archivedColor);
 		}
@@ -181,6 +279,7 @@ public class GUIController {
 	
 	public static void execute(String command) throws Exception {
 		String commandType = getCommandType(command, 0);
+<<<<<<< HEAD
 		Controller.executeCMD(command);
 		TaskList = Controller.getTaskList();
 		showList();
@@ -235,6 +334,8 @@ public class GUIController {
 	/*
 	public static void execute(String command) throws Exception {
 		String commandType = getCommandType(command, 0);
+=======
+>>>>>>> 0a070b1dc83ae3a2a4f8b1e955b12bccbc12b73f
 		switch (commandType) {
 		case "add":
 			executeAdd(command);
@@ -294,7 +395,8 @@ public class GUIController {
 	}
 
 	private static void executeClear(String command) {
-		Controller.executeCMD(command);	
+		Controller.executeCMD(command);
+		GUIMain.userCommandBlock.clear();
 		TaskList = Controller.getTaskList();
 		showList();
 		GUIMain.showAll();
@@ -302,16 +404,19 @@ public class GUIController {
 	}
 
 	private static void executeHelp(String command) {
-		// TODO Auto-generated method stub
-		
+		Controller.executeCMD(command);
+		GUIMain.userCommandBlock.clear();
+		// GUIMain.showHelp(Controller.getHelpString(helpMessage));
+		// TODO
 	}
 
 	private static void executeExit(String command) {
-		Controller.executeCMD(command);	
+		Controller.executeCMD(command);
 	}
 
 	private static void executeUndo(String command) throws IOException {
 		Controller.executeCMD(command);
+		GUIMain.userCommandBlock.clear();
 		TaskList = Controller.getTaskList();
 		showList();
 		GUIMain.showAll();
@@ -320,6 +425,7 @@ public class GUIController {
 
 	private static void executeUnComOrArc(String command) throws IOException {
 		Controller.executeCMD(command);
+		GUIMain.userCommandBlock.clear();
 		TaskList = Controller.getTaskList();
 		showList();
 		GUIMain.showAll();
@@ -328,6 +434,7 @@ public class GUIController {
 
 	private static void executeArchive(String command) throws IOException {
 		Controller.executeCMD(command);
+		GUIMain.userCommandBlock.clear();
 		TaskList = Controller.getTaskList();
 		showList();
 		GUIMain.showAll();
@@ -336,6 +443,7 @@ public class GUIController {
 
 	private static void executeComplete(String command) throws IOException {
 		Controller.executeCMD(command);
+		GUIMain.userCommandBlock.clear();
 		TaskList = Controller.getTaskList();
 		showList();
 		GUIMain.showAll();
@@ -344,6 +452,7 @@ public class GUIController {
 
 	private static void executeUpdate(String command) throws IOException {
 		Controller.executeCMD(command);
+		GUIMain.userCommandBlock.clear();
 		TaskList = Controller.getTaskList();
 		showList();
 		GUIMain.showAll();
@@ -352,6 +461,7 @@ public class GUIController {
 
 	private static void executeAll(String command) throws IOException {
 		Controller.executeCMD(command);
+		GUIMain.userCommandBlock.clear();
 		TaskList = Controller.getTaskList();
 		showList();
 		GUIMain.showAll();
@@ -359,11 +469,13 @@ public class GUIController {
 
 	private static void executeSave(String command) throws IOException {
 		Controller.executeCMD(command);
+		GUIMain.userCommandBlock.clear();
 		GUIMain.showSave();
 	}
 
 	private static void executeLoad(String command) throws IOException {
 		Controller.executeCMD(command);
+		GUIMain.userCommandBlock.clear();
 		TaskList = Controller.getTaskList();
 		showList();
 		GUIMain.showAll();
@@ -372,6 +484,7 @@ public class GUIController {
 
 	private static void executeSearch(String command) throws IOException {
 		Controller.executeCMD(command);
+		GUIMain.userCommandBlock.clear();
 		TaskList = Controller.getTaskList();
 		showList();
 		GUIMain.showSearch();
@@ -379,6 +492,7 @@ public class GUIController {
 
 	private static void executeDelete(String command) throws IOException {
 		Controller.executeCMD(command);
+		GUIMain.userCommandBlock.clear();
 		TaskList = Controller.getTaskList();
 		showList();
 		GUIMain.showAll();
@@ -387,6 +501,7 @@ public class GUIController {
 
 	private static void executeShow(String command) throws IOException {
 		Controller.executeCMD(command);
+		GUIMain.userCommandBlock.clear();
 		switch (getCommandType(command, 1)) {
 		case "archived":
 			TaskList = Controller.getArchivedList();
@@ -398,11 +513,22 @@ public class GUIController {
 			showList();
 			GUIMain.showFloating();
 			break;
+		case "by":
+			TaskList = Controller.getTaskList();
+			showList();
+			GUIMain.showBy();
+			break;
+		case "on":
+			TaskList = Controller.getTaskList();
+			showList();
+			GUIMain.showOn();
+			break;
 		}
 	}
 
 	private static void executeSet(String command) throws IOException {
 		Controller.executeCMD(command);
+		GUIMain.userCommandBlock.clear();
 		switch (getCommandType(command, 1)) {
 		case "path":
 			GUIMain.showSetPath();
@@ -415,11 +541,12 @@ public class GUIController {
 
 	private static void executeAdd(String command) throws IOException {
 		Controller.executeCMD(command);
+		GUIMain.userCommandBlock.clear();
 		TaskList = Controller.getTaskList();
 		showList();
 		GUIMain.showAll();
 		GUIMain.showAdd();
 	}
-	*/
+	
 
 }
