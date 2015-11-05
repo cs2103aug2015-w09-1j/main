@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <java version="1.8.0_65" class="java.beans.XMLDecoder">
+=======
+<java version="1.8.0_60" class="java.beans.XMLDecoder">
+>>>>>>> develop
  <object class="java.util.ArrayList">
   <void method="add">
    <object class="model.DeadlineTask">
@@ -10,6 +14,7 @@
      <string>18:20</string>
     </void>
     <void property="taskName">
+<<<<<<< HEAD
      <string>meet</string>
     </void>
     <void property="taskType">
@@ -68,12 +73,16 @@
     </void>
     <void property="taskType">
      <string>null</string>
+=======
+     <string>name</string>
+>>>>>>> develop
     </void>
    </object>
   </void>
   <void method="add">
    <object class="model.DeadlineTask">
     <void property="deadlineDate">
+<<<<<<< HEAD
      <string>2015-11-06</string>
     </void>
     <void property="deadlineTime">
@@ -160,11 +169,15 @@
     </void>
     <void property="taskType">
      <string>null</string>
+=======
+     <string>ddl date</string>
+>>>>>>> develop
     </void>
    </object>
   </void>
   <void method="add">
    <object class="model.EventTask">
+<<<<<<< HEAD
     <void property="endDate">
      <string>2015-11-14</string>
     </void>
@@ -250,6 +263,10 @@
     </void>
     <void property="taskType">
      <string>null</string>
+=======
+    <void property="endTime">
+     <string>end time</string>
+>>>>>>> develop
     </void>
    </object>
   </void>
