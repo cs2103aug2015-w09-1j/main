@@ -188,10 +188,10 @@ public class GUIMain extends Application {
 				}
 
 				if (event.getCode().equals(KeyCode.UP)) {
-					TaskDisplayBlock.setVvalue(TaskDisplayBlock.getVvalue() - 0.3f);
+					TaskDisplayBlock.setVvalue(TaskDisplayBlock.getVvalue() - 0.1f);
 				}
 				if (event.getCode().equals(KeyCode.DOWN)) {
-					TaskDisplayBlock.setVvalue(TaskDisplayBlock.getVvalue() + 0.3f);
+					TaskDisplayBlock.setVvalue(TaskDisplayBlock.getVvalue() + 0.1f);
 				}
 			}
 
