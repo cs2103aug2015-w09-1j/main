@@ -196,12 +196,8 @@ public class GUIMain extends Application {
 	}
 
 	protected static void showError() {
-<<<<<<< HEAD
-		message.setText("Error! Invalid or wrong format of command.");
-=======
 		message.setTextFill(warningColor);
-		message.setText("Error! Check your command format.");
->>>>>>> db90a6ad5e860c51b5669e575ed08d208456b9a5
+		message.setText("Error! Invalid or wrong format of command.");
 		
 		signal.setText("");
 	}
