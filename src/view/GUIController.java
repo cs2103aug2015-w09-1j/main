@@ -222,9 +222,20 @@ public class GUIController {
 		case "show":
 			executeShowArchived(command);
 			break;
+		case "undo":
+			executeUndo(command);
+			break;
 		default:
 			break;
 		}
+	}
+
+	private static void executeUndo(String command) throws IOException {
+		Controller.executeCMD(command);
+		TaskList = Controller.getTaskList();
+		showList();
+		GUIMain.showAll();
+		
 	}
 
 	private static void executeUnComOrArc(String command) throws IOException {
