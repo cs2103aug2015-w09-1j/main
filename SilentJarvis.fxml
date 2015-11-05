@@ -1,52 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<<<<<<< HEAD
-<java version="1.8.0_60" class="java.beans.XMLDecoder">
+<java version="1.8.0_65" class="java.beans.XMLDecoder">
  <object class="java.util.ArrayList">
   <void method="add">
    <object class="model.FloatingTask">
     <void property="taskName">
-     <string>name</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="model.DeadlineTask">
-    <void property="deadlineDate">
-     <string>ddl date</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-=======
-<java version="1.8.0_66" class="java.beans.XMLDecoder">
- <object class="java.util.ArrayList">
-  <void method="add">
->>>>>>> 6f360ba12e93dc836b5c1aab78f6ced1325f1661
-   <object class="model.EventTask">
-    <void property="endTime">
-<<<<<<< HEAD
-     <string>end time</string>
-=======
-     <string>17:43</string>
-    </void>
-    <void property="startDate">
-     <string>2015-11-05</string>
-    </void>
-    <void property="startTime">
-     <string>17:43</string>
-    </void>
-    <void property="taskName">
-     <string>eat</string>
-    </void>
-    <void property="taskType">
-     <string>null</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="model.FloatingTask">
-    <void property="taskName">
-     <string>anything</string>
+     <string>a</string>
     </void>
     <void property="taskType">
      <string>null</string>
@@ -59,14 +17,13 @@
      <string>2015-11-05</string>
     </void>
     <void property="deadlineTime">
-     <string>18:20</string>
+     <string>19:58</string>
     </void>
     <void property="taskName">
-     <string>meet</string>
+     <string>a</string>
     </void>
     <void property="taskType">
      <string>null</string>
->>>>>>> 6f360ba12e93dc836b5c1aab78f6ced1325f1661
     </void>
    </object>
   </void>
