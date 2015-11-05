@@ -31,7 +31,8 @@ public class ToDoList {
 //		Controller.executeCMD("add calvinsim by 2015-10-29 2201");
 //		Controller.executeCMD("add hijjjj by 2015-11-10");
 //		Controller.executeCMD("add 2103T HELLO by 2015-11-11");
-		
+		Controller.executeCMD("delete all");
+		Controller.executeCMD("add 2103T HELLO from today to 2 day later");
 //		Controller.executeCMD("edit 1 taskName aaa");
 //		Controller.executeCMD("show archived");
 //		Controller.executeCMD("edit 2 taskName aaa");

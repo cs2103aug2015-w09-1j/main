@@ -100,10 +100,7 @@ public class TaskMemory {
 						todayList.add(t);
 					}
 				} else if (t instanceof EventTask) {
-					if ((((EventTask) t).getEndTime().compareTo(timeNow) >= 0
-							&& ((EventTask) t).getStartDate()
-									.compareTo(dateNow) <= 0 && ((EventTask) t)
-							.getEndDate().compareTo(dateNow) >= 0)
+					if (((EventTask) t).getStartDate().compareTo(dateNow) <= 0 && ((EventTask) t).getEndDate().compareTo(dateNow) >= 0
 							&& !t.getTaskType().contains("Archived")) {
 						todayList.add(t);
 					}
