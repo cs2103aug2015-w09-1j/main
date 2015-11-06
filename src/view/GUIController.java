@@ -357,8 +357,7 @@ public class GUIController {
 	private static void executeHelp(String command) {
 		Controller.executeCMD(command);
 		GUIMain.userCommandBlock.clear();
-		// GUIMain.showHelp(Controller.getHelpString(helpMessage));
-		// TODO
+		GUIMain.showHelp(Controller.getHelpString());	
 	}
 
 	private static void executeExit(String command) {

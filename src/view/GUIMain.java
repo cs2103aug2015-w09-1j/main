@@ -14,12 +14,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import util.Storage;
@@ -37,6 +39,7 @@ public class GUIMain extends Application {
 	protected static Image completeImage;
 	protected static Image archivedImage;
 	protected static Image upcomingImage;
+	protected static Image helpImage;
 	protected static Image floating;
 	protected static Image today;
 	protected static Image following;
@@ -49,6 +52,8 @@ public class GUIMain extends Application {
 	protected static TextField userCommandBlock;
 	private static Font messageFont = Font.font("Stencil Std", FontWeight.BOLD, FontPosture.REGULAR, 22);
 	private static Font signalFont = Font.font("Stencil Std", FontWeight.BOLD, FontPosture.REGULAR, 14);
+	private static Font helpTitleFont = Font.font("Stencil Std", FontWeight.BOLD, FontPosture.REGULAR, 17);
+	private static Font helpContentFont = Font.font("Stencil Std", FontWeight.NORMAL, FontPosture.REGULAR, 14);
 	protected static Color floatingColor = Color.web("#039ed3");
 	protected static Color eventColor = Color.web("#17a42a");
 	protected static Color deadlineColor = Color.web("#b9ac1d");
@@ -97,6 +102,7 @@ public class GUIMain extends Application {
 		today = new Image(getClass().getResourceAsStream("today.png"));
 		following = new Image(getClass().getResourceAsStream("following.png"));
 		seeMore = new Image(getClass().getResourceAsStream("seeMore.png"));
+		helpImage =new Image(getClass().getResourceAsStream("help.png"));
 	}
 
 	private void initialStage(Stage primaryStage) {
@@ -129,10 +135,10 @@ public class GUIMain extends Application {
 		userCommandBlock.requestFocus();
 		grid.add(userCommandBlock, 0, 3);
 
-		DragController.dragStage(grid, primaryStage);
-
 		Scene scene = new Scene(back, 820, 660);
 		primaryStage.setScene(scene);
+
+		dragStage(primaryStage);
 	}
 
 	private void buildSysMsgBlk() {
@@ -208,7 +214,7 @@ public class GUIMain extends Application {
 	protected static void showError() {
 		message.setTextFill(warningColor);
 		message.setText("Error! Invalid or wrong format of command.");
-		
+
 		signal.setText("");
 	}
 
@@ -321,9 +327,79 @@ public class GUIMain extends Application {
 		signal.setText("");
 	}
 
-	protected static void showHelp() {
-		message.setTextFill(commonColor);
-		message.setText("");
-		// TODO
+	protected static void showHelp(String string) {
+		GridPane popUp = new GridPane();
+		popUp.setVgap(15);
+		popUp.setPadding(new Insets(30, 30, 30, 30));
+
+		ImageView backgroung = new ImageView(helpImage);
+		Group back = new Group();
+		back.getChildren().addAll(backgroung, popUp);
+
+		Text helpTitle = new Text("Sample format:");
+		helpTitle.setFont(helpTitleFont);
+		helpTitle.setFill(floatingColor);
+		popUp.add(helpTitle, 0, 0);
+		
+		Text helpString = new Text(string);
+		helpString.setFont(helpContentFont);
+		helpString.setFill(floatingColor);
+		popUp.add(helpString, 0, 1);
+
+		Text helpEnd = new Text("Press <ESC> to close.");
+		helpEnd.setFont(helpContentFont);
+		helpEnd.setFill(floatingColor);
+		popUp.add(helpEnd, 0, 2);
+		
+		Stage secondWindow = new Stage();
+		secondWindow.initStyle(StageStyle.UNDECORATED);
+		Scene scene = new Scene(back, 340, 340);
+		secondWindow.setScene(scene);
+		secondWindow.show();
+		
+		scene.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+
+			@Override
+			public void handle(KeyEvent t) {
+				if (t.getCode() == KeyCode.ESCAPE) {
+					secondWindow.close();
+				}
+			}
+		});
+
+		popUp.setOnMousePressed(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				xOffset = event.getSceneX();
+				yOffset = event.getSceneY();
+			}
+		});
+
+		popUp.setOnMouseDragged(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				secondWindow.setX(event.getScreenX() - xOffset);
+				secondWindow.setY(event.getScreenY() - yOffset);
+			}
+		});
+	}
+
+	public static void dragStage(final Stage primaryStage) {
+
+		grid.setOnMousePressed(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				xOffset = event.getSceneX();
+				yOffset = event.getSceneY();
+			}
+		});
+
+		grid.setOnMouseDragged(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				primaryStage.setX(event.getScreenX() - xOffset);
+				primaryStage.setY(event.getScreenY() - yOffset);
+			}
+		});
 	}
 }
