@@ -10,7 +10,6 @@ import command.DeleteBulkTask;
 import command.DeleteTask;
 import command.ICommand;
 import command.TaskMemory;
-import command.UpdateBulkCommand;
 import command.UpdateBulkTask;
 import command.UpdateTask;
 import model.*;

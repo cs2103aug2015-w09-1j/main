@@ -20,9 +20,7 @@ public class CreateBulkTask extends CreateCommand {
 
 	@Override
 	public void undo() {
-		if (this.undoable()) {
 
-		}
 	}
 
 }

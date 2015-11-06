@@ -21,6 +21,7 @@ public class Controller {
 			.getCombinedTaskList();
 	private static CommandParser parser = null;
 	private static String _helpMessage = null;
+	private static String _errorMessage = null;
 	public static Controller getInstance() {
 		if (_instance == null) {
 			_instance = new Controller();
@@ -217,7 +218,7 @@ public class Controller {
 			}
 		} catch (Exception e) {
 			String msg = "ERROR";
-			getErrorMessage(msg);
+			setErrorMessage(msg);
 		}
 	}
 
@@ -230,8 +231,8 @@ public class Controller {
 		return displayList.size();
 	}
 	
-	public static String getErrorMessage(String errorMessage){
-		return errorMessage;
+	public static String getErrorMessage(){
+		return _errorMessage;
 	}
 
 	public static String getHelpString() {
@@ -240,6 +241,10 @@ public class Controller {
 	
 	private static void setHelpMessage(String helpMessage){
 		_helpMessage = helpMessage;
+	}
+	
+	private static void setErrorMessage(String errorMsg){
+		_errorMessage = errorMsg;
 	}
 
 	public static ArrayList<Task> getFloatingTaskList() {
@@ -250,24 +255,13 @@ public class Controller {
 		return TaskMemory.getInstance().getFollowingDayTask();
 	}
 
-	public static ArrayList<Task> getOtherTaskList() {
-		return TaskMemory.getInstance().getOtherTask();
-	}
-
 	public static ArrayList<Task> getArchivedList() {
 		return TaskMemory.getInstance().getArchivedList();
 	}
 
-	public static ArrayList<Task> getNoArchivedList() {
-		return TaskMemory.getInstance().getNoArchivedList();
-	}
 
 	public static ArrayList<Task> getTodayTaskList() {
 		return TaskMemory.getInstance().getTodayTaskList();
-	}
-
-	public static ArrayList<Task> getDueTaskList() {
-		return TaskMemory.getInstance().getDueTask();
 	}
 	
 	public static ArrayList<Task> getCombinedTaskList(){

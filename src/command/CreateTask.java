@@ -5,10 +5,6 @@ import model.Task;
 public class CreateTask extends CreateCommand {
 	private Task task;
 
-	public CreateTask() {
-
-	}
-
 	public CreateTask(Task task) {
 		this.task = task;
 	}

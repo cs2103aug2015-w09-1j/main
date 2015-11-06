@@ -480,12 +480,198 @@ public class LogicTest {
 	}
 	
 	@Test
-	public void loadTest(){
+	public void taskListTest(){
 		ClearTaskTest();
 		assertEquals(0, taskList.size());
 		
-		taskList = Storage.getInstance().load();
+		
+		taskList = Controller.getFloatingTaskList();
+		assertEquals(0, taskList.size());
+		
+		Controller.executeCMD("add Float1");
+		Controller.executeCMD("add Deadline1 by 2015-12-13 0800");
+		Controller.executeCMD("add Event3 from 2015-12-13 0800 to 2015-12-14 0800");
+		Controller.executeCMD("add Event4 from 2015-12-14 0800 to 2015-12-15 0800");
+		Controller.executeCMD("add Event5 from 2015-12-15 0800 to 2015-12-16 0800");
+		
+		taskList = Controller.getFloatingTaskList();
+		assertEquals(1, taskList.size());
+		
+		taskList = Controller.getFollowingDayTaskList();
+		assertEquals(4, taskList.size());
+		
+		taskList = Controller.getTodayTaskList();
+		assertEquals(0, taskList.size());
+		
+		Controller.executeCMD("add deadlin123 by today 2359");
+		taskList = Controller.getTodayTaskList();
+		assertEquals(1, taskList.size());
+		
+		Controller.executeCMD("delete 1");
+		taskList = Controller.getCombinedTaskList();
 		assertEquals(5, taskList.size());
+		
+		Controller.executeCMD("delete 1,2");
+		taskList = Controller.getCombinedTaskList();
+		assertEquals(3, taskList.size());
+		
+		Controller.executeCMD("undo");
+		taskList = Controller.getCombinedTaskList();
+		assertEquals(5, taskList.size());
+		
+		Controller.executeCMD("undo");
+		taskList = Controller.getCombinedTaskList();
+		assertEquals(6, taskList.size());
+		
+		Controller.executeCMD("delete 1-3");
+		taskList = Controller.getCombinedTaskList();
+		assertEquals(3, taskList.size());
+		
+		Controller.executeCMD("delete all");
+		taskList = Controller.getCombinedTaskList();
+		assertEquals(0, taskList.size());
+		
+		Controller.executeCMD("undo");
+		taskList = Controller.getCombinedTaskList();
+		assertEquals(3, taskList.size());
+		
+		assertEquals("Float1", taskList.get(2).getTaskName());
+		Controller.executeCMD("edit 3 taskName helloWord");
+		taskList = Controller.getCombinedTaskList();
+		assertEquals(3, taskList.size());
+		assertEquals("helloWord", taskList.get(2).getTaskName());
+		
+		Controller.executeCMD("edit 3 hello123");
+		taskList = Controller.getCombinedTaskList();
+		assertEquals(3, taskList.size());
+		assertEquals("hello123", taskList.get(2).getTaskName());
+		Controller.executeCMD("undo");
+		taskList = Controller.getCombinedTaskList();
+		assertEquals(3, taskList.size());
+		assertEquals("helloWord", taskList.get(2).getTaskName());
+		Controller.executeCMD("edit 3 hello123");
+		taskList = Controller.getCombinedTaskList();
+		assertEquals(3, taskList.size());
+		assertEquals("hello123", taskList.get(2).getTaskName());
+		
+		Controller.executeCMD("search hello123");
+		taskList = Controller.getTaskList();
+		assertEquals(1, taskList.size());
+		
+		Controller.executeCMD("display");
+		taskList = Controller.getTaskList();
+		assertEquals(3, taskList.size());
+		
+		Controller.executeCMD("search by 2015-12-14");
+		taskList = Controller.getTaskList();
+		assertEquals(0, taskList.size());
+		
+		Controller.executeCMD("display");
+		taskList = Controller.getTaskList();
+		assertEquals(3, taskList.size());
+		
+		Controller.executeCMD("search by 2015-12-16");
+		taskList = Controller.getTaskList();
+		int size = Controller.getSize();
+		assertEquals(2, size);
+		
+		Controller.executeCMD("display");
+		taskList = Controller.getTaskList();
+		
+		Controller.executeCMD("search on 2015-12-16");
+		taskList = Controller.getTaskList();
+		assertEquals(1, taskList.size());
+		
+		Controller.executeCMD("display");
+		taskList = Controller.getTaskList();
+		Controller.executeCMD("search from today to 2015-12-16");
+		taskList = Controller.getTaskList();
+		assertEquals(2, taskList.size());
+		
+		Controller.executeCMD("display");
+		Controller.executeCMD("set path /testing/");
+		String path = "/testing/";
+		assertEquals(path, Storage.getInstance().getPath());
+		
+		Controller.executeCMD("set filename newfile");
+		String filename = "newfile.fxml";
+		assertEquals(filename, Storage.getInstance().getfileName());
+		
+		Controller.executeCMD("archive 1");
+		taskList = Controller.getCombinedTaskList();
+		assertEquals(2, taskList.size());
+		
+		Controller.executeCMD("display");
+		Controller.executeCMD("undo");
+		Controller.executeCMD("archive 1-2");
+		taskList = Controller.getCombinedTaskList();
+		assertEquals(1, taskList.size());
+		
+		Controller.executeCMD("display");
+		Controller.executeCMD("show archived");
+		taskList = Controller.getArchivedList();
+		assertEquals(2, taskList.size());
+		
+		Controller.executeCMD("unarchived 1,2");
+		taskList = Controller.getTaskList();
+		assertEquals(3, taskList.size());
+		
+		Controller.executeCMD("complete 1-3");
+		taskList = Controller.getTaskList();
+		assertEquals(3, taskList.size());
+		
+		Controller.executeCMD("uncomplete 1-2");
+		taskList = Controller.getTaskList();
+		assertEquals(3, taskList.size());
+		
+		Controller.executeCMD("show by 2015-12-16");
+		taskList = Controller.getTaskList();
+		assertEquals(2, taskList.size());
+		Controller.executeCMD("display");
+		Controller.executeCMD("show on 2015-12-16");
+		taskList = Controller.getTaskList();
+		assertEquals(1, taskList.size());
+		Controller.executeCMD("display");
+		Controller.executeCMD("show from today to 2015-12-16");
+		taskList = Controller.getTaskList();
+		assertEquals(2, taskList.size());
+		
+		Controller.executeCMD("display");
+		Controller.executeCMD("show floating");
+		taskList = Controller.getFloatingTaskList();
+		assertEquals(1, taskList.size());
+		
+		Controller.executeCMD("display");
+		Controller.executeCMD("save");
+		Controller.executeCMD("load");
+		taskList = Controller.getCombinedTaskList();
+		assertEquals(3,taskList.size());
+		
+		Controller.executeCMD("help");
+		String help = "add <name>\nadd <name> from <time> to <time>\nadd <name> by   <deadline>\ndelete  <id>\nsearch  <id>\narchive <id>\nedit <id> <attribute> <info>\nset  path     <storage path>\nset  filename <filename>\nundo\n";
+		assertEquals(help, Controller.getHelpString());
+		
+		Controller.executeCMD("clear");
+		taskList = Controller.getCombinedTaskList();
+		assertEquals(0,taskList.size());
+		
+		Controller.executeCMD("add abc by today");
+		taskList = Controller.getCombinedTaskList();
+		assertEquals(0, taskList.size());
+		
+		Controller.executeCMD("add eve from today to today");
+		taskList = Controller.getCombinedTaskList();
+		assertEquals(0, taskList.size());
+		
+		assertEquals(2, TaskMemory.getInstance().getSize());
+		
+		Controller.executeCMD("exit");
+		
+		
+		
+		
 	}
+	
+	
 
 }
