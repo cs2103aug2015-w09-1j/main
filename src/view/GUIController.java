@@ -20,6 +20,8 @@ public class GUIController {
 	static int taskCount;
 	
 	protected static void showPartitionList(int welcome) {
+		GUIMain.TaskDisplayGrid.getChildren().clear();
+		
 		int count = 0;
 		taskCount=0;
 		GridPane todayPane = new GridPane();
