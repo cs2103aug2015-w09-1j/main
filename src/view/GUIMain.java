@@ -34,50 +34,49 @@ import model.Task;
 import util.Storage;
 
 public class GUIMain extends Application {
+	private static int taskCount;
+	private static int gridRowCount;
 	private static double xOffset = 0;
 	private static double yOffset = 0;
-	private Image backgroundImage;
-	private Image iconImage;
 	private static Image deadlineImage;
 	private static Image eventImage;
 	private static Image floatingImage;
 	private static Image completeImage;
 	private static Image archivedImage;
 	private static Image helpImage;
-	private static Image floating;
-	private static Image today;
-	private static Image following;
-	private static Image seeMore;
+	private static Image floatingTitle;
+	private static Image todayTitle;
+	private static Image followingTitle;
+	private static Image seeMoreTitle;
+	private Image backgroundImage;
+	private Image iconImage;
+	final private GUIController GUI_CONTROLLOR= GUIController.getInstance();
+	protected static TextField userCommandBlock;
 	private static GridPane TaskDisplayGrid;
 	private ScrollPane TaskDisplayBlock;
-	protected static TextField userCommandBlock;
-	final private Font messageFont = Font.font("Stencil Std", FontWeight.BOLD, FontPosture.REGULAR, 22);
-	final private Font signalFont = Font.font("Stencil Std", FontWeight.BOLD, FontPosture.REGULAR, 14);
-	final private static Font helpTitleFont = Font.font("Stencil Std", FontWeight.BOLD, FontPosture.REGULAR, 17);
-	final private static Font helpContentFont = Font.font("Stencil Std", FontWeight.NORMAL, FontPosture.REGULAR, 14);
-	final private static Font taskNameFont = Font.font("Stencil Std", FontWeight.BOLD, FontPosture.REGULAR, 17);
-	final private static Font taskInfoFont = Font.font("Stencil Std", FontWeight.NORMAL, FontPosture.REGULAR, 17);
-	final private static Color floatingColor = Color.web("#039ed3");
-	final private static Color eventColor = Color.web("#17a42a");
-	final private static Color deadlineColor = Color.web("#b9ac1d");
-	final private static Color completeColor = Color.web("#898989");
-	final private static Color archivedColor = Color.web("#ae31f6");
-	final private static Color commonColor = Color.web("#039ed3");
-	final private Color safeColor = Color.web("#17a42a");
-	final private static Color warningColor = Color.web("#ff0000");
 	private static Label message;
-	private static Label signal;
-	final private GUIController theGUIController= GUIController.getInstance();
-	private static int taskCount;
-	
-	public static void main(String args[]) {
+	private static Label signal;	
+	final private static Font HELP_TITLE_FONT = Font.font("Stencil Std", FontWeight.BOLD, FontPosture.REGULAR, 17);
+	final private static Font HELP_CONTENT_FONT = Font.font("Stencil Std", FontWeight.NORMAL, FontPosture.REGULAR, 14);
+	final private static Font TASK_NAME_FONT = Font.font("Stencil Std", FontWeight.BOLD, FontPosture.REGULAR, 17);
+	final private static Font TASK_INFO_FONT = Font.font("Stencil Std", FontWeight.NORMAL, FontPosture.REGULAR, 17);
+	final private Font MESSAGE_FONT = Font.font("Stencil Std", FontWeight.BOLD, FontPosture.REGULAR, 22);
+	final private Font SIGNAL_FONT = Font.font("Stencil Std", FontWeight.BOLD, FontPosture.REGULAR, 14);
+	final private static Color FLOATING_COLOR = Color.web("#039ed3");
+	final private static Color EVENT_COLOR = Color.web("#17a42a");
+	final private static Color DEADLINE_COLOR = Color.web("#b9ac1d");
+	final private static Color COMPLETED_COLOR = Color.web("#898989");
+	final private static Color ARCHIVED_COLOR = Color.web("#ae31f6");
+	final private static Color COMMON_COLOR = Color.web("#039ed3");
+	final private static Color WARNING_COLOR = Color.web("#ff0000");
+	final private Color SAFE_COLOR = Color.web("#17a42a");	
 
+	public static void main(String args[]) {
 		launch(args);
 	}
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-
 		loadImage();
 
 		initialStage(primaryStage);
@@ -92,7 +91,6 @@ public class GUIMain extends Application {
 	}
 
 	private void loadImage() {
-
 		backgroundImage = new Image(getClass().getResourceAsStream("back3.png"));
 		iconImage = new Image(getClass().getResourceAsStream("icon.png"));
 		deadlineImage = new Image(getClass().getResourceAsStream("deadlineTask.png"));
@@ -100,59 +98,56 @@ public class GUIMain extends Application {
 		floatingImage = new Image(getClass().getResourceAsStream("floatingTask.png"));
 		completeImage = new Image(getClass().getResourceAsStream("completeTask.png"));
 		archivedImage = new Image(getClass().getResourceAsStream("archivedTask.png"));
-		floating = new Image(getClass().getResourceAsStream("floating.png"));
-		today = new Image(getClass().getResourceAsStream("today.png"));
-		following = new Image(getClass().getResourceAsStream("following.png"));
-		seeMore = new Image(getClass().getResourceAsStream("seeMore.png"));
+		floatingTitle = new Image(getClass().getResourceAsStream("floating.png"));
+		todayTitle = new Image(getClass().getResourceAsStream("today.png"));
+		followingTitle = new Image(getClass().getResourceAsStream("following.png"));
+		seeMoreTitle = new Image(getClass().getResourceAsStream("seeMore.png"));
 		helpImage =new Image(getClass().getResourceAsStream("help.png"));
 	}
 
 	private void initialStage(Stage primaryStage) {
-
 		primaryStage.setTitle("Silent Jarvis");
 		primaryStage.initStyle(StageStyle.UNDECORATED);
 		primaryStage.getIcons().add(iconImage);
 	}
 
 	private void buildView(Stage primaryStage) {
+		GridPane mainGrid = new GridPane();
+		mainGrid.setHgap(5);
+		mainGrid.setVgap(20);
+		mainGrid.setPadding(new Insets(10, 5, 5, 25));
 
-		GridPane grid = new GridPane();
-		grid.setHgap(5);
-		grid.setVgap(20);
-		grid.setPadding(new Insets(10, 5, 5, 25));
-
-		ImageView backgroung = new ImageView(backgroundImage);
-		Group back = new Group();
-		back.getChildren().addAll(backgroung, grid);
+		ImageView mainBack = new ImageView(backgroundImage);
+		Group holdBack = new Group();
+		holdBack.getChildren().addAll(mainBack, mainGrid);
 
 		StackPane SystemMessageBlock = new StackPane();
 		buildSysMsgBlk(SystemMessageBlock);
-		grid.add(SystemMessageBlock, 0, 1);
+		mainGrid.add(SystemMessageBlock, 0, 1);
 
 		TaskDisplayBlock = new ScrollPane();
 		buildTskDisBlk();
-		grid.add(TaskDisplayBlock, 0, 2);
+		mainGrid.add(TaskDisplayBlock, 0, 2);
 
 		userCommandBlock = new TextField();
 		userCommandBlock.requestFocus();
-		grid.add(userCommandBlock, 0, 3);
+		mainGrid.add(userCommandBlock, 0, 3);
 
-		Scene scene = new Scene(back, 820, 660);
-		primaryStage.setScene(scene);
+		Scene mainScene = new Scene(holdBack, 820, 660);
+		primaryStage.setScene(mainScene);
 
-		dragStage(grid, primaryStage);
+		dragStage(mainGrid, primaryStage);
 	}
 
 	private void buildSysMsgBlk(StackPane SystemMessageBlock) {
-
 		SystemMessageBlock.setPrefSize(770, 40);
 
 		message = new Label();
-		message.setFont(messageFont);
+		message.setFont(MESSAGE_FONT);
 
 		signal = new Label();
-		signal.setFont(signalFont);
-		signal.setTextFill(safeColor);
+		signal.setFont(SIGNAL_FONT);
+		signal.setTextFill(SAFE_COLOR);
 
 		SystemMessageBlock.getChildren().add(message);
 		StackPane.setAlignment(message, Pos.TOP_LEFT);
@@ -164,7 +159,6 @@ public class GUIMain extends Application {
 	}
 
 	private void buildTskDisBlk() {
-
 		TaskDisplayBlock.setPrefSize(770, 500);
 		TaskDisplayBlock.setOpacity(0.9);
 		TaskDisplayBlock.setHbarPolicy(ScrollBarPolicy.NEVER);
@@ -177,8 +171,25 @@ public class GUIMain extends Application {
 		TaskDisplayBlock.setContent(TaskDisplayGrid);
 	}
 
-	private void getCommand() {
+	private void dragStage(GridPane grid,final Stage primaryStage) {
+		grid.setOnMousePressed(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				xOffset = event.getSceneX();
+				yOffset = event.getSceneY();
+			}
+		});
 
+		grid.setOnMouseDragged(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				primaryStage.setX(event.getScreenX() - xOffset);
+				primaryStage.setY(event.getScreenY() - yOffset);
+			}
+		});
+	}
+	
+	private void getCommand() {
 		userCommandBlock.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent event) {
@@ -187,82 +198,101 @@ public class GUIMain extends Application {
 
 					if (!command.equals("")) {
 						try {
-							theGUIController.execute(command);
+							GUI_CONTROLLOR.execute(command);
 						} catch (Exception e) {
 							showError();
 						}
-						userCommandBlock.clear();
-
 					}
 				}
 
 				if (event.getCode().equals(KeyCode.UP)) {
 					TaskDisplayBlock.setVvalue(TaskDisplayBlock.getVvalue() - 0.1f);
 				}
+				
 				if (event.getCode().equals(KeyCode.DOWN)) {
 					TaskDisplayBlock.setVvalue(TaskDisplayBlock.getVvalue() + 0.1f);
 				}
 			}
-
 		});
 	}
 
 	protected static void showWelcome() {
-		message.setTextFill(commonColor);
+		message.setTextFill(COMMON_COLOR);
 		message.setText("Welcome to SilentJarvis! Recent tasks are listed below");
 
 		signal.setText("");
 	}
 
 	protected static void showError() {
-		message.setTextFill(warningColor);
+		message.setTextFill(WARNING_COLOR);
 		message.setText("Error! Invalid or wrong format of command.");
 
 		signal.setText("");
 	}
 
 	protected static void showToday() {
-		message.setTextFill(commonColor);
+		message.setTextFill(COMMON_COLOR);
 		message.setText("Today's tasks are listed below");
 
 		signal.setText("");
 	}
 
 	protected static void showSetFilename() {
-		message.setTextFill(commonColor);
+		message.setTextFill(COMMON_COLOR);
 		message.setText("New filename: " + Storage.getInstance().getfileName());
 
 		signal.setText("Set successfully!");
 	}
 
 	protected static void showSetPath() {
-		message.setTextFill(commonColor);
+		message.setTextFill(COMMON_COLOR);
 		message.setText("New path: " + Storage.getInstance().getPath());
 
 		signal.setText("Set successfully!");
 	}
 
 	protected static void showAll() {
-		message.setTextFill(commonColor);
+		message.setTextFill(COMMON_COLOR);
 		message.setText("All tasks are listed below");
 
 		signal.setText("");
 	}
 
 	protected static void showArchived() {
-		message.setTextFill(commonColor);
+		message.setTextFill(COMMON_COLOR);
 		message.setText("Archived tasks are listed below");
 
 		signal.setText("");
 	}
 
 	protected static void showSearch() {
-		message.setTextFill(commonColor);
+		message.setTextFill(COMMON_COLOR);
 		message.setText("Search results");
 
 		signal.setText("");
 	}
 
+	protected static void showFloating() {
+		message.setTextFill(COMMON_COLOR);
+		message.setText("Floating tasks are listed below");
+
+		signal.setText("");
+	}
+
+	protected static void showBy() {
+		message.setTextFill(COMMON_COLOR);
+		message.setText("Tasks before selected date are listed below");
+
+		signal.setText("");
+	}
+
+	protected static void showOn() {
+		message.setTextFill(COMMON_COLOR);
+		message.setText("Tasks on selected date are listed below");
+
+		signal.setText("");
+	}
+	
 	protected static void showSave() {
 		signal.setText("Saved to " + Storage.getInstance().getPath() + Storage.getInstance().getfileName());
 	}
@@ -299,78 +329,50 @@ public class GUIMain extends Application {
 		signal.setText("Task archived!");
 	}
 
-	protected static void showFloating() {
-		message.setTextFill(commonColor);
-		message.setText("Floating tasks are listed below");
-
-		signal.setText("");
-	}
-
 	protected static void showClear() {
 		signal.setText("All tasks selected have been cleared.");
 	}
 
-	protected static void showBy() {
-		message.setTextFill(commonColor);
-		message.setText("Tasks before selected date are listed below");
-
-		signal.setText("");
-	}
-
-	protected static void showOn() {
-		message.setText("Tasks on selected date are listed below");
-
-		signal.setText("");
-	}
-
-	protected static void showError(String errorMessage) {
-		message.setTextFill(warningColor);
-		message.setText("Error: " + errorMessage);
-
-		signal.setText("");
-	}
-
 	protected static void showHelp(String string) {
-		GridPane popUp = new GridPane();
-		popUp.setVgap(15);
-		popUp.setPadding(new Insets(30, 30, 30, 30));
+		GridPane popUpGrid = new GridPane();
+		popUpGrid.setVgap(15);
+		popUpGrid.setPadding(new Insets(30, 30, 30, 30));
 
-		ImageView backgroung = new ImageView(helpImage);
-		Group back = new Group();
-		back.getChildren().addAll(backgroung, popUp);
+		ImageView helpBack = new ImageView(helpImage);
+		Group holdBack = new Group();
+		holdBack.getChildren().addAll(helpBack, popUpGrid);
 
 		Text helpTitle = new Text("Sample format:");
-		helpTitle.setFont(helpTitleFont);
-		helpTitle.setFill(floatingColor);
-		popUp.add(helpTitle, 0, 0);
+		helpTitle.setFont(HELP_TITLE_FONT);
+		helpTitle.setFill(FLOATING_COLOR);
+		popUpGrid.add(helpTitle, 0, 0);
 		
 		Text helpString = new Text(string);
-		helpString.setFont(helpContentFont);
-		helpString.setFill(floatingColor);
-		popUp.add(helpString, 0, 1);
+		helpString.setFont(HELP_CONTENT_FONT);
+		helpString.setFill(FLOATING_COLOR);
+		popUpGrid.add(helpString, 0, 1);
 
 		Text helpEnd = new Text("Press <ESC> to close.");
-		helpEnd.setFont(helpContentFont);
-		helpEnd.setFill(floatingColor);
-		popUp.add(helpEnd, 0, 2);
+		helpEnd.setFont(HELP_CONTENT_FONT);
+		helpEnd.setFill(FLOATING_COLOR);
+		popUpGrid.add(helpEnd, 0, 2);
 		
-		Stage secondWindow = new Stage();
-		secondWindow.initStyle(StageStyle.UNDECORATED);
-		Scene scene = new Scene(back, 340, 340);
-		secondWindow.setScene(scene);
-		secondWindow.show();
+		Stage secondStage = new Stage();
+		secondStage.initStyle(StageStyle.UNDECORATED);
+		Scene secondScene = new Scene(holdBack, 340, 340);
+		secondStage.setScene(secondScene);
+		secondStage.show();
 		
-		scene.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
-
+		secondScene.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent t) {
 				if (t.getCode() == KeyCode.ESCAPE) {
-					secondWindow.close();
+					secondStage.close();
 				}
 			}
 		});
 
-		popUp.setOnMousePressed(new EventHandler<MouseEvent>() {
+		popUpGrid.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
 				xOffset = event.getSceneX();
@@ -378,249 +380,186 @@ public class GUIMain extends Application {
 			}
 		});
 
-		popUp.setOnMouseDragged(new EventHandler<MouseEvent>() {
+		popUpGrid.setOnMouseDragged(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				secondWindow.setX(event.getScreenX() - xOffset);
-				secondWindow.setY(event.getScreenY() - yOffset);
-			}
-		});
-	}
-
-	private void dragStage(GridPane grid,final Stage primaryStage) {
-
-		grid.setOnMousePressed(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				xOffset = event.getSceneX();
-				yOffset = event.getSceneY();
-			}
-		});
-
-		grid.setOnMouseDragged(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				primaryStage.setX(event.getScreenX() - xOffset);
-				primaryStage.setY(event.getScreenY() - yOffset);
+				secondStage.setX(event.getScreenX() - xOffset);
+				secondStage.setY(event.getScreenY() - yOffset);
 			}
 		});
 	}
 	
-	protected static void showPartitionList(int welcome) {
-		GUIMain.TaskDisplayGrid.getChildren().clear();
-		
-		int count = 0;
+	protected static void showPartitionList(int type) {
+		gridRowCount = 0;
 		taskCount=0;
+		
+		GUIMain.TaskDisplayGrid.getChildren().clear();		
+		
+		displayTodayTitle();
+		
+		showList(Controller.getTodayTaskList(),type);
+
+		displayFollowingTitle();
+		showList(Controller.getFollowingDayTaskList(),type);
+		
+		displayFloatingTitle();
+		showList(Controller.getFloatingTaskList(),type);
+	}
+
+	protected static void showGettedList(ArrayList<Task> taskList) {
+		gridRowCount=0;
+		taskCount=0;
+		
+		GUIMain.TaskDisplayGrid.getChildren().clear();
+
+		showList(taskList,0);
+	}
+	
+	private static void showList(ArrayList<Task> taskList,int type){
+		int taskSize=taskList.size();
+		
+		for (int i = 0; i < taskSize; i++) {
+			Task task = taskList.get(i);
+			
+			taskCount++;
+			
+			if (task instanceof DeadlineTask) {
+				displayADeadlineTask((DeadlineTask) task);
+			} else if (task instanceof FloatingTask) {
+				displayAFloatingTask((FloatingTask) task);
+			} else if (task instanceof EventTask) {
+				displayAEventTask((EventTask) task);
+			}
+			
+			if ((taskSize>3)&&(type==1)&&(i == 2)) {
+				displaySeeMore();
+				taskCount+=taskSize-i-1;
+				break;
+			}
+		}
+	}
+	
+	private static void displayTodayTitle(){
 		GridPane todayPane = new GridPane();
 		todayPane.setPrefSize(760, 30);
 		Group todayGroup = new Group();
-		ImageView todayBack = new ImageView(GUIMain.today);
+		ImageView todayBack = new ImageView(GUIMain.todayTitle);
 		todayGroup.getChildren().addAll(todayBack, todayPane);
-		GUIMain.TaskDisplayGrid.add(todayGroup, 0, count);
-		count++;
-
-		ArrayList<Task> TodayList = Controller.getTodayTaskList();
-		int TodaySize=TodayList.size();
-		for (int i = 0; i < TodaySize; i++) {
-			Task task = TodayList.get(i);
-			taskCount++;
-			if (task instanceof DeadlineTask) {
-				displayADeadlineTask(count, (DeadlineTask) task);
-			} else if (task instanceof FloatingTask) {
-				displayAFloatingTask(count, (FloatingTask) task);
-			} else if (task instanceof EventTask) {
-				displayAEventTask(count, (EventTask) task);
-			}
-			count++;
-			if ((TodaySize>3)&&(welcome==1)&&(i == 2)) {
-				GridPane seeMorePane = new GridPane();
-				seeMorePane.setPrefSize(760, 30);
-				Group seeMoreGroup = new Group();
-				ImageView seeMoreBack = new ImageView(GUIMain.seeMore);
-				seeMoreGroup.getChildren().addAll(seeMoreBack, seeMorePane);
-				GUIMain.TaskDisplayGrid.add(seeMoreGroup, 0, count);
-				count++;
-				taskCount+=TodaySize-i-1;
-				break;
-			}
-		}
-
+		GUIMain.TaskDisplayGrid.add(todayGroup, 0, gridRowCount);
+		gridRowCount++;
+	}
+	
+	private static void displayFollowingTitle(){
 		GridPane FollowingPane = new GridPane();
 		FollowingPane.setPrefSize(760, 30);
 		Group FollowingGroup = new Group();
-		ImageView FollowingBack = new ImageView(GUIMain.following);
+		ImageView FollowingBack = new ImageView(GUIMain.followingTitle);
 		FollowingGroup.getChildren().addAll(FollowingBack, FollowingPane);
-		GUIMain.TaskDisplayGrid.add(FollowingGroup, 0, count);
-		count++;
-
-		ArrayList<Task> FollowingList = Controller.getFollowingDayTaskList();
-		int FollowingSize=FollowingList.size();
-		for (int i = 0; i < FollowingSize; i++) {
-			Task task = FollowingList.get(i);
-			taskCount++;
-			if (task instanceof DeadlineTask) {
-				displayADeadlineTask(count, (DeadlineTask) task);
-			} else if (task instanceof FloatingTask) {
-				displayAFloatingTask(count, (FloatingTask) task);
-			} else if (task instanceof EventTask) {
-				displayAEventTask(count, (EventTask) task);
-			}
-			count++;
-			if ((FollowingSize>3)&&(welcome==1)&&(i == 2)) {
-				GridPane seeMorePane = new GridPane();
-				seeMorePane.setPrefSize(760, 30);
-				Group seeMoreGroup = new Group();
-				ImageView seeMoreBack = new ImageView(GUIMain.seeMore);
-				seeMoreGroup.getChildren().addAll(seeMoreBack, seeMorePane);
-				GUIMain.TaskDisplayGrid.add(seeMoreGroup, 0, count);
-				count++;
-				taskCount+=FollowingSize-i-1;
-				break;
-			}
-		}
-		
+		GUIMain.TaskDisplayGrid.add(FollowingGroup, 0, gridRowCount);
+		gridRowCount++;
+	}
+	
+	private static void displayFloatingTitle(){
 		GridPane FloatingPane = new GridPane();
 		FloatingPane.setPrefSize(760, 30);
 		Group FloatingGroup = new Group();
-		ImageView FloatingBack = new ImageView(GUIMain.floating);
+		ImageView FloatingBack = new ImageView(GUIMain.floatingTitle);
 		FloatingGroup.getChildren().addAll(FloatingBack, FloatingPane);
-		GUIMain.TaskDisplayGrid.add(FloatingGroup, 0, count);
-		count++;
-		
-		ArrayList<Task> FloatingList = Controller.getFloatingTaskList();
-		int FloatingSize=FloatingList.size();
-		for (int i = 0; i < FloatingSize; i++) {
-			Task task = FloatingList.get(i);
-			taskCount++;
-			if (task instanceof DeadlineTask) {
-				displayADeadlineTask(count, (DeadlineTask) task);
-			} else if (task instanceof FloatingTask) {
-				displayAFloatingTask(count, (FloatingTask) task);
-			} else if (task instanceof EventTask) {
-				displayAEventTask(count, (EventTask) task);
-			}
-			count++;
-			if ((FloatingSize>3)&&(welcome==1)&&(i == 2)) {
-				GridPane seeMorePane = new GridPane();
-				seeMorePane.setPrefSize(760, 30);
-				Group seeMoreGroup = new Group();
-				ImageView seeMoreBack = new ImageView(GUIMain.seeMore);
-				seeMoreGroup.getChildren().addAll(seeMoreBack, seeMorePane);
-				GUIMain.TaskDisplayGrid.add(seeMoreGroup, 0, count);
-				count++;
-				taskCount+=FloatingList.size()-i-1;
-				break;
-			}
-		}
+		GUIMain.TaskDisplayGrid.add(FloatingGroup, 0, gridRowCount);
+		gridRowCount++;
 	}
-
-	protected static void showList(ArrayList<Task> TaskList) {
-		int Arraysize = TaskList.size();
-
-		GUIMain.TaskDisplayGrid.getChildren().clear();
-
-		taskCount=0;
-		
-		for (int i = 0; i < Arraysize; i++) {
-			Task task = TaskList.get(i);
-			taskCount++;
-			if (task instanceof DeadlineTask) {
-				displayADeadlineTask(i, (DeadlineTask) task);
-			} else if (task instanceof FloatingTask) {
-				displayAFloatingTask(i, (FloatingTask) task);
-			} else if (task instanceof EventTask) {
-				displayAEventTask(i, (EventTask) task);
-			}
-		}
+	
+	private static void displaySeeMore(){
+		GridPane seeMorePane = new GridPane();
+		seeMorePane.setPrefSize(760, 30);
+		Group seeMoreGroup = new Group();
+		ImageView seeMoreBack = new ImageView(GUIMain.seeMoreTitle);
+		seeMoreGroup.getChildren().addAll(seeMoreBack, seeMorePane);
+		GUIMain.TaskDisplayGrid.add(seeMoreGroup, 0, gridRowCount);
+		gridRowCount++;
 	}
-
-	private static void displayAEventTask(int i, EventTask task) {
+	
+	private static void displayAEventTask(EventTask task) {
 		GridPane event = new GridPane();
 		event.setPrefSize(760, 30);
 		event.setHgap(1);
 		event.setVgap(1);
 		event.setPadding(new Insets(4, 1, 1, 1));
 
-		Group back = new Group();
+		Group holdBack = new Group();
+		ImageView eventBack;
 		if (task.getTaskType().equals("Completed") || task.getTaskType() == "Completed") {
-			ImageView combackg = new ImageView(GUIMain.completeImage);
-			back.getChildren().addAll(combackg, event);
+			eventBack = new ImageView(GUIMain.completeImage);
 		} else if (task.getTaskType().equals("Archived") || task.getTaskType() == "Archived") {
-			ImageView backgroung = new ImageView(GUIMain.archivedImage);
-			back.getChildren().addAll(backgroung, event);
+			eventBack = new ImageView(GUIMain.archivedImage);
 		} else {
-			ImageView backgroung = new ImageView(GUIMain.eventImage);
-			back.getChildren().addAll(backgroung, event);
+			eventBack = new ImageView(GUIMain.eventImage);
 		}
-		String temp;
+		holdBack.getChildren().addAll(eventBack, event);
 
 		GridPane nameGrid = new GridPane();
-		nameGrid.setPrefSize(375, 25);
+		nameGrid.setPrefSize(375, 25);	
 		Text name = new Text();
-		temp = " " + Integer.valueOf(taskCount).toString() + ". " + task.getTaskName();
-		name.setText(temp);
-		name.setFont(taskNameFont);
-		name.setFill(GUIMain.eventColor);
+		name.setText(" " + Integer.valueOf(taskCount).toString() + ". " + task.getTaskName());
+		name.setFont(TASK_NAME_FONT);
+		name.setFill(GUIMain.EVENT_COLOR);
 		nameGrid.add(name, 0, 0);
 		event.add(nameGrid, 0, 0);
 
 		Text info = new Text();
-		temp = "  S:  " + task.getStartDate() + " " + task.getStartTime() + "    E:  " + task.getEndDate() + " "
-				+ task.getEndTime();
-		info.setText(temp);
-		info.setFont(taskInfoFont);
-		info.setFill(GUIMain.eventColor);
+		info.setText("  S:  " + task.getStartDate() + " " + task.getStartTime() + "    E:  " + task.getEndDate() + " "
+				+ task.getEndTime());
+		info.setFont(TASK_INFO_FONT);
+		info.setFill(GUIMain.EVENT_COLOR);
 		event.add(info, 1, 0);
 
 		if (task.getTaskType().equals("Completed") || task.getTaskType() == "Completed") {
-			name.setFill(GUIMain.completeColor);
-			info.setFill(GUIMain.completeColor);
+			name.setFill(GUIMain.COMPLETED_COLOR);
+			info.setFill(GUIMain.COMPLETED_COLOR);
 		} else if (task.getTaskType().equals("Archived") || task.getTaskType() == "Archived") {
-			name.setFill(GUIMain.archivedColor);
-			info.setFill(GUIMain.archivedColor);
+			name.setFill(GUIMain.ARCHIVED_COLOR);
+			info.setFill(GUIMain.ARCHIVED_COLOR);
 		}
 
-		GUIMain.TaskDisplayGrid.add(back, 0, i);
+		GUIMain.TaskDisplayGrid.add(holdBack, 0, gridRowCount);
+		gridRowCount++;
 	}
 
-	private static void displayAFloatingTask(int i, FloatingTask task) {
+	private static void displayAFloatingTask(FloatingTask task) {
 		GridPane floating = new GridPane();
 		floating.setPrefSize(760, 30);
 		floating.setHgap(1);
 		floating.setVgap(1);
 		floating.setPadding(new Insets(4, 1, 1, 1));
 
-		Group back = new Group();
+		Group holdBack = new Group();
+		ImageView floatingBack;
 		if (task.getTaskType().equals("Completed") || task.getTaskType() == "Completed") {
-			ImageView combackg = new ImageView(GUIMain.completeImage);
-			back.getChildren().addAll(combackg, floating);
+			floatingBack = new ImageView(GUIMain.completeImage);
 		} else if (task.getTaskType().equals("Archived") || task.getTaskType() == "Archived") {
-			ImageView backgroung = new ImageView(GUIMain.archivedImage);
-			back.getChildren().addAll(backgroung, floating);
+			floatingBack = new ImageView(GUIMain.archivedImage);
 		} else {
-			ImageView backgroung = new ImageView(GUIMain.floatingImage);
-			back.getChildren().addAll(backgroung, floating);
+			floatingBack = new ImageView(GUIMain.floatingImage);
 		}
-
-		String temp;
+		holdBack.getChildren().addAll(floatingBack, floating);
 
 		Text name = new Text();
-		temp = " " + Integer.valueOf(taskCount).toString() + ". " + task.getTaskName();
-		name.setText(temp);
-		name.setFont(taskNameFont);
-		name.setFill(GUIMain.floatingColor);
+		name.setText(" " + Integer.valueOf(taskCount).toString() + ". " + task.getTaskName());
+		name.setFont(TASK_NAME_FONT);
+		name.setFill(GUIMain.FLOATING_COLOR);
 		floating.add(name, 0, 0);
 
 		if (task.getTaskType().equals("Completed") || task.getTaskType() == "Completed") {
-			name.setFill(GUIMain.completeColor);
+			name.setFill(GUIMain.COMPLETED_COLOR);
 		} else if (task.getTaskType().equals("Archived") || task.getTaskType() == "Archived") {
-			name.setFill(GUIMain.archivedColor);
+			name.setFill(GUIMain.ARCHIVED_COLOR);
 		}
 
-		GUIMain.TaskDisplayGrid.add(back, 0, i);
+		GUIMain.TaskDisplayGrid.add(holdBack, 0, gridRowCount);
+		gridRowCount++;
 	}
 
-	private static void displayADeadlineTask(int i, DeadlineTask task) {
+	private static void displayADeadlineTask(DeadlineTask task) {
 		GridPane deadline = new GridPane();
 		deadline.setPrefSize(760, 30);
 		deadline.setHgap(1);
@@ -628,43 +567,40 @@ public class GUIMain extends Application {
 		deadline.setPadding(new Insets(4, 1, 1, 1));
 
 		Group back = new Group();
+		ImageView deadlineBack;
 		if (task.getTaskType().equals("Completed") || task.getTaskType() == "Completed") {
-			ImageView combackg = new ImageView(GUIMain.completeImage);
-			back.getChildren().addAll(combackg, deadline);
+			deadlineBack = new ImageView(GUIMain.completeImage);
 		} else if (task.getTaskType().equals("Archived") || task.getTaskType() == "Archived") {
-			ImageView backgroung = new ImageView(GUIMain.archivedImage);
-			back.getChildren().addAll(backgroung, deadline);
+			deadlineBack = new ImageView(GUIMain.archivedImage);
 		} else {
-			ImageView backgroung = new ImageView(GUIMain.deadlineImage);
-			back.getChildren().addAll(backgroung, deadline);
+			deadlineBack = new ImageView(GUIMain.deadlineImage);
 		}
-		String temp;
+		back.getChildren().addAll(deadlineBack, deadline);
 
 		GridPane nameGrid = new GridPane();
 		nameGrid.setPrefSize(550, 25);
-		temp = " " + Integer.valueOf(taskCount).toString() + ". " + task.getTaskName();
-		Text name = new Text(temp);
-		name.setFont(taskNameFont);
-		name.setFill(GUIMain.deadlineColor);
+		Text name = new Text();
+		name.setText(" " + Integer.valueOf(taskCount).toString() + ". " + task.getTaskName());
+		name.setFont(TASK_NAME_FONT);
+		name.setFill(GUIMain.DEADLINE_COLOR);
 		nameGrid.add(name, 0, 0);
 		deadline.add(nameGrid, 0, 0);
 
-		temp = "    By: " + task.getDeadlineDate() + " " + task.getDeadlineTime();
-		Text info = new Text(temp);
-		info.setText(temp);
-		info.setFont(taskInfoFont);
-		info.setFill(GUIMain.deadlineColor);
+		Text info = new Text();
+		info.setText("    By: " + task.getDeadlineDate() + " " + task.getDeadlineTime());
+		info.setFont(TASK_INFO_FONT);
+		info.setFill(GUIMain.DEADLINE_COLOR);
 		deadline.add(info, 1, 0);
 
 		if (task.getTaskType().equals("Completed") || task.getTaskType() == "Completed") {
-			name.setFill(GUIMain.completeColor);
-			info.setFill(GUIMain.completeColor);
+			name.setFill(GUIMain.COMPLETED_COLOR);
+			info.setFill(GUIMain.COMPLETED_COLOR);
 		} else if (task.getTaskType().equals("Archived") || task.getTaskType() == "Archived") {
-			name.setFill(GUIMain.archivedColor);
-			info.setFill(GUIMain.archivedColor);
+			name.setFill(GUIMain.ARCHIVED_COLOR);
+			info.setFill(GUIMain.ARCHIVED_COLOR);
 		}
 
-		GUIMain.TaskDisplayGrid.add(back, 0, i);
-
+		GUIMain.TaskDisplayGrid.add(back, 0, gridRowCount);
+		gridRowCount++;
 	}
 }

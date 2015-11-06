@@ -160,7 +160,7 @@ public class GUIController {
 	private void executeSearch(String command) throws IOException {
 		Controller.executeCMD(command);
 		GUIMain.userCommandBlock.clear();
-		GUIMain.showList(Controller.getTaskList());
+		GUIMain.showGettedList(Controller.getTaskList());
 		GUIMain.showSearch();
 	}
 
@@ -177,23 +177,23 @@ public class GUIController {
 		GUIMain.userCommandBlock.clear();
 		switch (getCommandType(command, 1)) {
 		case "archived":
-			GUIMain.showList(Controller.getArchivedList());
+			GUIMain.showGettedList(Controller.getArchivedList());
 			GUIMain.showArchived();
 			break;
 		case "floating":
-			GUIMain.showList(Controller.getFloatingTaskList());
+			GUIMain.showGettedList(Controller.getFloatingTaskList());
 			GUIMain.showFloating();
 			break;
 		case "by":
-			GUIMain.showList(Controller.getTaskList());
+			GUIMain.showGettedList(Controller.getTaskList());
 			GUIMain.showBy();
 			break;
 		case "on":
-			GUIMain.showList(Controller.getTaskList());
+			GUIMain.showGettedList(Controller.getTaskList());
 			GUIMain.showOn();
 			break;
 		case "today":
-			GUIMain.showList(Controller.getTodayTaskList());
+			GUIMain.showGettedList(Controller.getTodayTaskList());
 			GUIMain.showToday();
 			break;
 		}
