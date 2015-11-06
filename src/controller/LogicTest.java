@@ -23,6 +23,17 @@ public class LogicTest {
 	}
 	
 	@Test
+	public void FailAddTaskTest(){
+		ClearTaskTest();
+		assertEquals(0, taskList.size());
+		
+		logic.executeCreateTask(null, null, null,
+				null, null);
+		taskList = TaskMemory.getInstance().getCombinedTaskList();
+		assertEquals(0, taskList.size());
+	}
+	
+	@Test
 	public void AddEventTaskTest() {
 		ClearTaskTest();
 		assertEquals(0, taskList.size());
@@ -215,6 +226,266 @@ public class LogicTest {
 		taskList = TaskMemory.getInstance().getCombinedTaskList();
 		assertEquals(2, taskList.size());
 		
+		logic.undo();
+		taskList = TaskMemory.getInstance().getCombinedTaskList();
+		assertEquals(1, taskList.size());
+		
+		logic.undo();
+		taskList = TaskMemory.getInstance().getCombinedTaskList();
+		assertEquals(0, taskList.size());
+		
+		logic.undo();
+		taskList = TaskMemory.getInstance().getCombinedTaskList();
+		assertEquals(6, taskList.size());		
+		
+	}
+	
+	@Test
+	public void searchBetweenDateTest(){
+		ClearTaskTest();
+		assertEquals(0, taskList.size());
+		
+		logic.executeCreateTask("Event1", "2016-12-01", "0800", "2016-12-12", "0800");
+		logic.executeCreateTask("Event2", "2015-12-12", "0800", "2015-12-13", "0800");
+		logic.executeCreateTask("Event3", "2015-12-13", "0800", "2015-12-14", "0800");
+		logic.executeCreateTask("Event4", "2015-12-14", "0800", "2015-12-15", "0800");
+		logic.executeCreateTask("Event5", "2015-12-15", "0800", "2015-12-16", "0800");
+		logic.executeCreateTask("deadline", null, null, "2015-12-12", "0700");
+		taskList = TaskMemory.getInstance().getCombinedTaskList();
+		assertEquals(6, taskList.size());
+		
+		taskList = logic.searchTaskBetweenDate(taskList, "2015-12-12", "2015-12-14");
+		assertEquals(3, taskList.size());
+		taskList = TaskMemory.getInstance().getCombinedTaskList();
+		
+		taskList = logic.searchTaskBetweenDate(taskList, "2015-12-12", "2015-12-16");
+		assertEquals(5, taskList.size());
+		taskList = TaskMemory.getInstance().getCombinedTaskList();
+		
+		taskList = logic.searchTaskBetweenDate(taskList, "2015-12-12", "2016-12-16");
+		assertEquals(6, taskList.size());
+		taskList = TaskMemory.getInstance().getCombinedTaskList();
+		
+	}
+	
+	@Test
+	public void updateTaskTest(){
+		
+		ClearTaskTest();
+		assertEquals(0, taskList.size());
+		
+		logic.executeCreateTask("Float1", null, null, null, null);
+		logic.executeCreateTask("Deadline1", null,null, "2015-12-13", "0800");
+		logic.executeCreateTask("Event3", "2015-12-13", "0800", "2015-12-14", "0800");
+		logic.executeCreateTask("Event4", "2015-12-14", "0800", "2015-12-15", "0800");
+		logic.executeCreateTask("Event5", "2015-12-15", "0800", "2015-12-16", "0800");
+		
+		taskList = TaskMemory.getInstance().getCombinedTaskList();
+		assertEquals(5, taskList.size());
+		assertEquals("Deadline1", taskList.get(0).getTaskName());
+		DeadlineTask deadline = (DeadlineTask) taskList.get(0);
+		assertEquals("2015-12-13", deadline.getDeadlineDate());
+		assertEquals("0800", deadline.getDeadlineTime());
+		
+		logic.executeUpdateTask(taskList, "Deadline2", null, null, "2015-12-14", "0700", "null", 1);
+		taskList = TaskMemory.getInstance().getCombinedTaskList();
+		assertEquals(5, taskList.size());
+		assertEquals("Deadline2", taskList.get(0).getTaskName());
+		deadline = (DeadlineTask) taskList.get(0);
+		assertEquals("2015-12-14", deadline.getDeadlineDate());
+		assertEquals("0700", deadline.getDeadlineTime());
+		
+		assertEquals("Float1", taskList.get(4).getTaskName());
+		
+		logic.executeUpdateTask(taskList, "Home sweet Home", null, null, null, null, "null", 5);
+		taskList = TaskMemory.getInstance().getCombinedTaskList();
+		assertEquals(5, taskList.size());
+		assertEquals("Home sweet Home", taskList.get(4).getTaskName());	
+	}
+	
+	@Test
+	public void updateTaskByAttrTest(){
+		ClearTaskTest();
+		assertEquals(0, taskList.size());
+		
+		logic.executeCreateTask("Float1", null, null, null, null);
+		logic.executeCreateTask("Deadline1", null,null, "2015-12-13", "0800");
+		logic.executeCreateTask("Event3", "2015-12-13", "0800", "2015-12-14", "0800");
+		logic.executeCreateTask("Event4", "2015-12-14", "0800", "2015-12-15", "0800");
+		logic.executeCreateTask("Event5", "2015-12-15", "0800", "2015-12-16", "0800");
+		
+		
+		
+		taskList = TaskMemory.getInstance().getCombinedTaskList();
+		assertEquals(5, taskList.size());
+		assertEquals("Deadline1", taskList.get(0).getTaskName());
+		DeadlineTask deadline = (DeadlineTask) taskList.get(0);
+		assertEquals("2015-12-13", deadline.getDeadlineDate());
+		assertEquals("0800", deadline.getDeadlineTime());
+		assertEquals("null", deadline.getTaskType());
+		
+		int[] index = {1};
+		logic.executeUpdateTaskByAttribute(taskList, index, "taskName", "Deadline4");
+		taskList = TaskMemory.getInstance().getCombinedTaskList();
+		assertEquals(5, taskList.size());
+		assertEquals("Deadline4", taskList.get(0).getTaskName());
+		deadline = (DeadlineTask) taskList.get(0);
+		assertEquals("2015-12-13", deadline.getDeadlineDate());
+		assertEquals("0800", deadline.getDeadlineTime());
+		assertEquals("null", deadline.getTaskType());
+		
+		logic.executeUpdateTaskByAttribute(taskList, index, "endTime", "0700");
+		taskList = TaskMemory.getInstance().getCombinedTaskList();
+		assertEquals(5, taskList.size());
+		assertEquals("Deadline4", taskList.get(0).getTaskName());
+		deadline = (DeadlineTask) taskList.get(0);
+		assertEquals("2015-12-13", deadline.getDeadlineDate());
+		assertEquals("0700", deadline.getDeadlineTime());
+		assertEquals("null", deadline.getTaskType());
+		
+		logic.executeUpdateTaskByAttribute(taskList, index, "endDate", "2015-12-11");
+		taskList = TaskMemory.getInstance().getCombinedTaskList();
+		assertEquals(5, taskList.size());
+		assertEquals("Deadline4", taskList.get(0).getTaskName());
+		deadline = (DeadlineTask) taskList.get(0);
+		assertEquals("2015-12-11", deadline.getDeadlineDate());
+		assertEquals("0700", deadline.getDeadlineTime());
+		assertEquals("null", deadline.getTaskType());
+		
+		logic.executeUpdateTaskByAttribute(taskList, index, "taskType", "Completed");
+		taskList = TaskMemory.getInstance().getCombinedTaskList();
+		assertEquals(5, taskList.size());
+		assertEquals("Deadline4", taskList.get(0).getTaskName());
+		deadline = (DeadlineTask) taskList.get(0);
+		assertEquals("2015-12-11", deadline.getDeadlineDate());
+		assertEquals("0700", deadline.getDeadlineTime());
+		assertEquals("Completed", deadline.getTaskType());
+		
+		logic.executeUpdateTaskByAttribute(taskList, index, "taskType", "Archive");
+		taskList = TaskMemory.getInstance().getCombinedTaskList();
+		assertEquals(5, taskList.size());
+		assertEquals("Deadline4", taskList.get(0).getTaskName());
+		deadline = (DeadlineTask) taskList.get(0);
+		assertEquals("2015-12-11", deadline.getDeadlineDate());
+		assertEquals("0700", deadline.getDeadlineTime());
+		assertEquals("Completed", deadline.getTaskType());
+		
+		int[] index2 = {2};
+		
+		logic.executeUpdateTaskByAttribute(taskList, index2, "taskname", "Event100");
+		taskList = TaskMemory.getInstance().getCombinedTaskList();
+		assertEquals(5, taskList.size());
+		assertEquals("Event100", taskList.get(1).getTaskName());
+		EventTask event = (EventTask) taskList.get(1);
+		assertEquals("2015-12-13", event.getStartDate());
+		assertEquals("0800", event.getStartTime());
+		assertEquals("2015-12-14", event.getEndDate());
+		assertEquals("0800", event.getEndTime());
+		
+		logic.executeUpdateTaskByAttribute(taskList, index2, "startdate", "2015-12-11");
+		taskList = TaskMemory.getInstance().getCombinedTaskList();
+		assertEquals(5, taskList.size());
+		assertEquals("Event100", taskList.get(1).getTaskName());
+		event = (EventTask) taskList.get(1);
+		assertEquals("2015-12-11", event.getStartDate());
+		assertEquals("0800", event.getStartTime());
+		assertEquals("2015-12-14", event.getEndDate());
+		assertEquals("0800", event.getEndTime());
+		
+		logic.executeUpdateTaskByAttribute(taskList, index2, "starttime", "0900");
+		taskList = TaskMemory.getInstance().getCombinedTaskList();
+		assertEquals(5, taskList.size());
+		assertEquals("Event100", taskList.get(1).getTaskName());
+		event = (EventTask) taskList.get(1);
+		assertEquals("2015-12-11", event.getStartDate());
+		assertEquals("0900", event.getStartTime());
+		assertEquals("2015-12-14", event.getEndDate());
+		assertEquals("0800", event.getEndTime());
+		
+		logic.executeUpdateTaskByAttribute(taskList, index2, "enddate", "2015-12-13");
+		taskList = TaskMemory.getInstance().getCombinedTaskList();
+		assertEquals(5, taskList.size());
+		assertEquals("Event100", taskList.get(1).getTaskName());
+		event = (EventTask) taskList.get(1);
+		assertEquals("2015-12-11", event.getStartDate());
+		assertEquals("0900", event.getStartTime());
+		assertEquals("2015-12-13", event.getEndDate());
+		assertEquals("0800", event.getEndTime());
+		
+		logic.executeUpdateTaskByAttribute(taskList, index2, "endtime", "0900");
+		taskList = TaskMemory.getInstance().getCombinedTaskList();
+		assertEquals(5, taskList.size());
+		assertEquals("Event100", taskList.get(1).getTaskName());
+		event = (EventTask) taskList.get(1);
+		assertEquals("2015-12-11", event.getStartDate());
+		assertEquals("0900", event.getStartTime());
+		assertEquals("2015-12-13", event.getEndDate());
+		assertEquals("0900", event.getEndTime());
+		
+		logic.executeUpdateTaskByAttribute(taskList, index2, "taskType", "Completed");
+		taskList = TaskMemory.getInstance().getCombinedTaskList();
+		assertEquals(5, taskList.size());
+		assertEquals("Event100", taskList.get(1).getTaskName());
+		event = (EventTask) taskList.get(1);
+		assertEquals("2015-12-11", event.getStartDate());
+		assertEquals("0900", event.getStartTime());
+		assertEquals("2015-12-13", event.getEndDate());
+		assertEquals("0900", event.getEndTime());
+		assertEquals("Completed", event.getTaskType());
+		
+		logic.executeUpdateTaskByAttribute(taskList, index2, "taskType", "Archived");
+		taskList = TaskMemory.getInstance().getCombinedTaskList();
+		assertEquals(5, taskList.size());
+		assertEquals("Event100", taskList.get(1).getTaskName());
+		event = (EventTask) taskList.get(1);
+		assertEquals("2015-12-11", event.getStartDate());
+		assertEquals("0900", event.getStartTime());
+		assertEquals("2015-12-13", event.getEndDate());
+		assertEquals("0900", event.getEndTime());
+		assertEquals("Completed", event.getTaskType());
+		
+		int[] index3 = {5};
+		logic.executeUpdateTaskByAttribute(taskList, index3, "taskname", "floatthere");
+		taskList = TaskMemory.getInstance().getCombinedTaskList();
+		assertEquals(5, taskList.size());
+		assertEquals("floatthere", taskList.get(4).getTaskName());
+		assertEquals("null", taskList.get(4).getTaskType());
+		
+		logic.executeUpdateTaskByAttribute(taskList, index3, "tasktype", "Completed");
+		taskList = TaskMemory.getInstance().getCombinedTaskList();
+		assertEquals(5, taskList.size());
+		assertEquals("floatthere", taskList.get(4).getTaskName());
+		assertEquals("Completed", taskList.get(4).getTaskType());
+		
+		logic.executeUpdateTaskByAttribute(taskList, index3, "taskType", "Archived");
+		taskList = TaskMemory.getInstance().getCombinedTaskList();
+		assertEquals(5, taskList.size());
+		assertEquals("floatthere", taskList.get(4).getTaskName());
+		assertEquals("Completed", taskList.get(4).getTaskType());
+		
+	}
+	
+	@Test
+	public void saveTest(){
+		ClearTaskTest();
+		assertEquals(0, taskList.size());
+		
+		logic.executeCreateTask("Float1", null, null, null, null);
+		logic.executeCreateTask("Deadline1", null,null, "2015-12-13", "0800");
+		logic.executeCreateTask("Event3", "2015-12-13", "0800", "2015-12-14", "0800");
+		logic.executeCreateTask("Event4", "2015-12-14", "0800", "2015-12-15", "0800");
+		logic.executeCreateTask("Event5", "2015-12-15", "0800", "2015-12-16", "0800");
+		
+		logic.save();
+	}
+	
+	@Test
+	public void loadTest(){
+		ClearTaskTest();
+		assertEquals(0, taskList.size());
+		
+		taskList = Storage.getInstance().load();
+		assertEquals(5, taskList.size());
 	}
 
 }
