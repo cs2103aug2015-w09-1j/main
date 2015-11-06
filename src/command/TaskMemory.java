@@ -184,7 +184,7 @@ public class TaskMemory {
 		}
 	}
 
-	public ArrayList<Task> getDueTask() {
+	private ArrayList<Task> getDueTask() {
 		ArrayList<Task> dueTaskList = new ArrayList<Task>();
 		try {
 
@@ -218,38 +218,6 @@ public class TaskMemory {
 		}
 	}
 
-	public ArrayList<Task> getOtherTask() {
-		ArrayList<Task> otherTaskList = new ArrayList<Task>();
-		try {
-			String followWeekDate = LocalDate.now().plusDays(7).toString();
-			String dateNow = LocalDate.now().toString();
-			for (Task t : this.taskList) {
-				if (t instanceof DeadlineTask) {
-					if (((DeadlineTask) t).getDeadlineDate().compareTo(dateNow) >= 0
-							&& ((DeadlineTask) t).getDeadlineDate().compareTo(
-									followWeekDate) > 0) {
-						if (!t.getTaskType().contains("Archived")) {
-							otherTaskList.add(t);
-						}
-
-					}
-				} else if (t instanceof EventTask) {
-					if (((EventTask) t).getEndDate().compareTo(dateNow) >= 0
-							&& ((EventTask) t).getEndDate().compareTo(
-									followWeekDate) > 0) {
-						if (!t.getTaskType().contains("Archived")) {
-							otherTaskList.add(t);
-						}
-					}
-				}
-			}
-			Collections.sort(otherTaskList, new DateComparator());
-			return otherTaskList;
-		} catch (Exception e) {
-			return null;
-		}
-	}
-
 	public ArrayList<Task> getArchivedList() {
 		ArrayList<Task> archivedList = new ArrayList<Task>();
 		try {
@@ -264,10 +232,6 @@ public class TaskMemory {
 		} catch (Exception e) {
 			return null;
 		}
-	}
-
-	public void setTaskList(ArrayList<Task> taskList) {
-		this.taskList = taskList;
 	}
 
 	public void Add(Task task) {
