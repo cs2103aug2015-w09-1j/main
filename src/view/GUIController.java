@@ -284,6 +284,60 @@ public class GUIController {
 	private static String getCommandType(String command, int i) {
 		return command.trim().split("\\s+")[i];
 	}
+	/*
+	public static void execute(String command) throws Exception {
+		String commandType = getCommandType(command, 0);
+		Controller.executeCMD(command);
+		TaskList = Controller.getTaskList();
+		showRecentList();
+		GUIMain.showWelcome();;
+		switch(commandType) {
+		case "add":
+			GUIMain.showAdd();
+			break;
+		case "delete":
+			GUIMain.showDelete();
+			break;
+		case "clear":
+			GUIMain.showDelete();
+			break;
+		case "edit":
+			GUIMain.showUpdate();
+			break;
+		case "complete":
+			GUIMain.showComplete();
+			break;
+		case "uncomplete":
+			GUIMain.showUnComOrArc();
+			break;
+		case "archive":
+			GUIMain.showArchive();
+			break;
+		case "unarchived":
+			GUIMain.showUnComOrArc();
+			break;
+		case "undo":
+			GUIMain.showUndo();
+			break;
+		case "search":
+			GUIMain.showSearch();
+			break;
+		case "load":
+			GUIMain.showLoad();
+			break;
+		case "save":
+			GUIMain.showSave();
+			break;
+		case "display":
+			GUIMain.showAll();
+			break;
+		case "show":
+			GUIMain.showArchived();
+			break;
+		default:
+			throw new Exception();
+		}
+	}*/
 	
 	public static void execute(String command) throws Exception {
 		String commandType = getCommandType(command, 0);
@@ -357,8 +411,7 @@ public class GUIController {
 	private static void executeHelp(String command) {
 		Controller.executeCMD(command);
 		GUIMain.userCommandBlock.clear();
-		// GUIMain.showHelp(Controller.getHelpString(helpMessage));
-		// TODO
+		GUIMain.showHelp(Controller.getHelpString());	
 	}
 
 	private static void executeExit(String command) {
@@ -465,6 +518,11 @@ public class GUIController {
 			TaskList = Controller.getTaskList();
 			showList();
 			GUIMain.showOn();
+			break;
+		case "today":
+			TaskList = Controller.getTodayTaskList();
+			showList();
+			GUIMain.showToday();
 			break;
 		}
 	}
