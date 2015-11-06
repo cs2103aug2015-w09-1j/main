@@ -1,10 +1,6 @@
 package util;
 
 import model.Task;
-import model.DeadlineTask;
-import model.EventTask;
-import model.FloatingTask;
-
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.BufferedInputStream;
