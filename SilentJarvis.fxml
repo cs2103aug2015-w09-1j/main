@@ -1,51 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<<<<<<< HEAD
 <java version="1.8.0_65" class="java.beans.XMLDecoder">
  <object class="java.util.ArrayList">
   <void method="add">
    <object class="model.DeadlineTask">
     <void property="deadlineDate">
-     <string>2015-11-07</string>
+     <string>2015-11-06</string>
     </void>
     <void property="deadlineTime">
      <string>22:00</string>
     </void>
     <void property="taskName">
-     <string>b</string>
-=======
-<java version="1.8.0_31" class="java.beans.XMLDecoder">
- <object class="java.util.ArrayList">
-  <void method="add">
-   <object class="model.FloatingTask">
-    <void property="taskName">
-     <string>Float1</string>
->>>>>>> aac2f9fd19c9f000fd2ee59988cf3bdaedae4240
-    </void>
-    <void property="taskType">
-     <string>null</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="model.DeadlineTask">
-    <void property="deadlineDate">
-<<<<<<< HEAD
-     <string>2015-11-08</string>
-    </void>
-    <void property="deadlineTime">
-     <string>18:56</string>
-    </void>
-    <void property="taskName">
-     <string>d</string>
-=======
-     <string>2015-12-13</string>
-    </void>
-    <void property="deadlineTime">
-     <string>0800</string>
-    </void>
-    <void property="taskName">
-     <string>Deadline1</string>
->>>>>>> aac2f9fd19c9f000fd2ee59988cf3bdaedae4240
+     <string>a</string>
     </void>
     <void property="taskType">
      <string>null</string>
@@ -55,64 +20,76 @@
   <void method="add">
    <object class="model.EventTask">
     <void property="endDate">
-<<<<<<< HEAD
      <string>2015-11-08</string>
     </void>
     <void property="endTime">
-     <string>23:00</string>
+     <string>22:00</string>
     </void>
     <void property="startDate">
      <string>2015-11-06</string>
     </void>
     <void property="startTime">
-     <string>23:00</string>
+     <string>22:00</string>
     </void>
     <void property="taskName">
-     <string>c</string>
-    </void>
-    <void property="taskType">
-     <string>Archived</string>
-=======
-     <string>2015-12-14</string>
-    </void>
-    <void property="endTime">
-     <string>0800</string>
-    </void>
-    <void property="startDate">
-     <string>2015-12-13</string>
-    </void>
-    <void property="startTime">
-     <string>0800</string>
-    </void>
-    <void property="taskName">
-     <string>Event3</string>
+     <string>b</string>
     </void>
     <void property="taskType">
      <string>null</string>
->>>>>>> aac2f9fd19c9f000fd2ee59988cf3bdaedae4240
     </void>
    </object>
   </void>
   <void method="add">
    <object class="model.EventTask">
     <void property="endDate">
-<<<<<<< HEAD
      <string>2015-11-12</string>
     </void>
     <void property="endTime">
-     <string>17:00</string>
+     <string>19:27</string>
     </void>
     <void property="startDate">
      <string>2015-11-08</string>
     </void>
     <void property="startTime">
-     <string>22:00</string>
+     <string>19:27</string>
     </void>
+    <void property="taskName">
+     <string>c</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.EventTask">
+    <void property="endDate">
+     <string>2015-11-13</string>
+    </void>
+    <void property="endTime">
+     <string>19:28</string>
+    </void>
+    <void property="startDate">
+     <string>2015-11-09</string>
+    </void>
+    <void property="startTime">
+     <string>19:28</string>
+    </void>
+    <void property="taskName">
+     <string>d</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.FloatingTask">
     <void property="taskName">
      <string>e</string>
     </void>
     <void property="taskType">
-     <string>Archived</string>
+     <string>null</string>
     </void>
    </object>
   </void>
@@ -140,21 +117,6 @@
    <object class="model.FloatingTask">
     <void property="taskName">
      <string>h</string>
-=======
-     <string>2015-12-15</string>
-    </void>
-    <void property="endTime">
-     <string>0800</string>
-    </void>
-    <void property="startDate">
-     <string>2015-12-14</string>
-    </void>
-    <void property="startTime">
-     <string>0800</string>
-    </void>
-    <void property="taskName">
-     <string>Event4</string>
->>>>>>> aac2f9fd19c9f000fd2ee59988cf3bdaedae4240
     </void>
     <void property="taskType">
      <string>null</string>
@@ -162,7 +124,16 @@
    </object>
   </void>
   <void method="add">
-<<<<<<< HEAD
+   <object class="model.FloatingTask">
+    <void property="taskName">
+     <string>i</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
    <object class="model.FloatingTask">
     <void property="taskName">
      <string>j</string>
@@ -183,46 +154,21 @@
    </object>
   </void>
   <void method="add">
-   <object class="model.FloatingTask">
-    <void property="taskName">
-     <string>l</string>
-    </void>
-    <void property="taskType">
-     <string>null</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="model.FloatingTask">
-    <void property="taskName">
-     <string>m</string>
-    </void>
-    <void property="taskType">
-     <string>null</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="model.FloatingTask">
-    <void property="taskName">
-     <string>n</string>
-=======
    <object class="model.EventTask">
     <void property="endDate">
-     <string>2015-12-16</string>
+     <string>2015-11-11</string>
     </void>
     <void property="endTime">
-     <string>0800</string>
+     <string>14:00</string>
     </void>
     <void property="startDate">
-     <string>2015-12-15</string>
+     <string>2015-11-10</string>
     </void>
     <void property="startTime">
-     <string>0800</string>
+     <string>13:00</string>
     </void>
     <void property="taskName">
-     <string>Event5</string>
->>>>>>> aac2f9fd19c9f000fd2ee59988cf3bdaedae4240
+     <string>l</string>
     </void>
     <void property="taskType">
      <string>null</string>

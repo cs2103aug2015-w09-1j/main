@@ -13,6 +13,7 @@ import org.junit.rules.ExpectedException;
 import command.TaskMemory;
 import model.DeadlineTask;
 import model.EventTask;
+import model.FloatingTask;
 import model.Task;
 import util.Storage;
 
@@ -58,22 +59,36 @@ public class TaskMemmoryTest {
 		}
 	}
 	
-	/*
-	@Test
-	public void testGetTaskList() {
-		fail("Not yet implemented"); // TODO
-	}
 
 	@Test
 	public void testGetFloatingTask() {
-		fail("Not yet implemented"); // TODO
+		ArrayList<Task> floating = tm.getFloatingTask();
+		if (floating.size() > 0) {
+			for (Task e:floating) {
+				assertTrue(e instanceof FloatingTask);
+			}
+		}
 	}
-
+	
+	
 	@Test
-	public void testGetFollowingWeekTask() {
-		fail("Not yet implemented"); // TODO
+	public void testGetFollowingDayTask() {
+		ArrayList<Task> following = tm.getFollowingDayTask();
+		String dateNow = LocalDate.now().toString();
+		String followDayDate = LocalDate.now().plusDays(1).toString();
+		if (following.size() != 0) {
+			for(Task e:following) {
+				if (e instanceof DeadlineTask) {
+					assertTrue(((DeadlineTask) e).getDeadlineDate().compareTo(dateNow) > 0);
+				} else if (e instanceof EventTask) {
+					assertTrue(((EventTask) e).getEndDate().compareTo(dateNow) > 0);
+					assertTrue(((EventTask) e).getEndDate().compareTo(followDayDate) >=0);
+				}
+			}
+		}
 	}
-
+	
+	/*
 	@Test
 	public void testGetOtherTask() {
 		fail("Not yet implemented"); // TODO
