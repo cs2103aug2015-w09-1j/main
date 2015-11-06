@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.8.0_65" class="java.beans.XMLDecoder">
+ <object class="java.util.ArrayList">
+  <void method="add">
+   <object class="model.DeadlineTask">
+    <void property="deadlineDate">
+     <string>2015-11-07</string>
+    </void>
+    <void property="deadlineTime">
+     <string>22:00</string>
+    </void>
+    <void property="taskName">
+     <string>b</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.DeadlineTask">
+    <void property="deadlineDate">
+     <string>2015-11-08</string>
+    </void>
+    <void property="deadlineTime">
+     <string>18:56</string>
+    </void>
+    <void property="taskName">
+     <string>d</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.EventTask">
+    <void property="endDate">
+     <string>2015-11-08</string>
+    </void>
+    <void property="endTime">
+     <string>23:00</string>
+    </void>
+    <void property="startDate">
+     <string>2015-11-06</string>
+    </void>
+    <void property="startTime">
+     <string>23:00</string>
+    </void>
+    <void property="taskName">
+     <string>c</string>
+    </void>
+    <void property="taskType">
+     <string>Archived</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.EventTask">
+    <void property="endDate">
+     <string>2015-11-12</string>
+    </void>
+    <void property="endTime">
+     <string>17:00</string>
+    </void>
+    <void property="startDate">
+     <string>2015-11-08</string>
+    </void>
+    <void property="startTime">
+     <string>22:00</string>
+    </void>
+    <void property="taskName">
+     <string>e</string>
+    </void>
+    <void property="taskType">
+     <string>Archived</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.FloatingTask">
+    <void property="taskName">
+     <string>f</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.FloatingTask">
+    <void property="taskName">
+     <string>g</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.FloatingTask">
+    <void property="taskName">
+     <string>h</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.FloatingTask">
+    <void property="taskName">
+     <string>j</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.FloatingTask">
+    <void property="taskName">
+     <string>k</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.FloatingTask">
+    <void property="taskName">
+     <string>l</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.FloatingTask">
+    <void property="taskName">
+     <string>m</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.FloatingTask">
+    <void property="taskName">
+     <string>n</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
+    </void>
+   </object>
+  </void>
+ </object>
+</java>
