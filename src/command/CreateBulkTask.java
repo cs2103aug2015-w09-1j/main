@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import model.Task;
 
-public class CreateBulkTask extends CreateBulkCommand {
+public class CreateBulkTask extends CreateCommand {
 	private ArrayList<Task> tasks;
 
 	public CreateBulkTask(ArrayList<Task> tasks) {

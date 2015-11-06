@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import model.Task;
 
-public class UpdateBulkTask extends UpdateBulkCommand {
+public class UpdateBulkTask extends UpdateCommand {
 	private ArrayList<Task> thisTask;
 	private ArrayList<Task> newTask;
 

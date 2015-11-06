@@ -19,7 +19,9 @@ public class GUIController {
 	private static Font taskInfoFont = Font.font("Stencil Std", FontWeight.NORMAL, FontPosture.REGULAR, 17);
 	static int taskCount;
 	
-	protected static void showRecentList() {
+	protected static void showPartitionList(int welcome) {
+		GUIMain.TaskDisplayGrid.getChildren().clear();
+		
 		int count = 0;
 		taskCount=0;
 		GridPane todayPane = new GridPane();
@@ -31,7 +33,8 @@ public class GUIController {
 		count++;
 
 		ArrayList<Task> TodayList = Controller.getTodayTaskList();
-		for (int i = 0; i < TodayList.size(); i++) {
+		int TodaySize=TodayList.size();
+		for (int i = 0; i < TodaySize; i++) {
 			Task task = TodayList.get(i);
 			taskCount++;
 			if (task instanceof DeadlineTask) {
@@ -42,7 +45,7 @@ public class GUIController {
 				displayAEventTask(count, (EventTask) task);
 			}
 			count++;
-			if (i == 2) {
+			if ((TodaySize>3)&&(welcome==1)&&(i == 2)) {
 				GridPane seeMorePane = new GridPane();
 				seeMorePane.setPrefSize(760, 30);
 				Group seeMoreGroup = new Group();
@@ -50,6 +53,7 @@ public class GUIController {
 				seeMoreGroup.getChildren().addAll(seeMoreBack, seeMorePane);
 				GUIMain.TaskDisplayGrid.add(seeMoreGroup, 0, count);
 				count++;
+				taskCount+=TodaySize-i-1;
 				break;
 			}
 		}
@@ -63,7 +67,8 @@ public class GUIController {
 		count++;
 
 		ArrayList<Task> FollowingList = Controller.getFollowingDayTaskList();
-		for (int i = 0; i < TodayList.size(); i++) {
+		int FollowingSize=FollowingList.size();
+		for (int i = 0; i < FollowingSize; i++) {
 			Task task = FollowingList.get(i);
 			taskCount++;
 			if (task instanceof DeadlineTask) {
@@ -74,7 +79,7 @@ public class GUIController {
 				displayAEventTask(count, (EventTask) task);
 			}
 			count++;
-			if (i == 2) {
+			if ((FollowingSize>3)&&(welcome==1)&&(i == 2)) {
 				GridPane seeMorePane = new GridPane();
 				seeMorePane.setPrefSize(760, 30);
 				Group seeMoreGroup = new Group();
@@ -82,6 +87,7 @@ public class GUIController {
 				seeMoreGroup.getChildren().addAll(seeMoreBack, seeMorePane);
 				GUIMain.TaskDisplayGrid.add(seeMoreGroup, 0, count);
 				count++;
+				taskCount+=FollowingSize-i-1;
 				break;
 			}
 		}
@@ -95,7 +101,8 @@ public class GUIController {
 		count++;
 		
 		ArrayList<Task> FloatingList = Controller.getFloatingTaskList();
-		for (int i = 0; i < TodayList.size(); i++) {
+		int FloatingSize=FloatingList.size();
+		for (int i = 0; i < FloatingSize; i++) {
 			Task task = FloatingList.get(i);
 			taskCount++;
 			if (task instanceof DeadlineTask) {
@@ -106,7 +113,7 @@ public class GUIController {
 				displayAEventTask(count, (EventTask) task);
 			}
 			count++;
-			if (i == 2) {
+			if ((FloatingSize>3)&&(welcome==1)&&(i == 2)) {
 				GridPane seeMorePane = new GridPane();
 				seeMorePane.setPrefSize(760, 30);
 				Group seeMoreGroup = new Group();
@@ -114,6 +121,7 @@ public class GUIController {
 				seeMoreGroup.getChildren().addAll(seeMoreBack, seeMorePane);
 				GUIMain.TaskDisplayGrid.add(seeMoreGroup, 0, count);
 				count++;
+				taskCount+=FloatingList.size()-i-1;
 				break;
 			}
 		}
@@ -395,7 +403,7 @@ public class GUIController {
 		Controller.executeCMD(command);
 		GUIMain.userCommandBlock.clear();
 		TaskList = Controller.getTaskList();
-		showList();
+		showPartitionList(0);
 		GUIMain.showAll();
 		GUIMain.showClear();
 	}
@@ -403,8 +411,7 @@ public class GUIController {
 	private static void executeHelp(String command) {
 		Controller.executeCMD(command);
 		GUIMain.userCommandBlock.clear();
-		// GUIMain.showHelp(Controller.getHelpString(helpMessage));
-		// TODO
+		GUIMain.showHelp(Controller.getHelpString());	
 	}
 
 	private static void executeExit(String command) {
@@ -414,8 +421,7 @@ public class GUIController {
 	private static void executeUndo(String command) throws IOException {
 		Controller.executeCMD(command);
 		GUIMain.userCommandBlock.clear();
-		TaskList = Controller.getTaskList();
-		showList();
+		showPartitionList(0);
 		GUIMain.showAll();
 		GUIMain.showUndo();
 	}
@@ -423,8 +429,7 @@ public class GUIController {
 	private static void executeUnComOrArc(String command) throws IOException {
 		Controller.executeCMD(command);
 		GUIMain.userCommandBlock.clear();
-		TaskList = Controller.getTaskList();
-		showList();
+		showPartitionList(0);
 		GUIMain.showAll();
 		GUIMain.showUnComOrArc();
 	}
@@ -432,8 +437,7 @@ public class GUIController {
 	private static void executeArchive(String command) throws IOException {
 		Controller.executeCMD(command);
 		GUIMain.userCommandBlock.clear();
-		TaskList = Controller.getTaskList();
-		showList();
+		showPartitionList(0);
 		GUIMain.showAll();
 		GUIMain.showArchive();
 	}
@@ -441,8 +445,7 @@ public class GUIController {
 	private static void executeComplete(String command) throws IOException {
 		Controller.executeCMD(command);
 		GUIMain.userCommandBlock.clear();
-		TaskList = Controller.getTaskList();
-		showList();
+		showPartitionList(0);
 		GUIMain.showAll();
 		GUIMain.showComplete();
 	}
@@ -450,8 +453,7 @@ public class GUIController {
 	private static void executeUpdate(String command) throws IOException {
 		Controller.executeCMD(command);
 		GUIMain.userCommandBlock.clear();
-		TaskList = Controller.getTaskList();
-		showList();
+		showPartitionList(0);
 		GUIMain.showAll();
 		GUIMain.showUpdate();
 	}
@@ -459,8 +461,7 @@ public class GUIController {
 	private static void executeAll(String command) throws IOException {
 		Controller.executeCMD(command);
 		GUIMain.userCommandBlock.clear();
-		TaskList = Controller.getTaskList();
-		showList();
+		showPartitionList(0);
 		GUIMain.showAll();
 	}
 
@@ -473,8 +474,7 @@ public class GUIController {
 	private static void executeLoad(String command) throws IOException {
 		Controller.executeCMD(command);
 		GUIMain.userCommandBlock.clear();
-		TaskList = Controller.getTaskList();
-		showList();
+		showPartitionList(0);
 		GUIMain.showAll();
 		GUIMain.showLoad();
 	}
@@ -490,8 +490,7 @@ public class GUIController {
 	private static void executeDelete(String command) throws IOException {
 		Controller.executeCMD(command);
 		GUIMain.userCommandBlock.clear();
-		TaskList = Controller.getTaskList();
-		showList();
+		showPartitionList(0);
 		GUIMain.showAll();
 		GUIMain.showDelete();
 	}
@@ -520,6 +519,11 @@ public class GUIController {
 			showList();
 			GUIMain.showOn();
 			break;
+		case "today":
+			TaskList = Controller.getTodayTaskList();
+			showList();
+			GUIMain.showToday();
+			break;
 		}
 	}
 
@@ -539,8 +543,7 @@ public class GUIController {
 	private static void executeAdd(String command) throws IOException {
 		Controller.executeCMD(command);
 		GUIMain.userCommandBlock.clear();
-		TaskList = Controller.getTaskList();
-		showList();
+		showPartitionList(0);
 		GUIMain.showAll();
 		GUIMain.showAdd();
 	}

@@ -20,7 +20,7 @@ public class Controller {
 	private static ArrayList<Task> displayList = TaskMemory.getInstance()
 			.getCombinedTaskList();
 	private static CommandParser parser = null;
-
+	private static String _helpMessage = null;
 	public static Controller getInstance() {
 		if (_instance == null) {
 			_instance = new Controller();
@@ -196,7 +196,7 @@ public class Controller {
 				break;
 			case "help":
 				String _helpString = parser.getHelpString();
-				getHelpString(_helpString);
+				setHelpMessage(_helpString);
 				break;
 
 			case "save":
@@ -234,8 +234,12 @@ public class Controller {
 		return errorMessage;
 	}
 
-	public static String getHelpString(String helpMessage) {
-		return helpMessage;
+	public static String getHelpString() {
+		return _helpMessage;
+	}
+	
+	private static void setHelpMessage(String helpMessage){
+		_helpMessage = helpMessage;
 	}
 
 	public static ArrayList<Task> getFloatingTaskList() {
