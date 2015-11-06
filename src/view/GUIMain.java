@@ -77,7 +77,7 @@ public class GUIMain extends Application {
 
 		buildView(primaryStage);
 
-		GUIController.showRecentList();
+		GUIController.showPartitionList(1);
 		;
 
 		getCommand();
