@@ -30,7 +30,6 @@ public class Logic {
 	// purposes
 	private static Stack<ICommand> processStack = null;
 
-
 	public Logic() {
 		processStack = new Stack<ICommand>();
 	}
@@ -48,7 +47,7 @@ public class Logic {
 
 	// execute save
 	public void save() {
-		//Storage.getInstance().setfileName("silentjarvis.fxml");
+		// Storage.getInstance().setfileName("silentjarvis.fxml");
 		Storage.getInstance().save(TaskMemory.getInstance().getTaskList());
 	}
 
@@ -84,16 +83,16 @@ public class Logic {
 	// execute deleting all tasks in the current view list
 	public void deleteAllTask(ArrayList<Task> currentList) {
 		ArrayList<Task> deleteBulkArray = new ArrayList<Task>();
-		for(int i = 0 ; i < currentList.size(); i++){
-			if(deleteBulkArray.isEmpty()){
+		for (int i = 0; i < currentList.size(); i++) {
+			if (deleteBulkArray.isEmpty()) {
 				deleteBulkArray.add(currentList.get(i));
-			}else{
-				if(!deleteBulkArray.contains(currentList.get(i))){
+			} else {
+				if (!deleteBulkArray.contains(currentList.get(i))) {
 					deleteBulkArray.add(currentList.get(i));
 				}
 			}
 		}
-		
+
 		DeleteBulkTask deletebulk = new DeleteBulkTask(deleteBulkArray);
 		deletebulk.execute();
 		pushToProcessStack(deletebulk);
@@ -201,7 +200,10 @@ public class Logic {
 				for (Task t : taskList) {
 					if (!taskOfSearchedList.contains(t)) {
 						if (t.getTaskName() != null
-								&& Pattern.compile(Pattern.quote(token), Pattern.CASE_INSENSITIVE).matcher(t.getTaskName()).find()
+								&& Pattern
+										.compile(Pattern.quote(token),
+												Pattern.CASE_INSENSITIVE)
+										.matcher(t.getTaskName()).find()
 								&& t.getTaskType() != "Archived") {
 							taskOfSearchedList.add(t);
 						}
@@ -235,11 +237,11 @@ public class Logic {
 		try {
 			ArrayList<Task> oldTask = new ArrayList<Task>();
 			ArrayList<Task> newTask = new ArrayList<Task>();
-				
+
 			oldTask = getTaskByMutlipleId(currentList, task_index);
-			
+
 			for (Task task : oldTask) {
-				
+
 				String task_name = null;
 				String start_date = null;
 				String end_date = null;
@@ -298,13 +300,14 @@ public class Logic {
 					}
 
 				}
-				Task t = buildTask(task_name, start_date, end_date, start_time, end_time, task_type);
+				Task t = buildTask(task_name, start_date, end_date, start_time,
+						end_time, task_type);
 				newTask.add(t);
 			}
 			UpdateBulkTask update = new UpdateBulkTask(oldTask, newTask);
 			update.execute();
 			pushToProcessStack(update);
-			
+
 		} catch (Exception e) {
 
 		}
@@ -388,10 +391,11 @@ public class Logic {
 		ArrayList<Task> taskOfSearchedList = new ArrayList<Task>();
 		try {
 			for (int i = 0; i < index.length; i++) {
-				if(taskOfSearchedList.isEmpty()){
+				if (taskOfSearchedList.isEmpty()) {
 					taskOfSearchedList.add(currentList.get(index[i] - 1));
-				}else{
-					if(!taskOfSearchedList.contains(currentList.get(index[i] - 1))){
+				} else {
+					if (!taskOfSearchedList.contains(currentList
+							.get(index[i] - 1))) {
 						taskOfSearchedList.add(currentList.get(index[i] - 1));
 					}
 				}
