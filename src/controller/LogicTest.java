@@ -12,11 +12,16 @@ import command.TaskMemory;
 import util.Storage;
 
 public class LogicTest {
+	// get instance from TaskMemory
 	ArrayList<Task> taskList = TaskMemory.getInstance().getCombinedTaskList();
+	
+	// create logic object
 	Logic logic = new Logic();
 	@Test
 	public void ClearTaskTest() {		
+		// calling delete all task logic
 		logic.deleteAllTask(taskList);
+		// call memory instance of combined task list.
 		taskList = TaskMemory.getInstance().getCombinedTaskList();
 		
 		assertEquals(0, taskList.size());
@@ -24,9 +29,11 @@ public class LogicTest {
 	
 	@Test
 	public void FailAddTaskTest(){
+		
 		ClearTaskTest();
 		assertEquals(0, taskList.size());
 		
+		// a null task will failed to create
 		logic.executeCreateTask(null, null, null,
 				null, null);
 		taskList = TaskMemory.getInstance().getCombinedTaskList();
@@ -38,11 +45,13 @@ public class LogicTest {
 		ClearTaskTest();
 		assertEquals(0, taskList.size());
 		
+		// create a event task
 		logic.executeCreateTask("Event task", "2015-11-05", "2359",
 				"2015-11-11", "1000");
-
+		// get instance
 		taskList = TaskMemory.getInstance().getCombinedTaskList();
 		assertEquals(2, taskList.size());
+		// assert event task attribute
 		EventTask event = (EventTask) taskList.get(0);
 		assertEquals("Event task", event.getTaskName());
 		assertEquals("2015-11-05", event.getStartDate());
@@ -56,7 +65,7 @@ public class LogicTest {
 	public void AddFloatingTaskTest() {
 		ClearTaskTest();
 		assertEquals(0, taskList.size());
-		
+		// create a floating task
 		logic.executeCreateTask("Floating task", null, null, null, null);
 
 		taskList = TaskMemory.getInstance()
@@ -73,6 +82,7 @@ public class LogicTest {
 		ClearTaskTest();
 		assertEquals(0, taskList.size());
 		
+		// create a deadline task
 		logic.executeCreateTask("Deadline task", null, null, "2015-11-12",
 				"1100");
 
@@ -93,10 +103,13 @@ public class LogicTest {
 		ClearTaskTest();
 		assertEquals(0, taskList.size());
 		
+		
 		logic.executeCreateTask("Float", null, null, null, null);
 		taskList = TaskMemory.getInstance().getCombinedTaskList();
 		assertEquals(1, taskList.size());
 		
+		
+		// delete task index 1 which is Floating task
 		logic.executeDeleteTask(taskList, 1);
 		taskList = TaskMemory.getInstance().getCombinedTaskList();
 		assertEquals(0, taskList.size());
@@ -110,9 +123,11 @@ public class LogicTest {
 		logic.executeCreateTask("Float", null, null, null, null);
 		logic.executeCreateTask("Float2", null, null, null, null);
 		
+		
 		taskList = TaskMemory.getInstance().getCombinedTaskList();
 		assertEquals(2, taskList.size());
 		
+		// delete multiple task, index 1 and 2, which is Floating task. Float and Float2
 		int[] index = {1,2};
 		logic.deleteMultipleTask(taskList, index);
 		taskList = TaskMemory.getInstance().getCombinedTaskList();
@@ -134,17 +149,19 @@ public class LogicTest {
 		taskList = TaskMemory.getInstance().getCombinedTaskList();
 		assertEquals(6, taskList.size());
 		
-		
+		// search by keyword "BOSS"
 		taskList = logic.searchTaskByKeyword(taskList, "BOSS");
 		assertEquals(2, taskList.size());
 		assertEquals("BOSS", taskList.get(0).getTaskName());
 		assertEquals("MEETING WITH BOSS", taskList.get(1).getTaskName());
 		
 		taskList = TaskMemory.getInstance().getCombinedTaskList();
+		// search by keyword "HoMe" with case sensitive
 		taskList = logic.searchTaskByKeyword(taskList, "HoMe");
 		assertEquals("Home", taskList.get(0).getTaskName());
 		
 		taskList = TaskMemory.getInstance().getCombinedTaskList();
+		// search by key with word jumble up
 		taskList = logic.searchTaskByKeyword(taskList, "BOSS WITH");
 		assertEquals("BOSS", taskList.get(0).getTaskName());
 		assertEquals("MEETING WITH BOSS", taskList.get(1).getTaskName());
@@ -163,6 +180,7 @@ public class LogicTest {
 		taskList = TaskMemory.getInstance().getCombinedTaskList();
 		assertEquals(3, taskList.size());
 		
+		// search task by date, it will give you a list of task with deadline/end date before searched date.
 		taskList = logic.searchTaskByDate(taskList, "2015-12-12");
 		assertEquals(0, taskList.size());
 		taskList = TaskMemory.getInstance().getCombinedTaskList();
@@ -193,6 +211,7 @@ public class LogicTest {
 		taskList = TaskMemory.getInstance().getCombinedTaskList();
 		assertEquals(3, taskList.size());
 		
+		// search task on date. it will return a list of task with the specific date given
 		taskList = logic.searchTaskOnDate(taskList, "2015-12-12");
 		assertEquals(0, taskList.size());
 		taskList = TaskMemory.getInstance().getCombinedTaskList();
@@ -221,7 +240,7 @@ public class LogicTest {
 		
 		taskList = TaskMemory.getInstance().getCombinedTaskList();
 		assertEquals(3, taskList.size());
-		
+		// test for undo
 		logic.undo();
 		taskList = TaskMemory.getInstance().getCombinedTaskList();
 		assertEquals(2, taskList.size());
@@ -254,6 +273,7 @@ public class LogicTest {
 		taskList = TaskMemory.getInstance().getCombinedTaskList();
 		assertEquals(6, taskList.size());
 		
+		// search tasks between the dates. 
 		taskList = logic.searchTaskBetweenDate(taskList, "2015-12-12", "2015-12-14");
 		assertEquals(3, taskList.size());
 		taskList = TaskMemory.getInstance().getCombinedTaskList();
@@ -280,6 +300,7 @@ public class LogicTest {
 		logic.executeCreateTask("Event4", "2015-12-14", "0800", "2015-12-15", "0800");
 		logic.executeCreateTask("Event5", "2015-12-15", "0800", "2015-12-16", "0800");
 		
+		// Update the task bu index
 		taskList = TaskMemory.getInstance().getCombinedTaskList();
 		assertEquals(5, taskList.size());
 		assertEquals("Deadline1", taskList.get(0).getTaskName());
@@ -308,6 +329,7 @@ public class LogicTest {
 		ClearTaskTest();
 		assertEquals(0, taskList.size());
 		
+		
 		logic.executeCreateTask("Float1", null, null, null, null);
 		logic.executeCreateTask("Deadline1", null,null, "2015-12-13", "0800");
 		logic.executeCreateTask("Event3", "2015-12-13", "0800", "2015-12-14", "0800");
@@ -315,7 +337,7 @@ public class LogicTest {
 		logic.executeCreateTask("Event5", "2015-12-15", "0800", "2015-12-16", "0800");
 		
 		
-		
+		// update the task by index and the attribute 
 		taskList = TaskMemory.getInstance().getCombinedTaskList();
 		assertEquals(5, taskList.size());
 		assertEquals("Deadline1", taskList.get(0).getTaskName());
