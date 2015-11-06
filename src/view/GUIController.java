@@ -466,6 +466,11 @@ public class GUIController {
 			showList();
 			GUIMain.showOn();
 			break;
+		case "today":
+			TaskList = Controller.getTodayTaskList();
+			showList();
+			GUIMain.showToday();
+			break;
 		}
 	}
 
