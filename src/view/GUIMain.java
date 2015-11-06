@@ -183,6 +183,7 @@ public class GUIMain extends Application {
 						} catch (Exception e) {
 							showError();
 						}
+						userCommandBlock.clear();
 
 					}
 				}
@@ -198,7 +199,7 @@ public class GUIMain extends Application {
 		});
 	}
 
-	private void showWelcome() {
+	protected static void showWelcome() {
 		message.setTextFill(commonColor);
 		message.setText("Welcome to SilentJarvis! Recent tasks are listed below");
 

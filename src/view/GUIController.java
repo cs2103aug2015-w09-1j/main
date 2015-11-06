@@ -276,14 +276,13 @@ public class GUIController {
 	private static String getCommandType(String command, int i) {
 		return command.trim().split("\\s+")[i];
 	}
-	
+	/*
 	public static void execute(String command) throws Exception {
 		String commandType = getCommandType(command, 0);
-<<<<<<< HEAD
 		Controller.executeCMD(command);
 		TaskList = Controller.getTaskList();
-		showList();
-		GUIMain.showAll();
+		showRecentList();
+		GUIMain.showWelcome();;
 		switch(commandType) {
 		case "add":
 			GUIMain.showAdd();
@@ -330,12 +329,10 @@ public class GUIController {
 		default:
 			throw new Exception();
 		}
-	}
-	/*
+	}*/
+	
 	public static void execute(String command) throws Exception {
 		String commandType = getCommandType(command, 0);
-=======
->>>>>>> 0a070b1dc83ae3a2a4f8b1e955b12bccbc12b73f
 		switch (commandType) {
 		case "add":
 			executeAdd(command);
