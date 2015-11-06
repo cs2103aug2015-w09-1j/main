@@ -5,19 +5,19 @@ import controller.Controller;
 
 public class GUIController {
 
-	protected static GUIController theOne=null;
+	protected static GUIController theOne = null;
 
 	protected static GUIController getInstance() {
-		if(theOne==null){
-			theOne =new GUIController();
+		if (theOne == null) {
+			theOne = new GUIController();
 		}
 		return theOne;
 	}
-	
+
 	private String getCommandType(String command, int i) {
 		return command.trim().split("\\s+")[i];
 	}
-	
+
 	protected void execute(String command) throws Exception {
 		String commandType = getCommandType(command, 0);
 		switch (commandType) {
@@ -89,7 +89,7 @@ public class GUIController {
 	private void executeHelp(String command) {
 		Controller.executeCMD(command);
 		GUIMain.userCommandBlock.clear();
-		GUIMain.showHelp(Controller.getHelpString());	
+		GUIMain.showHelp(Controller.getHelpString());
 	}
 
 	private void executeExit(String command) {
@@ -174,40 +174,51 @@ public class GUIController {
 
 	private void executeShow(String command) throws IOException {
 		Controller.executeCMD(command);
-		GUIMain.userCommandBlock.clear();
 		switch (getCommandType(command, 1)) {
 		case "archived":
+			GUIMain.userCommandBlock.clear();
 			GUIMain.showGettedList(Controller.getArchivedList());
 			GUIMain.showArchived();
 			break;
 		case "floating":
+			GUIMain.userCommandBlock.clear();
 			GUIMain.showGettedList(Controller.getFloatingTaskList());
 			GUIMain.showFloating();
 			break;
 		case "by":
+			GUIMain.userCommandBlock.clear();
 			GUIMain.showGettedList(Controller.getTaskList());
 			GUIMain.showBy();
 			break;
 		case "on":
+			GUIMain.userCommandBlock.clear();
 			GUIMain.showGettedList(Controller.getTaskList());
 			GUIMain.showOn();
 			break;
 		case "today":
+			GUIMain.userCommandBlock.clear();
 			GUIMain.showGettedList(Controller.getTodayTaskList());
 			GUIMain.showToday();
+			break;
+		default:
+			GUIMain.showError();
 			break;
 		}
 	}
 
 	private void executeSet(String command) throws IOException {
 		Controller.executeCMD(command);
-		GUIMain.userCommandBlock.clear();
 		switch (getCommandType(command, 1)) {
 		case "path":
+			GUIMain.userCommandBlock.clear();
 			GUIMain.showSetPath();
 			break;
 		case "filename":
+			GUIMain.userCommandBlock.clear();
 			GUIMain.showSetFilename();
+			break;
+		default:
+			GUIMain.showError();
 			break;
 		}
 	}
