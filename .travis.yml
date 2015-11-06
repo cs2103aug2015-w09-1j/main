@@ -7,7 +7,3 @@ branches:
     only:
     - develop
 
-notifications:
-    email:
-    - yollyhideout@gmail.com
-    - cvansang94@gmail.com
