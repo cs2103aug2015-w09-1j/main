@@ -74,6 +74,9 @@
 //		e. show archived
 //			show archived
 
+//		f. show complete
+//			show complete
+
 
 //@@author A0133976U
 
@@ -364,7 +367,9 @@ public class CommandParser {
 		if(args.contains("archived")) {
 			setShowOption("archived");
 		} else if (args.contains("floating")) {
-			setShowOption("floating");
+			setShowOption("floating");	
+		} else if (args.contains("complete")) {
+			setShowOption("complete");
 		} else if (args.contains("by")){
 			String date = args.split(" ", 2)[1];
 			List<Date> dates = new PrettyTimeParser().parse(date);

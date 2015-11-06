@@ -301,6 +301,9 @@ public class CommandParserTest {
 		
 		CommandParser cp2 = new CommandParser("show floating");
 		assertEquals("floating", cp2.getShowOption());
+		
+		CommandParser cp3 = new CommandParser("show complete");
+		assertEquals("complete", cp3.getShowOption());
 	}
 	
 	@Test
