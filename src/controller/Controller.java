@@ -22,12 +22,6 @@ public class Controller {
 	private static CommandParser parser = null;
 	private static String _helpMessage = null;
 	private static String _errorMessage = null;
-	public static Controller getInstance() {
-		if (_instance == null) {
-			_instance = new Controller();
-		}
-		return _instance;
-	}
 
 	public static void executeCMD(String input) {
 

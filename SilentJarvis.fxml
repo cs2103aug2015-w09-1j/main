@@ -93,37 +93,5 @@
     </void>
    </object>
   </void>
-  <void method="add">
-   <object class="model.EventTask">
-    <void property="endDate">
-     <string>2015-11-13</string>
-    </void>
-    <void property="endTime">
-     <string>20:43</string>
-    </void>
-    <void property="startDate">
-     <string>2015-11-09</string>
-    </void>
-    <void property="startTime">
-     <string>20:43</string>
-    </void>
-    <void property="taskName">
-     <string>test</string>
-    </void>
-    <void property="taskType">
-     <string>null</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="model.FloatingTask">
-    <void property="taskName">
-     <string>meeting</string>
-    </void>
-    <void property="taskType">
-     <string>null</string>
-    </void>
-   </object>
-  </void>
  </object>
 </java>
