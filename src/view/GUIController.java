@@ -7,6 +7,9 @@ public class GUIController {
 
 	protected static GUIController theOne = null;
 
+	private GUIController(){
+	}
+	
 	protected static GUIController getInstance() {
 		if (theOne == null) {
 			theOne = new GUIController();
