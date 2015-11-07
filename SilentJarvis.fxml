@@ -2,16 +2,6 @@
 <java version="1.8.0_31" class="java.beans.XMLDecoder">
  <object class="java.util.ArrayList">
   <void method="add">
-   <object class="model.FloatingTask">
-    <void property="taskName">
-     <string>Float1</string>
-    </void>
-    <void property="taskType">
-     <string>null</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
    <object class="model.DeadlineTask">
     <void property="deadlineDate">
      <string>2015-12-13</string>
@@ -23,7 +13,7 @@
      <string>Deadline1</string>
     </void>
     <void property="taskType">
-     <string>null</string>
+     <string>Completed</string>
     </void>
    </object>
   </void>
@@ -87,6 +77,16 @@
     </void>
     <void property="taskName">
      <string>Event5</string>
+    </void>
+    <void property="taskType">
+     <string>null</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="model.FloatingTask">
+    <void property="taskName">
+     <string>Float1</string>
     </void>
     <void property="taskType">
      <string>null</string>

@@ -101,14 +101,14 @@ public class TaskMemory {
 				if (t instanceof DeadlineTask) {
 					if (((DeadlineTask) t).getDeadlineDate().compareTo(
 									dateNow) == 0
-							&& !t.getTaskType().contains("Archived") && !checkDue(t)) {
+							&& (!t.getTaskType().contains("Archived") && !t.getTaskType().contains("Completed")) && !checkDue(t)) {
 						todayList.add(t);
 					}
 				} else if (t instanceof EventTask) {
 					if ((((EventTask) t).getStartDate()
 									.compareTo(dateNow) <= 0 && ((EventTask) t)
 							.getEndDate().compareTo(dateNow) >= 0)
-							&& !t.getTaskType().contains("Archived")  && !checkDue(t)) {
+							&& (!t.getTaskType().contains("Archived") || !t.getTaskType().contains("Completed"))  && !checkDue(t)) {
 						todayList.add(t);
 					}
 				}
@@ -131,7 +131,7 @@ public class TaskMemory {
 		try {
 			for (Task floatingTask : this.taskList) {
 				if (floatingTask instanceof FloatingTask) {
-					if (floatingTask.getTaskType() != "Archived") {
+					if (!floatingTask.getTaskType().contains("Archived") && !floatingTask.getTaskType().contains("Completed")) {
 						floatingTaskList.add((FloatingTask) floatingTask);
 					}
 				}
@@ -158,7 +158,7 @@ public class TaskMemory {
 //					String dateTime = ((DeadlineTask) t).getDeadlineDate()
 //							+ " " + ((DeadlineTask) t).getDeadlineTime();
 					if (((DeadlineTask) t).getDeadlineDate().compareTo(dateNow) > 0) {
-						if (!t.getTaskType().contains("Archived")) {
+						if (!t.getTaskType().contains("Archived") && !t.getTaskType().contains("Completed")) {
 
 							followingDayList.add(t);
 						}
@@ -170,7 +170,7 @@ public class TaskMemory {
 					// " " + ((EventTask) t).getStartTime();
 					if (((EventTask) t).getEndDate().compareTo(dateNow) > 0
 							&& ((EventTask) t).getEndDate().compareTo(followDayDate) >= 0) {
-						if (!t.getTaskType().contains("Archived")) {
+						if (!t.getTaskType().contains("Archived") && !t.getTaskType().contains("Completed")) {
 
 							followingDayList.add(t);
 						}
@@ -196,7 +196,7 @@ public class TaskMemory {
 					String dateTime2 = ((DeadlineTask) t).getDeadlineDate()
 							+ " " + ((DeadlineTask) t).getDeadlineTime();
 					if (dateTime2.compareTo(dateTime) < 0) {
-						if (!t.getTaskType().contains("Archived")) {
+						if (!t.getTaskType().contains("Archived") && !t.getTaskType().contains("Completed")) {
 							dueTaskList.add(t);
 						}
 
@@ -205,7 +205,7 @@ public class TaskMemory {
 					String dateTime2 = ((EventTask) t).getEndDate() + " "
 							+ ((EventTask) t).getEndTime();
 					if (dateTime2.compareTo(dateTime) < 0) {
-						if (!t.getTaskType().contains("Archived")) {
+						if (!t.getTaskType().contains("Archived") && !t.getTaskType().contains("Completed")) {
 							dueTaskList.add(t);
 						}
 					}
@@ -230,6 +230,20 @@ public class TaskMemory {
 
 			return archivedList;
 		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	public ArrayList<Task> getCompletedList(){
+		ArrayList<Task> completedList = new ArrayList<Task>();
+		try{
+			for(Task t : this.taskList){
+				if(t.getTaskType().contains("Completed")){
+					completedList.add(t);
+				}
+			}
+			return completedList;
+		}catch(Exception e){
 			return null;
 		}
 	}

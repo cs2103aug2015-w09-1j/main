@@ -181,6 +181,8 @@ public class Controller {
 								.getFloatingTask();
 					} else if (_showOption.equalsIgnoreCase("archived")) {
 						displayList = getArchivedList();
+					} else if (_showOption.equalsIgnoreCase("complete")){
+						displayList = getCompletedList();
 					}
 				}
 				break;
@@ -260,6 +262,10 @@ public class Controller {
 	
 	public static ArrayList<Task> getCombinedTaskList(){
 		return TaskMemory.getInstance().getCombinedTaskList();
+	}
+	
+	public static ArrayList<Task> getCompletedList(){
+		return TaskMemory.getInstance().getCompletedList();
 	}
 
 }
