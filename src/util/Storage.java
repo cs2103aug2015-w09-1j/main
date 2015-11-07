@@ -20,7 +20,7 @@ public class Storage {
 	private static Storage theOne = null;
 	private String tempStore;
 
-	public Storage() {
+	private Storage() {
 		reset();
 	}
 
