@@ -2,12 +2,76 @@ package view;
 
 import java.io.IOException;
 import controller.Controller;
+import javafx.event.EventHandler;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 public class GUIController {
 
 	protected static GUIController theOne = null;
-
+	protected double xOffset = 0;
+	protected double yOffset = 0;
+	
 	private GUIController(){
+	}
+	
+	protected void getCommand() {
+		GUIMain.userCommandBlock.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent event) {
+				if (event.getCode().equals(KeyCode.ENTER)) {
+					String command = GUIMain.userCommandBlock.getText();
+
+					if (!command.equals("")) {
+						try {
+							execute(command);
+						} catch (Exception e) {
+							GUIMain.showError();
+						}
+					}
+				}
+
+				if (event.getCode().equals(KeyCode.UP)) {
+					GUIMain.TaskDisplayBlock.setVvalue(GUIMain.TaskDisplayBlock.getVvalue() - 0.1f);
+				}
+				
+				if (event.getCode().equals(KeyCode.DOWN)) {
+					GUIMain.TaskDisplayBlock.setVvalue(GUIMain.TaskDisplayBlock.getVvalue() + 0.1f);
+				}
+			}
+		});
+	}
+	
+	protected void dragStage(GridPane grid,final Stage stage) {
+		grid.setOnMousePressed(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				xOffset = event.getSceneX();
+				yOffset = event.getSceneY();
+			}
+		});
+
+		grid.setOnMouseDragged(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				stage.setX(event.getScreenX() - xOffset);
+				stage.setY(event.getScreenY() - yOffset);
+			}
+		});
+	}
+	
+	protected void escClose(GridPane grid,final Stage stage) {
+		grid.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+		@Override
+		public void handle(KeyEvent t) {
+			if (t.getCode() == KeyCode.ESCAPE) {
+				stage.close();
+			}
+		}
+	});
 	}
 	
 	protected static GUIController getInstance() {

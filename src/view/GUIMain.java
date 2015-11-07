@@ -36,8 +36,6 @@ import util.Storage;
 public class GUIMain extends Application {
 	private static int taskCount;
 	private static int gridRowCount;
-	private static double xOffset = 0;
-	private static double yOffset = 0;
 	private static Image deadlineImage;
 	private static Image eventImage;
 	private static Image floatingImage;
@@ -50,10 +48,11 @@ public class GUIMain extends Application {
 	private static Image seeMoreTitle;
 	private Image backgroundImage;
 	private Image iconImage;
-	final private GUIController GUI_CONTROLLOR= GUIController.getInstance();
+	final private static GUIController GUI_CONTROLLOR= GUIController.getInstance();
+	protected static Stage primaryStage;
 	protected static TextField userCommandBlock;
 	private static GridPane TaskDisplayGrid;
-	private ScrollPane TaskDisplayBlock;
+	protected static ScrollPane TaskDisplayBlock;
 	private static Label message;
 	private static Label signal;	
 	final private static Font HELP_TITLE_FONT = Font.font("Stencil Std", FontWeight.BOLD, FontPosture.REGULAR, 17);
@@ -87,7 +86,7 @@ public class GUIMain extends Application {
 
 		showPartitionList(1);
 
-		getCommand();
+		GUI_CONTROLLOR.getCommand();
 	}
 
 	private void loadImage() {
@@ -136,7 +135,7 @@ public class GUIMain extends Application {
 		Scene mainScene = new Scene(holdBack, 820, 660);
 		primaryStage.setScene(mainScene);
 
-		dragStage(mainGrid, primaryStage);
+		GUI_CONTROLLOR.dragStage(mainGrid, primaryStage);
 	}
 
 	private void buildSysMsgBlk(StackPane SystemMessageBlock) {
@@ -169,51 +168,6 @@ public class GUIMain extends Application {
 		TaskDisplayGrid.setPadding(new Insets(4, 4, 4, 4));
 
 		TaskDisplayBlock.setContent(TaskDisplayGrid);
-	}
-
-	private void dragStage(GridPane grid,final Stage primaryStage) {
-		grid.setOnMousePressed(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				xOffset = event.getSceneX();
-				yOffset = event.getSceneY();
-			}
-		});
-
-		grid.setOnMouseDragged(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				primaryStage.setX(event.getScreenX() - xOffset);
-				primaryStage.setY(event.getScreenY() - yOffset);
-			}
-		});
-	}
-	
-	private void getCommand() {
-		userCommandBlock.setOnKeyPressed(new EventHandler<KeyEvent>() {
-			@Override
-			public void handle(KeyEvent event) {
-				if (event.getCode().equals(KeyCode.ENTER)) {
-					String command = userCommandBlock.getText();
-
-					if (!command.equals("")) {
-						try {
-							GUI_CONTROLLOR.execute(command);
-						} catch (Exception e) {
-							showError();
-						}
-					}
-				}
-
-				if (event.getCode().equals(KeyCode.UP)) {
-					TaskDisplayBlock.setVvalue(TaskDisplayBlock.getVvalue() - 0.1f);
-				}
-				
-				if (event.getCode().equals(KeyCode.DOWN)) {
-					TaskDisplayBlock.setVvalue(TaskDisplayBlock.getVvalue() + 0.1f);
-				}
-			}
-		});
 	}
 
 	protected static void showWelcome() {
@@ -379,21 +333,9 @@ public class GUIMain extends Application {
 			}
 		});
 
-		popUpGrid.setOnMousePressed(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				xOffset = event.getSceneX();
-				yOffset = event.getSceneY();
-			}
-		});
-
-		popUpGrid.setOnMouseDragged(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				secondStage.setX(event.getScreenX() - xOffset);
-				secondStage.setY(event.getScreenY() - yOffset);
-			}
-		});
+		//GUI_CONTROLLOR.escClose(popUpGrid, secondStage);
+		
+		GUI_CONTROLLOR.dragStage(popUpGrid, secondStage);
 	}
 	
 	protected static void showPartitionList(int type) {
