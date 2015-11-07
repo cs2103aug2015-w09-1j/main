@@ -2,50 +2,58 @@ package view;
 
 import java.io.IOException;
 import controller.Controller;
+import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class GUIController {
-
-	protected static GUIController theOne = null;
-	protected double xOffset = 0;
-	protected double yOffset = 0;
+public class GUIController extends Application {
+	private static double xOffset = 0;
+	private static double yOffset = 0;
+	final private static GUIView GUI_VIEW = GUIView.getInstance();
 	
-	private GUIController(){
+	public static void main(String args[]) {
+		launch(args);
+	}
+
+	@Override
+	public void start(Stage Stage) throws Exception {
+		GUI_VIEW.buildGUI(Stage);
+		getCommand();
 	}
 	
-	protected void getCommand() {
-		GUIMain.userCommandBlock.setOnKeyPressed(new EventHandler<KeyEvent>() {
+	private void getCommand() {
+		GUI_VIEW.userCommandBlock.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent event) {
 				if (event.getCode().equals(KeyCode.ENTER)) {
-					String command = GUIMain.userCommandBlock.getText();
+					String command = GUI_VIEW.userCommandBlock.getText();
 
 					if (!command.equals("")) {
 						try {
 							execute(command);
 						} catch (Exception e) {
-							GUIMain.showError();
+							GUI_VIEW.showError();
 						}
 					}
 				}
 
 				if (event.getCode().equals(KeyCode.UP)) {
-					GUIMain.TaskDisplayBlock.setVvalue(GUIMain.TaskDisplayBlock.getVvalue() - 0.1f);
+					GUI_VIEW.TaskDisplayBlock.setVvalue(GUI_VIEW.TaskDisplayBlock.getVvalue() - 0.1f);
 				}
 				
 				if (event.getCode().equals(KeyCode.DOWN)) {
-					GUIMain.TaskDisplayBlock.setVvalue(GUIMain.TaskDisplayBlock.getVvalue() + 0.1f);
+					GUI_VIEW.TaskDisplayBlock.setVvalue(GUI_VIEW.TaskDisplayBlock.getVvalue() + 0.1f);
 				}
 			}
 		});
 	}
 	
-	protected void dragStage(GridPane grid,final Stage stage) {
+	protected static void dragStage(GridPane grid,final Stage stage) {
 		grid.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -63,8 +71,8 @@ public class GUIController {
 		});
 	}
 	
-	protected void escClose(GridPane grid,final Stage stage) {
-		grid.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+	protected static void escClose(Scene scene,final Stage stage) {
+		scene.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
 		@Override
 		public void handle(KeyEvent t) {
 			if (t.getCode() == KeyCode.ESCAPE) {
@@ -74,18 +82,11 @@ public class GUIController {
 	});
 	}
 	
-	protected static GUIController getInstance() {
-		if (theOne == null) {
-			theOne = new GUIController();
-		}
-		return theOne;
-	}
-
 	private String getCommandType(String command, int i) {
 		return command.trim().split("\\s+")[i];
 	}
 
-	protected void execute(String command) throws Exception {
+	private void execute(String command) throws Exception {
 		String commandType = getCommandType(command, 0);
 		switch (commandType) {
 		case "add":
@@ -140,23 +141,23 @@ public class GUIController {
 			executeClear(command);
 			break;
 		default:
-			GUIMain.showError();
+			GUI_VIEW.showError();
 			break;
 		}
 	}
 
 	private void executeClear(String command) {
 		Controller.executeCMD(command);
-		GUIMain.userCommandBlock.clear();
-		GUIMain.showPartitionList(0);
-		GUIMain.showAll();
-		GUIMain.showClear();
+		GUI_VIEW.userCommandBlock.clear();
+		GUI_VIEW.showPartitionList(0);
+		GUI_VIEW.showAll();
+		GUI_VIEW.showClear();
 	}
 
 	private void executeHelp(String command) {
 		Controller.executeCMD(command);
-		GUIMain.userCommandBlock.clear();
-		GUIMain.showHelp(Controller.getHelpString());
+		GUI_VIEW.userCommandBlock.clear();
+		GUI_VIEW.showHelp(Controller.getHelpString());
 	}
 
 	private void executeExit(String command) {
@@ -165,115 +166,115 @@ public class GUIController {
 
 	private void executeUndo(String command) throws IOException {
 		Controller.executeCMD(command);
-		GUIMain.userCommandBlock.clear();
-		GUIMain.showPartitionList(0);
-		GUIMain.showAll();
-		GUIMain.showUndo();
+		GUI_VIEW.userCommandBlock.clear();
+		GUI_VIEW.showPartitionList(0);
+		GUI_VIEW.showAll();
+		GUI_VIEW.showUndo();
 	}
 
 	private void executeUnComOrArc(String command) throws IOException {
 		Controller.executeCMD(command);
-		GUIMain.userCommandBlock.clear();
-		GUIMain.showPartitionList(0);
-		GUIMain.showAll();
-		GUIMain.showUnComOrArc();
+		GUI_VIEW.userCommandBlock.clear();
+		GUI_VIEW.showPartitionList(0);
+		GUI_VIEW.showAll();
+		GUI_VIEW.showUnComOrArc();
 	}
 
 	private void executeArchive(String command) throws IOException {
 		Controller.executeCMD(command);
-		GUIMain.userCommandBlock.clear();
-		GUIMain.showPartitionList(0);
-		GUIMain.showAll();
-		GUIMain.showArchive();
+		GUI_VIEW.userCommandBlock.clear();
+		GUI_VIEW.showPartitionList(0);
+		GUI_VIEW.showAll();
+		GUI_VIEW.showArchive();
 	}
 
 	private void executeComplete(String command) throws IOException {
 		Controller.executeCMD(command);
-		GUIMain.userCommandBlock.clear();
-		GUIMain.showPartitionList(0);
-		GUIMain.showAll();
-		GUIMain.showComplete();
+		GUI_VIEW.userCommandBlock.clear();
+		GUI_VIEW.showPartitionList(0);
+		GUI_VIEW.showAll();
+		GUI_VIEW.showComplete();
 	}
 
 	private void executeUpdate(String command) throws IOException {
 		Controller.executeCMD(command);
-		GUIMain.userCommandBlock.clear();
-		GUIMain.showPartitionList(0);
-		GUIMain.showAll();
-		GUIMain.showUpdate();
+		GUI_VIEW.userCommandBlock.clear();
+		GUI_VIEW.showPartitionList(0);
+		GUI_VIEW.showAll();
+		GUI_VIEW.showUpdate();
 	}
 
 	private void executeAll(String command) throws IOException {
 		Controller.executeCMD(command);
-		GUIMain.userCommandBlock.clear();
-		GUIMain.showPartitionList(0);
-		GUIMain.showAll();
+		GUI_VIEW.userCommandBlock.clear();
+		GUI_VIEW.showPartitionList(0);
+		GUI_VIEW.showAll();
 	}
 
 	private void executeSave(String command) throws IOException {
 		Controller.executeCMD(command);
-		GUIMain.userCommandBlock.clear();
-		GUIMain.showSave();
+		GUI_VIEW.userCommandBlock.clear();
+		GUI_VIEW.showSave();
 	}
 
 	private void executeLoad(String command) throws IOException {
 		Controller.executeCMD(command);
-		GUIMain.userCommandBlock.clear();
-		GUIMain.showPartitionList(0);
-		GUIMain.showAll();
-		GUIMain.showLoad();
+		GUI_VIEW.userCommandBlock.clear();
+		GUI_VIEW.showPartitionList(0);
+		GUI_VIEW.showAll();
+		GUI_VIEW.showLoad();
 	}
 
 	private void executeSearch(String command) throws IOException {
 		Controller.executeCMD(command);
-		GUIMain.userCommandBlock.clear();
-		GUIMain.showGettedList(Controller.getTaskList());
-		GUIMain.showSearch();
+		GUI_VIEW.userCommandBlock.clear();
+		GUI_VIEW.showGettedList(Controller.getTaskList());
+		GUI_VIEW.showSearch();
 	}
 
 	private void executeDelete(String command) throws IOException {
 		Controller.executeCMD(command);
-		GUIMain.userCommandBlock.clear();
-		GUIMain.showPartitionList(0);
-		GUIMain.showAll();
-		GUIMain.showDelete();
+		GUI_VIEW.userCommandBlock.clear();
+		GUI_VIEW.showPartitionList(0);
+		GUI_VIEW.showAll();
+		GUI_VIEW.showDelete();
 	}
 
 	private void executeShow(String command) throws IOException {
 		Controller.executeCMD(command);
 		switch (getCommandType(command, 1)) {
 		case "archived":
-			GUIMain.userCommandBlock.clear();
-			GUIMain.showGettedList(Controller.getArchivedList());
-			GUIMain.showArchived();
+			GUI_VIEW.userCommandBlock.clear();
+			GUI_VIEW.showGettedList(Controller.getArchivedList());
+			GUI_VIEW.showArchived();
 			break;
 		case "complete":
-			GUIMain.userCommandBlock.clear();
-			GUIMain.showGettedList(Controller.getCompletedList());
-			GUIMain.showCompleted();
+			GUI_VIEW.userCommandBlock.clear();
+			GUI_VIEW.showGettedList(Controller.getCompletedList());
+			GUI_VIEW.showCompleted();
 			break;
 		case "floating":
-			GUIMain.userCommandBlock.clear();
-			GUIMain.showGettedList(Controller.getFloatingTaskList());
-			GUIMain.showFloating();
+			GUI_VIEW.userCommandBlock.clear();
+			GUI_VIEW.showGettedList(Controller.getFloatingTaskList());
+			GUI_VIEW.showFloating();
 			break;
 		case "by":
-			GUIMain.userCommandBlock.clear();
-			GUIMain.showGettedList(Controller.getTaskList());
-			GUIMain.showBy();
+			GUI_VIEW.userCommandBlock.clear();
+			GUI_VIEW.showGettedList(Controller.getTaskList());
+			GUI_VIEW.showBy();
 			break;
 		case "on":
-			GUIMain.userCommandBlock.clear();
-			GUIMain.showGettedList(Controller.getTaskList());
-			GUIMain.showOn();
+			GUI_VIEW.userCommandBlock.clear();
+			GUI_VIEW.showGettedList(Controller.getTaskList());
+			GUI_VIEW.showOn();
 			break;
 		case "today":
-			GUIMain.userCommandBlock.clear();
-			GUIMain.showGettedList(Controller.getTodayTaskList());
-			GUIMain.showToday();
+			GUI_VIEW.userCommandBlock.clear();
+			GUI_VIEW.showGettedList(Controller.getTodayTaskList());
+			GUI_VIEW.showToday();
 			break;
 		default:
-			GUIMain.showError();
+			GUI_VIEW.showError();
 			break;
 		}
 	}
@@ -282,24 +283,24 @@ public class GUIController {
 		Controller.executeCMD(command);
 		switch (getCommandType(command, 1)) {
 		case "path":
-			GUIMain.userCommandBlock.clear();
-			GUIMain.showSetPath();
+			GUI_VIEW.userCommandBlock.clear();
+			GUI_VIEW.showSetPath();
 			break;
 		case "filename":
-			GUIMain.userCommandBlock.clear();
-			GUIMain.showSetFilename();
+			GUI_VIEW.userCommandBlock.clear();
+			GUI_VIEW.showSetFilename();
 			break;
 		default:
-			GUIMain.showError();
+			GUI_VIEW.showError();
 			break;
 		}
 	}
 
 	private void executeAdd(String command) throws IOException {
 		Controller.executeCMD(command);
-		GUIMain.userCommandBlock.clear();
-		GUIMain.showPartitionList(0);
-		GUIMain.showAll();
-		GUIMain.showAdd();
+		GUI_VIEW.userCommandBlock.clear();
+		GUI_VIEW.showPartitionList(0);
+		GUI_VIEW.showAll();
+		GUI_VIEW.showAdd();
 	}
 }
