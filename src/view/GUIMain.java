@@ -265,6 +265,13 @@ public class GUIMain extends Application {
 		signal.setText("");
 	}
 
+	protected static void showCompleted() {
+		message.setTextFill(COMMON_COLOR);
+		message.setText("Completed tasks are listed below");
+
+		signal.setText("");
+	}
+
 	protected static void showSearch() {
 		message.setTextFill(COMMON_COLOR);
 		message.setText("Search results");

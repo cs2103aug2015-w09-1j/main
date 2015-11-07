@@ -180,6 +180,11 @@ public class GUIController {
 			GUIMain.showGettedList(Controller.getArchivedList());
 			GUIMain.showArchived();
 			break;
+		case "complete":
+			GUIMain.userCommandBlock.clear();
+			GUIMain.showGettedList(Controller.getCompletedList());
+			GUIMain.showCompleted();
+			break;
 		case "floating":
 			GUIMain.userCommandBlock.clear();
 			GUIMain.showGettedList(Controller.getFloatingTaskList());
