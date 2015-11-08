@@ -129,12 +129,12 @@ public class CommandParserTest {
 	@Test
 	public void testGetTaskName() {
 		//event task
-		CommandParser cp1 = new CommandParser("add meeting from 2015-10-03 0900 to 2015-10-04 0900");
-		assertEquals("meeting", cp1.getTaskName());
+		CommandParser cp1 = new CommandParser("add meeting from home from 2015-10-03 0900 to 2015-10-04 0900");
+		assertEquals("meeting from home", cp1.getTaskName());
 		
 		//deadline task
-		CommandParser cp2 = new CommandParser("add finish project manual by 2015-10-03 0900");
-		assertEquals("finish project manual", cp2.getTaskName());
+		CommandParser cp2 = new CommandParser("add finish project    by manual by 2015-10-03 0900");
+		assertEquals("finish project by manual", cp2.getTaskName());
 		
 		//float task
 		CommandParser cp3 = new CommandParser("add visit uncle Lee");

@@ -587,22 +587,24 @@ public class CommandParser {
 	}
 	
 	private void parseEventTask(String args) {
-		String[] argsArray = args.split("from | to ");
-		String startStr = argsArray[1];
-		String endStr = argsArray[2];
+		String taskNameStr = args.substring(0, args.lastIndexOf("from"));
+		String timeStr = args.substring(args.lastIndexOf("from"),args.length()-1);
 		
-		setTaskName(argsArray[0]);
-		Date start = new PrettyTimeParser().parse(startStr).get(0);		
-		Date end = new PrettyTimeParser().parse(endStr).get(0);
-		LocalDateTime startLdt = start.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-		LocalDateTime endLdt = end.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-		setStartDateTime(startLdt);
-		setEndDateTime(endLdt);
-		setStartDate(getDateString(startLdt));
-		setStartTime(getTimeString(startLdt));
-		setEndDate(getDateString(endLdt));
-		setEndTime(getTimeString(endLdt));
-
+		setTaskName(taskNameStr);
+		
+		List<Date> dates = new PrettyTimeParser().parse(timeStr);
+		if(dates.size()==2) {
+			LocalDateTime startLdt = dates.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+			LocalDateTime endLdt = dates.get(1).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+			setStartDateTime(startLdt);
+			setEndDateTime(endLdt);
+			setStartDate(getDateString(startLdt));
+			setStartTime(getTimeString(startLdt));
+			setEndDate(getDateString(endLdt));
+			setEndTime(getTimeString(endLdt));
+		} else {
+			throw new Error("time cannot be recongized");
+		}
 
 	}
 	private String getDateString(LocalDateTime ldt) {
@@ -621,10 +623,7 @@ public class CommandParser {
 		String[] argsArray = args.split("\\s+by\\s+");
 		String endStr = argsArray[argsArray.length-1];
 		
-		String startStr = "";
-		for(int i=0;i < argsArray.length-1; i++){
-			startStr += argsArray[i];
-		}
+		String startStr = args.substring(0,args.lastIndexOf("by"));
 		
 		setTaskName(startStr);
 		
@@ -653,9 +652,18 @@ public class CommandParser {
 				&& !this.command.equals("exit")){
 			String[] inputArr = this.userInput.split(" ", 2);
 			if(inputArr.length == 2) {
-				this.args = inputArr[1];
+				this.args = trim(inputArr[1]);
 			}
 		}
+	}
+	private String trim(String str){
+		String[] strArr = str.split("\\s+");
+		String result = "";
+		for(int i=0; i<strArr.length; i++) {
+			result += strArr[i];
+			result += " ";
+		}
+		return result.trim();
 	}
 	private String getArgs() {
 		return this.args;
@@ -774,7 +782,10 @@ public class CommandParser {
 	public static void main(String[] args) {
 //		String help = getHelpString();
 //		System.out.print(getHelpString());
-		CommandParser cp2 = new CommandParser("search meeting  ss   tt");
+//		CommandParser cp2 = new CommandParser("add drop by mother by tonight");
+		String str = "add drop tomorrow mother from tonight 2pm to 3pm";
+		System.out.println(str.substring(str.lastIndexOf("from"), str.length()-1));
+		
 //		System.out.print(cp2.getSearchWord());
 //		print(cp2.getDeleteIDs());
 //		System.out.print(cp2.getUncompleteID());
