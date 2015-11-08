@@ -147,6 +147,7 @@ public class Controller {
 				break;
 
 			case "complete":
+				displayList = getCombinedTaskList();
 				int[] _completeIndex = parser.getCompleteIDs();
 				_editAttr = "taskType";
 				_editInfo = "Completed";
