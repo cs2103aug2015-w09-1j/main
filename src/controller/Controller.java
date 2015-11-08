@@ -86,7 +86,7 @@ public class Controller {
 				break;
 
 			case "search":
-
+				displayList = getCombinedTaskList();
 				if (_searchWord != null) {
 					displayList = logic.searchTaskByKeyword(displayList,
 							_searchWord.trim());
@@ -165,7 +165,7 @@ public class Controller {
 				break;
 
 			case "show":
-
+				displayList = getCombinedTaskList();
 				if (_showByDate != null) {
 					displayList = logic.searchTaskByDate(displayList,
 							_showByDate);

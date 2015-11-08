@@ -29,6 +29,8 @@ public class LogicTest {
 		taskList = TaskMemory.getInstance().getCombinedTaskList();
 
 		assertEquals(0, taskList.size());
+		logic.save();
+		
 	}
 
 	@Test
