@@ -129,6 +129,7 @@ public class Controller {
 				break;
 
 			case "archive":
+				displayList = getCombinedTaskList();
 				int[] _archiveIndex = parser.getArchivedIDs();
 				_editAttr = "taskType";
 				_editInfo = "Archived";
@@ -147,6 +148,7 @@ public class Controller {
 				break;
 
 			case "complete":
+				displayList = getCombinedTaskList();
 				int[] _completeIndex = parser.getCompleteIDs();
 				_editAttr = "taskType";
 				_editInfo = "Completed";
