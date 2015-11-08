@@ -33,15 +33,15 @@ public class TestStorage {
 	public void test_setPath() {
 		// test for case without space
 		test.setPath("path");
-		assertEquals(test.getPath(), "path");
+		assertEquals(test.getPath(), "path\\");
 
 		// test for case with space in head
 		test.setPath("        path");
-		assertEquals(test.getPath(), "path");
+		assertEquals(test.getPath(), "path\\");
 
 		// test for case with space in tail
 		test.setPath("path        ");
-		assertEquals(test.getPath(), "path");
+		assertEquals(test.getPath(), "path\\");
 	}
 
 	/**
@@ -86,6 +86,10 @@ public class TestStorage {
 		assertTrue(test.existFolder());
 
 		// test for creating new folder
+		File canNotExist = new File("newFolder\\");
+		if ((canNotExist.exists() && canNotExist.isDirectory())) {
+			canNotExist.delete();
+		}
 		test.setPath("newFolder\\");
 		assertTrue(test.existFolder());
 	}
@@ -106,10 +110,12 @@ public class TestStorage {
 		test.setfileName("newFile");
 		assertTrue(test.existFile());
 
-		//// test for checking existed file
-		File createdFile = new File("createdFile.fxml");
-		createdFile.createNewFile();
-		test.setfileName("createdFile");
+		// test for checking existed file
+		File canNotExist = new File("newFile.fxml");
+		if (canNotExist.exists()) {
+			canNotExist.delete();
+		}
+		test.setfileName("newFile.fxml");
 		assertTrue(test.existFile());
 	}
 

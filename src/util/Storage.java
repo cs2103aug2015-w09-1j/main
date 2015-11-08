@@ -11,10 +11,11 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 public class Storage {
-    /**
-     *This is a class to deal with all operations relative to local date
-     *
-     * @author Liang Yuan*/
+	/**
+	 * This is a class to deal with all operations relative to local date
+	 *
+	 * @author Liang Yuan
+	 */
 	private String path = "";
 	private String fileName = "SilentJarvis.fxml";
 	private static Storage theOne = null;
@@ -31,23 +32,27 @@ public class Storage {
 	}
 
 	public boolean setPath(String path) {
-		tempStore=this.path;
-		this.path = path.trim();
-		if(existFolder()){
-			return true;
+		Boolean isSet = false;
+		tempStore = this.path;
+		this.path = path.trim().concat("\\");
+		if (existFolder()) {
+			isSet = true;
+		} else {
+			this.path = tempStore;
 		}
-		this.path=tempStore;
-		return false;
+		return isSet;
 	}
 
 	public boolean setfileName(String fileName) {
-		tempStore=this.fileName;
+		Boolean isSet = false;
+		tempStore = this.fileName;
 		this.fileName = fileName.trim().split("\\.")[0].concat(".fxml");
-		if(existFile()){
-			return true;
+		if (existFile()) {
+			isSet = true;
+		} else {
+			this.fileName = tempStore;
 		}
-		this.fileName=tempStore;
-		return false;
+		return isSet;
 	}
 
 	public static Storage getInstance() {
@@ -65,37 +70,40 @@ public class Storage {
 	}
 
 	public boolean existFolder() {
+		Boolean isSet = false;
 		File pathToCheck = new File(path);
-		if (path.compareTo("")==0||(pathToCheck.exists() && pathToCheck.isDirectory())) {
-			return true;
+		if (path.compareTo("") == 0 || (pathToCheck.exists() && pathToCheck.isDirectory())) {
+			isSet = true;
+		} else {
+			isSet = pathToCheck.mkdirs();
 		}
-		boolean success = pathToCheck.mkdirs();
-		return success;
+		return isSet;
 	}
 
 	public boolean existFile() {
+		Boolean isSet = false;
 		if (existFolder()) {
 			File fileToCheck = new File(path + fileName);
 			if (fileToCheck.exists() && !fileToCheck.isDirectory()) {
-				return true;
-			}
-
-			try {
-				save(new ArrayList<Task>());
-				return true;
-			} catch (Exception e) {
-				e.printStackTrace();
+				isSet = true;
+			} else {
+				try {
+					save(new ArrayList<Task>());
+					isSet = true;
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
-		return false;
+		return isSet;
 	}
 
 	public void save(ArrayList<Task> listToSave) {
 		try {
 			if (existFolder()) {
-			XMLEncoder encoder = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(path + fileName)));
-			encoder.writeObject(listToSave);
-			encoder.close();
+				XMLEncoder encoder = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(path + fileName)));
+				encoder.writeObject(listToSave);
+				encoder.close();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -105,16 +113,16 @@ public class Storage {
 
 	@SuppressWarnings("unchecked")
 	public ArrayList<Task> load() {
+		ArrayList<Task> listToload = null;
 		try {
 			if (existFile()) {
-			XMLDecoder decoder = new XMLDecoder(new BufferedInputStream(new FileInputStream(path + fileName)));
-			ArrayList<Task> o = (ArrayList<Task>) decoder.readObject();
-			decoder.close();
-			return o;
+				XMLDecoder decoder = new XMLDecoder(new BufferedInputStream(new FileInputStream(path + fileName)));
+				listToload = (ArrayList<Task>) decoder.readObject();
+				decoder.close();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return listToload;
 	}
 }
