@@ -322,6 +322,7 @@ public class CommandParser {
 				throw new Exception("command cannot be recongnised");
 		}
 	}
+	
 	/**
 	 * This method is used to parse an add command
 	 */	
@@ -354,15 +355,13 @@ public class CommandParser {
 			setShowOption("floating");	
 		} else if (args.contains("complete")) {
 			setShowOption("complete");
-		} else if (args.contains("by")){
+		} else if (args.contains("by")){ //show tasks before a certain date
 			String date = args.split(" ", 2)[1];
 			List<Date> dates = new PrettyTimeParser().parse(date);
-			if(dates.size() != 1) {
-				throw new Exception("time cannot be reconginsed");
-			}
+			assert(dates.size() == 1): "deadline cannot be reconginsed"; 
 			date = dates.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().toLocalDate().toString();
 			setShowByDate(date);
-		} else {
+		} else { //show tasks on a certain date or interval
 			List<Date> dates = new PrettyTimeParser().parse(args);
 			if(dates.size() == 1) {
 				String date = dates.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().toLocalDate().toString();
@@ -373,7 +372,7 @@ public class CommandParser {
 				String endDate = dates.get(1).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().toLocalDate().toString();
 				setShowEndDate(endDate);
 			} else {
-				throw new Exception("time cannot be recongised");
+				throw new Exception("time cannot be recongised correctly");
 			}
 		}
 	}
@@ -383,12 +382,12 @@ public class CommandParser {
 	 */	
 	private void parseEditCommand() throws Exception{
 		String args = getArgs();
-		String[] argArray = args.split(" ");
-		String[] argArray2 = args.split(" ", 2);
+		String[] argArray = args.split(" "); //will be used when editing one attribute
+		String[] argArray2 = args.split(" ", 2); // will be used when updating all attributes
 		if(!isInteger(argArray[0])){
 			throw new Exception("Task index cannot be parsed");
 		} 
-		
+
 		setTaskID(Integer.parseInt(argArray[0]));
 		if(isAttribute(argArray[1].toLowerCase())) {
 			//edit <id> <attribute> <info>
@@ -402,9 +401,13 @@ public class CommandParser {
 			} else if(argArray[1].toLowerCase().contains("date")) {
 				String date = dates.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().toLocalDate().toString();
 				setEditInfo(date);
+			} else {
+				throw new Exception("attribute cannot be parsed correctly");
 			}
 		} else {
 			//edit <id> <all info>
+			//inner logic for updating all attributes and adding a new task is essentially the same
+			//so parseAddCommand is called here.
 			parseAddCommand(argArray2[1]);
 		}
 
@@ -414,15 +417,15 @@ public class CommandParser {
 	 */	
 	private void parseSearchCommand() throws Exception {
 		String args = getArgs();
-		if(args.contains("on")) {
+		if(args.contains("on")) { //search tasks on a certain date
 			Date date = new PrettyTimeParser().parse(args).get(0);
 			LocalDateTime searchDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 			setSearchOnDate(searchDate.toLocalDate().toString());
-		} else if(args.contains("by")) {
+		} else if(args.contains("by")) { //search tasks before a certain date
 			Date date = new PrettyTimeParser().parse(args).get(0);
 			LocalDateTime searchDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 			setSearchByDate(searchDate.toLocalDate().toString());
-		} else if(args.contains("from")){
+		} else if(args.contains("from")){ //search tasks in a time interval
 			List<Date> dates = new PrettyTimeParser().parse(args);
 			if(dates.size() == 2) {
 				String startDate = dates.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().toLocalDate().toString();
@@ -449,11 +452,9 @@ public class CommandParser {
 			String[] argsArray = args.split(",");
 			if (argsArray.length == 1 && !argsArray[0].contains("-")) {
 				args = args.replaceAll("\\D+","");
-				if(args != null) {
-					setDeleteTaskID(Integer.parseInt(args));
-				} else {
-					throw new Exception("deleted index invalid");
-				}
+				assert(args!=null):"user's input is not a digit";
+				setDeleteTaskID(Integer.parseInt(args));
+
 			} else {
 				int[] idArr = parseMultipleIDs(argsArray);
 				setDeleteIDs(idArr);
@@ -520,7 +521,7 @@ public class CommandParser {
 		if(args == null || args.contains("all")){
 			setDisplayMode("all");
 		} else {
-			throw new Exception("display cmd invalid");
+			throw new Exception("display command is invalid");
 		}
 	}
 	/**
@@ -579,26 +580,22 @@ public class CommandParser {
 	 * when user want to add an event
 	 * @param user's input
 	 */
-	private void parseEventTask(String args) throws Exception {
+	private void parseEventTask(String args)  {
 		String taskNameStr = args.substring(0, args.lastIndexOf("from"));
-		String timeStr = args.substring(args.lastIndexOf("from"),args.length()-1);
-		
+		String timeStr = args.substring(args.lastIndexOf("from"),args.length()-1);	
 		setTaskName(taskNameStr);
 		
 		List<Date> dates = new PrettyTimeParser().parse(timeStr);
-		if(dates.size()==2) {
-			LocalDateTime startLdt = dates.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-			LocalDateTime endLdt = dates.get(1).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-			setStartDateTime(startLdt);
-			setEndDateTime(endLdt);
-			setStartDate(formatDateString(startLdt));
-			setStartTime(formatTimeString(startLdt));
-			setEndDate(formatDateString(endLdt));
-			setEndTime(formatTimeString(endLdt));
-		} else {
-			throw new Exception("time cannot be recongized");
-		}
-
+		assert(dates.size()==2): "event tasks' parsing result conatins more than two date";
+		LocalDateTime startLdt = dates.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+		LocalDateTime endLdt = dates.get(1).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+			
+		setStartDateTime(startLdt);
+		setEndDateTime(endLdt);
+		setStartDate(formatDateString(startLdt));
+		setStartTime(formatTimeString(startLdt));
+		setEndDate(formatDateString(endLdt));
+		setEndTime(formatTimeString(endLdt));
 	}
 
 	/**
@@ -612,21 +609,17 @@ public class CommandParser {
 		String endStr = argsArray[argsArray.length-1];		
 		String startStr = args.substring(0,args.lastIndexOf("by"));
 		setTaskName(startStr);
+		
 		List<Date> dates = new PrettyTimeParser().parse(endStr);
+		assert(dates.size()==1): "deadline tasks' parsing result conatins more than one date";
+		Date end = dates.get(0);
+		LocalDateTime ldt = end.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+		setEndDateTime(ldt);
 		
-		if(dates.size() == 1){
-			Date end = dates.get(0);
-			LocalDateTime ldt = end.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-			setEndDateTime(ldt);
-		
-			String endDate = ""+ldt.getYear()+"-"+formatTwoDigits(ldt.getMonthValue())+"-"+formatTwoDigits(ldt.getDayOfMonth());
-			String endTime = ""+formatTwoDigits(ldt.getHour())+":"+formatTwoDigits(ldt.getMinute());
-			setEndDate(endDate);
-			setEndTime(endTime);
-		} else {
-			throw new Exception("deadline cannot be recongized correctly");
-		}
-
+		String endDate = ""+ldt.getYear()+"-"+formatTwoDigits(ldt.getMonthValue())+"-"+formatTwoDigits(ldt.getDayOfMonth());
+		String endTime = ""+formatTwoDigits(ldt.getHour())+":"+formatTwoDigits(ldt.getMinute());
+		setEndDate(endDate);
+		setEndTime(endTime);
 
 	}
 	
@@ -827,16 +820,14 @@ public class CommandParser {
 			} else {											//it is a series of integers
 				String start = indexArr[0].replaceAll("\\D+", "");
 				String end = indexArr[1].replaceAll("\\D+","");
-				if(start == null || end == null) {
-					throw new Exception("delete index cannot recongised");
-				}
-				
+				assert(start != null && end != null):"delete index cannot recongised";
+				 
 				int startIndex = Integer.parseInt(start);
 				int endIndex = Integer.parseInt(end);
 				if(startIndex>endIndex){
 					throw new Exception("delete index invalid");
 				}
-				
+				//add in parsed index into data structure
 				while(startIndex <= endIndex) {
 					if(!l.contains(startIndex)) {
 						l.add(startIndex);
@@ -896,18 +887,18 @@ public class CommandParser {
 }
 
 class CommandChecker {
-	//Attribute
+	/*****************Attribute*****************/
 	private boolean isValid;
 	private String errorMessage;
 	
-	//Constructor
+	/*****************Constructor*****************/
 	public CommandChecker(String userInput) {
 		if(!isValidCommand(userInput)) {
 			this.isValid = false;
 		}
 		this.isValid = true;
 	}
-	
+	/*****************Public API*****************/
 	public boolean isValid(){
 		return this.isValid;
 	}
@@ -915,6 +906,7 @@ class CommandChecker {
 	public String getErrorMessage() {
 		return this.errorMessage;
 	}
+	/*****************Private helper methods*****************/
 	private boolean isValidCommand(String userInput) {
 		String firstWord = getFirstWord(userInput);
 		return isCommand(firstWord);
