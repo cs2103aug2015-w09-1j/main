@@ -128,6 +128,7 @@ public class GUIView{
 		mainGrid.add(TaskDisplayBlock, 0, 2);
 
 		userCommandBlock = new TextField();
+		userCommandBlock.setId("text-field");
 		userCommandBlock.requestFocus();
 		mainGrid.add(userCommandBlock, 0, 3);
 
@@ -141,9 +142,11 @@ public class GUIView{
 		SystemMessageBlock.setPrefSize(770, 40);
 
 		message = new Label();
+		message.setId("msg");
 		message.setFont(MESSAGE_FONT);
 
 		signal = new Label();
+		signal.setId("sig");
 		signal.setFont(SIGNAL_FONT);
 		signal.setTextFill(SAFE_COLOR);
 
@@ -162,6 +165,7 @@ public class GUIView{
 		TaskDisplayBlock.setHbarPolicy(ScrollBarPolicy.NEVER);
 
 		TaskDisplayGrid = new GridPane();
+		TaskDisplayGrid.setId("task-grid");
 		TaskDisplayGrid.setHgap(3);
 		TaskDisplayGrid.setVgap(3);
 		TaskDisplayGrid.setPadding(new Insets(4, 4, 4, 4));
@@ -282,7 +286,7 @@ public class GUIView{
 	}
 
 	protected void showUnComOrArc() {
-		signal.setText("Task recoverd!");
+		signal.setText("Task recovered!");
 	}
 
 	protected void showArchive() {
@@ -303,16 +307,19 @@ public class GUIView{
 		holdBack.getChildren().addAll(helpBack, popUpGrid);
 
 		Text helpTitle = new Text("Sample format:");
+		helpTitle.setId("help-title");
 		helpTitle.setFont(HELP_TITLE_FONT);
 		helpTitle.setFill(FLOATING_COLOR);
 		popUpGrid.add(helpTitle, 0, 0);
 		
 		Text helpString = new Text(string);
+		helpString.setId("help-string");
 		helpString.setFont(HELP_CONTENT_FONT);
 		helpString.setFill(FLOATING_COLOR);
 		popUpGrid.add(helpString, 0, 1);
 
 		Text helpEnd = new Text("Press <ESC> to close.");
+		helpEnd.setId("help-end");
 		helpEnd.setFont(HELP_CONTENT_FONT);
 		helpEnd.setFill(FLOATING_COLOR);
 		popUpGrid.add(helpEnd, 0, 2);
@@ -390,6 +397,7 @@ public class GUIView{
 		GridPane todayPane = new GridPane();
 		todayPane.setPrefSize(760, 30);
 		Group todayGroup = new Group();
+		todayGroup.setId("today-group");
 		ImageView todayBack = new ImageView(todayTitle);
 		todayGroup.getChildren().addAll(todayBack, todayPane);
 		TaskDisplayGrid.add(todayGroup, 0, gridRowCount);
@@ -400,6 +408,7 @@ public class GUIView{
 		GridPane FollowingPane = new GridPane();
 		FollowingPane.setPrefSize(760, 30);
 		Group FollowingGroup = new Group();
+		FollowingGroup.setId("following-group");
 		ImageView FollowingBack = new ImageView(followingTitle);
 		FollowingGroup.getChildren().addAll(FollowingBack, FollowingPane);
 		TaskDisplayGrid.add(FollowingGroup, 0, gridRowCount);
@@ -410,6 +419,7 @@ public class GUIView{
 		GridPane FloatingPane = new GridPane();
 		FloatingPane.setPrefSize(760, 30);
 		Group FloatingGroup = new Group();
+		FloatingGroup.setId("floating-group");
 		ImageView FloatingBack = new ImageView(floatingTitle);
 		FloatingGroup.getChildren().addAll(FloatingBack, FloatingPane);
 		TaskDisplayGrid.add(FloatingGroup, 0, gridRowCount);
@@ -420,6 +430,7 @@ public class GUIView{
 		GridPane seeMorePane = new GridPane();
 		seeMorePane.setPrefSize(760, 30);
 		Group seeMoreGroup = new Group();
+		seeMoreGroup.setId("see-group");
 		ImageView seeMoreBack = new ImageView(seeMoreTitle);
 		seeMoreGroup.getChildren().addAll(seeMoreBack, seeMorePane);
 		TaskDisplayGrid.add(seeMoreGroup, 0, gridRowCount);
@@ -428,6 +439,7 @@ public class GUIView{
 	
 	private void displayAEventTask(EventTask task) {
 		GridPane event = new GridPane();
+		event.setId("event");
 		event.setPrefSize(760, 30);
 		event.setHgap(1);
 		event.setVgap(1);
@@ -447,6 +459,7 @@ public class GUIView{
 		GridPane nameGrid = new GridPane();
 		nameGrid.setPrefSize(375, 25);	
 		Text name = new Text();
+		name.setId("event-name");
 		name.setText(" " + Integer.valueOf(taskCount).toString() + ". " + task.getTaskName());
 		name.setFont(TASK_NAME_FONT);
 		name.setFill(EVENT_COLOR);
@@ -454,6 +467,7 @@ public class GUIView{
 		event.add(nameGrid, 0, 0);
 
 		Text info = new Text();
+		info.setId("event-info");
 		info.setText("  S:  " + task.getStartDate() + " " + task.getStartTime() + "    E:  " + task.getEndDate() + " "
 				+ task.getEndTime());
 		info.setFont(TASK_INFO_FONT);
@@ -474,6 +488,7 @@ public class GUIView{
 
 	private void displayAFloatingTask(FloatingTask task) {
 		GridPane floating = new GridPane();
+		floating.setId("floating");
 		floating.setPrefSize(760, 30);
 		floating.setHgap(1);
 		floating.setVgap(1);
@@ -491,6 +506,7 @@ public class GUIView{
 		holdBack.getChildren().addAll(floatingBack, floating);
 
 		Text name = new Text();
+		name.setId("floating-name");
 		name.setText(" " + Integer.valueOf(taskCount).toString() + ". " + task.getTaskName());
 		name.setFont(TASK_NAME_FONT);
 		name.setFill(FLOATING_COLOR);
@@ -527,6 +543,7 @@ public class GUIView{
 		GridPane nameGrid = new GridPane();
 		nameGrid.setPrefSize(550, 25);
 		Text name = new Text();
+		name.setId("deadline-name");
 		name.setText(" " + Integer.valueOf(taskCount).toString() + ". " + task.getTaskName());
 		name.setFont(TASK_NAME_FONT);
 		name.setFill(DEADLINE_COLOR);
@@ -534,6 +551,7 @@ public class GUIView{
 		deadline.add(nameGrid, 0, 0);
 
 		Text info = new Text();
+		info.setId("deadline-info");
 		info.setText("    By: " + task.getDeadlineDate() + " " + task.getDeadlineTime());
 		info.setFont(TASK_INFO_FONT);
 		info.setFill(DEADLINE_COLOR);
