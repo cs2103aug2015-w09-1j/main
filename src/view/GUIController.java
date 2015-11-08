@@ -14,7 +14,11 @@ import javafx.stage.Stage;
 public class GUIController extends Application {
 	private static double xOffset = 0;
 	private static double yOffset = 0;
-	final private static GUIView GUI_VIEW = GUIView.getInstance();
+	private static GUIView GUI_VIEW = GUIView.getInstance();
+	
+	public GUIView getView() {
+		return GUI_VIEW;
+	}
 	
 	public static void main(String args[]) {
 		launch(args);
