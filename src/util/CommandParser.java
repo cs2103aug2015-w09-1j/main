@@ -364,7 +364,7 @@ public class CommandParser {
 	private void parseShowCommand(){
 		String args = getArgs();
 		if(args.contains("archive")) {
-			setShowOption("archive");
+			setShowOption("archived");
 		} else if (args.contains("floating")) {
 			setShowOption("floating");	
 		} else if (args.contains("complete")) {
@@ -393,16 +393,16 @@ public class CommandParser {
 		String[] argArray = args.split(" ");
 		String[] argArray2 = args.split(" ", 2);
 		setTaskID(Integer.parseInt(argArray[0]));
-		if(isAttribute(argArray[1])) {
+		if(isAttribute(argArray[1].toLowerCase())) {
 			//edit <id> <attribute> <info>
-			setEditAttribute(argArray[1]);
+			setEditAttribute(argArray[1].toLowerCase());
 			List<Date> dates = new PrettyTimeParser().parse(argArray2[1]);
 			if (dates.size() == 0) {
 				setEditInfo(argArray[2]);
-			} else if(argArray[1].contains("Time")) {
+			} else if(argArray[1].toLowerCase().contains("time")) {
 				String time = dates.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().toLocalTime().toString();
 				setEditInfo(time);
-			} else if(argArray[1].contains("Date")) {
+			} else if(argArray[1].toLowerCase().contains("date")) {
 				String date = dates.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().toLocalDate().toString();
 				setEditInfo(date);
 			}
@@ -415,11 +415,11 @@ public class CommandParser {
 	
 	private boolean isAttribute(String str) {
 		LinkedList<String> ls = new LinkedList<String>();
-		ls.add("startDate");
-		ls.add("startTime");
-		ls.add("endDate");
-		ls.add("endTime");
-		ls.add("taskName");
+		ls.add("startdate");
+		ls.add("starttime");
+		ls.add("enddate");
+		ls.add("endtime");
+		ls.add("taskname");
 		return ls.contains(str);
 	}
 	
@@ -568,12 +568,10 @@ public class CommandParser {
 	
 	private void parseDisplayCommand(){
 		String args = getArgs();
-		if(args == null){
-			
-		} else if(args.equals("archived")) {
-			setDisplayMode(args);
-		} else if(args.equals("all")) {
-			setDisplayMode(args);
+		if(args == null || args.contains("all")){
+			setDisplayMode("all");
+		} else if(args.contains("archive")) {
+			setDisplayMode("archived");
 		} else {
 			throw new Error("display cmd invalid");
 		}

@@ -246,12 +246,18 @@ public class CommandParserTest {
 	public void testGetEditAttribute(){
 		CommandParser cp1 = new CommandParser("edit 1 startDate 2015-10-23");
 		assertEquals("startdate", cp1.getEditAttribute());
+		
+		CommandParser cp2 = new CommandParser("edit 1 taskname event");
+		assertEquals("taskname", cp2.getEditAttribute());
 	}
 	
 	@Test
 	public void testGetEditInfo(){
 		CommandParser cp1 = new CommandParser("edit 1 startDate 2015-10-23");
 		assertEquals("2015-10-23", cp1.getEditInfo());
+		
+		CommandParser cp2 = new CommandParser("edit 1 taskname event");
+		assertEquals("event", cp2.getEditInfo());
 	}
 
 	
@@ -296,7 +302,7 @@ public class CommandParserTest {
 	
 	@Test
 	public void TestGetShowOption() {
-		CommandParser cp1 = new CommandParser("show archived");
+		CommandParser cp1 = new CommandParser("show archive");
 		assertEquals("archived", cp1.getShowOption());
 		
 		CommandParser cp2 = new CommandParser("show floating");
