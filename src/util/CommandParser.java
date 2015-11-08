@@ -23,11 +23,7 @@
 //		c. search by task name
 //			search by <keyword>
 //	
-//	4) display / showall
-//		a. display archived tasks
-//			display archived
-//		b. display all incomplete tasks
-//			display (all)
+//	4) display 
 //	
 //	5) edit
 //	    a. edit the whole task
@@ -153,9 +149,7 @@ public class CommandParser {
 			 parse();
 		} 			
 	}
-	public CommandParser() {
-		
-	}
+
 	//public methods
 	public String getCommandType() {
 		return this.command;
@@ -570,8 +564,6 @@ public class CommandParser {
 		String args = getArgs();
 		if(args == null || args.contains("all")){
 			setDisplayMode("all");
-		} else if(args.contains("archive")) {
-			setDisplayMode("archived");
 		} else {
 			throw new Error("display cmd invalid");
 		}
@@ -626,10 +618,15 @@ public class CommandParser {
 	
 	private void parseDeadlineTask(String args) {
 		//add finish project manual by 2015-10-03 0900
-		String[] argsArray = args.split(" by ");
-		String endStr = argsArray[1];
+		String[] argsArray = args.split("\\s+by\\s+");
+		String endStr = argsArray[argsArray.length-1];
 		
-		setTaskName(argsArray[0]);
+		String startStr = "";
+		for(int i=0;i < argsArray.length-1; i++){
+			startStr += argsArray[i];
+		}
+		
+		setTaskName(startStr);
 		
 		Date end = new PrettyTimeParser().parse(endStr).get(0);
 		LocalDateTime ldt = end.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
@@ -813,6 +810,9 @@ class CommandChecker {
 	
 	//Constructor
 	public CommandChecker(String userInput) {
+		if(!isValidCommand(userInput)) {
+			this.isValid = false;
+		}
 		this.isValid = true;
 	}
 	
@@ -820,7 +820,37 @@ class CommandChecker {
 		return this.isValid;
 	}
 	
-	public String getErrorMessage(){
+	public String getErrorMessage() {
 		return this.errorMessage;
+	}
+	private boolean isValidCommand(String userInput) {
+		String firstWord = getFirstWord(userInput);
+		return isCommand(firstWord);
+	}
+	
+	private void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+		
+	}
+	
+	private boolean isCommand(String word) {
+		LinkedList<String> ls = new LinkedList<String>();
+		ls.add("add");
+		ls.add("edit");
+		ls.add("display");
+		ls.add("set");
+		ls.add("show");
+		ls.add("delete");
+		if(!ls.contains(word)){
+			setErrorMessage(word + " is not a valid command!");
+			return false;
+		} else {
+			return true;
+		}
+		
+	}
+	
+	private String getFirstWord(String userInput) {
+		return userInput.split("\\s+")[0].toLowerCase();
 	}
 }

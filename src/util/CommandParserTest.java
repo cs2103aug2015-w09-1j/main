@@ -7,8 +7,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-
-
+import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.*;
 
@@ -51,7 +50,7 @@ public class CommandParserTest {
 		
 		
 		//display
-		CommandParser cp5 = new CommandParser("display archived");	
+		CommandParser cp5 = new CommandParser("display all");	
 		assertEquals("display", cp5.getCommandType());
 		
 		//search
@@ -149,9 +148,9 @@ public class CommandParserTest {
 	
 	@Test
 	public void testGetDisplayMode(){
-		//archive
-		CommandParser cp1 = new CommandParser("display archived");
-		assertEquals("archived", cp1.getDisplayMode());
+		//all
+		CommandParser cp1 = new CommandParser("display");
+		assertEquals("all", cp1.getDisplayMode());
 		
 		//all
 		CommandParser cp2 = new CommandParser("display all");
@@ -395,6 +394,18 @@ public class CommandParserTest {
 	public void TestGetSearchEndDate() {
 		CommandParser cp1 = new CommandParser("search from 2015-10-31 to 2015-11-3");
 		assertEquals("2015-11-03", cp1.getSearchEndDate());
+	}
+	
+	
+	@Test
+	public void TestGetErrorMessage(){
+		CommandParser cp1 = new CommandParser("a");
+		assertEquals("a is not a valid command!", cp1.getErrorMessage());
+	}
+	
+	@Test
+	public void TestAddCommandException(){
+		
 	}
 	
 }
