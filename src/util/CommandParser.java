@@ -513,7 +513,7 @@ public class CommandParser {
 	
 	private void parseDeleteCommand(){
 		String args = getArgs();
-		if(args.equals("all")) {
+		if(args.contains("all")) {
 			setDeleteMode("all");
 		} else {
 			String[] argsArray = args.split(",");
@@ -521,7 +521,12 @@ public class CommandParser {
 				argsArray[i] = argsArray[i].trim();
 			}
 			if (argsArray.length == 1 && !argsArray[0].contains("-")) {
-				setTaskID(Integer.parseInt(args));
+				args = args.replaceAll("\\D+","");
+				if(args != null) {
+					setDeleteTaskID(Integer.parseInt(args));
+				} else {
+					throw new Error("deleted index invalid");
+				}
 			} else {
 				int[] idArr = parseMultipleIDs(argsArray);
 				setDeleteIDs(idArr);
@@ -534,11 +539,16 @@ public class CommandParser {
 		int[] idArr;
 		for(int i=0; i<argsArray.length;i++){
 			String[] indexArr = argsArray[i].split("-");
-			if(indexArr.length == 1) {
+			if(indexArr.length == 1 && indexArr[0].replaceAll("\\D+", "")!=null) {
 				l.add(Integer.parseInt(indexArr[0]));
 			} else {
-				int startIndex = Integer.parseInt(indexArr[0]);
-				int endIndex = Integer.parseInt(indexArr[1]);
+				String start = indexArr[0].replaceAll("\\D+", "");
+				String end = indexArr[1].replaceAll("\\D+","");
+				if(start == null || end == null) {
+					throw new Error("delete index cannot recongised");
+				}
+				int startIndex = Integer.parseInt(start);
+				int endIndex = Integer.parseInt(end);
 				
 				if(startIndex>endIndex){
 					throw new Error("delete index invalid");
@@ -627,14 +637,21 @@ public class CommandParser {
 		
 		setTaskName(startStr);
 		
-		Date end = new PrettyTimeParser().parse(endStr).get(0);
-		LocalDateTime ldt = end.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-		setEndDateTime(ldt);
 		
-		String endDate = ""+ldt.getYear()+"-"+format(ldt.getMonthValue())+"-"+format(ldt.getDayOfMonth());
-		String endTime = ""+format(ldt.getHour())+":"+format(ldt.getMinute());
-		setEndDate(endDate);
-		setEndTime(endTime);
+		List<Date> dates = new PrettyTimeParser().parse(endStr);
+		
+		if(dates.size() == 1){
+			Date end = dates.get(0);
+			LocalDateTime ldt = end.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+			setEndDateTime(ldt);
+		
+			String endDate = ""+ldt.getYear()+"-"+format(ldt.getMonthValue())+"-"+format(ldt.getDayOfMonth());
+			String endTime = ""+format(ldt.getHour())+":"+format(ldt.getMinute());
+			setEndDate(endDate);
+			setEndTime(endTime);
+		} else {
+			throw new Error("deadline cannot be recongized correctly");
+		}
 
 
 	}
@@ -758,6 +775,9 @@ public class CommandParser {
 	private void setSearchEndDate(String date) {
 		this.searchEndDate = date;
 	}
+	private void setDeleteTaskID(int index) {
+		this.taskID = index;
+	}
 	static void print(String[] str){
 		for(int i=0;i<str.length;i++){
 			System.out.println("Index "+i+" : "+ str[i]);
@@ -783,8 +803,11 @@ public class CommandParser {
 //		String help = getHelpString();
 //		System.out.print(getHelpString());
 //		CommandParser cp2 = new CommandParser("add drop by mother by tonight");
-		String str = "add drop tomorrow mother from tonight 2pm to 3pm";
-		System.out.println(str.substring(str.lastIndexOf("from"), str.length()-1));
+//		String str = "add drop tomorrow mother from tonight 2pm to 3pm";
+//		System.out.println(str.substring(str.lastIndexOf("from"), str.length()-1));
+		String str ="";
+		str = str.replaceAll("\\D+","");
+		System.out.println(Integer.parseInt(str));
 		
 //		System.out.print(cp2.getSearchWord());
 //		print(cp2.getDeleteIDs());
