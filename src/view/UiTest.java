@@ -72,6 +72,7 @@ public class UiTest extends GuiTest {
 	  
 	  @Test
 	  public void showAddTest() {
+		  type("load").push(KeyCode.ENTER);
 		  type("add meeting").push(KeyCode.ENTER);
 		  assertEquals(((Label) find("#sig")).getText(), "New task added!");
 		  assertThat(find("#text-field"), NodeMatchers.hasText(""));
@@ -85,6 +86,7 @@ public class UiTest extends GuiTest {
 	  }
 	  @Test
 	  public void showErrorTest() {
+		  type("load").push(KeyCode.ENTER);
 		  type("asdfasd").push(KeyCode.ENTER);
 		  assertEquals(((Label) find("#msg")).getText(), "Error! Invalid or wrong format of command.");
 		  assertEquals(((Label) find("#sig")).getText(), "");
@@ -92,6 +94,7 @@ public class UiTest extends GuiTest {
 	  
 	  @Test
 	  public void showTodayTest() {
+		  type("load").push(KeyCode.ENTER);
 		  type("show today").push(KeyCode.ENTER);
 		  assertEquals(((Label) find("#msg")).getText(), "Today's tasks are listed below");
 		  assertEquals(((Label) find("#sig")).getText(), "");
@@ -99,6 +102,7 @@ public class UiTest extends GuiTest {
 	  
 	  @Test
 	  public void showSetFileNameTest() {
+		  type("load").push(KeyCode.ENTER);
 		  type("set filename test").push(KeyCode.ENTER);
 		  assertEquals(((Label) find("#msg")).getText(), "New filename: " + Storage.getInstance().getfileName());
 		  assertEquals(((Label) find("#sig")).getText(), "Set successfully!");
@@ -106,6 +110,7 @@ public class UiTest extends GuiTest {
 	  
 	  @Test
 	  public void showSetPathTest() {
+		  type("load").push(KeyCode.ENTER);
 		  type("set path test").push(KeyCode.BACK_SLASH).push(KeyCode.ENTER);
 		  assertEquals(((Label) find("#msg")).getText(), "New path: " + Storage.getInstance().getPath());
 		  assertEquals(((Label) find("#sig")).getText(), "Set successfully!");
@@ -113,12 +118,14 @@ public class UiTest extends GuiTest {
 	  
 	  @Test
 	  public void showAllTest() {
+		  type("load").push(KeyCode.ENTER);
 		  type("display").push(KeyCode.ENTER);
 		  assertEquals(((Label) find("#msg")).getText(), "All tasks are listed below");
 		  assertEquals(((Label) find("#sig")).getText(), "");
 	  }
 	  @Test
 	  public void showArchived() {
+		  type("load").push(KeyCode.ENTER);
 		  type("show archived").push(KeyCode.ENTER);
 		  assertEquals(((Label) find("#msg")).getText(), "Archived tasks are listed below");
 		  assertEquals(((Label) find("#sig")).getText(), "");
@@ -126,6 +133,7 @@ public class UiTest extends GuiTest {
 	  
 	  @Test
 	  public void showCompletedTest() {
+		  type("load").push(KeyCode.ENTER);
 		  type("show complete").push(KeyCode.ENTER);
 		  assertEquals(((Label) find("#msg")).getText(), "Completed tasks are listed below");
 		  assertEquals(((Label) find("#sig")).getText(), "");
@@ -133,6 +141,7 @@ public class UiTest extends GuiTest {
 	  
 	  @Test
 	  public void showSearchTest() {
+		  type("load").push(KeyCode.ENTER);
 		  type("search meet").push(KeyCode.ENTER);
 		  assertEquals(((Label) find("#msg")).getText(), "Search results");
 		  assertEquals(((Label) find("#sig")).getText(), "");
@@ -140,6 +149,7 @@ public class UiTest extends GuiTest {
 	  
 	  @Test
 	  public void showFloatingTest() {
+		  type("load").push(KeyCode.ENTER);
 		  type("show floating").push(KeyCode.ENTER);
 		  assertEquals(((Label) find("#msg")).getText(), "Floating tasks are listed below");
 		  assertEquals(((Label) find("#sig")).getText(), "");
@@ -147,6 +157,7 @@ public class UiTest extends GuiTest {
 	  
 	  @Test
 	  public void showByTest() {
+		  type("load").push(KeyCode.ENTER);
 		  type("show by tomorrow").push(KeyCode.ENTER);
 		  assertEquals(((Label) find("#msg")).getText(), "Tasks before selected date are listed below");
 		  assertEquals(((Label) find("#sig")).getText(), "");
@@ -154,6 +165,7 @@ public class UiTest extends GuiTest {
 	  
 	  @Test
 	  public void showOnTest() {
+		  type("load").push(KeyCode.ENTER);
 		  type("show on tomorrow").push(KeyCode.ENTER);
 		  assertEquals(((Label) find("#msg")).getText(), "Tasks on selected date are listed below");
 		  assertEquals(((Label) find("#sig")).getText(), "");
@@ -168,12 +180,14 @@ public class UiTest extends GuiTest {
 	  
 	  @Test
 	  public void showDeleteTest() {
+		  type("load").push(KeyCode.ENTER);
 		  type("delete 1").push(KeyCode.ENTER);
 		  assertEquals(((Label) find("#sig")).getText(), "Task Deleted!");
 	  }
 	  
 	  @Test
 	  public void showUpdateTest() {
+		  type("load").push(KeyCode.ENTER);
 		  type("edit 1 taskName test").push(KeyCode.ENTER);
 		  assertEquals(((Label) find("#sig")).getText(), "Task Edited!");
 	  }
@@ -192,12 +206,14 @@ public class UiTest extends GuiTest {
 	  
 	  @Test
 	  public void showCompleteTest() {
+		  type("load").push(KeyCode.ENTER);
 		  type("complete 1").push(KeyCode.ENTER);
 		  assertEquals(((Label) find("#sig")).getText(), "Task complete!");
 	  }
 	  
 	  @Test
 	  public void showUnComOrArcTest() {
+		  type("load").push(KeyCode.ENTER);
 		  type("uncomplete 1").push(KeyCode.ENTER);
 		  assertEquals(((Label) find("#sig")).getText(), "Task recovered!");
 		  type("display").push(KeyCode.ENTER);
@@ -207,6 +223,7 @@ public class UiTest extends GuiTest {
 	  
 	  @Test
 	  public void showArchiveTest() {
+		  type("load").push(KeyCode.ENTER);
 		  type("archive 1").push(KeyCode.ENTER);
 		  assertEquals(((Label) find("#sig")).getText(), "Task archived!");
 	  }

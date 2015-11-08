@@ -2,13 +2,15 @@ package test;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+
+import controller.LogicTest;
+import view.UiTest;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   TestCreate.class,
-   TestDelete.class,
-   TestCreateBulk.class,
-   TestDeleteBulk.class,
-   TestUpdate.class
+   CommandParserTest.class,
+   UiTest.class,
+   LogicTest.class,
+   TestStorage.class
 })
 public class TestCommands {   
 }
