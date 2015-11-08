@@ -1,6 +1,6 @@
 //@@author A0133976U
 
-package util;
+package test;
 
 import static org.junit.Assert.*;
 
@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import org.junit.*;
 import org.ocpsoft.prettytime.*;
+import util.CommandParser;
 
 public class CommandParserTest {
 
