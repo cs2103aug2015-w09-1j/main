@@ -395,13 +395,14 @@ public class LogicTest {
 
 		logic.executeUpdateTaskByAttribute(taskList, index, "taskType",
 				"Completed");
+		logic.undo();
 		taskList = TaskMemory.getInstance().getCombinedTaskList();
 		assertEquals(5, taskList.size());
 		assertEquals("Deadline4", taskList.get(0).getTaskName());
 		deadline = (DeadlineTask) taskList.get(0);
 		assertEquals("2015-12-11", deadline.getDeadlineDate());
 		assertEquals("0700", deadline.getDeadlineTime());
-		assertEquals("Completed", deadline.getTaskType());
+		assertEquals("null", deadline.getTaskType());
 
 		logic.executeUpdateTaskByAttribute(taskList, index, "taskType",
 				"Archive");
@@ -411,8 +412,9 @@ public class LogicTest {
 		deadline = (DeadlineTask) taskList.get(0);
 		assertEquals("2015-12-11", deadline.getDeadlineDate());
 		assertEquals("0700", deadline.getDeadlineTime());
-		assertEquals("Completed", deadline.getTaskType());
+		assertEquals("Archive", deadline.getTaskType());
 
+		logic.undo();
 		int[] index2 = { 2 };
 
 		logic.executeUpdateTaskByAttribute(taskList, index2, "taskname",
@@ -471,6 +473,7 @@ public class LogicTest {
 
 		logic.executeUpdateTaskByAttribute(taskList, index2, "taskType",
 				"Completed");
+		logic.undo();
 		taskList = TaskMemory.getInstance().getCombinedTaskList();
 		assertEquals(5, taskList.size());
 		assertEquals("Event100", taskList.get(1).getTaskName());
@@ -479,42 +482,36 @@ public class LogicTest {
 		assertEquals("0900", event.getStartTime());
 		assertEquals("2015-12-13", event.getEndDate());
 		assertEquals("0900", event.getEndTime());
-		assertEquals("Completed", event.getTaskType());
-
+	
 		logic.executeUpdateTaskByAttribute(taskList, index2, "taskType",
 				"Archived");
 		taskList = TaskMemory.getInstance().getCombinedTaskList();
-		assertEquals(5, taskList.size());
-		assertEquals("Event100", taskList.get(1).getTaskName());
+		assertEquals(4, taskList.size());
+		assertEquals("Event4", taskList.get(1).getTaskName());
 		event = (EventTask) taskList.get(1);
-		assertEquals("2015-12-11", event.getStartDate());
-		assertEquals("0900", event.getStartTime());
-		assertEquals("2015-12-13", event.getEndDate());
-		assertEquals("0900", event.getEndTime());
-		assertEquals("Completed", event.getTaskType());
+		assertEquals("2015-12-14", event.getStartDate());
+		assertEquals("0800", event.getStartTime());
+		assertEquals("2015-12-15", event.getEndDate());
+		assertEquals("0800", event.getEndTime());
+		assertEquals("null", event.getTaskType());
 
-		int[] index3 = { 5 };
+		int[] index3 = { 4 };
 		logic.executeUpdateTaskByAttribute(taskList, index3, "taskname",
 				"floatthere");
 		taskList = TaskMemory.getInstance().getCombinedTaskList();
-		assertEquals(5, taskList.size());
-		assertEquals("floatthere", taskList.get(4).getTaskName());
-		assertEquals("null", taskList.get(4).getTaskType());
+		assertEquals(4, taskList.size());
+		assertEquals("floatthere", taskList.get(3).getTaskName());
+		assertEquals("null", taskList.get(3).getTaskType());
 
 		logic.executeUpdateTaskByAttribute(taskList, index3, "tasktype",
 				"Completed");
 		taskList = TaskMemory.getInstance().getCombinedTaskList();
-		assertEquals(5, taskList.size());
-		assertEquals("floatthere", taskList.get(4).getTaskName());
-		assertEquals("Completed", taskList.get(4).getTaskType());
-
+		assertEquals(3, taskList.size());
+		
 		logic.executeUpdateTaskByAttribute(taskList, index3, "taskType",
 				"Archived");
 		taskList = TaskMemory.getInstance().getCombinedTaskList();
-		assertEquals(5, taskList.size());
-		assertEquals("floatthere", taskList.get(4).getTaskName());
-		assertEquals("Completed", taskList.get(4).getTaskType());
-
+		assertEquals(3, taskList.size());
 	}
 
 	@Test
@@ -617,7 +614,7 @@ public class LogicTest {
 
 		Controller.executeCMD("display");
 		taskList = Controller.getTaskList();
-		assertEquals(3, taskList.size());
+		assertEquals(1, taskList.size());
 
 		Controller.executeCMD("search by 2015-12-14");
 		taskList = Controller.getTaskList();
@@ -625,25 +622,25 @@ public class LogicTest {
 
 		Controller.executeCMD("display");
 		taskList = Controller.getTaskList();
-		assertEquals(3, taskList.size());
+		assertEquals(0, taskList.size());
 
 		Controller.executeCMD("search by 2015-12-16");
 		taskList = Controller.getTaskList();
 		int size = Controller.getSize();
-		assertEquals(2, size);
+		assertEquals(0, size);
 
 		Controller.executeCMD("display");
 		taskList = Controller.getTaskList();
 
 		Controller.executeCMD("search on 2015-12-16");
 		taskList = Controller.getTaskList();
-		assertEquals(1, taskList.size());
+		assertEquals(0, taskList.size());
 
 		Controller.executeCMD("display");
 		taskList = Controller.getTaskList();
 		Controller.executeCMD("search from today to 2015-12-16");
 		taskList = Controller.getTaskList();
-		assertEquals(2, taskList.size());
+		assertEquals(0, taskList.size());
 
 		Controller.executeCMD("display");
 		Controller.executeCMD("set path /testing/");
@@ -656,7 +653,7 @@ public class LogicTest {
 
 		Controller.executeCMD("archive 1");
 		taskList = Controller.getCombinedTaskList();
-		assertEquals(2, taskList.size());
+		assertEquals(3, taskList.size());
 
 		Controller.executeCMD("display");
 		Controller.executeCMD("undo");
@@ -675,11 +672,16 @@ public class LogicTest {
 
 		Controller.executeCMD("complete 1-3");
 		taskList = Controller.getTaskList();
+		assertEquals(0, taskList.size());
+		
+		Controller.executeCMD("show complete");
+		taskList = Controller.getCompletedList();
 		assertEquals(3, taskList.size());
+		
 
 		Controller.executeCMD("uncomplete 1-2");
 		taskList = Controller.getTaskList();
-		assertEquals(3, taskList.size());
+		assertEquals(2, taskList.size());
 
 		Controller.executeCMD("show by 2015-12-16");
 		taskList = Controller.getTaskList();
@@ -691,18 +693,18 @@ public class LogicTest {
 		Controller.executeCMD("display");
 		Controller.executeCMD("show from today to 2015-12-16");
 		taskList = Controller.getTaskList();
-		assertEquals(2, taskList.size());
+		assertEquals(1, taskList.size());
 
 		Controller.executeCMD("display");
 		Controller.executeCMD("show floating");
 		taskList = Controller.getFloatingTaskList();
-		assertEquals(1, taskList.size());
+		assertEquals(0, taskList.size());
 
 		Controller.executeCMD("display");
 		Controller.executeCMD("save");
 		Controller.executeCMD("load");
 		taskList = Controller.getCombinedTaskList();
-		assertEquals(3, taskList.size());
+		assertEquals(2, taskList.size());
 
 		Controller.executeCMD("help");
 		String help = "add <name>\nadd <name> from <time> to <time>\nadd <name> by   <deadline>\ndelete  <id>\nsearch  <id>\narchive <id>\nedit <id> <attribute> <info>\nset  path     <storage path>\nset  filename <filename>\nundo\n";
@@ -720,7 +722,7 @@ public class LogicTest {
 		taskList = Controller.getCombinedTaskList();
 		assertEquals(0, taskList.size());
 
-		assertEquals(2, TaskMemory.getInstance().getSize());
+		assertEquals(3, TaskMemory.getInstance().getSize());
 
 		Controller.executeCMD("exit");
 
