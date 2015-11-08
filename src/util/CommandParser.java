@@ -323,6 +323,9 @@ public class CommandParser {
 		}
 	}
 	
+	/**
+	 * This method is used to parse an add command
+	 */	
 	private void parseAddCommand(String args) throws Exception{
 		String taskType = getTaskType(args);
 		switch (taskType){
@@ -341,7 +344,9 @@ public class CommandParser {
 
 	}
 	
-	
+	/**
+	 * This method is used to parse a show command
+	 */		
 	private void parseShowCommand() throws Exception{
 		String args = getArgs();
 		if(args.contains("archive")) {
@@ -350,15 +355,13 @@ public class CommandParser {
 			setShowOption("floating");	
 		} else if (args.contains("complete")) {
 			setShowOption("complete");
-		} else if (args.contains("by")){
+		} else if (args.contains("by")){ //show tasks before a certain date
 			String date = args.split(" ", 2)[1];
 			List<Date> dates = new PrettyTimeParser().parse(date);
-			if(dates.size() != 1) {
-				throw new Exception("time cannot be reconginsed");
-			}
+			assert(dates.size() == 1): "deadline cannot be reconginsed"; 
 			date = dates.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().toLocalDate().toString();
 			setShowByDate(date);
-		} else {
+		} else { //show tasks on a certain date or interval
 			List<Date> dates = new PrettyTimeParser().parse(args);
 			if(dates.size() == 1) {
 				String date = dates.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().toLocalDate().toString();
@@ -369,19 +372,22 @@ public class CommandParser {
 				String endDate = dates.get(1).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().toLocalDate().toString();
 				setShowEndDate(endDate);
 			} else {
-				throw new Exception("time cannot be recongised");
+				throw new Exception("time cannot be recongised correctly");
 			}
 		}
 	}
 	
+	/**
+	 * This method is used to parse an edit command
+	 */	
 	private void parseEditCommand() throws Exception{
 		String args = getArgs();
-		String[] argArray = args.split(" ");
-		String[] argArray2 = args.split(" ", 2);
+		String[] argArray = args.split(" "); //will be used when editing one attribute
+		String[] argArray2 = args.split(" ", 2); // will be used when updating all attributes
 		if(!isInteger(argArray[0])){
 			throw new Exception("Task index cannot be parsed");
 		} 
-		
+
 		setTaskID(Integer.parseInt(argArray[0]));
 		if(isAttribute(argArray[1].toLowerCase())) {
 			//edit <id> <attribute> <info>
@@ -395,24 +401,31 @@ public class CommandParser {
 			} else if(argArray[1].toLowerCase().contains("date")) {
 				String date = dates.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().toLocalDate().toString();
 				setEditInfo(date);
+			} else {
+				throw new Exception("attribute cannot be parsed correctly");
 			}
 		} else {
 			//edit <id> <all info>
+			//inner logic for updating all attributes and adding a new task is essentially the same
+			//so parseAddCommand is called here.
 			parseAddCommand(argArray2[1]);
 		}
 
 	}
+	/**
+	 * This method is used to parse a search command
+	 */	
 	private void parseSearchCommand() throws Exception {
 		String args = getArgs();
-		if(args.contains("on")) {
+		if(args.contains("on")) { //search tasks on a certain date
 			Date date = new PrettyTimeParser().parse(args).get(0);
 			LocalDateTime searchDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 			setSearchOnDate(searchDate.toLocalDate().toString());
-		} else if(args.contains("by")) {
+		} else if(args.contains("by")) { //search tasks before a certain date
 			Date date = new PrettyTimeParser().parse(args).get(0);
 			LocalDateTime searchDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 			setSearchByDate(searchDate.toLocalDate().toString());
-		} else if(args.contains("from")){
+		} else if(args.contains("from")){ //search tasks in a time interval
 			List<Date> dates = new PrettyTimeParser().parse(args);
 			if(dates.size() == 2) {
 				String startDate = dates.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().toLocalDate().toString();
@@ -423,11 +436,13 @@ public class CommandParser {
 				throw new Exception("dates cannot be recongised");
 			}
 		} else {
-			setSearchWord(standarlizeWord(args));
+			setSearchWord(removeExtraSpace(args));
 		}
 		
 	}
-
+	/**
+	 * This method is used to parse a delete command
+	 */	
 	
 	private void parseDeleteCommand() throws Exception{
 		String args = getArgs();
@@ -437,18 +452,18 @@ public class CommandParser {
 			String[] argsArray = args.split(",");
 			if (argsArray.length == 1 && !argsArray[0].contains("-")) {
 				args = args.replaceAll("\\D+","");
-				if(args != null) {
-					setDeleteTaskID(Integer.parseInt(args));
-				} else {
-					throw new Exception("deleted index invalid");
-				}
+				assert(args!=null):"user's input is not a digit";
+				setDeleteTaskID(Integer.parseInt(args));
+
 			} else {
 				int[] idArr = parseMultipleIDs(argsArray);
 				setDeleteIDs(idArr);
 			}
 		}
 	}
-	
+	/**
+	 * This method is used to parse a set command
+	 */	
 	private void parseSetCommand() throws Exception{
 		String[] args = getArgs().split(" ", 2);
 		String type = args[0].toLowerCase();
@@ -460,7 +475,9 @@ public class CommandParser {
 			throw new Exception("set attribute cannot be recongised");
 		}
 	}
-	
+	/**
+	 * This method is used to parse an archive command
+	 */	
 	private void parseArchiveCommand() throws Exception {
 		String args = getArgs();
 		String[] argsArray = args.split(",");
@@ -468,6 +485,9 @@ public class CommandParser {
 		setArchivedIDs(idArr);
 		
 	}
+	/**
+	 * This method is used to parse a complete command
+	 */	
 	private void parseCompleteCommand() throws Exception {
 		String args = getArgs();
 		String[] argsArray = args.split(",");
@@ -475,107 +495,131 @@ public class CommandParser {
 		setCompleteIDs(idArr);
 		
 	}
-
+	/**
+	 * This method is used to parse an unarchive command
+	 */	
 	private void parseUnarchivedCommand() throws Exception {
 		String args = getArgs();
 		String[] argsArray = args.split(",");
 		int[] idArr = parseMultipleIDs(argsArray);
 		setUnarchivedIDs(idArr);
 	}
-	
+	/**
+	 * This method is used to parse a complete command
+	 */	
 	private void parseUncompleteCommand() throws Exception {
 		String args = getArgs();
 		String[] argsArray = args.split(",");
 		int[] idArr = parseMultipleIDs(argsArray);
 		setUncompleteIDs(idArr);
 	}
-	
-
-	
+	/**
+	 * This method is used to parse a display command
+	 */	
 	private void parseDisplayCommand() throws Exception{
 		String args = getArgs();
 		if(args == null || args.contains("all")){
 			setDisplayMode("all");
 		} else {
-			throw new Exception("display cmd invalid");
+			throw new Exception("display command is invalid");
 		}
 	}
+	/**
+	 * This method is used to parse a clear command
+	 */	
 	private void parseClearCommand(){
 		
 	}
-	
+	/**
+	 * This method is used to parse a save command
+	 */	
 	private void parseSaveCommand() { 
 		
 	}
-	
+	/**
+	 * This method is used to parse a load command
+	 */	
 	private void parseLoadCommand() {
 		
 	}
-	
+	/**
+	 * This method is used to parse a home command
+	 */	
 	private void parseHomeCommand() {
 		
 	}
-	
+	/**
+	 * This method is used to parse an exit command
+	 */	
 	private void parseExitCommand() {
 		
 	}
+	/**
+	 * This method is used to parse a help command
+	 */	
 	private void parseHelpCommand(){
 		
 	}
+	/**
+	 * This method is used to parse an undo command
+	 */	
 	
 	private void parseUndoCommand(){
 		
 	}
-
-	
+	/**
+	 * This method is used to parse the user input 
+	 * when user want to add an floating task
+	 * @param user's input
+	 */
 	private void parseFloatTask(String args){
 		setTaskName(args);
 	}
-	
-	private void parseEventTask(String args) throws Exception {
+	/**
+	 * This method is used to parse the user input 
+	 * when user want to add an event
+	 * @param user's input
+	 */
+	private void parseEventTask(String args)  {
 		String taskNameStr = args.substring(0, args.lastIndexOf("from"));
-		String timeStr = args.substring(args.lastIndexOf("from"),args.length()-1);
-		
+		String timeStr = args.substring(args.lastIndexOf("from"),args.length()-1);	
 		setTaskName(taskNameStr);
 		
 		List<Date> dates = new PrettyTimeParser().parse(timeStr);
-		if(dates.size()==2) {
-			LocalDateTime startLdt = dates.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-			LocalDateTime endLdt = dates.get(1).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-			setStartDateTime(startLdt);
-			setEndDateTime(endLdt);
-			setStartDate(getDateString(startLdt));
-			setStartTime(getTimeString(startLdt));
-			setEndDate(getDateString(endLdt));
-			setEndTime(getTimeString(endLdt));
-		} else {
-			throw new Exception("time cannot be recongized");
-		}
-
+		assert(dates.size()==2): "event tasks' parsing result conatins more than two date";
+		LocalDateTime startLdt = dates.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+		LocalDateTime endLdt = dates.get(1).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+			
+		setStartDateTime(startLdt);
+		setEndDateTime(endLdt);
+		setStartDate(formatDateString(startLdt));
+		setStartTime(formatTimeString(startLdt));
+		setEndDate(formatDateString(endLdt));
+		setEndTime(formatTimeString(endLdt));
 	}
 
-	
+	/**
+	 * This method is used to parse the user input 
+	 * when user want to add an deadline task
+	 * @param user's input
+	 */
 	private void parseDeadlineTask(String args) throws Exception {
 		//add finish project manual by 2015-10-03 0900
 		String[] argsArray = args.split("\\s+by\\s+");
 		String endStr = argsArray[argsArray.length-1];		
 		String startStr = args.substring(0,args.lastIndexOf("by"));
 		setTaskName(startStr);
+		
 		List<Date> dates = new PrettyTimeParser().parse(endStr);
+		assert(dates.size()==1): "deadline tasks' parsing result conatins more than one date";
+		Date end = dates.get(0);
+		LocalDateTime ldt = end.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+		setEndDateTime(ldt);
 		
-		if(dates.size() == 1){
-			Date end = dates.get(0);
-			LocalDateTime ldt = end.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-			setEndDateTime(ldt);
-		
-			String endDate = ""+ldt.getYear()+"-"+format(ldt.getMonthValue())+"-"+format(ldt.getDayOfMonth());
-			String endTime = ""+format(ldt.getHour())+":"+format(ldt.getMinute());
-			setEndDate(endDate);
-			setEndTime(endTime);
-		} else {
-			throw new Exception("deadline cannot be recongized correctly");
-		}
-
+		String endDate = ""+ldt.getYear()+"-"+formatTwoDigits(ldt.getMonthValue())+"-"+formatTwoDigits(ldt.getDayOfMonth());
+		String endTime = ""+formatTwoDigits(ldt.getHour())+":"+formatTwoDigits(ldt.getMinute());
+		setEndDate(endDate);
+		setEndTime(endTime);
 
 	}
 	
@@ -591,10 +635,15 @@ public class CommandParser {
 		String[] inputArr = this.userInput.split(" ", 2);
 		this.command = inputArr[0].trim();  
 	}
+	/**
+	 * This method is used to set a global variable "args"
+	 * which is the user's input without command keyword.
+	 * This variable will be frequently used for further parsing.
+	 */
 	private void setArgs(){
 		String[] inputArr = this.userInput.split(" ", 2);
 		if(inputArr.length == 2) {
-			this.args = trim(inputArr[1]);
+			this.args = removeExtraSpace(inputArr[1]);
 		}
 	}
 	private String getArgs() {
@@ -694,18 +743,34 @@ public class CommandParser {
 	/**********************************************************************
 	 ***************Miscellaneous helper methods for parsing and formating*********
 	 ***********************************************************************/
+	/**
+	 * This method is used to check whether a string can be parsed into an integer.
+	 * 
+	 * @param a string which by right should represent a index
+	 */
 	private boolean isInteger(String str) {
 		str = str.replaceAll("\\D+","");
 		return str != null;
 	}
-	
-	static String format(int value){
+	/**
+	 * This method is used to make a integer value be 2-digit
+	 * 
+	 * @param value that represents minute or second 
+	 *            
+	 * @return a string of length two. 
+	 */
+	static String formatTwoDigits(int value){
 		String str = "" + value;
 		if(str.split("").length == 1) {
 			str = "0"+str;
 		}
 		return str;
 	}
+	/**
+	 * This method is used to check if a string is a valid attribute 
+	 * 
+	 * @param a string that should be a attribute name 
+	 */
 	private boolean isAttribute(String str) {
 		LinkedList<String> ls = new LinkedList<String>();
 		ls.add("startdate");
@@ -715,8 +780,14 @@ public class CommandParser {
 		ls.add("taskname");
 		return ls.contains(str);
 	}
-
-	private String standarlizeWord(String args) {
+	/**
+	 * This method is used to remove extra space
+	 * 
+	 * @param a string typed by user 
+	 *            
+	 * @return a string with extra space removed
+	 */
+	private String removeExtraSpace(String args) {
 		String[] argsArr = args.split("\\s+");
 		String result = "";
 		for(int i=0; i<argsArr.length; i++) {
@@ -726,46 +797,43 @@ public class CommandParser {
 		}
 		return result.trim();
 	}
-	
-	private String trim(String str){
-		String[] strArr = str.split("\\s+");
-		String result = "";
-		for(int i=0; i<strArr.length; i++) {
-			result += strArr[i];
-			result += " ";
-		}
-		return result.trim();
-	}
+	/**
+	 * This method is used to covert a string into a list of index
+	 * in integer type.
+	 * 
+	 * @param a string array that represents index. 
+	 * Assume user use comma "," and minus "-"
+	 * to separate different indexes.
+	 *            
+	 * @return a list of index in integer type
+	 */
 	private int[] parseMultipleIDs(String[] argsArray) throws Exception{
 		for(int i=0; i<argsArray.length; i++){
-			argsArray[i]= argsArray[i].trim();
+			argsArray[i]= argsArray[i].trim(); 				//remove extra space
 		}
 		LinkedList<Integer> l = new LinkedList<Integer>();
 		int[] idArr;
 		for(int i=0; i<argsArray.length;i++){
 			String[] indexArr = argsArray[i].split("-");
-			if(indexArr.length == 1 && isInteger(indexArr[0])) {
+			if(indexArr.length == 1 && isInteger(indexArr[0])) { //it is only one integer
 				l.add(Integer.parseInt(indexArr[0].replaceAll("\\D+", "")));
-			} else {
+			} else {											//it is a series of integers
 				String start = indexArr[0].replaceAll("\\D+", "");
 				String end = indexArr[1].replaceAll("\\D+","");
-				if(start == null || end == null) {
-					throw new Exception("delete index cannot recongised");
-				}
+				assert(start != null && end != null):"delete index cannot recongised";
+				 
 				int startIndex = Integer.parseInt(start);
 				int endIndex = Integer.parseInt(end);
-				
 				if(startIndex>endIndex){
 					throw new Exception("delete index invalid");
 				}
-				
+				//add in parsed index into data structure
 				while(startIndex <= endIndex) {
 					if(!l.contains(startIndex)) {
 						l.add(startIndex);
 					}
 					startIndex++;
-				}
-				
+				}		
 			}
 		}
 		idArr = new int[l.size()];
@@ -774,17 +842,37 @@ public class CommandParser {
 		}
 		return idArr;
 	}
-	
-	private String getDateString(LocalDateTime ldt) {
-		String date = ""+ldt.getYear()+"-"+format(ldt.getMonthValue())+"-"+format(ldt.getDayOfMonth());
+	/**
+	 * This method is used to get a unified date format
+	 * 
+	 * @param an local date time object
+	 *            
+	 * @return a string that represents date in YYYY-MM-DD format
+	 */
+	private String formatDateString(LocalDateTime ldt) {
+		String date = ""+ldt.getYear()+"-"+formatTwoDigits(ldt.getMonthValue())+"-"+formatTwoDigits(ldt.getDayOfMonth());
 		return date;
 
 	}
-	private String getTimeString(LocalDateTime ldt) {
-		String time = ""+format(ldt.getHour())+":"+format(ldt.getMinute());
+	/**
+	 * This method is used to get a unified time format
+	 * 
+	 * @param an local date time object
+	 *            
+	 * @return a string that represents date in MM:SS format
+	 */
+	private String formatTimeString(LocalDateTime ldt) {
+		String time = ""+formatTwoDigits(ldt.getHour())+":"+formatTwoDigits(ldt.getMinute());
 		return time;
 
 	}
+	/**
+	 * This method is used to detect a task type that will be added
+	 * 
+	 * @param user's input
+	 *            
+	 * @return a string that represents a task type
+	 */
 	private static String getTaskType(String input){
 		if(input.contains("from")) {
 			return "event";
@@ -799,18 +887,18 @@ public class CommandParser {
 }
 
 class CommandChecker {
-	//Attribute
+	/*****************Attribute*****************/
 	private boolean isValid;
 	private String errorMessage;
 	
-	//Constructor
+	/*****************Constructor*****************/
 	public CommandChecker(String userInput) {
 		if(!isValidCommand(userInput)) {
 			this.isValid = false;
 		}
 		this.isValid = true;
 	}
-	
+	/*****************Public API*****************/
 	public boolean isValid(){
 		return this.isValid;
 	}
@@ -818,6 +906,7 @@ class CommandChecker {
 	public String getErrorMessage() {
 		return this.errorMessage;
 	}
+	/*****************Private helper methods*****************/
 	private boolean isValidCommand(String userInput) {
 		String firstWord = getFirstWord(userInput);
 		return isCommand(firstWord);
