@@ -35,10 +35,10 @@
 //	6) undo
 //		undo
 //		
-//	7) complete
+//	7) (un)complete
 //		complete <id> -- mark the task as complete
 //		
-//	8) archive
+//	8) (un)archive
 //		archive <id>
 //	
 //	9) set storage path
@@ -867,6 +867,15 @@ class CommandChecker {
 		ls.add("set");
 		ls.add("show");
 		ls.add("delete");
+		ls.add("help");
+		ls.add("save");
+		ls.add("load");
+		ls.add("search");
+		ls.add("undo");
+		ls.add("archive");
+		ls.add("unarchive");
+		ls.add("complete");
+		ls.add("uncomplete");
 		if(!ls.contains(word)){
 			setErrorMessage(word + " is not a valid command!");
 			return false;
