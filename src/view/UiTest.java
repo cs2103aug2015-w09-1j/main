@@ -161,6 +161,7 @@ public class UiTest extends GuiTest {
 	  
 	  @Test
 	  public void showSaveTest() {
+		  type("load").push(KeyCode.ENTER);
 		  type("save").push(KeyCode.ENTER);
 		  assertEquals(((Label) find("#sig")).getText(), "Saved to " + Storage.getInstance().getPath() + Storage.getInstance().getfileName());
 	  }
