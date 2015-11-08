@@ -77,7 +77,7 @@ public class CommandParserTest {
 		assertEquals("archive", cp11.getCommandType());
 		
 		//set
-		CommandParser cp12 = new CommandParser("set C:/Program/SilentJarvis/Data");
+		CommandParser cp12 = new CommandParser("set path C:/Program/SilentJarvis/Data");
 		assertEquals("set", cp12.getCommandType());
 		
 		//edit
@@ -353,8 +353,8 @@ public class CommandParserTest {
 		CommandParser cp1 = new CommandParser("archive 1");
 		assertArrayEquals(id1, cp1.getArchivedIDs());
 		
-		int[] id2 = {1,2,3};
-		CommandParser cp2 = new CommandParser("archive 1-3");
+		int[] id2 = {1,2,3,67};
+		CommandParser cp2 = new CommandParser("archive 1-3, 6   7");
 		assertArrayEquals(id2, cp2.getArchivedIDs());
 		
 		int[] id3 = {1,2,3,5,6};

@@ -24,6 +24,7 @@
 //			search by <keyword>
 //	
 //	4) display 
+//		display (all) -- display the default view
 //	
 //	5) edit
 //	    a. edit the whole task
@@ -366,6 +367,9 @@ public class CommandParser {
 		} else if (args.contains("by")){
 			String date = args.split(" ", 2)[1];
 			List<Date> dates = new PrettyTimeParser().parse(date);
+			if(dates.size() != 1) {
+				throw new Error("time cannot be reconginsed");
+			}
 			date = dates.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().toLocalDate().toString();
 			setShowByDate(date);
 		} else {
@@ -373,11 +377,13 @@ public class CommandParser {
 			if(dates.size() == 1) {
 				String date = dates.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().toLocalDate().toString();
 				setShowDate(date);
-			} else {
+			} else if(dates.size() == 2){
 				String startDate = dates.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().toLocalDate().toString();
 				setShowStartDate(startDate);
 				String endDate = dates.get(1).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().toLocalDate().toString();
 				setShowEndDate(endDate);
+			} else {
+				throw new Error("time cannot be recongised");
 			}
 		}
 	}
@@ -386,13 +392,17 @@ public class CommandParser {
 		String args = getArgs();
 		String[] argArray = args.split(" ");
 		String[] argArray2 = args.split(" ", 2);
+		if(!isInteger(argArray[0])){
+			throw new Error("Task index cannot be parsed");
+		} 
+		
 		setTaskID(Integer.parseInt(argArray[0]));
 		if(isAttribute(argArray[1].toLowerCase())) {
 			//edit <id> <attribute> <info>
 			setEditAttribute(argArray[1].toLowerCase());
 			List<Date> dates = new PrettyTimeParser().parse(argArray2[1]);
 			if (dates.size() == 0) {
-				setEditInfo(argArray[2]);
+				setEditInfo(argArray[2].trim());
 			} else if(argArray[1].toLowerCase().contains("time")) {
 				String time = dates.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().toLocalTime().toString();
 				setEditInfo(time);
@@ -419,20 +429,19 @@ public class CommandParser {
 	
 	private void parseSetCommand(){
 		String[] args = getArgs().split(" ", 2);
-		String type = args[0];
+		String type = args[0].toLowerCase();
 		if(type.equals("filename")) {
 			setStorageFileName(args[1]);
 		} else if(type.equals("path")) {
 			setStoragePath(args[1]);
+		} else {
+			throw new Error("set attribute cannot be recongised");
 		}
 	}
 	
 	private void parseArchiveCommand() {
 		String args = getArgs();
 		String[] argsArray = args.split(",");
-		for(int i=0; i<argsArray.length; i++){
-			argsArray[i] = argsArray[i].trim();
-		}
 		int[] idArr = parseMultipleIDs(argsArray);
 		setArchivedIDs(idArr);
 		
@@ -440,9 +449,6 @@ public class CommandParser {
 	private void parseCompleteCommand() {
 		String args = getArgs();
 		String[] argsArray = args.split(",");
-		for(int i=0; i<argsArray.length; i++){
-			argsArray[i] = argsArray[i].trim();
-		}
 		int[] idArr = parseMultipleIDs(argsArray);
 		setCompleteIDs(idArr);
 		
@@ -467,16 +473,14 @@ public class CommandParser {
 			setSearchByDate(searchDate.toLocalDate().toString());
 		} else if(args.contains("from")){
 			List<Date> dates = new PrettyTimeParser().parse(args);
-			if(dates.size() == 1) {
-				String date = dates.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().toLocalDate().toString();
-				setShowDate(date);
-			} else {
+			if(dates.size() == 2) {
 				String startDate = dates.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().toLocalDate().toString();
 				setSearchStartDate(startDate);
 				String endDate = dates.get(1).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().toLocalDate().toString();
 				setSearchEndDate(endDate);
+			} else {
+				throw new Error("dates cannot be recongised");
 			}
-			
 		} else {
 			setSearchWord(standarlizeWord(args));
 		}
@@ -517,9 +521,6 @@ public class CommandParser {
 			setDeleteMode("all");
 		} else {
 			String[] argsArray = args.split(",");
-			for(int i=0; i<argsArray.length; i++){
-				argsArray[i] = argsArray[i].trim();
-			}
 			if (argsArray.length == 1 && !argsArray[0].contains("-")) {
 				args = args.replaceAll("\\D+","");
 				if(args != null) {
@@ -535,12 +536,15 @@ public class CommandParser {
 	}
 	
 	private int[] parseMultipleIDs(String[] argsArray){
+		for(int i=0; i<argsArray.length; i++){
+			argsArray[i]= argsArray[i].trim();
+		}
 		LinkedList<Integer> l = new LinkedList<Integer>();
 		int[] idArr;
 		for(int i=0; i<argsArray.length;i++){
 			String[] indexArr = argsArray[i].split("-");
-			if(indexArr.length == 1 && indexArr[0].replaceAll("\\D+", "")!=null) {
-				l.add(Integer.parseInt(indexArr[0]));
+			if(indexArr.length == 1 && isInteger(indexArr[0])) {
+				l.add(Integer.parseInt(indexArr[0].replaceAll("\\D+", "")));
 			} else {
 				String start = indexArr[0].replaceAll("\\D+", "");
 				String end = indexArr[1].replaceAll("\\D+","");
@@ -778,6 +782,10 @@ public class CommandParser {
 	private void setDeleteTaskID(int index) {
 		this.taskID = index;
 	}
+	private boolean isInteger(String str) {
+		str = str.replaceAll("\\D+","");
+		return str != null;
+	}
 	static void print(String[] str){
 		for(int i=0;i<str.length;i++){
 			System.out.println("Index "+i+" : "+ str[i]);
@@ -802,12 +810,13 @@ public class CommandParser {
 	public static void main(String[] args) {
 //		String help = getHelpString();
 //		System.out.print(getHelpString());
-//		CommandParser cp2 = new CommandParser("add drop by mother by tonight");
+//		CommandParser cp2 = new CommandParser("delete 1,    3-5");
+//		print(cp2.getDeleteIDs());
 //		String str = "add drop tomorrow mother from tonight 2pm to 3pm";
 //		System.out.println(str.substring(str.lastIndexOf("from"), str.length()-1));
-		String str ="";
-		str = str.replaceAll("\\D+","");
-		System.out.println(Integer.parseInt(str));
+//		String str ="";
+//		str = str.replaceAll("\\D+","");
+//		System.out.println(Integer.parseInt(str));
 		
 //		System.out.print(cp2.getSearchWord());
 //		print(cp2.getDeleteIDs());
