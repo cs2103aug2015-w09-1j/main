@@ -161,8 +161,8 @@ public class CommandParserTest {
 	
 	@Test
 	public void testGetSearchWord() {
-		CommandParser cp1 = new CommandParser("search meeting");
-		assertEquals("meeting", cp1.getSearchWord());
+		CommandParser cp1 = new CommandParser("search meeting  ss   tt");
+		assertEquals("meeting ss tt", cp1.getSearchWord());
 
 	}
 	

@@ -363,8 +363,8 @@ public class CommandParser {
 	
 	private void parseShowCommand(){
 		String args = getArgs();
-		if(args.contains("archived")) {
-			setShowOption("archived");
+		if(args.contains("archive")) {
+			setShowOption("archive");
 		} else if (args.contains("floating")) {
 			setShowOption("floating");	
 		} else if (args.contains("complete")) {
@@ -484,9 +484,20 @@ public class CommandParser {
 			}
 			
 		} else {
-			setSearchWord(args);
+			setSearchWord(standarlizeWord(args));
 		}
 		
+	}
+	
+	private String standarlizeWord(String args) {
+		String[] argsArr = args.split("\\s+");
+		String result = "";
+		for(int i=0; i<argsArr.length; i++) {
+			argsArr[i] = argsArr[i].trim();
+			result += argsArr[i];
+			result += " ";
+		}
+		return result.trim();
 	}
 	private void parseAddCommand(String args){
 		String taskType = getTaskType(args);
@@ -768,8 +779,8 @@ public class CommandParser {
 	public static void main(String[] args) {
 //		String help = getHelpString();
 //		System.out.print(getHelpString());
-		CommandParser cp2 = new CommandParser("clear");
-		System.out.print(cp2.getCommandType());
+		CommandParser cp2 = new CommandParser("search meeting  ss   tt");
+//		System.out.print(cp2.getSearchWord());
 //		print(cp2.getDeleteIDs());
 //		System.out.print(cp2.getUncompleteID());
 //		String arg = "edit 2 startDate sad";
