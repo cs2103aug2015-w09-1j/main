@@ -64,7 +64,7 @@ public class GUIView{
 	final private Color ARCHIVED_COLOR = Color.web("#ae31f6");
 	final private Color COMMON_COLOR = Color.web("#039ed3");
 	final private Color WARNING_COLOR = Color.web("#ff0000");
-	final private Color SAFE_COLOR = Color.web("#17a42a");	
+	final private Color SAFE_COLOR = Color.web("#17a42a");
 
 	private GUIView(){
 	}
