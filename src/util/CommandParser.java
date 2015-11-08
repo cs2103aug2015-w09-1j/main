@@ -16,16 +16,18 @@
 //			delete <index>,<index>,<startIndex-EndIndex>
 //	
 //	3) search
-//		a. search tasks on a certain date
+//		a. search tasks based on its name
+//			search <name>
+//		b. search tasks on a certain date
 //			search on <date>
-//		b. search by task name
+//		c. search by task name
 //			search by <keyword>
 //	
 //	4) display / showall
 //		a. display archived tasks
 //			display archived
 //		b. display all incomplete tasks
-//			display all
+//			display (all)
 //	
 //	5) edit
 //	    a. edit the whole task
@@ -54,16 +56,13 @@
 //		
 //	12) save
 //		save
-//  
-//	13) return to starting view
-//      home
-	
+//
 //	14) show
 //		a. show all floating tasks
 //			show floating  
 //
 //		b. show a certain date
-//			show <date>
+//			show on <date>
 // 
 //		c. show everything before a date
 //			show by <date>
