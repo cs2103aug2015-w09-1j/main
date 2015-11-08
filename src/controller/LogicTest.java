@@ -616,7 +616,7 @@ public class LogicTest {
 
 		Controller.executeCMD("display");
 		taskList = Controller.getTaskList();
-		assertEquals(1, taskList.size());
+		assertEquals(3, taskList.size());
 
 		Controller.executeCMD("search by 2015-12-14");
 		taskList = Controller.getTaskList();
@@ -624,7 +624,7 @@ public class LogicTest {
 
 		Controller.executeCMD("display");
 		taskList = Controller.getTaskList();
-		assertEquals(0, taskList.size());
+		assertEquals(3, taskList.size());
 
 		Controller.executeCMD("search by 2015-12-16");
 		taskList = Controller.getTaskList();
@@ -645,8 +645,8 @@ public class LogicTest {
 		assertEquals(2, taskList.size());
 
 		Controller.executeCMD("display");
-		Controller.executeCMD("set path /testing/");
-		String path = "/testing/";
+		Controller.executeCMD("set path testing");
+		String path = "testing"+ "\\";
 		assertEquals(path, Storage.getInstance().getPath());
 
 		Controller.executeCMD("set filename newfile");
@@ -678,7 +678,7 @@ public class LogicTest {
 		
 		Controller.executeCMD("show complete");
 		taskList = Controller.getCompletedList();
-		assertEquals(8, taskList.size());
+		assertEquals(7, taskList.size());
 		
 
 		Controller.executeCMD("uncomplete 1-2");
@@ -724,7 +724,7 @@ public class LogicTest {
 		taskList = Controller.getCombinedTaskList();
 		assertEquals(0, taskList.size());
 
-		assertEquals(14, TaskMemory.getInstance().getSize());
+		assertEquals(12, TaskMemory.getInstance().getSize());
 
 		Controller.executeCMD("exit");
 

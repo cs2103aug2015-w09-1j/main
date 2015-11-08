@@ -31,6 +31,8 @@ public class TestStorage {
 	 */
 	@Test
 	public void test_setPath() {
+		test.reset();
+		
 		// test for case without space
 		test.setPath("path");
 		assertEquals(test.getPath(), "path\\");
@@ -42,6 +44,8 @@ public class TestStorage {
 		// test for case with space in tail
 		test.setPath("path        ");
 		assertEquals(test.getPath(), "path\\");
+		
+		new File(test.getPath()).delete();
 	}
 
 	/**
@@ -52,6 +56,8 @@ public class TestStorage {
 	 */
 	@Test
 	public void test_setFilename() {
+		test.reset();
+		
 		// test for case without space
 		test.setfileName("filename");
 		assertEquals(test.getfileName(), "filename.fxml");
@@ -67,6 +73,8 @@ public class TestStorage {
 		// test for case with tail that can cause file type mess
 		test.setfileName("filename.txt");
 		assertEquals(test.getfileName(), "filename.fxml");
+		
+		new File(test.getfileName()).delete();
 	}
 
 	/**
@@ -92,6 +100,7 @@ public class TestStorage {
 		}
 		test.setPath("newFolder\\");
 		assertTrue(test.existFolder());
+		new File(test.getPath()).delete();
 	}
 
 	/**
@@ -109,6 +118,7 @@ public class TestStorage {
 		// test for creating new file
 		test.setfileName("newFile");
 		assertTrue(test.existFile());
+		new File(test.getfileName()).delete();
 
 		// test for checking existed file
 		File canNotExist = new File("newFile.fxml");
@@ -117,6 +127,7 @@ public class TestStorage {
 		}
 		test.setfileName("newFile.fxml");
 		assertTrue(test.existFile());
+		new File(test.getfileName()).delete();
 	}
 
 	/**
@@ -131,6 +142,7 @@ public class TestStorage {
 	@Test
 	public void test_saveAndLoad() {
 		test.reset();
+		test.setfileName("test");
 		ArrayList<Task> listToSave = new ArrayList<Task>();
 		ArrayList<Task> listToLoad = new ArrayList<Task>();
 
@@ -168,5 +180,6 @@ public class TestStorage {
 		assertEquals(A.getTaskName(), Ax.getTaskName());
 		assertEquals(B.getDeadlineDate(), Bx.getDeadlineDate());
 		assertEquals(C.getEndTime(), Cx.getEndTime());
+		new File(test.getfileName()).delete();
 	}
 }
