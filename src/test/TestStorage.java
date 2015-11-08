@@ -142,6 +142,7 @@ public class TestStorage {
 	@Test
 	public void test_saveAndLoad() {
 		test.reset();
+		test.setfileName("test");
 		ArrayList<Task> listToSave = new ArrayList<Task>();
 		ArrayList<Task> listToLoad = new ArrayList<Task>();
 
