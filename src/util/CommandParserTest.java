@@ -31,7 +31,7 @@ public class CommandParserTest {
 	}
 
 	@Test
-	public void testGetCommandType() {
+	public void testGetCommandType() throws Exception {
 		//event task
 		CommandParser cp1 = new CommandParser("add meeting from 2015-10-03 0900 to 2015-10-04 0900");
 		assertEquals("add", cp1.getCommandType());
@@ -115,19 +115,19 @@ public class CommandParserTest {
 	}
 	
 	@Test
-	public void testGetStoragePath(){
+	public void testGetStoragePath() throws Exception{
 		CommandParser cp1 = new CommandParser("set path C:/Program/SilentJarvis/Data");
 		assertEquals("C:/Program/SilentJarvis/Data", cp1.getStoragePath());
 	}
 
 	@Test
-	public void testGetStorageFileName() {
+	public void testGetStorageFileName() throws Exception{
 		CommandParser cp1 = new CommandParser("set filename mytext.txt");
 		assertEquals("mytext.txt", cp1.getStorageFileName());
 	}
 	
 	@Test
-	public void testGetTaskName() {
+	public void testGetTaskName() throws Exception{
 		//event task
 		CommandParser cp1 = new CommandParser("add meeting from home from 2015-10-03 0900 to 2015-10-04 0900");
 		assertEquals("meeting from home", cp1.getTaskName());
@@ -147,7 +147,7 @@ public class CommandParserTest {
 	}
 	
 	@Test
-	public void testGetDisplayMode(){
+	public void testGetDisplayMode() throws Exception{
 		//all
 		CommandParser cp1 = new CommandParser("display");
 		assertEquals("all", cp1.getDisplayMode());
@@ -159,7 +159,7 @@ public class CommandParserTest {
 	
 	
 	@Test
-	public void testGetSearchWord() {
+	public void testGetSearchWord() throws Exception{
 		CommandParser cp1 = new CommandParser("search meeting  ss   tt");
 		assertEquals("meeting ss tt", cp1.getSearchWord());
 
@@ -167,7 +167,7 @@ public class CommandParserTest {
 	
 	
 	@Test
-	public void testGetId() {
+	public void testGetId() throws Exception{
 		int id = 2;
 		//delete
 		CommandParser cp1 = new CommandParser("delete 2");
@@ -181,7 +181,7 @@ public class CommandParserTest {
 	}
 
 	@Test
-	public void testGetStartDate() {
+	public void testGetStartDate() throws Exception{
 		//event task
 		CommandParser cp1 = new CommandParser("add meeting from 2015-10-03 0900 to 2015-10-04 0900");
 		assertEquals("2015-10-03", cp1.getStartDate());
@@ -196,7 +196,7 @@ public class CommandParserTest {
 	}
 
 	@Test
-	public void testGetEndDate() {
+	public void testGetEndDate() throws Exception {
 		//event task
 		CommandParser cp1 = new CommandParser("add meeting from 2015-10-03 0900 to 2015-10-04 0900");
 		assertEquals("2015-10-04", cp1.getEndDate());
@@ -211,7 +211,7 @@ public class CommandParserTest {
 	}
 
 	@Test
-	public void testGetStartTime() {
+	public void testGetStartTime() throws Exception {
 		//event task
 		CommandParser cp = new CommandParser("add meeting from 2015-10-03 0900 to 2015-10-04 0900");
 		assertEquals("09:00", cp.getStartTime());
@@ -222,7 +222,7 @@ public class CommandParserTest {
 	}
 
 	@Test
-	public void testGetEndTime() {
+	public void testGetEndTime() throws Exception {
 		CommandParser cp = new CommandParser("add meeting from 2015-10-03 0900 to 2015-10-04 0900");
 		assertEquals("09:00", cp.getEndTime());
 		
@@ -236,13 +236,13 @@ public class CommandParserTest {
 	}
 	
 	@Test
-	public void testGetDeleteMode(){
+	public void testGetDeleteMode() throws Exception{
 		CommandParser cp1 = new CommandParser("delete all");
 		assertEquals("all", cp1.getDeleteMode());
 	}
 	
 	@Test
-	public void testGetEditAttribute(){
+	public void testGetEditAttribute() throws Exception{ 
 		CommandParser cp1 = new CommandParser("edit 1 startDate 2015-10-23");
 		assertEquals("startdate", cp1.getEditAttribute());
 		
@@ -251,7 +251,7 @@ public class CommandParserTest {
 	}
 	
 	@Test
-	public void testGetEditInfo(){
+	public void testGetEditInfo() throws Exception{
 		CommandParser cp1 = new CommandParser("edit 1 startDate 2015-10-23");
 		assertEquals("2015-10-23", cp1.getEditInfo());
 		
@@ -261,7 +261,7 @@ public class CommandParserTest {
 
 	
 	@Test
-	public void TestGetDeleteIDs(){
+	public void TestGetDeleteIDs() throws Exception{
 		CommandParser cp1 = new CommandParser("delete 1, 2,3, 10-12");
 		int[] target = {1, 2, 3, 10, 11, 12};
 		int[] actual = cp1.getDeleteIDs();
@@ -274,33 +274,33 @@ public class CommandParserTest {
 
 	}
 	@Test
-	public void TestGetStart() {
+	public void TestGetStart() throws Exception{
 		CommandParser cp1 = new CommandParser("add attend tutorial from 2015-10-03 to 2015-10-23");
 		assertEquals("2015-10-03", cp1.getStartDateTime().toLocalDate().toString());
 	}
 	
 	@Test
-	public void TestGetEnd() {
+	public void TestGetEnd() throws Exception{
 		CommandParser cp1 = new CommandParser("add finish report by 2015-10-23");
 		assertEquals("2015-10-23", cp1.getEndDateTime().toLocalDate().toString());
 	}
 	
 	@Test
-	public void TestSearchOnDate() {
+	public void TestSearchOnDate() throws Exception{
 		CommandParser cp1 = new CommandParser("search on December 29");
 		assertEquals("2015-12-29", cp1.getSearchOnDate());
 		assertEquals(null, cp1.getSearchByDate());
 	}
 	
 	@Test
-	public void TestSearchByDate() {
+	public void TestSearchByDate() throws Exception {
 		CommandParser cp1 = new CommandParser("search by December 9");
 		assertEquals(null, cp1.getSearchOnDate());
 		assertEquals("2015-12-09", cp1.getSearchByDate());
 	}
 	
 	@Test
-	public void TestGetShowOption() {
+	public void TestGetShowOption() throws Exception{
 		CommandParser cp1 = new CommandParser("show archive");
 		assertEquals("archived", cp1.getShowOption());
 		
@@ -312,43 +312,43 @@ public class CommandParserTest {
 	}
 	
 	@Test
-	public void TestGetShowByDate() {
+	public void TestGetShowByDate() throws Exception{
 		CommandParser cp1 = new CommandParser("show by December 12");
 		assertEquals("2015-12-12", cp1.getShowByDate());
 	}
 	
 	@Test
-	public void TestGetShowDate() {
+	public void TestGetShowDate() throws Exception{
 		CommandParser cp1 = new CommandParser("show December 12");
 		assertEquals("2015-12-12", cp1.getShowDate());
 	}
 	
 	@Test
-	public void TestGetShowStartDate() {
+	public void TestGetShowStartDate() throws Exception {
 		CommandParser cp1 = new CommandParser("show from December 12 to December 20");
 		assertEquals("2015-12-12", cp1.getShowStartDate());
 	}
 	
 	@Test
-	public void TestGetShowEndDate() {
+	public void TestGetShowEndDate() throws Exception {
 		CommandParser cp1 = new CommandParser("show from December 12 to December 20 ");
 		assertEquals("2015-12-20", cp1.getShowEndDate());
 	}
 	@Test
-	public void TestGetUnarchivedID(){
+	public void TestGetUnarchivedID() throws Exception{
 		int[] id = {1};
 		CommandParser cp1 = new CommandParser("unarchived 1");
 		assertArrayEquals(id, cp1.getUnarchivedIDs());
 	}
 	@Test
-	public void TestGetUncompleteID(){
+	public void TestGetUncompleteID() throws Exception{
 		int[] id1 = {1};
 		CommandParser cp1 = new CommandParser("uncomplete 1");
 		assertArrayEquals(id1, cp1.getUncompleteIDs());
 	}
 	
 	@Test
-	public void TestGetArchivedIDs() {
+	public void TestGetArchivedIDs() throws Exception {
 		int[] id1 = {1};
 		CommandParser cp1 = new CommandParser("archive 1");
 		assertArrayEquals(id1, cp1.getArchivedIDs());
@@ -363,7 +363,7 @@ public class CommandParserTest {
 	}
 	
 	@Test
-	public void TestGetCompleteIDs() {
+	public void TestGetCompleteIDs() throws Exception {
 		int[] id1 = {1};
 		CommandParser cp1 = new CommandParser("complete 1");
 		assertArrayEquals(id1, cp1.getCompleteIDs());
@@ -378,34 +378,25 @@ public class CommandParserTest {
 	}
 	
 	@Test
-	public void TestGetHelpString() {
+	public void TestGetHelpString() throws Exception {
 		CommandParser cp1 = new CommandParser("help");
 		String help = "add <name>\nadd <name> from <time> to <time>\nadd <name> by   <deadline>\ndelete  <id>\nsearch  <id>\narchive <id>\nedit <id> <attribute> <info>\nset  path     <storage path>\nset  filename <filename>\nundo\n";
 		assertEquals(help, cp1.getHelpString());
 	}
 	
 	@Test
-	public void TestGetSearchStartDate() {
+	public void TestGetSearchStartDate() throws Exception {
 		CommandParser cp1 = new CommandParser("search from 2015-10-31 to 2015-11-3");
 		assertEquals("2015-10-31", cp1.getSearchStartDate());
 	}
 	
 	@Test
-	public void TestGetSearchEndDate() {
+	public void TestGetSearchEndDate() throws Exception{
 		CommandParser cp1 = new CommandParser("search from 2015-10-31 to 2015-11-3");
 		assertEquals("2015-11-03", cp1.getSearchEndDate());
 	}
 	
+
 	
-	@Test
-	public void TestGetErrorMessage(){
-		CommandParser cp1 = new CommandParser("a");
-		assertEquals("a is not a valid command!", cp1.getErrorMessage());
-	}
-	
-	@Test
-	public void TestAddCommandException(){
-		
-	}
 	
 }

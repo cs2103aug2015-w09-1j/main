@@ -79,17 +79,11 @@
 package util;
 
 import java.util.LinkedList;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
-import java.time.*;
-
-import org.ocpsoft.prettytime.PrettyTime;
 import org.ocpsoft.prettytime.nlp.PrettyTimeParser;
-import org.ocpsoft.prettytime.nlp.parse.DateGroup;
-import org.ocpsoft.prettytime.shade.org.antlr.runtime.debug.Profiler.DecisionDescriptor;
 
 public class CommandParser {
 	//Attribute
@@ -139,11 +133,11 @@ public class CommandParser {
 	CommandChecker cc;
 	
 	//Constructor
-	public CommandParser(String userInput) {
+	public CommandParser(String userInput) throws Exception {
 		this.setUserInput(userInput);
 		cc = new CommandChecker(userInput);
 		if (!cc.isValid()) {
-			throw new Error(cc.getErrorMessage());
+			throw new Exception(cc.getErrorMessage());
 		} else {
 			 this.setCommandType();
 			 this.setArgs();
@@ -255,7 +249,7 @@ public class CommandParser {
 		return this.searchEndDate;
 	}
 	//private methods
-	private void parse(){
+	private void parse() throws Exception{
 		String cmdType = getCommandType();
 		switch (cmdType) {
 			case "add":
@@ -313,7 +307,7 @@ public class CommandParser {
 				parseClearCommand();
 				break;
 			default:
-				break;
+				throw new Exception("command cannot be recongnised");
 		}
 	}
 	
@@ -336,7 +330,7 @@ public class CommandParser {
 	private void parseExitCommand() {
 		
 	}
-	private void parseUnarchivedCommand() {
+	private void parseUnarchivedCommand() throws Exception {
 		String args = getArgs();
 		String[] argsArray = args.split(",");
 		for(int i=0; i<argsArray.length; i++){
@@ -346,7 +340,7 @@ public class CommandParser {
 		setUnarchivedIDs(idArr);
 	}
 	
-	private void parseUncompleteCommand() {
+	private void parseUncompleteCommand() throws Exception {
 		String args = getArgs();
 		String[] argsArray = args.split(",");
 		for(int i=0; i<argsArray.length; i++){
@@ -356,7 +350,7 @@ public class CommandParser {
 		setUncompleteIDs(idArr);
 	}
 	
-	private void parseShowCommand(){
+	private void parseShowCommand() throws Exception{
 		String args = getArgs();
 		if(args.contains("archive")) {
 			setShowOption("archived");
@@ -368,7 +362,7 @@ public class CommandParser {
 			String date = args.split(" ", 2)[1];
 			List<Date> dates = new PrettyTimeParser().parse(date);
 			if(dates.size() != 1) {
-				throw new Error("time cannot be reconginsed");
+				throw new Exception("time cannot be reconginsed");
 			}
 			date = dates.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().toLocalDate().toString();
 			setShowByDate(date);
@@ -383,17 +377,17 @@ public class CommandParser {
 				String endDate = dates.get(1).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().toLocalDate().toString();
 				setShowEndDate(endDate);
 			} else {
-				throw new Error("time cannot be recongised");
+				throw new Exception("time cannot be recongised");
 			}
 		}
 	}
 	
-	private void parseEditCommand(){
+	private void parseEditCommand() throws Exception{
 		String args = getArgs();
 		String[] argArray = args.split(" ");
 		String[] argArray2 = args.split(" ", 2);
 		if(!isInteger(argArray[0])){
-			throw new Error("Task index cannot be parsed");
+			throw new Exception("Task index cannot be parsed");
 		} 
 		
 		setTaskID(Integer.parseInt(argArray[0]));
@@ -427,7 +421,7 @@ public class CommandParser {
 		return ls.contains(str);
 	}
 	
-	private void parseSetCommand(){
+	private void parseSetCommand() throws Exception{
 		String[] args = getArgs().split(" ", 2);
 		String type = args[0].toLowerCase();
 		if(type.equals("filename")) {
@@ -435,18 +429,18 @@ public class CommandParser {
 		} else if(type.equals("path")) {
 			setStoragePath(args[1]);
 		} else {
-			throw new Error("set attribute cannot be recongised");
+			throw new Exception("set attribute cannot be recongised");
 		}
 	}
 	
-	private void parseArchiveCommand() {
+	private void parseArchiveCommand() throws Exception {
 		String args = getArgs();
 		String[] argsArray = args.split(",");
 		int[] idArr = parseMultipleIDs(argsArray);
 		setArchivedIDs(idArr);
 		
 	}
-	private void parseCompleteCommand() {
+	private void parseCompleteCommand() throws Exception {
 		String args = getArgs();
 		String[] argsArray = args.split(",");
 		int[] idArr = parseMultipleIDs(argsArray);
@@ -461,7 +455,7 @@ public class CommandParser {
 		
 	}
 	
-	private void parseSearchCommand() {
+	private void parseSearchCommand() throws Exception {
 		String args = getArgs();
 		if(args.contains("on")) {
 			Date date = new PrettyTimeParser().parse(args).get(0);
@@ -479,7 +473,7 @@ public class CommandParser {
 				String endDate = dates.get(1).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().toLocalDate().toString();
 				setSearchEndDate(endDate);
 			} else {
-				throw new Error("dates cannot be recongised");
+				throw new Exception("dates cannot be recongised");
 			}
 		} else {
 			setSearchWord(standarlizeWord(args));
@@ -497,7 +491,7 @@ public class CommandParser {
 		}
 		return result.trim();
 	}
-	private void parseAddCommand(String args){
+	private void parseAddCommand(String args) throws Exception{
 		String taskType = getTaskType(args);
 		switch (taskType){
 			case "float":
@@ -510,12 +504,12 @@ public class CommandParser {
 				parseEventTask(args);
 				break;
 			default:
-				throw new Error("task type not recognised");		
+				throw new Exception("task type not recognised");		
 		}
 
 	}
 	
-	private void parseDeleteCommand(){
+	private void parseDeleteCommand() throws Exception{
 		String args = getArgs();
 		if(args.contains("all")) {
 			setDeleteMode("all");
@@ -526,7 +520,7 @@ public class CommandParser {
 				if(args != null) {
 					setDeleteTaskID(Integer.parseInt(args));
 				} else {
-					throw new Error("deleted index invalid");
+					throw new Exception("deleted index invalid");
 				}
 			} else {
 				int[] idArr = parseMultipleIDs(argsArray);
@@ -535,7 +529,7 @@ public class CommandParser {
 		}
 	}
 	
-	private int[] parseMultipleIDs(String[] argsArray){
+	private int[] parseMultipleIDs(String[] argsArray) throws Exception{
 		for(int i=0; i<argsArray.length; i++){
 			argsArray[i]= argsArray[i].trim();
 		}
@@ -549,13 +543,13 @@ public class CommandParser {
 				String start = indexArr[0].replaceAll("\\D+", "");
 				String end = indexArr[1].replaceAll("\\D+","");
 				if(start == null || end == null) {
-					throw new Error("delete index cannot recongised");
+					throw new Exception("delete index cannot recongised");
 				}
 				int startIndex = Integer.parseInt(start);
 				int endIndex = Integer.parseInt(end);
 				
 				if(startIndex>endIndex){
-					throw new Error("delete index invalid");
+					throw new Exception("delete index invalid");
 				}
 				
 				while(startIndex <= endIndex) {
@@ -574,12 +568,12 @@ public class CommandParser {
 		return idArr;
 	}
 	
-	private void parseDisplayCommand(){
+	private void parseDisplayCommand() throws Exception{
 		String args = getArgs();
 		if(args == null || args.contains("all")){
 			setDisplayMode("all");
 		} else {
-			throw new Error("display cmd invalid");
+			throw new Exception("display cmd invalid");
 		}
 	}
 	
@@ -600,7 +594,7 @@ public class CommandParser {
 		setTaskName(args);
 	}
 	
-	private void parseEventTask(String args) {
+	private void parseEventTask(String args) throws Exception {
 		String taskNameStr = args.substring(0, args.lastIndexOf("from"));
 		String timeStr = args.substring(args.lastIndexOf("from"),args.length()-1);
 		
@@ -617,7 +611,7 @@ public class CommandParser {
 			setEndDate(getDateString(endLdt));
 			setEndTime(getTimeString(endLdt));
 		} else {
-			throw new Error("time cannot be recongized");
+			throw new Exception("time cannot be recongized");
 		}
 
 	}
@@ -632,7 +626,7 @@ public class CommandParser {
 
 	}
 	
-	private void parseDeadlineTask(String args) {
+	private void parseDeadlineTask(String args) throws Exception {
 		//add finish project manual by 2015-10-03 0900
 		String[] argsArray = args.split("\\s+by\\s+");
 		String endStr = argsArray[argsArray.length-1];
@@ -654,7 +648,7 @@ public class CommandParser {
 			setEndDate(endDate);
 			setEndTime(endTime);
 		} else {
-			throw new Error("deadline cannot be recongized correctly");
+			throw new Exception("deadline cannot be recongized correctly");
 		}
 
 
@@ -786,17 +780,6 @@ public class CommandParser {
 		str = str.replaceAll("\\D+","");
 		return str != null;
 	}
-	static void print(String[] str){
-		for(int i=0;i<str.length;i++){
-			System.out.println("Index "+i+" : "+ str[i]);
-		}
-	}
-	
-	static void print(int[] str){
-		for(int i=0;i<str.length;i++){
-			System.out.println("Index "+i+" : "+ str[i]);
-		}
-	}
 	
 	static String format(int value){
 		String str = "" + value;
@@ -892,7 +875,7 @@ class CommandChecker {
 		}
 		
 	}
-	
+
 	private String getFirstWord(String userInput) {
 		return userInput.split("\\s+")[0].toLowerCase();
 	}
