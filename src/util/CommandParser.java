@@ -86,7 +86,9 @@ import java.util.List;
 import org.ocpsoft.prettytime.nlp.PrettyTimeParser;
 
 public class CommandParser {
-	//Attribute
+	/**********************************************************************
+	 ************************   Attribute *****************************
+	 ***********************************************************************/
 	private String userInput;
 	private String command;
 	private String args;
@@ -96,22 +98,27 @@ public class CommandParser {
 	private String endTime;
 	private String startDate;
 	private String endDate;
-	
 	private LocalDateTime start;
 	private LocalDateTime end;
-	
 	private int taskID;
+	
+	
 	private String searchWord;
 	private String searchDate;
+	private String searchOnDate;
+	private String searchByDate;
+	private String searchStartDate;
+	private String searchEndDate;
 	private String displayMode;
-	private String deleteMode;
+
 	private String storagePath;
 	private String storageFileName;
+	
 	private String editAttribute;
 	private String editInfo;
 	private LocalDateTime editDate;
-	private String searchOnDate;
-	private String searchByDate;
+	
+	private String deleteMode;
 	private int[] deleteIDs;
 	private int[] archivedIDs;
 	
@@ -124,15 +131,15 @@ public class CommandParser {
 	private int[] unarchivedIDs;
 	private int[] uncompleteIDs;
 	private int[] completeIDs;
-	
-	private String searchStartDate;
-	private String searchEndDate;
+
 	
 	private static String help = "add <name>\nadd <name> from <time> to <time>\nadd <name> by   <deadline>\ndelete  <id>\nsearch  <id>\narchive <id>\nedit <id> <attribute> <info>\nset  path     <storage path>\nset  filename <filename>\nundo\n";
 	
 	CommandChecker cc;
 	
-	//Constructor
+	/**********************************************************************
+	 ************************   Constructor  *****************************
+	 ***********************************************************************/
 	public CommandParser(String userInput) throws Exception {
 		this.setUserInput(userInput);
 		cc = new CommandChecker(userInput);
@@ -145,7 +152,9 @@ public class CommandParser {
 		} 			
 	}
 
-	//public methods
+	/**********************************************************************
+	 ************************   Parser API *****************************
+	 ***********************************************************************/
 	public String getCommandType() {
 		return this.command;
 	}
@@ -248,7 +257,10 @@ public class CommandParser {
 	public String getSearchEndDate() {
 		return this.searchEndDate;
 	}
-	//private methods
+	
+	/**********************************************************************
+	 ***************Basic parsing methods for commands**************
+	 ***********************************************************************/
 	private void parse() throws Exception{
 		String cmdType = getCommandType();
 		switch (cmdType) {
@@ -311,44 +323,24 @@ public class CommandParser {
 		}
 	}
 	
-	private void parseClearCommand(){
-		
-	}
-	
-	private void parseSaveCommand() { 
-		
-	}
-	
-	private void parseLoadCommand() {
-		
-	}
-	
-	private void parseHomeCommand() {
-		
-	}
-	
-	private void parseExitCommand() {
-		
-	}
-	private void parseUnarchivedCommand() throws Exception {
-		String args = getArgs();
-		String[] argsArray = args.split(",");
-		for(int i=0; i<argsArray.length; i++){
-			argsArray[i] = argsArray[i].trim();
+	private void parseAddCommand(String args) throws Exception{
+		String taskType = getTaskType(args);
+		switch (taskType){
+			case "float":
+				parseFloatTask(args);
+				break;
+			case "deadline":
+				parseDeadlineTask(args);
+				break;
+			case "event":
+				parseEventTask(args);
+				break;
+			default:
+				throw new Exception("task type not recognised");		
 		}
-		int[] idArr = parseMultipleIDs(argsArray);
-		setUnarchivedIDs(idArr);
+
 	}
 	
-	private void parseUncompleteCommand() throws Exception {
-		String args = getArgs();
-		String[] argsArray = args.split(",");
-		for(int i=0; i<argsArray.length; i++){
-			argsArray[i] = argsArray[i].trim();
-		}
-		int[] idArr = parseMultipleIDs(argsArray);
-		setUncompleteIDs(idArr);
-	}
 	
 	private void parseShowCommand() throws Exception{
 		String args = getArgs();
@@ -410,15 +402,51 @@ public class CommandParser {
 		}
 
 	}
+	private void parseSearchCommand() throws Exception {
+		String args = getArgs();
+		if(args.contains("on")) {
+			Date date = new PrettyTimeParser().parse(args).get(0);
+			LocalDateTime searchDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+			setSearchOnDate(searchDate.toLocalDate().toString());
+		} else if(args.contains("by")) {
+			Date date = new PrettyTimeParser().parse(args).get(0);
+			LocalDateTime searchDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+			setSearchByDate(searchDate.toLocalDate().toString());
+		} else if(args.contains("from")){
+			List<Date> dates = new PrettyTimeParser().parse(args);
+			if(dates.size() == 2) {
+				String startDate = dates.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().toLocalDate().toString();
+				setSearchStartDate(startDate);
+				String endDate = dates.get(1).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().toLocalDate().toString();
+				setSearchEndDate(endDate);
+			} else {
+				throw new Exception("dates cannot be recongised");
+			}
+		} else {
+			setSearchWord(standarlizeWord(args));
+		}
+		
+	}
+
 	
-	private boolean isAttribute(String str) {
-		LinkedList<String> ls = new LinkedList<String>();
-		ls.add("startdate");
-		ls.add("starttime");
-		ls.add("enddate");
-		ls.add("endtime");
-		ls.add("taskname");
-		return ls.contains(str);
+	private void parseDeleteCommand() throws Exception{
+		String args = getArgs();
+		if(args.contains("all")) {
+			setDeleteMode("all");
+		} else {
+			String[] argsArray = args.split(",");
+			if (argsArray.length == 1 && !argsArray[0].contains("-")) {
+				args = args.replaceAll("\\D+","");
+				if(args != null) {
+					setDeleteTaskID(Integer.parseInt(args));
+				} else {
+					throw new Exception("deleted index invalid");
+				}
+			} else {
+				int[] idArr = parseMultipleIDs(argsArray);
+				setDeleteIDs(idArr);
+			}
+		}
 	}
 	
 	private void parseSetCommand() throws Exception{
@@ -447,126 +475,22 @@ public class CommandParser {
 		setCompleteIDs(idArr);
 		
 	}
-	private void parseHelpCommand(){
-		
-	}
-	
-	private void parseUndoCommand(){
-		
-	}
-	
-	private void parseSearchCommand() throws Exception {
-		String args = getArgs();
-		if(args.contains("on")) {
-			Date date = new PrettyTimeParser().parse(args).get(0);
-			LocalDateTime searchDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-			setSearchOnDate(searchDate.toLocalDate().toString());
-		} else if(args.contains("by")) {
-			Date date = new PrettyTimeParser().parse(args).get(0);
-			LocalDateTime searchDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-			setSearchByDate(searchDate.toLocalDate().toString());
-		} else if(args.contains("from")){
-			List<Date> dates = new PrettyTimeParser().parse(args);
-			if(dates.size() == 2) {
-				String startDate = dates.get(0).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().toLocalDate().toString();
-				setSearchStartDate(startDate);
-				String endDate = dates.get(1).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().toLocalDate().toString();
-				setSearchEndDate(endDate);
-			} else {
-				throw new Exception("dates cannot be recongised");
-			}
-		} else {
-			setSearchWord(standarlizeWord(args));
-		}
-		
-	}
-	
-	private String standarlizeWord(String args) {
-		String[] argsArr = args.split("\\s+");
-		String result = "";
-		for(int i=0; i<argsArr.length; i++) {
-			argsArr[i] = argsArr[i].trim();
-			result += argsArr[i];
-			result += " ";
-		}
-		return result.trim();
-	}
-	private void parseAddCommand(String args) throws Exception{
-		String taskType = getTaskType(args);
-		switch (taskType){
-			case "float":
-				parseFloatTask(args);
-				break;
-			case "deadline":
-				parseDeadlineTask(args);
-				break;
-			case "event":
-				parseEventTask(args);
-				break;
-			default:
-				throw new Exception("task type not recognised");		
-		}
 
-	}
-	
-	private void parseDeleteCommand() throws Exception{
+	private void parseUnarchivedCommand() throws Exception {
 		String args = getArgs();
-		if(args.contains("all")) {
-			setDeleteMode("all");
-		} else {
-			String[] argsArray = args.split(",");
-			if (argsArray.length == 1 && !argsArray[0].contains("-")) {
-				args = args.replaceAll("\\D+","");
-				if(args != null) {
-					setDeleteTaskID(Integer.parseInt(args));
-				} else {
-					throw new Exception("deleted index invalid");
-				}
-			} else {
-				int[] idArr = parseMultipleIDs(argsArray);
-				setDeleteIDs(idArr);
-			}
-		}
+		String[] argsArray = args.split(",");
+		int[] idArr = parseMultipleIDs(argsArray);
+		setUnarchivedIDs(idArr);
 	}
 	
-	private int[] parseMultipleIDs(String[] argsArray) throws Exception{
-		for(int i=0; i<argsArray.length; i++){
-			argsArray[i]= argsArray[i].trim();
-		}
-		LinkedList<Integer> l = new LinkedList<Integer>();
-		int[] idArr;
-		for(int i=0; i<argsArray.length;i++){
-			String[] indexArr = argsArray[i].split("-");
-			if(indexArr.length == 1 && isInteger(indexArr[0])) {
-				l.add(Integer.parseInt(indexArr[0].replaceAll("\\D+", "")));
-			} else {
-				String start = indexArr[0].replaceAll("\\D+", "");
-				String end = indexArr[1].replaceAll("\\D+","");
-				if(start == null || end == null) {
-					throw new Exception("delete index cannot recongised");
-				}
-				int startIndex = Integer.parseInt(start);
-				int endIndex = Integer.parseInt(end);
-				
-				if(startIndex>endIndex){
-					throw new Exception("delete index invalid");
-				}
-				
-				while(startIndex <= endIndex) {
-					if(!l.contains(startIndex)) {
-						l.add(startIndex);
-					}
-					startIndex++;
-				}
-				
-			}
-		}
-		idArr = new int[l.size()];
-		for(int k=0; k<l.size(); k++){
-			idArr[k] = l.get(k);
-		}
-		return idArr;
+	private void parseUncompleteCommand() throws Exception {
+		String args = getArgs();
+		String[] argsArray = args.split(",");
+		int[] idArr = parseMultipleIDs(argsArray);
+		setUncompleteIDs(idArr);
 	}
+	
+
 	
 	private void parseDisplayCommand() throws Exception{
 		String args = getArgs();
@@ -576,19 +500,33 @@ public class CommandParser {
 			throw new Exception("display cmd invalid");
 		}
 	}
+	private void parseClearCommand(){
+		
+	}
 	
-	private void setDisplayMode(String args) {
-		this.displayMode = args;
+	private void parseSaveCommand() { 
+		
 	}
-	private static String getTaskType(String input){
-		if(input.contains("from")) {
-			return "event";
-		} else if (input.contains("by")) {
-			return "deadline";
-		} else {
-			return "float";
-		}	
+	
+	private void parseLoadCommand() {
+		
 	}
+	
+	private void parseHomeCommand() {
+		
+	}
+	
+	private void parseExitCommand() {
+		
+	}
+	private void parseHelpCommand(){
+		
+	}
+	
+	private void parseUndoCommand(){
+		
+	}
+
 	
 	private void parseFloatTask(String args){
 		setTaskName(args);
@@ -615,27 +553,14 @@ public class CommandParser {
 		}
 
 	}
-	private String getDateString(LocalDateTime ldt) {
-		String date = ""+ldt.getYear()+"-"+format(ldt.getMonthValue())+"-"+format(ldt.getDayOfMonth());
-		return date;
 
-	}
-	private String getTimeString(LocalDateTime ldt) {
-		String time = ""+format(ldt.getHour())+":"+format(ldt.getMinute());
-		return time;
-
-	}
 	
 	private void parseDeadlineTask(String args) throws Exception {
 		//add finish project manual by 2015-10-03 0900
 		String[] argsArray = args.split("\\s+by\\s+");
-		String endStr = argsArray[argsArray.length-1];
-		
+		String endStr = argsArray[argsArray.length-1];		
 		String startStr = args.substring(0,args.lastIndexOf("by"));
-		
 		setTaskName(startStr);
-		
-		
 		List<Date> dates = new PrettyTimeParser().parse(endStr);
 		
 		if(dates.size() == 1){
@@ -654,6 +579,11 @@ public class CommandParser {
 
 	}
 	
+
+	/**********************************************************************
+	 ***************Miscellaneous setting attribute methods  *********
+	 ***********************************************************************/
+	
 	private void setUserInput(String userInput){
 		this.userInput = userInput;
 	}
@@ -662,23 +592,10 @@ public class CommandParser {
 		this.command = inputArr[0].trim();  
 	}
 	private void setArgs(){
-		if(!this.command.equals("undo") && !this.command.equals("help")
-				&& !this.command.equals("load") && !this.command.equals("save") && !this.command.equals("home")
-				&& !this.command.equals("exit")){
-			String[] inputArr = this.userInput.split(" ", 2);
-			if(inputArr.length == 2) {
-				this.args = trim(inputArr[1]);
-			}
+		String[] inputArr = this.userInput.split(" ", 2);
+		if(inputArr.length == 2) {
+			this.args = trim(inputArr[1]);
 		}
-	}
-	private String trim(String str){
-		String[] strArr = str.split("\\s+");
-		String result = "";
-		for(int i=0; i<strArr.length; i++) {
-			result += strArr[i];
-			result += " ";
-		}
-		return result.trim();
 	}
 	private String getArgs() {
 		return this.args;
@@ -701,9 +618,6 @@ public class CommandParser {
 	private void setTaskID(int id) {
 		this.taskID = id;
 	}
-	private void setSearchDate(String date) {
-		this.searchDate = date;
-	}	
 	private void setSearchWord(String word) {
 		this.searchWord = word;
 	}
@@ -719,6 +633,9 @@ public class CommandParser {
 	private void setDeleteMode(String mode){
 		this.deleteMode = mode;
 	}
+	private void setDisplayMode(String args) {
+		this.displayMode = args;
+	}
 	private void setDeleteIDs(int[] ids){
 		this.deleteIDs = ids;
 	}
@@ -727,9 +644,6 @@ public class CommandParser {
 	}
 	private void setStartDateTime(LocalDateTime start) {
 		this.start = start;
-	}
-	private void setEditDate(LocalDateTime date) {
-		this.editDate = date;
 	}
 	private void setSearchOnDate(String date) {
 		this.searchOnDate = date;
@@ -776,6 +690,10 @@ public class CommandParser {
 	private void setDeleteTaskID(int index) {
 		this.taskID = index;
 	}
+	
+	/**********************************************************************
+	 ***************Miscellaneous helper methods for parsing and formating*********
+	 ***********************************************************************/
 	private boolean isInteger(String str) {
 		str = str.replaceAll("\\D+","");
 		return str != null;
@@ -788,42 +706,93 @@ public class CommandParser {
 		}
 		return str;
 	}
+	private boolean isAttribute(String str) {
+		LinkedList<String> ls = new LinkedList<String>();
+		ls.add("startdate");
+		ls.add("starttime");
+		ls.add("enddate");
+		ls.add("endtime");
+		ls.add("taskname");
+		return ls.contains(str);
+	}
 
+	private String standarlizeWord(String args) {
+		String[] argsArr = args.split("\\s+");
+		String result = "";
+		for(int i=0; i<argsArr.length; i++) {
+			argsArr[i] = argsArr[i].trim();
+			result += argsArr[i];
+			result += " ";
+		}
+		return result.trim();
+	}
+	
+	private String trim(String str){
+		String[] strArr = str.split("\\s+");
+		String result = "";
+		for(int i=0; i<strArr.length; i++) {
+			result += strArr[i];
+			result += " ";
+		}
+		return result.trim();
+	}
+	private int[] parseMultipleIDs(String[] argsArray) throws Exception{
+		for(int i=0; i<argsArray.length; i++){
+			argsArray[i]= argsArray[i].trim();
+		}
+		LinkedList<Integer> l = new LinkedList<Integer>();
+		int[] idArr;
+		for(int i=0; i<argsArray.length;i++){
+			String[] indexArr = argsArray[i].split("-");
+			if(indexArr.length == 1 && isInteger(indexArr[0])) {
+				l.add(Integer.parseInt(indexArr[0].replaceAll("\\D+", "")));
+			} else {
+				String start = indexArr[0].replaceAll("\\D+", "");
+				String end = indexArr[1].replaceAll("\\D+","");
+				if(start == null || end == null) {
+					throw new Exception("delete index cannot recongised");
+				}
+				int startIndex = Integer.parseInt(start);
+				int endIndex = Integer.parseInt(end);
+				
+				if(startIndex>endIndex){
+					throw new Exception("delete index invalid");
+				}
+				
+				while(startIndex <= endIndex) {
+					if(!l.contains(startIndex)) {
+						l.add(startIndex);
+					}
+					startIndex++;
+				}
+				
+			}
+		}
+		idArr = new int[l.size()];
+		for(int k=0; k<l.size(); k++){
+			idArr[k] = l.get(k);
+		}
+		return idArr;
+	}
+	
+	private String getDateString(LocalDateTime ldt) {
+		String date = ""+ldt.getYear()+"-"+format(ldt.getMonthValue())+"-"+format(ldt.getDayOfMonth());
+		return date;
 
-	public static void main(String[] args) {
-//		String help = getHelpString();
-//		System.out.print(getHelpString());
-//		CommandParser cp2 = new CommandParser("delete 1,    3-5");
-//		print(cp2.getDeleteIDs());
-//		String str = "add drop tomorrow mother from tonight 2pm to 3pm";
-//		System.out.println(str.substring(str.lastIndexOf("from"), str.length()-1));
-//		String str ="";
-//		str = str.replaceAll("\\D+","");
-//		System.out.println(Integer.parseInt(str));
-		
-//		System.out.print(cp2.getSearchWord());
-//		print(cp2.getDeleteIDs());
-//		System.out.print(cp2.getUncompleteID());
-//		String arg = "edit 2 startDate sad";
-//		String[] argsArray = arg.split("from | to ");
-		
-//		String[] argsArray = arg.split(" ");
-//		String startStr = argsArray[1];
-//		String endStr = argsArray[2];
-//		System.out.print(startStr);
-//		System.out.print(endStr);
-//		print(argsArray);
-		
-//		String str = "1-10";
-//		String[] strArr = str.split("-");
-//		for(int i=0; i<strArr.length; i++){
-//			strArr[i] = strArr[i].trim();
-//		}
-//		print(strArr);
-//		System.out.println(cp2.getDeleteIDs());
-//		System.out.print(cp2.getDeleteIDs().toString());
-		
+	}
+	private String getTimeString(LocalDateTime ldt) {
+		String time = ""+format(ldt.getHour())+":"+format(ldt.getMinute());
+		return time;
 
+	}
+	private static String getTaskType(String input){
+		if(input.contains("from")) {
+			return "event";
+		} else if (input.contains("by")) {
+			return "deadline";
+		} else {
+			return "float";
+		}	
 	}
 	
 
