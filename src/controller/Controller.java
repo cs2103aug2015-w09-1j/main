@@ -49,7 +49,7 @@ public class Controller {
 			String _showStartDate = parser.getShowStartDate();
 			String _searchStartDate = parser.getSearchStartDate();
 			String _searchEndDate = parser.getSearchEndDate();
-			String _displayMode = parser.getDisplayMode();
+			//String _displayMode = parser.getDisplayMode();
 
 			switch (_cmdType.trim()) {
 			case "add":
@@ -105,11 +105,11 @@ public class Controller {
 
 			case "display":
 
-				if (_displayMode == null) {
+				//if (_displayMode == null) {
 					ArrayList<Task> list = TaskMemory.getInstance().
 							getCombinedTaskList();
 					displayList = list;
-				}
+				//}
 
 				break;
 
