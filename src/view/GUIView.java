@@ -344,7 +344,6 @@ public class GUIView{
 		TaskDisplayGrid.getChildren().clear();		
 		
 		displayTodayTitle();
-		
 		showList(Controller.getTodayTaskList(),type);
 
 		displayFollowingTitle();
