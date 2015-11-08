@@ -337,7 +337,7 @@ public class CommandParser {
 				break;
 			default:
 				throw new Exception("task type not recognised");		
-		}
+		} 
 
 	}
 	
