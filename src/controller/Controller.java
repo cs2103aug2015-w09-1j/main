@@ -86,7 +86,7 @@ public class Controller {
 				break;
 
 			case "search":
-
+				displayList = getCombinedTaskList();
 				if (_searchWord != null) {
 					displayList = logic.searchTaskByKeyword(displayList,
 							_searchWord.trim());
@@ -129,6 +129,7 @@ public class Controller {
 				break;
 
 			case "archive":
+				displayList = getCombinedTaskList();
 				int[] _archiveIndex = parser.getArchivedIDs();
 				_editAttr = "taskType";
 				_editInfo = "Archived";
@@ -147,6 +148,7 @@ public class Controller {
 				break;
 
 			case "complete":
+				displayList = getCombinedTaskList();
 				int[] _completeIndex = parser.getCompleteIDs();
 				_editAttr = "taskType";
 				_editInfo = "Completed";
@@ -165,7 +167,7 @@ public class Controller {
 				break;
 
 			case "show":
-
+				displayList = getCombinedTaskList();
 				if (_showByDate != null) {
 					displayList = logic.searchTaskByDate(displayList,
 							_showByDate);
