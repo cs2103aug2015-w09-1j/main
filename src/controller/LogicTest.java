@@ -535,7 +535,7 @@ public class LogicTest {
 	}
 
 	@Test
-	public void taskListTest() {
+	public void taskListTest() throws Exception {
 		ClearTaskTest();
 		assertEquals(0, taskList.size());
 		ArrayList<Task> getArchivedList = TaskMemory.getInstance().getArchivedList();

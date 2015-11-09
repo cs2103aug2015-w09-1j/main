@@ -22,9 +22,9 @@ public class Controller {
 	private static String _helpMessage = null;
 	private static String _errorMessage = null;
 
-	public static void executeCMD(String input) {
+	public static void executeCMD(String input) throws Exception {
 
-		try {
+		
 			parser = new CommandParser(input.trim());
 
 			String _cmdType = parser.getCommandType();
@@ -211,12 +211,11 @@ public class Controller {
 				// close program
 				Platform.exit();
 				break;
+			default:
+				throw new Exception(parser.getErrorMessage());
 
 			}
-		} catch (Exception e) {
-			String msg = "ERROR";
-			setErrorMessage(msg);
-		}
+			
 	}
 
 	public static ArrayList<Task> getTaskList() {

@@ -297,6 +297,10 @@ public class GUIView{
 	protected void showClear() {
 		signal.setText("All tasks selected have been cleared.");
 	}
+	
+	protected void showFromTo() {
+		message.setText("Tasks under the required inteval are shown below");
+	}
 
 	protected void showHelp(String string) {
 		GridPane popUpGrid = new GridPane();

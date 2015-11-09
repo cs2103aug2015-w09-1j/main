@@ -2,7 +2,7 @@
 
 package view;
 
-import java.io.IOException;
+
 import controller.Controller;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -152,7 +152,7 @@ public class GUIController extends Application {
 		}
 	}
 
-	private void executeClear(String command) {
+	private void executeClear(String command) throws Exception {
 		Controller.executeCMD(command);
 		GUI_VIEW.userCommandBlock.clear();
 		GUI_VIEW.showPartitionList(0);
@@ -160,17 +160,17 @@ public class GUIController extends Application {
 		GUI_VIEW.showClear();
 	}
 
-	private void executeHelp(String command) {
+	private void executeHelp(String command) throws Exception {
 		Controller.executeCMD(command);
 		GUI_VIEW.userCommandBlock.clear();
 		GUI_VIEW.showHelp(Controller.getHelpString());
 	}
 
-	private void executeExit(String command) {
+	private void executeExit(String command) throws Exception {
 		Controller.executeCMD(command);
 	}
 
-	private void executeUndo(String command) throws IOException {
+	private void executeUndo(String command) throws Exception {
 		Controller.executeCMD(command);
 		GUI_VIEW.userCommandBlock.clear();
 		GUI_VIEW.showPartitionList(0);
@@ -178,7 +178,7 @@ public class GUIController extends Application {
 		GUI_VIEW.showUndo();
 	}
 
-	private void executeUnComOrArc(String command) throws IOException {
+	private void executeUnComOrArc(String command) throws Exception {
 		Controller.executeCMD(command);
 		GUI_VIEW.userCommandBlock.clear();
 		GUI_VIEW.showPartitionList(0);
@@ -186,7 +186,7 @@ public class GUIController extends Application {
 		GUI_VIEW.showUnComOrArc();
 	}
 
-	private void executeArchive(String command) throws IOException {
+	private void executeArchive(String command) throws Exception {
 		Controller.executeCMD(command);
 		GUI_VIEW.userCommandBlock.clear();
 		GUI_VIEW.showPartitionList(0);
@@ -194,7 +194,7 @@ public class GUIController extends Application {
 		GUI_VIEW.showArchive();
 	}
 
-	private void executeComplete(String command) throws IOException {
+	private void executeComplete(String command) throws Exception {
 		Controller.executeCMD(command);
 		GUI_VIEW.userCommandBlock.clear();
 		GUI_VIEW.showPartitionList(0);
@@ -202,7 +202,7 @@ public class GUIController extends Application {
 		GUI_VIEW.showComplete();
 	}
 
-	private void executeUpdate(String command) throws IOException {
+	private void executeUpdate(String command) throws Exception {
 		Controller.executeCMD(command);
 		GUI_VIEW.userCommandBlock.clear();
 		GUI_VIEW.showPartitionList(0);
@@ -210,20 +210,20 @@ public class GUIController extends Application {
 		GUI_VIEW.showUpdate();
 	}
 
-	private void executeAll(String command) throws IOException {
+	private void executeAll(String command) throws Exception {
 		Controller.executeCMD(command);
 		GUI_VIEW.userCommandBlock.clear();
 		GUI_VIEW.showPartitionList(0);
 		GUI_VIEW.showAll();
 	}
 
-	private void executeSave(String command) throws IOException {
+	private void executeSave(String command) throws Exception {
 		Controller.executeCMD(command);
 		GUI_VIEW.userCommandBlock.clear();
 		GUI_VIEW.showSave();
 	}
 
-	private void executeLoad(String command) throws IOException {
+	private void executeLoad(String command) throws Exception {
 		Controller.executeCMD(command);
 		GUI_VIEW.userCommandBlock.clear();
 		GUI_VIEW.showPartitionList(0);
@@ -231,14 +231,14 @@ public class GUIController extends Application {
 		GUI_VIEW.showLoad();
 	}
 
-	private void executeSearch(String command) throws IOException {
+	private void executeSearch(String command) throws Exception {
 		Controller.executeCMD(command);
 		GUI_VIEW.userCommandBlock.clear();
 		GUI_VIEW.showGettedList(Controller.getTaskList());
 		GUI_VIEW.showSearch();
 	}
 
-	private void executeDelete(String command) throws IOException {
+	private void executeDelete(String command) throws Exception {
 		Controller.executeCMD(command);
 		GUI_VIEW.userCommandBlock.clear();
 		GUI_VIEW.showPartitionList(0);
@@ -246,7 +246,7 @@ public class GUIController extends Application {
 		GUI_VIEW.showDelete();
 	}
 
-	private void executeShow(String command) throws IOException {
+	private void executeShow(String command) throws Exception {
 		Controller.executeCMD(command);
 		switch (getCommandType(command, 1)) {
 		case "archived":
@@ -278,6 +278,10 @@ public class GUIController extends Application {
 			GUI_VIEW.userCommandBlock.clear();
 			GUI_VIEW.showGettedList(Controller.getTodayTaskList());
 			GUI_VIEW.showToday();
+		case "from":
+			GUI_VIEW.userCommandBlock.clear();
+			GUI_VIEW.showGettedList(Controller.getTaskList());
+			GUI_VIEW.showFromTo();
 			break;
 		default:
 			GUI_VIEW.showError();
@@ -285,7 +289,7 @@ public class GUIController extends Application {
 		}
 	}
 
-	private void executeSet(String command) throws IOException {
+	private void executeSet(String command) throws Exception {
 		Controller.executeCMD(command);
 		switch (getCommandType(command, 1)) {
 		case "path":
@@ -302,7 +306,7 @@ public class GUIController extends Application {
 		}
 	}
 
-	private void executeAdd(String command) throws IOException {
+	private void executeAdd(String command) throws Exception {
 		Controller.executeCMD(command);
 		GUI_VIEW.userCommandBlock.clear();
 		GUI_VIEW.showPartitionList(0);
