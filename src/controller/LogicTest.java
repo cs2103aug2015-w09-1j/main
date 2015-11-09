@@ -537,6 +537,12 @@ public class LogicTest {
 	public void taskListTest() {
 		ClearTaskTest();
 		assertEquals(0, taskList.size());
+		ArrayList<Task> getArchivedList = TaskMemory.getInstance().getArchivedList();
+		logic.deleteAllTask(getArchivedList);
+		taskList = TaskMemory.getInstance().getCombinedTaskList();
+		taskList = TaskMemory.getInstance().getCompletedList();
+		logic.deleteAllTask(taskList);
+		taskList = TaskMemory.getInstance().getCombinedTaskList();
 
 		taskList = Controller.getFloatingTaskList();
 		assertEquals(0, taskList.size());
@@ -597,9 +603,9 @@ public class LogicTest {
 		assertEquals(3, taskList.size());
 		assertEquals("helloWord", taskList.get(2).getTaskName());
 
-		Controller.executeCMD("edit 2 hello123");
+		Controller.executeCMD("edit 3 hello123");
 		taskList = Controller.getCombinedTaskList();
-		assertEquals(4, taskList.size());
+		assertEquals(3, taskList.size());
 		assertEquals("hello123", taskList.get(2).getTaskName());
 		Controller.executeCMD("undo");
 		taskList = Controller.getCombinedTaskList();
@@ -666,7 +672,7 @@ public class LogicTest {
 		Controller.executeCMD("display");
 		Controller.executeCMD("show archived");
 		taskList = Controller.getArchivedList();
-		assertEquals(8, taskList.size());
+		assertEquals(2, taskList.size());
 
 		Controller.executeCMD("unarchived 1,2");
 		taskList = Controller.getCombinedTaskList();
@@ -678,7 +684,7 @@ public class LogicTest {
 		
 		Controller.executeCMD("show complete");
 		taskList = Controller.getCompletedList();
-		assertEquals(7, taskList.size());
+		assertEquals(3, taskList.size());
 		
 
 		Controller.executeCMD("uncomplete 1-2");
@@ -700,7 +706,7 @@ public class LogicTest {
 		Controller.executeCMD("display");
 		Controller.executeCMD("show floating");
 		taskList = Controller.getFloatingTaskList();
-		assertEquals(2, taskList.size());
+		assertEquals(0, taskList.size());
 
 		Controller.executeCMD("display");
 		Controller.executeCMD("save");
@@ -724,7 +730,7 @@ public class LogicTest {
 		taskList = Controller.getCombinedTaskList();
 		assertEquals(0, taskList.size());
 
-		assertEquals(12, TaskMemory.getInstance().getSize());
+		assertEquals(2, TaskMemory.getInstance().getSize());
 
 		Controller.executeCMD("exit");
 
