@@ -10,8 +10,7 @@ import controller.LogicTest;
 import view.UiTest;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-	SystematicTest.class,
-	UiTest.class,
+   UiTest.class,
    LogicTest.class,
    CommandParserTest.class,
    TestStorage.class,
@@ -21,6 +20,7 @@ import view.UiTest;
    TestDelete.class,
    TestDeleteBulk.class,
    TestUpdate.class,
+   SystematicTest.class,
 })
 public class TestCommands {   
 }
