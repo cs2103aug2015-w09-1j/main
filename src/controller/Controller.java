@@ -1,7 +1,6 @@
 package controller;
 
 import java.util.*;
-import java.io.IOException;
 
 import javafx.application.Platform;
 import util.CommandParser;
@@ -25,7 +24,7 @@ public class Controller {
 	public static void executeCMD(String input) throws Exception {
 
 		
-			parser = new CommandParser(input.trim());
+			parser = new CommandParser(input);
 
 			String _cmdType = parser.getCommandType();
 			String _taskName = parser.getTaskName();
