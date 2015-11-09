@@ -12,6 +12,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+/**
+ * This is a class to detect users' action and control the behavior of GUIView
+ * */
 
 public class GUIController extends Application {
 	private static double xOffset = 0;

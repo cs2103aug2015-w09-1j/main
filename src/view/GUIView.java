@@ -31,6 +31,9 @@ import model.FloatingTask;
 import model.Task;
 import util.Storage;
 
+/**
+ * This is a class to build GUI directly
+ * */
 public class GUIView{
 	private int taskCount;
 	private int gridRowCount;
