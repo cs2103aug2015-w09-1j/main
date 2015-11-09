@@ -716,7 +716,7 @@ public class LogicTest {
 		assertEquals(2, taskList.size());
 
 		Controller.executeCMD("help");
-		String help = "add <name>\nadd <name> from <time> to <time>\nadd <name> by   <deadline>\ndelete  <id>\nsearch  <id>\narchive <id>\nedit <id> <attribute> <info>\nset  path     <storage path>\nset  filename <filename>\nundo\n";
+		String help = "add <name>\nadd <name> from <time> to <time>\nadd <name> by   <deadline>\ndelete  <id>\nsearch  <id>\narchive <id>\nedit <id> <attribute> <info>\nset  path     <storage path>\nset  filename <filename>\nshow on <date>\nshow by <date>\nundo\n";
 		assertEquals(help, Controller.getHelpString());
 
 		Controller.executeCMD("clear");
