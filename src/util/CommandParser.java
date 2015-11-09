@@ -887,14 +887,6 @@ public class CommandParser {
 		}	
 	}
 	
-	public static void main(String[] agrs) throws Exception {
-		CommandParser cp1 = new CommandParser("add task from today to tomorrow");
-		System.out.println(cp1.getStartDate());
-		System.out.println(cp1.getEndDate());
-		System.out.println(cp1.getStartTime());
-		System.out.println(cp1.getEndTime());
-		
-	}
 
 }
 
