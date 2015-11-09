@@ -284,8 +284,8 @@ public class CommandParserTest {
 	@Test
 	public void testGetEndTime() throws Exception {
 		//add an event task
-		CommandParser cp = new CommandParser("add meeting from 2015-10-03 0900 to 2015-10-04 0900");
-		assertEquals("09:00", cp.getEndTime());
+		CommandParser cp = new CommandParser("add meeting from today 2pm to today 3pm");
+		assertEquals("15:00", cp.getEndTime());
 		
 		//add a deadline task
 		CommandParser cp2 = new CommandParser("add finish project manual by 2015-10-03 0900");
@@ -340,11 +340,11 @@ public class CommandParserTest {
 	}
 
 	/**
-	 * test getDelete()
-	 * which should return the starting date of a task in "YYYY-MM-DD" format
+	 * test getDeleteIDs()
+	 * which should return a index in Integer type
 	 */
 	@Test
-	public void TestGetDeleteIDs() throws Exception{
+	public void testGetDeleteIDs() throws Exception{
 		CommandParser cp1 = new CommandParser("delete 1, 2,3, 10-12");
 		int[] target = {1, 2, 3, 10, 11, 12};
 		int[] actual = cp1.getDeleteIDs();
@@ -356,82 +356,149 @@ public class CommandParserTest {
 		assertArrayEquals(target2, actual2);
 
 	}
+	/**
+	 * test getStart()
+	 * which should return the starting date and time in LocalDateTime type
+	 */
 	@Test
-	public void TestGetStart() throws Exception{
+	public void testGetStart() throws Exception{
 		CommandParser cp1 = new CommandParser("add attend tutorial from 2015-10-03 to 2015-10-23");
 		assertEquals("2015-10-03", cp1.getStartDateTime().toLocalDate().toString());
 	}
-	
+	/**
+	 * test getEnd()
+	 * which should return the end date in LocalDateTime type
+	 */
 	@Test
-	public void TestGetEnd() throws Exception{
+	public void testGetEnd() throws Exception{
 		CommandParser cp1 = new CommandParser("add finish report by 2015-10-23");
 		assertEquals("2015-10-23", cp1.getEndDateTime().toLocalDate().toString());
 	}
-	
+	/**
+	 * test getSearchOnDate()
+	 * which should return a date in a String when user wants to 
+	 * search tasks on that date
+	 */
 	@Test
-	public void TestSearchOnDate() throws Exception{
+	public void testSearchOnDate() throws Exception{
 		CommandParser cp1 = new CommandParser("search on December 29");
 		assertEquals("2015-12-29", cp1.getSearchOnDate());
 		assertEquals(null, cp1.getSearchByDate());
 	}
-	
+	/**
+	 * test getSearchByDate()
+	 * which should return a date in a String when user wants to 
+	 * search tasks before that date
+	 */
 	@Test
-	public void TestSearchByDate() throws Exception {
+	public void testSearchByDate() throws Exception {
 		CommandParser cp1 = new CommandParser("search by December 9");
 		assertEquals(null, cp1.getSearchOnDate());
 		assertEquals("2015-12-09", cp1.getSearchByDate());
 	}
-	
+	/**
+	 * test getShowOption()
+	 * which should return the show option in a String type
+	 */
 	@Test
-	public void TestGetShowOption() throws Exception{
-		CommandParser cp1 = new CommandParser("show archive");
+	public void testGetShowOption() throws Exception{
+		//show all archived tasks
+		CommandParser cp1 = new CommandParser("show archived");
 		assertEquals("archived", cp1.getShowOption());
 		
+		//show all floating tasks
 		CommandParser cp2 = new CommandParser("show floating");
 		assertEquals("floating", cp2.getShowOption());
 		
+		//show all complete tasks
 		CommandParser cp3 = new CommandParser("show complete");
 		assertEquals("complete", cp3.getShowOption());
 	}
-	
+	/**
+	 * test getShowByDate()
+	 * which should return a date in a String when user wants to 
+	 * show tasks before that date
+	 */
 	@Test
-	public void TestGetShowByDate() throws Exception{
+	public void testGetShowByDate() throws Exception{
 		CommandParser cp1 = new CommandParser("show by December 12");
 		assertEquals("2015-12-12", cp1.getShowByDate());
 	}
-	
+	/**
+	 * test getShowDate()
+	 * which should return a date in a String when user wants to 
+	 * show tasks on that date
+	 */
 	@Test
-	public void TestGetShowDate() throws Exception{
+	public void testGetShowDate() throws Exception{
 		CommandParser cp1 = new CommandParser("show December 12");
 		assertEquals("2015-12-12", cp1.getShowDate());
 	}
-	
+	/**
+	 * test getShowStartDate()
+	 * which should return the starting date of an interval in a String when user wants to 
+	 * show tasks within a certain period
+	 */
 	@Test
-	public void TestGetShowStartDate() throws Exception {
+	public void testGetShowStartDate() throws Exception {
 		CommandParser cp1 = new CommandParser("show from December 12 to December 20");
 		assertEquals("2015-12-12", cp1.getShowStartDate());
 	}
-	
+	/**
+	 * test getShowEndDate()
+	 * which should return the ending date of an interval in a String when user wants to 
+	 * show tasks within a certain period
+	 */
 	@Test
-	public void TestGetShowEndDate() throws Exception {
+	public void testGetShowEndDate() throws Exception {
 		CommandParser cp1 = new CommandParser("show from December 12 to December 20 ");
 		assertEquals("2015-12-20", cp1.getShowEndDate());
 	}
+	/**
+	 * test getUnarchivedIDs()
+	 * which should return a list of indexes in Integer type
+	 * when user wants to unarchive a group of tasks
+	 */
 	@Test
-	public void TestGetUnarchivedID() throws Exception{
-		int[] id = {1};
+	public void testGetUnarchivedID() throws Exception{
+		int[] id1 = {1};
 		CommandParser cp1 = new CommandParser("unarchived 1");
-		assertArrayEquals(id, cp1.getUnarchivedIDs());
+		assertArrayEquals(id1, cp1.getUnarchivedIDs());
+		
+		int[] id2 = {1,2,4};
+		CommandParser cp2 = new CommandParser("unarchived 1,2,4");
+		assertArrayEquals(id2, cp2.getUnarchivedIDs());
+		
+		int[] id3 = {1,2,3,5,6};
+		CommandParser cp3 = new CommandParser("unarchive 1-3, 5-6");
+		assertArrayEquals(id3, cp3.getArchivedIDs());
 	}
+	/**
+	 * test getUncompleteIDs()
+	 * which should return a list of indexes in Integer type
+	 * when user wants to label tasks as "incomplete"
+	 */
 	@Test
-	public void TestGetUncompleteID() throws Exception{
+	public void testGetUncompleteID() throws Exception{
 		int[] id1 = {1};
 		CommandParser cp1 = new CommandParser("uncomplete 1");
 		assertArrayEquals(id1, cp1.getUncompleteIDs());
+		
+		int[] id2 = {1,2,3,67};
+		CommandParser cp2 = new CommandParser("uncomplete 1-3, 6   7");
+		assertArrayEquals(id2, cp2.getArchivedIDs());
+		
+		int[] id3 = {1,2,3,5,6};
+		CommandParser cp3 = new CommandParser("uncomplete 1-3, 5-6");
+		assertArrayEquals(id3, cp3.getArchivedIDs());
 	}
-	
+	/**
+	 * test getUnArchivedIDs()
+	 * which should return a list of indexes in Integer type
+	 * when user wants to archive a group of tasks
+	 */
 	@Test
-	public void TestGetArchivedIDs() throws Exception {
+	public void testGetArchivedIDs() throws Exception {
 		int[] id1 = {1};
 		CommandParser cp1 = new CommandParser("archive 1");
 		assertArrayEquals(id1, cp1.getArchivedIDs());
@@ -444,7 +511,11 @@ public class CommandParserTest {
 		CommandParser cp3 = new CommandParser("archive 1-3, 5-6");
 		assertArrayEquals(id3, cp3.getArchivedIDs());
 	}
-	
+	/**
+	 * test getCompleteIDs()
+	 * which should return a list of indexes in Integer type
+	 * when user wants to label tasks as "complete"
+	 */
 	@Test
 	public void TestGetCompleteIDs() throws Exception {
 		int[] id1 = {1};
@@ -459,20 +530,32 @@ public class CommandParserTest {
 		CommandParser cp3 = new CommandParser("complete 1-3, 5-6");
 		assertArrayEquals(id3, cp3.getCompleteIDs());
 	}
-	
+	/**
+	 * test getHelpString()
+	 * which should return a String that represents a command list
+	 * as reference for users
+	 */
 	@Test
 	public void TestGetHelpString() throws Exception {
 		CommandParser cp1 = new CommandParser("help");
 		String help = "add <name>\nadd <name> from <time> to <time>\nadd <name> by   <deadline>\ndelete  <id>\nsearch  <id>\narchive <id>\nedit <id> <attribute> <info>\nset  path     <storage path>\nset  filename <filename>\nundo\n";
 		assertEquals(help, cp1.getHelpString());
 	}
-	
+	/**
+	 * test getSearchStartDate()
+	 * which should return a String that represents the starting date
+	 * when user want to search tasks within certain period
+	 */
 	@Test
 	public void TestGetSearchStartDate() throws Exception {
 		CommandParser cp1 = new CommandParser("search from 2015-10-31 to 2015-11-3");
 		assertEquals("2015-10-31", cp1.getSearchStartDate());
 	}
-	
+	/**
+	 * test getSearchStartDate()
+	 * which should return a String that represents the ending date
+	 * when user want to search tasks within certain period
+	 */
 	@Test
 	public void TestGetSearchEndDate() throws Exception{
 		CommandParser cp1 = new CommandParser("search from 2015-10-31 to 2015-11-3");
