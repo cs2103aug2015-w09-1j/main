@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
 
-
+import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.loadui.testfx.GuiTest;
 
@@ -70,22 +70,29 @@ public class UiTest extends GuiTest {
 	  
 	  //@@author Jason (A0127830J)
 	  @Test
-	  public void showAddTest() {
-		  type("load").push(KeyCode.ENTER);
-		  type("add meeting").push(KeyCode.ENTER);
-		  assertEquals(((Label) find("#sig")).getText(), "New task added!");
-		  assertThat(find("#text-field"), NodeMatchers.hasText(""));
-	  }
-	  
-	  
-	  @Test
 	  public void showWelcomeTest() {
 		  assertEquals(((Label) find("#msg")).getText(), "Welcome to SilentJarvis! Recent tasks are listed below");
 		  assertEquals(((Label) find("#sig")).getText(), "");
 	  }
+	  
+	  @Test
+	  public void displayTodayTitleTest() {
+		  type("display").push(KeyCode.ENTER);
+		  assertThat(find("#task-grid"), NodeMatchers.hasChild("#today-group"));
+	  }
+	  @Test
+	  public void displayFollowingTitleTest() {
+		  type("display").push(KeyCode.ENTER);
+		  assertThat(find("#task-grid"), NodeMatchers.hasChild("#following-group"));
+	  }
+	  @Test
+	  public void displayFloatingTitleTest() {
+		  type("display").push(KeyCode.ENTER);
+		  assertThat(find("#task-grid"), NodeMatchers.hasChild("#floating-group"));
+	  }
+	  
 	  @Test
 	  public void showErrorTest() {
-		  type("load").push(KeyCode.ENTER);
 		  type("asdfasd").push(KeyCode.ENTER);
 		  assertEquals(((Label) find("#msg")).getText(), "Error! Invalid or wrong format of command.");
 		  assertEquals(((Label) find("#sig")).getText(), "");
@@ -101,46 +108,54 @@ public class UiTest extends GuiTest {
 	  
 	  @Test
 	  public void showSetFileNameTest() {
-		  type("load").push(KeyCode.ENTER);
 		  type("set filename test").push(KeyCode.ENTER);
 		  assertEquals(((Label) find("#msg")).getText(), "New filename: " + Storage.getInstance().getfileName());
 		  assertEquals(((Label) find("#sig")).getText(), "Set successfully!");
 	  }
 	  
+	  
 	  @Test
 	  public void showSetPathTest() {
-		  type("load").push(KeyCode.ENTER);
-		  type("set path test").push(KeyCode.BACK_SLASH).push(KeyCode.ENTER);
+		  type("set path ").push(KeyCode.BACK_SLASH).type("test").push(KeyCode.ENTER);
 		  assertEquals(((Label) find("#msg")).getText(), "New path: " + Storage.getInstance().getPath());
 		  assertEquals(((Label) find("#sig")).getText(), "Set successfully!");
 	  }
 	  
 	  @Test
 	  public void showAllTest() {
-		  type("load").push(KeyCode.ENTER);
 		  type("display").push(KeyCode.ENTER);
 		  assertEquals(((Label) find("#msg")).getText(), "All tasks are listed below");
 		  assertEquals(((Label) find("#sig")).getText(), "");
 	  }
 	  @Test
 	  public void showArchived() {
-		  type("load").push(KeyCode.ENTER);
 		  type("show archived").push(KeyCode.ENTER);
 		  assertEquals(((Label) find("#msg")).getText(), "Archived tasks are listed below");
 		  assertEquals(((Label) find("#sig")).getText(), "");
 	  }
 	  
 	  @Test
+	  public void showUnArcTest() {
+		  type("show archived").push(KeyCode.ENTER);
+		  type("unarchived 1").push(KeyCode.ENTER);
+		  assertEquals(((Label) find("#sig")).getText(), "Task recovered!");
+	  }
+	  
+	  @Test
 	  public void showCompletedTest() {
-		  type("load").push(KeyCode.ENTER);
 		  type("show complete").push(KeyCode.ENTER);
 		  assertEquals(((Label) find("#msg")).getText(), "Completed tasks are listed below");
 		  assertEquals(((Label) find("#sig")).getText(), "");
 	  }
+	  @Test
+	  public void showUnCompletedTest() {
+		  type("show complete").push(KeyCode.ENTER);
+		  type("uncomplete 1").push(KeyCode.ENTER);
+		  assertEquals(((Label) find("#sig")).getText(), "Task recovered!");
+	  }
 	  
 	  @Test
 	  public void showSearchTest() {
-		  type("load").push(KeyCode.ENTER);
 		  type("search meet").push(KeyCode.ENTER);
 		  assertEquals(((Label) find("#msg")).getText(), "Search results");
 		  assertEquals(((Label) find("#sig")).getText(), "");
@@ -148,7 +163,6 @@ public class UiTest extends GuiTest {
 	  
 	  @Test
 	  public void showFloatingTest() {
-		  type("load").push(KeyCode.ENTER);
 		  type("show floating").push(KeyCode.ENTER);
 		  assertEquals(((Label) find("#msg")).getText(), "Floating tasks are listed below");
 		  assertEquals(((Label) find("#sig")).getText(), "");
@@ -156,7 +170,6 @@ public class UiTest extends GuiTest {
 	  
 	  @Test
 	  public void showByTest() {
-		  type("load").push(KeyCode.ENTER);
 		  type("show by tomorrow").push(KeyCode.ENTER);
 		  assertEquals(((Label) find("#msg")).getText(), "Tasks before selected date are listed below");
 		  assertEquals(((Label) find("#sig")).getText(), "");
@@ -164,7 +177,6 @@ public class UiTest extends GuiTest {
 	  
 	  @Test
 	  public void showOnTest() {
-		  type("load").push(KeyCode.ENTER);
 		  type("show on tomorrow").push(KeyCode.ENTER);
 		  assertEquals(((Label) find("#msg")).getText(), "Tasks on selected date are listed below");
 		  assertEquals(((Label) find("#sig")).getText(), "");
@@ -177,9 +189,16 @@ public class UiTest extends GuiTest {
 		  assertEquals(((Label) find("#sig")).getText(), "Saved to " + Storage.getInstance().getPath() + Storage.getInstance().getfileName());
 	  }
 	  
+	  
+	  @Test
+	  public void showAddTest() {
+		  type("add meeting").push(KeyCode.ENTER);
+		  assertEquals(((Label) find("#sig")).getText(), "New task added!");
+		  assertThat(find("#text-field"), NodeMatchers.hasText(""));
+	  }
+	  
 	  @Test
 	  public void showDeleteTest() {
-		  type("load").push(KeyCode.ENTER);
 		  type("delete 1").push(KeyCode.ENTER);
 		  assertEquals(((Label) find("#sig")).getText(), "Task Deleted!");
 	  }
@@ -205,24 +224,12 @@ public class UiTest extends GuiTest {
 	  
 	  @Test
 	  public void showCompleteTest() {
-		  type("load").push(KeyCode.ENTER);
 		  type("complete 1").push(KeyCode.ENTER);
 		  assertEquals(((Label) find("#sig")).getText(), "Task complete!");
 	  }
 	  
 	  @Test
-	  public void showUnComOrArcTest() {
-		  type("load").push(KeyCode.ENTER);
-		  type("uncomplete 1").push(KeyCode.ENTER);
-		  assertEquals(((Label) find("#sig")).getText(), "Task recovered!");
-		  type("display").push(KeyCode.ENTER);
-		  type("unarchived 1").push(KeyCode.ENTER);
-		  assertEquals(((Label) find("#sig")).getText(), "Task recovered!");
-	  }
-	  
-	  @Test
 	  public void showArchiveTest() {
-		  type("load").push(KeyCode.ENTER);
 		  type("archive 1").push(KeyCode.ENTER);
 		  assertEquals(((Label) find("#sig")).getText(), "Task archived!");
 	  }
@@ -231,6 +238,7 @@ public class UiTest extends GuiTest {
 	  public void showClearTest() {
 		  type("clear").push(KeyCode.ENTER);
 		  assertEquals(((Label) find("#sig")).getText(), "All tasks selected have been cleared.");
+		  type("undo").push(KeyCode.ENTER);
 	  }
 	  
 	  @Test
@@ -240,38 +248,24 @@ public class UiTest extends GuiTest {
 		  assertEquals(((Text) find("#help-string")).getText(), Controller.getHelpString());
 		  assertEquals(((Text) find("#help-end")).getText(), "Press <ESC> to close.");
 		  push(KeyCode.ESCAPE);	  
-		  
-	  }
-	  
-	  @Test
-	  public void displayTodayTitleTest() {
-		  type("display").push(KeyCode.ENTER);
-		  assertThat(find("#task-grid"), NodeMatchers.hasChild("#today-group"));
-	  }
-	  @Test
-	  public void displayFollowingTitleTest() {
-		  type("display").push(KeyCode.ENTER);
-		  assertThat(find("#task-grid"), NodeMatchers.hasChild("#following-group"));
-	  }
-	  @Test
-	  public void displayFloatingTitleTest() {
-		  type("display").push(KeyCode.ENTER);
-		  assertThat(find("#task-grid"), NodeMatchers.hasChild("#floating-group"));
+		
 	  }
 	  
 	  @Test
 	  public void displayAEventTaskTest() {
-		  type("clear").push(KeyCode.ENTER);
-		  type("add meeting from today 2pm to tomorrow 2pm").push(KeyCode.ENTER);
-		  assertEquals(((Text) find("#event-name")).getText(), " " + Integer.valueOf(1).toString() + ". " + "meeting");
+		  type("add consultation from today 2pm to tomorrow 2pm").push(KeyCode.ENTER);
+		  assertThat(((Text) find("#event-name")).getText(), CoreMatchers.containsString("consultation"));
 		  assertEquals(((Text) find("#event-info")).getText(), "  S:  " + LocalDate.now().toString() + " " + "14:00" + "    E:  " + LocalDate.now().plusDays(1).toString() + " "
 					+ "14:00");
 	  }
+	  
 	  @Test
 	  public void displayAFloatingTaskTest() {
 		  type("clear").push(KeyCode.ENTER);
 		  type("add reading competitive programming").push(KeyCode.ENTER);
 		  assertEquals(((Text) find("#floating-name")).getText(), " " + Integer.valueOf(1).toString() + ". " + "reading competitive programming");
+		  type("undo").push(KeyCode.ENTER);
+		  type("undo").push(KeyCode.ENTER);
 	  }
 	  
 	  @Test
@@ -280,7 +274,11 @@ public class UiTest extends GuiTest {
 		  type("add dinner date by tomorrow 8pm").push(KeyCode.ENTER);
 		  assertEquals(((Text) find("#deadline-name")).getText(), " " + Integer.valueOf(1).toString() + ". " + "dinner date");
 		  assertEquals(((Text) find("#deadline-info")).getText(), "    By: " + LocalDate.now().plusDays(1).toString() + " " + "20:00");
+		  type("undo").push(KeyCode.ENTER);
+		  type("undo").push(KeyCode.ENTER);
 	  }
+	  
+	  
 	  
 
 	  

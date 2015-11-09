@@ -509,13 +509,16 @@ public class GUIView{
 			floatingBack = new ImageView(floatingImage);
 		}
 		holdBack.getChildren().addAll(floatingBack, floating);
-
+		
+		GridPane nameGrid = new GridPane();
+		nameGrid.setPrefSize(375, 25);
 		Text name = new Text();
 		name.setId("floating-name");
 		name.setText(" " + Integer.valueOf(taskCount).toString() + ". " + task.getTaskName());
 		name.setFont(TASK_NAME_FONT);
 		name.setFill(FLOATING_COLOR);
-		floating.add(name, 0, 0);
+		nameGrid.add(name, 0, 0);
+		floating.add(nameGrid, 0, 0);
 
 		if (task.getTaskType().equals("Completed") || task.getTaskType() == "Completed") {
 			name.setFill(COMPLETED_COLOR);
