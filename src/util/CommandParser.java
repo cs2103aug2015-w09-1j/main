@@ -582,7 +582,8 @@ public class CommandParser {
 	 */
 	private void parseEventTask(String args)  {
 		String taskNameStr = args.substring(0, args.lastIndexOf("from"));
-		String timeStr = args.substring(args.lastIndexOf("from"),args.length()-1);	
+		String timeStr = args.substring(args.lastIndexOf("from"),args.length());	
+		System.out.println(timeStr);
 		setTaskName(taskNameStr);
 		
 		List<Date> dates = new PrettyTimeParser().parse(timeStr);
@@ -884,6 +885,15 @@ public class CommandParser {
 		} else {
 			return "float";
 		}	
+	}
+	
+	public static void main(String[] agrs) throws Exception {
+		CommandParser cp1 = new CommandParser("add task from today to tomorrow");
+		System.out.println(cp1.getStartDate());
+		System.out.println(cp1.getEndDate());
+		System.out.println(cp1.getStartTime());
+		System.out.println(cp1.getEndTime());
+		
 	}
 
 }
