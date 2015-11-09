@@ -133,7 +133,7 @@ public class CommandParser {
 	private int[] completeIDs;
 
 	
-	private static final String help = "add <name>\nadd <name> from <time> to <time>\nadd <name> by   <deadline>\ndelete  <id>\nsearch  <id>\narchive <id>\nedit <id> <attribute> <info>\nset  path     <storage path>\nset  filename <filename>\nundo\n";
+	private final String help = "add <name>\nadd <name> from <time> to <time>\nadd <name> by   <deadline>\ndelete  <id>\nsearch  <id>\narchive <id>\nedit <id> <attribute> <info>\nset  path     <storage path>\nset  filename <filename>\nshow on <date>\nshow by <date>\nundo\n";
 	private static final int taskNameMaximumLength = 37;
 	CommandChecker cc;
 	
@@ -249,7 +249,7 @@ public class CommandParser {
 		return this.storageFileName;
 	}
 	public String getHelpString() {
-		return help;
+		return this.help;
 	}
 	public String getSearchStartDate() {
 		return this.searchStartDate;
@@ -885,7 +885,6 @@ public class CommandParser {
 			return "float";
 		}	
 	}
-	
 
 }
 
@@ -949,4 +948,6 @@ class CommandChecker {
 	private String getFirstWord(String userInput) {
 		return userInput.split("\\s+")[0].toLowerCase();
 	}
+	
+
 }

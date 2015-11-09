@@ -470,8 +470,8 @@ public class CommandParserTest {
 		assertArrayEquals(id2, cp2.getUnarchivedIDs());
 		
 		int[] id3 = {1,2,3,5,6};
-		CommandParser cp3 = new CommandParser("unarchive 1-3, 5-6");
-		assertArrayEquals(id3, cp3.getArchivedIDs());
+		CommandParser cp3 = new CommandParser("unarchived 1-3, 5-6");
+		assertArrayEquals(id3, cp3.getUnarchivedIDs());
 	}
 	/**
 	 * test getUncompleteIDs()
@@ -486,11 +486,11 @@ public class CommandParserTest {
 		
 		int[] id2 = {1,2,3,67};
 		CommandParser cp2 = new CommandParser("uncomplete 1-3, 6   7");
-		assertArrayEquals(id2, cp2.getArchivedIDs());
+		assertArrayEquals(id2, cp2.getUncompleteIDs());
 		
 		int[] id3 = {1,2,3,5,6};
 		CommandParser cp3 = new CommandParser("uncomplete 1-3, 5-6");
-		assertArrayEquals(id3, cp3.getArchivedIDs());
+		assertArrayEquals(id3, cp3.getUncompleteIDs());
 	}
 	/**
 	 * test getUnArchivedIDs()
@@ -538,7 +538,7 @@ public class CommandParserTest {
 	@Test
 	public void TestGetHelpString() throws Exception {
 		CommandParser cp1 = new CommandParser("help");
-		String help = "add <name>\nadd <name> from <time> to <time>\nadd <name> by   <deadline>\ndelete  <id>\nsearch  <id>\narchive <id>\nedit <id> <attribute> <info>\nset  path     <storage path>\nset  filename <filename>\nundo\n";
+		String help = "add <name>\nadd <name> from <time> to <time>\nadd <name> by   <deadline>\ndelete  <id>\nsearch  <id>\narchive <id>\nedit <id> <attribute> <info>\nset  path     <storage path>\nset  filename <filename>\nshow on <date>\nshow by <date>\nundo\n";
 		assertEquals(help, cp1.getHelpString());
 	}
 	/**
