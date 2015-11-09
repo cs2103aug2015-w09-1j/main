@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 /*
  * @@author Jason (A0127830J)
  */
+=======
+/*@@author Jason (A0127830J)*/
+>>>>>>> 00a458d8fa30912844db7e0e110cfc512c21df7b
 
 package view;
 
@@ -37,7 +41,10 @@ public class GUIController extends Application {
 		getCommand();
 	}
 	
+<<<<<<< HEAD
 
+=======
+>>>>>>> 00a458d8fa30912844db7e0e110cfc512c21df7b
 	private void getCommand() {
 		GUI_VIEW.userCommandBlock.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
@@ -312,7 +319,11 @@ public class GUIController extends Application {
 			break;
 		}
 	}
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> 00a458d8fa30912844db7e0e110cfc512c21df7b
 	private void executeAdd(String command) throws Exception {
 		Controller.executeCMD(command);
 		GUI_VIEW.userCommandBlock.clear();
