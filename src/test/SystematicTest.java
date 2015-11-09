@@ -21,7 +21,6 @@ public class SystematicTest {
 	/**
 	 * Systematic Test to test flow work
 	 * 
-	 * @author Liang Yuan
 	 */
 	@Test
 	public void initializeTest() throws Exception {
@@ -356,6 +355,7 @@ public class SystematicTest {
 		assertTrue(task instanceof EventTask);
 	}
 
+	//@@author Jason (A0127830J)
 	@Test
 	public void testCompleteUncomplete() throws Exception {
 		Controller.executeCMD("display");
@@ -431,6 +431,7 @@ public class SystematicTest {
 		assertTrue(taskList.size()==0);
 	}
 	
+	//@@author Jason (A0127830J)
 	@Test
 	public void testArchiveUnarchive() throws Exception {
 		Controller.executeCMD("display");
@@ -505,7 +506,7 @@ public class SystematicTest {
 		assertTrue(taskList.size()==0);
 	}
 
-	
+	//@@author Jason (A0127830J)
 	@Test
 	public void testOtherShow() throws Exception {
 		Controller.executeCMD("display");
@@ -523,6 +524,7 @@ public class SystematicTest {
 		assertTrue(taskList.size()==1);
 	}
 	
+	//@@author Liang Yuan(A0133975W)
 	@Test
 	public void testHelpThenExit() throws Exception {
 		Controller.executeCMD("help");
