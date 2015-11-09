@@ -1,11 +1,13 @@
+//@@author ZhouYou(A0133976U)
 package model;
 import java.util.*;
 
 /*
- * This is a Floating Task
- * @@author A0111947E
+ * This class models a floating Task
+ * It inherits from a task model and contains no extra information 
  */
 public class FloatingTask extends Task{
+	/***************Constructor********************/
 	public FloatingTask(){
 		super();
 	}

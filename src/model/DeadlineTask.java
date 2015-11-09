@@ -1,17 +1,21 @@
+//@@author ZhouYou(A0133976U)
 package model;
 import java.util.*;
 /*
- * This is a Deadline Class
- * @@author A0111947E
+ * This class models a Deadline Task
+ * It inherits from a task model and contains extra information 
+ * including date and time as deadline
  */
 public class DeadlineTask extends Task {
+	/***************Attributes********************/
 	private String deadline_date;
 	private String deadline_time;
 	
+	/***************Constructor********************/
 	public DeadlineTask(){
 		super();
 	}
-	
+	/***************Accessors and mutators********************/
 	public DeadlineTask(String task_name, String deadline_date, String deadline_time, String task_type){
 		super(task_name, task_type);
 		this.deadline_date = deadline_date;

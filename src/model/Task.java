@@ -1,3 +1,4 @@
+//@@author ZhouYou(A0133976U)
 package model;
 
 import java.util.*;
@@ -6,12 +7,14 @@ import javafx.beans.property.StringProperty;
 
 /*
  * This class is the abstract class of Deadline, Event and Floating Class.
- * @@author A0111947E
  */
 
 public abstract class Task {
+	/***************Attributes********************/
 	private String task_name;
 	private String task_type;
+	
+	/***************Constructors********************/
 	public Task() {
 
 	}
@@ -20,7 +23,8 @@ public abstract class Task {
 		this.task_name = task_name;
 		this.task_type = task_type;
 	}
-
+	
+	/***************Accessors and mutators********************/
 	public String getTaskName() {
 		return this.task_name;
 	}
@@ -36,10 +40,9 @@ public abstract class Task {
 	public void setTaskType(String task_type){
 		this.task_type = task_type;
 	}
-
+	/***************Comparator********************/
 	@Override
 	public boolean equals(Object task) {
-		// if the task is compared with itself then return true
 		if (task == this) {
 			return true;
 		}
@@ -52,9 +55,9 @@ public abstract class Task {
 			return false;
 		}
 
-		Task comparingTask = (Task) task;
+		Task comparedTask = (Task) task;
 
-		return (this.getTaskName().equals(comparingTask.getTaskName()));
+		return (this.getTaskName().equals(comparedTask.getTaskName()));
 	}
 	
 }

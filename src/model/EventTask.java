@@ -1,19 +1,23 @@
+//@@author ZhouYou(A0133976U)
 package model;
 
 import java.util.*;
 
 /*
- * This a Event Class
- * @@author A0111947E
+ * This class models a event Task
+ * It inherits from a task model and contains extra information 
+ * including starting date and time and ending date and time
  */
 
 public class EventTask extends Task {
 
+	/***************Attributes********************/
 	private String start_time;
 	private String end_time;
 	private String start_date;
 	private String end_date;
-
+	
+	/***************Constructors********************/
 	public EventTask() {
 		super();
 	}
@@ -27,7 +31,7 @@ public class EventTask extends Task {
 		this.end_time = end_time;
 
 	}
-
+	/***************Accessors and mutators********************/
 	public String getStartDate() {
 		return start_date;
 	}
