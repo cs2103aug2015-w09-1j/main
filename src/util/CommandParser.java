@@ -583,7 +583,6 @@ public class CommandParser {
 	private void parseEventTask(String args)  {
 		String taskNameStr = args.substring(0, args.lastIndexOf("from"));
 		String timeStr = args.substring(args.lastIndexOf("from"),args.length());	
-		System.out.println(timeStr);
 		setTaskName(taskNameStr);
 		
 		List<Date> dates = new PrettyTimeParser().parse(timeStr);
