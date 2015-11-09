@@ -52,12 +52,12 @@ public class GUIView{
 	protected ScrollPane TaskDisplayBlock;
 	private Label message;
 	private Label signal;	
-	final private Font HELP_TITLE_FONT = Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 17);
-	final private Font HELP_CONTENT_FONT = Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 14);
-	final private Font TASK_NAME_FONT = Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 17);
-	final private Font TASK_INFO_FONT = Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 17);
-	final private Font MESSAGE_FONT = Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 22);
-	final private Font SIGNAL_FONT = Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 14);
+	final private Font HELP_TITLE_FONT = Font.font("Stencil Std", FontWeight.BOLD, FontPosture.REGULAR, 17);
+	final private Font HELP_CONTENT_FONT = Font.font("Stencil Std", FontWeight.NORMAL, FontPosture.REGULAR, 14);
+	final private Font TASK_NAME_FONT = Font.font("Stencil Std", FontWeight.BOLD, FontPosture.REGULAR, 17);
+	final private Font TASK_INFO_FONT = Font.font("Stencil Std", FontWeight.NORMAL, FontPosture.REGULAR, 17);
+	final private Font MESSAGE_FONT = Font.font("Stencil Std", FontWeight.BOLD, FontPosture.REGULAR, 22);
+	final private Font SIGNAL_FONT = Font.font("Stencil Std", FontWeight.BOLD, FontPosture.REGULAR, 14);
 	final private Color FLOATING_COLOR = Color.web("#039ed3");
 	final private Color EVENT_COLOR = Color.web("#17a42a");
 	final private Color DEADLINE_COLOR = Color.web("#b9ac1d");
@@ -90,18 +90,18 @@ public class GUIView{
 	}
 
 	private void loadImage() {
-		backgroundImage = new Image(getClass().getResourceAsStream("/resource/back3.png"));
-		iconImage = new Image(getClass().getResourceAsStream("/resource/icon.png"));
-		deadlineImage = new Image(getClass().getResourceAsStream("/resource/deadlineTask.png"));
-		eventImage = new Image(getClass().getResourceAsStream("/resource/eventTask.png"));
-		floatingImage = new Image(getClass().getResourceAsStream("/resource/floatingTask.png"));
-		completeImage = new Image(getClass().getResourceAsStream("/resource/completeTask.png"));
-		archivedImage = new Image(getClass().getResourceAsStream("/resource/archivedTask.png"));
-		floatingTitle = new Image(getClass().getResourceAsStream("/resource/floating.png"));
-		todayTitle = new Image(getClass().getResourceAsStream("/resource/today.png"));
-		followingTitle = new Image(getClass().getResourceAsStream("/resource/following.png"));
-		seeMoreTitle = new Image(getClass().getResourceAsStream("/resource/seeMore.png"));
-		helpImage =new Image(getClass().getResourceAsStream("/resource/help.png"));
+		backgroundImage = new Image(getClass().getResourceAsStream("back3.png"));
+		iconImage = new Image(getClass().getResourceAsStream("icon.png"));
+		deadlineImage = new Image(getClass().getResourceAsStream("deadlineTask.png"));
+		eventImage = new Image(getClass().getResourceAsStream("eventTask.png"));
+		floatingImage = new Image(getClass().getResourceAsStream("floatingTask.png"));
+		completeImage = new Image(getClass().getResourceAsStream("completeTask.png"));
+		archivedImage = new Image(getClass().getResourceAsStream("archivedTask.png"));
+		floatingTitle = new Image(getClass().getResourceAsStream("floating.png"));
+		todayTitle = new Image(getClass().getResourceAsStream("today.png"));
+		followingTitle = new Image(getClass().getResourceAsStream("following.png"));
+		seeMoreTitle = new Image(getClass().getResourceAsStream("seeMore.png"));
+		helpImage =new Image(getClass().getResourceAsStream("help.png"));
 	}
 
 	private void initialStage(Stage primaryStage) {
@@ -296,10 +296,6 @@ public class GUIView{
 
 	protected void showClear() {
 		signal.setText("All tasks selected have been cleared.");
-	}
-	
-	protected void showFromTo() {
-		message.setText("Tasks under the required inteval are shown below");
 	}
 
 	protected void showHelp(String string) {
