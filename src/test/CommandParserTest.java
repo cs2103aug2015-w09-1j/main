@@ -1,4 +1,4 @@
-//@@author Zhou You(A0133976U)
+//@@author ZhouYou(A0133976U)
 
 package test;
 
