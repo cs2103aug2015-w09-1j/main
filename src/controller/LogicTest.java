@@ -1,4 +1,5 @@
 package controller;
+
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class LogicTest {
 
 		assertEquals(0, taskList.size());
 		logic.save();
-		
+
 	}
 
 	@Test
@@ -485,7 +486,7 @@ public class LogicTest {
 		assertEquals("0900", event.getStartTime());
 		assertEquals("2015-12-13", event.getEndDate());
 		assertEquals("0900", event.getEndTime());
-	
+
 		logic.executeUpdateTaskByAttribute(taskList, index2, "taskType",
 				"Archived");
 		taskList = TaskMemory.getInstance().getCombinedTaskList();
@@ -510,7 +511,7 @@ public class LogicTest {
 				"Completed");
 		taskList = TaskMemory.getInstance().getCombinedTaskList();
 		assertEquals(3, taskList.size());
-		
+
 		logic.executeUpdateTaskByAttribute(taskList, index3, "taskType",
 				"Archived");
 		taskList = TaskMemory.getInstance().getCombinedTaskList();
@@ -538,7 +539,8 @@ public class LogicTest {
 	public void taskListTest() throws Exception {
 		ClearTaskTest();
 		assertEquals(0, taskList.size());
-		ArrayList<Task> getArchivedList = TaskMemory.getInstance().getArchivedList();
+		ArrayList<Task> getArchivedList = TaskMemory.getInstance()
+				.getArchivedList();
 		logic.deleteAllTask(getArchivedList);
 		taskList = TaskMemory.getInstance().getCombinedTaskList();
 		taskList = TaskMemory.getInstance().getCompletedList();
@@ -653,7 +655,7 @@ public class LogicTest {
 
 		Controller.executeCMD("display");
 		Controller.executeCMD("set path testing");
-		String path = "testing"+ "\\";
+		String path = "testing" + "\\";
 		assertEquals(path, Storage.getInstance().getPath());
 
 		Controller.executeCMD("set filename newfile");
@@ -682,11 +684,10 @@ public class LogicTest {
 		Controller.executeCMD("complete 1-3");
 		taskList = Controller.getTaskList();
 		assertEquals(0, taskList.size());
-		
+
 		Controller.executeCMD("show complete");
 		taskList = Controller.getCompletedList();
 		assertEquals(3, taskList.size());
-		
 
 		Controller.executeCMD("uncomplete 1-2");
 		taskList = Controller.getTaskList();
@@ -736,17 +737,20 @@ public class LogicTest {
 		Controller.executeCMD("exit");
 
 	}
+
 	@Test
-	public void equalsTest(){
+	public void equalsTest() {
 		Task a = new FloatingTask("a", null);
-		Task b= new FloatingTask("a", null);
+		Task b = new FloatingTask("a", null);
 		Task c = a;
 		assertEquals(true, a.equals(c));
-		Task d = new DeadlineTask("abc","2015-12-12", "0800","null");
-		Task e = new DeadlineTask("abc","2015-12-12", "0800","null");
+		Task d = new DeadlineTask("abc", "2015-12-12", "0800", "null");
+		Task e = new DeadlineTask("abc", "2015-12-12", "0800", "null");
 		assertEquals(false, d.equals(e));
-		Task f = new EventTask("event", "2015-12-12", "0800", "2015-12-14", "0800", "null");
-		Task g = new EventTask("event", "2015-12-12", "0800", "2015-12-14", "0800", "null");
+		Task f = new EventTask("event", "2015-12-12", "0800", "2015-12-14",
+				"0800", "null");
+		Task g = new EventTask("event", "2015-12-12", "0800", "2015-12-14",
+				"0800", "null");
 		Task h = g;
 		assertEquals(false, f.equals(g));
 		assertEquals(false, a.equals(g));
