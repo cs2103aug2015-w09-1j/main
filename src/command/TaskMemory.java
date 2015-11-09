@@ -38,6 +38,10 @@ public class TaskMemory {
 		return _instance;
 	}
 
+	public void loadTask(){
+		this.taskList = Storage.getInstance().load();
+	}
+	
 	public ArrayList<Task> getNoArchivedList() {
 		ArrayList<Task> noArchivedList = new ArrayList<Task>();
 		try {

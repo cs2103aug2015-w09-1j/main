@@ -189,6 +189,7 @@ public class Controller {
 				break;
 
 			case "load":
+				TaskMemory.getInstance().loadTask();
 				displayList = TaskMemory.getInstance().getCombinedTaskList();
 
 				break;
