@@ -44,7 +44,7 @@ public class UiTest extends GuiTest {
 	    public void start(Stage primaryStage) throws Exception {
 	      super.start(primaryStage);
 	      stageFuture.set(primaryStage);
-	      Platform.setImplicitExit(false);
+	      //Platform.setImplicitExit(false);
 	    }
 	  }
 

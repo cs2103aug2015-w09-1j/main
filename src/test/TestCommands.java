@@ -11,6 +11,7 @@ import view.UiTest;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    UiTest.class,
+   SystematicTest.class,
    LogicTest.class,
    CommandParserTest.class,
    TestStorage.class,
@@ -19,8 +20,8 @@ import view.UiTest;
    TestCreateBulk.class,
    TestDelete.class,
    TestDeleteBulk.class,
-   TestUpdate.class,
-   SystematicTest.class,
+   TestUpdate.class
+
 })
 public class TestCommands {   
 }

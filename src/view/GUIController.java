@@ -38,7 +38,9 @@ public class GUIController extends Application {
 		getCommand();
 	}
 	
-
+	/*
+	 * Get the user input from the textfield in the UI and handle the input
+	 */
 	private void getCommand() {
 		GUI_VIEW.userCommandBlock.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
@@ -158,7 +160,11 @@ public class GUIController extends Application {
 			break;
 		}
 	}
-
+	/*----------------- LIST OF EXECUTIONS TO THE COMMAND INPUT ----------------*/
+	
+	/* Each execution method will show the corresponding list to the user in the UI view.
+	 * @param String command
+	 */
 	private void executeClear(String command) throws Exception {
 		Controller.executeCMD(command);
 		GUI_VIEW.userCommandBlock.clear();

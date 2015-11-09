@@ -360,6 +360,8 @@ public class SystematicTest {
 	public void testCompleteUncomplete() throws Exception {
 		Controller.executeCMD("display");
 		Controller.executeCMD("delete all");
+		Controller.executeCMD("show complete");
+		Controller.executeCMD("delete all");
 		Controller.executeCMD("add deadLine by 2015-12-20 2359");
 		Controller.executeCMD("add event from 2015-12-25 0800 to 2015-12-30 2300");
 		Controller.executeCMD("add floating");
