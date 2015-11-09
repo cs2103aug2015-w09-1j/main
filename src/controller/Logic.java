@@ -52,15 +52,15 @@ public class Logic {
 	// execute create task
 	public void executeCreateTask(String task_name, String start_date,
 			String start_time, String end_date, String end_time) {
-		try{
-		Task task;
-		task = buildTask(task_name.trim(), start_date, end_date, start_time,
-				end_time, "null");
-		CreateTask create = new CreateTask(task);
-		create.execute();
-		pushToProcessStack(create);
-		}catch (Exception e){
-			
+		try {
+			Task task;
+			task = buildTask(task_name.trim(), start_date, end_date,
+					start_time, end_time, "null");
+			CreateTask create = new CreateTask(task);
+			create.execute();
+			pushToProcessStack(create);
+		} catch (Exception e) {
+
 		}
 	}
 

@@ -112,7 +112,7 @@ public class TaskMemory {
 					if ((((EventTask) t).getStartDate()
 									.compareTo(dateNow) <= 0 && ((EventTask) t)
 							.getEndDate().compareTo(dateNow) >= 0)
-							&& (!t.getTaskType().contains("Archived") || !t.getTaskType().contains("Completed"))  && !checkDue(t)) {
+							&& (!t.getTaskType().contains("Archived") && !t.getTaskType().contains("Completed"))  && !checkDue(t)) {
 						todayList.add(t);
 					}
 				}
