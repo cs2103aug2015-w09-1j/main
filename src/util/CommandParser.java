@@ -650,7 +650,7 @@ public class CommandParser {
 		return this.args;
 	}
 	private void setTaskName(String name) {
-		this.taskName = name.trim();
+		this.taskName = name.trim().substring(0,36);
 	}
 	private void setStartTime(String time) {
 		this.startTime = time.trim();
