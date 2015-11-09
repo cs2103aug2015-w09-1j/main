@@ -1,4 +1,4 @@
-package view;
+package test;
 /* UI Testing using TestFx and Hamcrest Matcher library
  * @@author Jason (A0127830J)
  */
@@ -31,6 +31,7 @@ import javafx.scene.control.TextField;
 
 import javafx.stage.Stage;
 import util.Storage;
+import view.GUIController;
 
 public class UiTest extends GuiTest {
 	  private static final SettableFuture<Stage> stageFuture = SettableFuture.create();
@@ -100,7 +101,6 @@ public class UiTest extends GuiTest {
 	  
 	  @Test
 	  public void showTodayTest() {
-		  type("load").push(KeyCode.ENTER);
 		  type("show today").push(KeyCode.ENTER);
 		  assertEquals(((Label) find("#msg")).getText(), "Today's tasks are listed below");
 		  assertEquals(((Label) find("#sig")).getText(), "");
@@ -205,7 +205,6 @@ public class UiTest extends GuiTest {
 	  
 	  @Test
 	  public void showUpdateTest() {
-		  type("load").push(KeyCode.ENTER);
 		  type("edit 1 taskName test").push(KeyCode.ENTER);
 		  assertEquals(((Label) find("#sig")).getText(), "Task Edited!");
 	  }

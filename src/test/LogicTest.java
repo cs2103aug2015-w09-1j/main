@@ -1,4 +1,4 @@
-package controller;
+package test;
 
 import static org.junit.Assert.*;
 
@@ -9,6 +9,8 @@ import model.*;
 import org.junit.Test;
 
 import command.TaskMemory;
+import controller.Controller;
+import controller.Logic;
 import util.Storage;
 
 /*
