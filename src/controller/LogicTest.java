@@ -727,11 +727,11 @@ public class LogicTest {
 		taskList = Controller.getCombinedTaskList();
 		assertEquals(0, taskList.size());
 
-		Controller.executeCMD("add eve from today to today");
+		Controller.executeCMD("add eve from today 2359 to today 2359");
 		taskList = Controller.getCombinedTaskList();
-		assertEquals(0, taskList.size());
+		assertEquals(1, taskList.size());
 
-		assertEquals(2, TaskMemory.getInstance().getSize());
+		assertEquals(3, TaskMemory.getInstance().getSize());
 
 		Controller.executeCMD("exit");
 

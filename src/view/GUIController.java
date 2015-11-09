@@ -278,6 +278,7 @@ public class GUIController extends Application {
 			GUI_VIEW.userCommandBlock.clear();
 			GUI_VIEW.showGettedList(Controller.getTodayTaskList());
 			GUI_VIEW.showToday();
+			break;
 		case "from":
 			GUI_VIEW.userCommandBlock.clear();
 			GUI_VIEW.showGettedList(Controller.getTaskList());
