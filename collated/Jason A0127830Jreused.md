@@ -1,13 +1,6 @@
-package util;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-
-/**
- * Helper functions for handling dates.
- * 
- * @@author Jason (A0127830J)-reused
+# Jason A0127830Jreused
+###### src\util\DateUtil.java
+``` java
  */
 public class DateUtil {
 
@@ -60,3 +53,26 @@ public class DateUtil {
         return DateUtil.parse(dateString) != null;
     }
 }
+```
+###### src\view\UiTest.java
+``` java
+	  @Override
+	  public void setupStage() throws Throwable {
+	    assumeTrue(!UserInputDetector.instance.hasDetectedUserInput());
+
+	    FXTestUtils.launchApp(TestUI.class); // You can add start parameters here
+	    try {
+	      stage = targetWindow(stageFuture.get(25, TimeUnit.SECONDS));
+	      FXTestUtils.bringToFront(stage);
+	    } catch (Exception e) {
+	      throw new RuntimeException("Unable to show stage", e);
+	    }
+	    ((TextField) find("#text-field")).clear();
+	  }
+
+	  @Override
+	  protected Parent getRootNode() {
+	    return stage.getScene().getRoot();
+	  }
+	  
+```

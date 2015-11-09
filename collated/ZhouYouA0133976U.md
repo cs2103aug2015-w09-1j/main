@@ -1,7 +1,9 @@
 # ZhouYouA0133976U
 ###### src\test\CommandParserTest.java
 ``` java
-
+	/**
+	 * This class is used to test Parser component API
+	 */
 package test;
 
 import static org.junit.Assert.*;
@@ -32,103 +34,131 @@ public class CommandParserTest {
 	@Test
 	public void testCommandParser() {
 	}
-
+	
+	/**
+	 * test getCommandType()
+	 * which should return a command type corresponding
+	 * to the user's input in a String
+	 */
 	@Test
 	public void testGetCommandType() throws Exception {
-		//event task
+		//add an event task 
 		CommandParser cp1 = new CommandParser("add meeting from 2015-10-03 0900 to 2015-10-04 0900");
 		assertEquals("add", cp1.getCommandType());
 		
-		//deadline task
+		//add a deadline task
 		CommandParser cp2 = new CommandParser("add finish project manual by 2015-10-03 0900");
 		assertEquals("add", cp2.getCommandType());
 		
-		//float task
+		//add a float task
 		CommandParser cp3 = new CommandParser("add visit uncle Lee");
 		assertEquals("add", cp3.getCommandType());
 		
-		//delete
+		//delete a task
 		CommandParser cp4 = new CommandParser("delete 2");	
 		assertEquals("delete", cp4.getCommandType());
-		
 		
 		//display
 		CommandParser cp5 = new CommandParser("display all");	
 		assertEquals("display", cp5.getCommandType());
 		
-		//search
+		//search a task based on keyword
 		CommandParser cp6 = new CommandParser("search meeting");
 		assertEquals("search", cp6.getCommandType());
 		
+		//search a task based on date
 		CommandParser cp7 = new CommandParser("search on 2015-10-03");
 		assertEquals("search", cp7.getCommandType());
 		
-		//undo
+		//undo command
 		CommandParser cp8 = new CommandParser("undo");
 		assertEquals("undo", cp8.getCommandType());
 		
-		//help
+		//help command
 		CommandParser cp9 = new CommandParser("help");
 		assertEquals("help", cp9.getCommandType());
 		
-		//complete
+		//complete command
 		CommandParser cp10 = new CommandParser("complete 10");
 		assertEquals("complete", cp10.getCommandType());
 		
-		//archive 
+		//archive command
 		CommandParser cp11 = new CommandParser("archive 11");
 		assertEquals("archive", cp11.getCommandType());
 		
-		//set
+		//set the data file's path
 		CommandParser cp12 = new CommandParser("set path C:/Program/SilentJarvis/Data");
 		assertEquals("set", cp12.getCommandType());
 		
-		//edit
+		//edit command
 		CommandParser cp14 = new CommandParser("edit 2 meeting with boss by 2015-03-04 1259");
 		assertEquals("edit", cp14.getCommandType());
 		
-		//save
+		//save command
 		CommandParser cp15 = new CommandParser("save");
 		assertEquals("save", cp15.getCommandType());
 		
-		//load
+		//load command
 		CommandParser cp16 = new CommandParser("load");
 		assertEquals("load", cp16.getCommandType());
 		
-		//home
+		//home command
 		CommandParser cp17 = new CommandParser("home");
 		assertEquals("home", cp17.getCommandType());
 		
-		//show
+		//show tasks on a given interval
 		CommandParser cp18 = new CommandParser("show this week");
 		assertEquals("show", cp18.getCommandType());
 		
-		//exit
+		//exit command
 		CommandParser cp19 = new CommandParser("exit");
 		assertEquals("exit", cp19.getCommandType());
 		
-		//display
+		//display command
 		CommandParser cp20 = new CommandParser("display");
 		assertEquals("display", cp20.getCommandType());
 		
-		//clear
+		//clear command
 		CommandParser cp21 = new CommandParser("clear");
 		assertEquals("clear", cp21.getCommandType());
 		
+		//mark "incomplete" command
+		CommandParser cp22 = new CommandParser("uncomplete 2");
+		assertEquals("uncomplete", cp22.getCommandType());
+		
+		//mark "unarchived" command
+		CommandParser cp23 = new CommandParser("unarchived 3");
+		assertEquals("unarchived", cp23.getCommandType());
+		
+		//show command
+		CommandParser cp24 = new CommandParser("show archived");
+		assertEquals("show", cp24.getCommandType());
+		
 	}
-	
+	/**
+	 * test getStoragePath()
+	 * which should return an the data file storage path 
+	 * specified by the user
+	 */
 	@Test
 	public void testGetStoragePath() throws Exception{
 		CommandParser cp1 = new CommandParser("set path C:/Program/SilentJarvis/Data");
 		assertEquals("C:/Program/SilentJarvis/Data", cp1.getStoragePath());
 	}
-
+	/**
+	 * test getStoragePath()
+	 * which should return an the data file storage path 
+	 * specified by the user
+	 */
 	@Test
 	public void testGetStorageFileName() throws Exception{
 		CommandParser cp1 = new CommandParser("set filename mytext.txt");
 		assertEquals("mytext.txt", cp1.getStorageFileName());
 	}
-	
+	/**
+	 * test getTaskName()
+	 * which should return the name of a task in a string 
+	 */
 	@Test
 	public void testGetTaskName() throws Exception{
 		//event task
@@ -143,15 +173,23 @@ public class CommandParserTest {
 		CommandParser cp3 = new CommandParser("add visit uncle Lee");
 		assertEquals("visit uncle Lee", cp3.getTaskName());
 		
-		//edit
+		//updating all information of a task
 		CommandParser cp4 = new CommandParser("edit 2 meeting with boss by 2015-03-04 1259");
 		assertEquals("meeting with boss", cp4.getTaskName());
+		
+		CommandParser cp5 = new CommandParser("add kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk by 2015-10-03");
+		assertEquals("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk", cp5.getTaskName());
 
 	}
-	
+	/**
+	 * test getDisplayMode()
+	 * which should return display option in a String
+	 */	
 	@Test
 	public void testGetDisplayMode() throws Exception{
-		//all
+		//currently there's only one display mode 
+		//no matter what user types, as long as it is
+		//a display command, the mode should be "all".  
 		CommandParser cp1 = new CommandParser("display");
 		assertEquals("all", cp1.getDisplayMode());
 		
@@ -159,110 +197,154 @@ public class CommandParserTest {
 		CommandParser cp2 = new CommandParser("display all");
 		assertEquals("all", cp2.getDisplayMode());
 	}
-	
-	
+	/**
+	 * test getSearchWord()
+	 * which should return the keyword to be searched
+	 * specified by the user
+	 */
 	@Test
 	public void testGetSearchWord() throws Exception{
+		//keyword should be returned after extra spaces being ignored
 		CommandParser cp1 = new CommandParser("search meeting  ss   tt");
 		assertEquals("meeting ss tt", cp1.getSearchWord());
 
 	}
-	
-	
+	/**
+	 * test getID()
+	 * which should return a index in Integer type
+	 */
 	@Test
 	public void testGetId() throws Exception{
 		int id = 2;
-		//delete
+		//delete a task
 		CommandParser cp1 = new CommandParser("delete 2");
 		assertEquals(id, cp1.getId());
 		
 	}
-
+	/**
+	 * test invalid command type handling
+	 * if user type an invalid command, parse should throw an exception.
+	 */
 	@Test
-	public void testGetErrorMessage() {
-
+	public void testInvalidCommandTypeException() throws Exception {
+		try{
+			CommandParser cp1 = new CommandParser("random type");
+		} catch(Exception e){
+			assertEquals("command cannot be recongnised", e.getMessage());
+		}
 	}
-
+	/**
+	 * test getStartDate()
+	 * which should return the starting date of a task in "YYYY-MM-DD" format
+	 */
 	@Test
 	public void testGetStartDate() throws Exception{
-		//event task
+		//add an event task
 		CommandParser cp1 = new CommandParser("add meeting from 2015-10-03 0900 to 2015-10-04 0900");
 		assertEquals("2015-10-03", cp1.getStartDate());
 		
-//		
-//		CommandParser cp2 = new CommandParser("add meeting with boss from  to 10 on Monday");
-//		assertEquals("Monday", cp2.getStartDate());
-		
-		//deadline task
+		//add a deadline task
 		CommandParser cp3 = new CommandParser("add finish project manual by 2015-10-03 0900");
 		assertEquals(null, cp3.getStartDate());
 	}
-
+	/**
+	 * test getEndDate()
+	 * which should return the ending date of a task in "YYYY-MM-DD" format
+	 */
 	@Test
 	public void testGetEndDate() throws Exception {
-		//event task
+		//add an event task
 		CommandParser cp1 = new CommandParser("add meeting from 2015-10-03 0900 to 2015-10-04 0900");
 		assertEquals("2015-10-04", cp1.getEndDate());
 		
-		//deadline task
+		//add a deadline task
 		CommandParser cp2 = new CommandParser("add finish project manual by oct 9 9am");
 		assertEquals("2015-10-09", cp2.getEndDate());
 		
-		//edit
+		//edit a task
 		CommandParser cp3 = new CommandParser("edit 2 meeting with boss by 2015-03-04 1259");
 		assertEquals("2015-03-04", cp3.getEndDate());
 	}
-
+	/**
+	 * test getStartTime()
+	 * which should return the starting time of a task in "MM-SS" format
+	 */
 	@Test
 	public void testGetStartTime() throws Exception {
-		//event task
+		//add an event task
 		CommandParser cp = new CommandParser("add meeting from 2015-10-03 0900 to 2015-10-04 0900");
 		assertEquals("09:00", cp.getStartTime());
 		
-		//deadline task
+		//add a deadline task
 		CommandParser cp2 = new CommandParser("add finish project manual by 2015-10-03 0900");
 		assertEquals(null, cp2.getStartDate());
 	}
-
+	/**
+	 * test getEndTime()
+	 * which should return the ending time of a task in "MM-SS" format
+	 */
 	@Test
 	public void testGetEndTime() throws Exception {
+		//add an event task
 		CommandParser cp = new CommandParser("add meeting from 2015-10-03 0900 to 2015-10-04 0900");
 		assertEquals("09:00", cp.getEndTime());
 		
-		//deadline task
+		//add a deadline task
 		CommandParser cp2 = new CommandParser("add finish project manual by 2015-10-03 0900");
 		assertEquals("09:00", cp2.getEndTime());
 		
-		//edit
+		//edit a task
 		CommandParser cp3 = new CommandParser("edit 2 meeting with boss by 2015-03-04 1259");
 		assertEquals("12:59", cp3.getEndTime());
 	}
-	
+	/**
+	 * test getDeleteMode()
+	 * which should return the mode of deletion in a String
+	 */
 	@Test
 	public void testGetDeleteMode() throws Exception{
+		//delete all tasks
 		CommandParser cp1 = new CommandParser("delete all");
 		assertEquals("all", cp1.getDeleteMode());
+		
+		//delete a specific task
+		CommandParser cp2 = new CommandParser("delete 2");
+		assertEquals(null, cp2.getDeleteMode());
 	}
-	
+	/**
+	 * test getEditAttribute()
+	 * which should return attribute name to be edited in a String (Case ignored)
+	 */
 	@Test
 	public void testGetEditAttribute() throws Exception{ 
+		//edit the starting date of a task
 		CommandParser cp1 = new CommandParser("edit 1 startDate 2015-10-23");
 		assertEquals("startdate", cp1.getEditAttribute());
 		
+		
+		//editing name of a task
 		CommandParser cp2 = new CommandParser("edit 1 taskname event");
 		assertEquals("taskname", cp2.getEditAttribute());
 	}
-	
+	/**
+	 * test getStartEditInfo()
+	 * which should return the attribute information to be updated in a String
+	 */
 	@Test
 	public void testGetEditInfo() throws Exception{
+		//editing staring date of a task
 		CommandParser cp1 = new CommandParser("edit 1 startDate 2015-10-23");
 		assertEquals("2015-10-23", cp1.getEditInfo());
 		
+		//updating the name of a task
 		CommandParser cp2 = new CommandParser("edit 1 taskname event");
 		assertEquals("event", cp2.getEditInfo());
 	}
 
-	
+	/**
+	 * test getDelete()
+	 * which should return the starting date of a task in "YYYY-MM-DD" format
+	 */
 	@Test
 	public void TestGetDeleteIDs() throws Exception{
 		CommandParser cp1 = new CommandParser("delete 1, 2,3, 10-12");
@@ -540,8 +622,8 @@ public class CommandParser {
 	private int[] completeIDs;
 
 	
-	private static String help = "add <name>\nadd <name> from <time> to <time>\nadd <name> by   <deadline>\ndelete  <id>\nsearch  <id>\narchive <id>\nedit <id> <attribute> <info>\nset  path     <storage path>\nset  filename <filename>\nundo\n";
-	
+	private static final String help = "add <name>\nadd <name> from <time> to <time>\nadd <name> by   <deadline>\ndelete  <id>\nsearch  <id>\narchive <id>\nedit <id> <attribute> <info>\nset  path     <storage path>\nset  filename <filename>\nundo\n";
+	private static final int taskNameMaximumLength = 37;
 	CommandChecker cc;
 	
 	/**********************************************************************
@@ -1057,6 +1139,9 @@ public class CommandParser {
 		return this.args;
 	}
 	private void setTaskName(String name) {
+		if(name.trim().length() > taskNameMaximumLength) {
+			name = name.trim().substring(0, taskNameMaximumLength-1);
+		}
 		this.taskName = name.trim();
 	}
 	private void setStartTime(String time) {

@@ -297,7 +297,7 @@ public class GUIView{
 	protected void showClear() {
 		signal.setText("All tasks selected have been cleared.");
 	}
-	
+	//@@author Jason (A0127830J)
 	protected void showFromTo() {
 		message.setText("Tasks under the required inteval are shown below");
 	}

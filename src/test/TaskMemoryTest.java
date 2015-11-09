@@ -1,4 +1,7 @@
 package test;
+/*
+ * @@author Jason (A0127830J)
+ */
 
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -19,17 +22,6 @@ import util.Storage;
 
 public class TaskMemoryTest {
 	private TaskMemory tm = TaskMemory.getInstance();
-	@Rule
-	public ExpectedException exception = ExpectedException.none();
-	
-	/*
-	@Test
-	public void testTaskMemory() {
-		assertEquals(Storage.getInstance().load(), tm.getTaskList());
-	}
-	*/
-	
-	
 	
 	@Test
 	public void testGetNoArchivedList() {
@@ -87,37 +79,5 @@ public class TaskMemoryTest {
 			}
 		}
 	}
-	
-	/*
-	@Test
-	public void testGetOtherTask() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	@Test
-	public void testGetArchivedList() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	@Test
-	public void testSetTaskList() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	@Test
-	public void testAdd() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	@Test
-	public void testRemove() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	@Test
-	public void testGetSize() {
-		fail("Not yet implemented"); // TODO
-	}
-	*/
 
 }

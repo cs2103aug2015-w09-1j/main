@@ -1,54 +1,6 @@
-package view;
-/* UI Testing using TestFx and Hamcrest Matcher library
- * @@author Jason (A0127830J)
- */
-
-import static org.junit.Assert.*;
-import static org.junit.Assume.*;
-
-
-import java.time.LocalDate;
-import java.util.concurrent.TimeUnit;
-import javafx.scene.input.KeyCode;
-import javafx.scene.text.Text;
-
-
-import org.junit.Test;
-import org.loadui.testfx.GuiTest;
-
-import org.loadui.testfx.utils.FXTestUtils;
-import org.loadui.testfx.utils.UserInputDetector;
-
-import org.testfx.matcher.base.NodeMatchers;
-
-import com.google.common.util.concurrent.SettableFuture;
-
-import controller.Controller;
-import javafx.application.Platform;
-import javafx.scene.Parent;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-
-import javafx.stage.Stage;
-import util.Storage;
-
-public class UiTest extends GuiTest {
-	  private static final SettableFuture<Stage> stageFuture = SettableFuture.create();
-
-	  protected static class TestUI extends GUIController {
-	    public TestUI() {
-	      super();
-	    }
-
-	    @Override
-	    public void start(Stage primaryStage) throws Exception {
-	      super.start(primaryStage);
-	      stageFuture.set(primaryStage);
-	      Platform.setImplicitExit(false);
-	    }
-	  }
-
-	  //@@author Jason (A0127830J)-reused
+# JasonA0127830Jreused
+###### src\view\UiTest.java
+``` java
 	  @Override
 	  public void setupStage() throws Throwable {
 	    assumeTrue(!UserInputDetector.instance.hasDetectedUserInput());
@@ -68,7 +20,7 @@ public class UiTest extends GuiTest {
 	    return stage.getScene().getRoot();
 	  }
 	  
-	  //@@author Jason (A0127830J)
+	  
 	  @Test
 	  public void showAddTest() {
 		  type("load").push(KeyCode.ENTER);
@@ -290,3 +242,4 @@ public class UiTest extends GuiTest {
 	  
 
 	}
+```

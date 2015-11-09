@@ -32,6 +32,7 @@ public class GUIController extends Application {
 		getCommand();
 	}
 	
+	//@@author Jason (A0127830J)
 	private void getCommand() {
 		GUI_VIEW.userCommandBlock.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
@@ -58,7 +59,7 @@ public class GUIController extends Application {
 			}
 		});
 	}
-	
+	//@author Jason (A0127830J)
 	protected static void dragStage(GridPane grid,final Stage stage) {
 		grid.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
@@ -76,7 +77,7 @@ public class GUIController extends Application {
 			}
 		});
 	}
-	
+
 	protected static void escClose(Scene scene,final Stage stage) {
 		scene.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
 		@Override
@@ -87,7 +88,7 @@ public class GUIController extends Application {
 		}
 	});
 	}
-	
+
 	private String getCommandType(String command, int i) {
 		return command.trim().split("\\s+")[i];
 	}
@@ -151,7 +152,7 @@ public class GUIController extends Application {
 			break;
 		}
 	}
-
+	//@@author Jason (A0127830J)
 	private void executeClear(String command) throws Exception {
 		Controller.executeCMD(command);
 		GUI_VIEW.userCommandBlock.clear();
@@ -159,17 +160,17 @@ public class GUIController extends Application {
 		GUI_VIEW.showAll();
 		GUI_VIEW.showClear();
 	}
-
+	//@@author Jason (A0127830J)
 	private void executeHelp(String command) throws Exception {
 		Controller.executeCMD(command);
 		GUI_VIEW.userCommandBlock.clear();
 		GUI_VIEW.showHelp(Controller.getHelpString());
 	}
-
+	//@@author Jason (A0127830J)
 	private void executeExit(String command) throws Exception {
 		Controller.executeCMD(command);
 	}
-
+	//@@author Jason (A0127830J)
 	private void executeUndo(String command) throws Exception {
 		Controller.executeCMD(command);
 		GUI_VIEW.userCommandBlock.clear();
@@ -177,7 +178,7 @@ public class GUIController extends Application {
 		GUI_VIEW.showAll();
 		GUI_VIEW.showUndo();
 	}
-
+	//@@author Jason (A0127830J)
 	private void executeUnComOrArc(String command) throws Exception {
 		Controller.executeCMD(command);
 		GUI_VIEW.userCommandBlock.clear();
@@ -185,7 +186,7 @@ public class GUIController extends Application {
 		GUI_VIEW.showAll();
 		GUI_VIEW.showUnComOrArc();
 	}
-
+	//@@author Jason (A0127830J)
 	private void executeArchive(String command) throws Exception {
 		Controller.executeCMD(command);
 		GUI_VIEW.userCommandBlock.clear();
@@ -193,7 +194,7 @@ public class GUIController extends Application {
 		GUI_VIEW.showAll();
 		GUI_VIEW.showArchive();
 	}
-
+	//@@author Liang Yuan(A0133975W)
 	private void executeComplete(String command) throws Exception {
 		Controller.executeCMD(command);
 		GUI_VIEW.userCommandBlock.clear();
@@ -201,7 +202,7 @@ public class GUIController extends Application {
 		GUI_VIEW.showAll();
 		GUI_VIEW.showComplete();
 	}
-
+	//@@author Liang Yuan(A0133975W)
 	private void executeUpdate(String command) throws Exception {
 		Controller.executeCMD(command);
 		GUI_VIEW.userCommandBlock.clear();
@@ -209,20 +210,20 @@ public class GUIController extends Application {
 		GUI_VIEW.showAll();
 		GUI_VIEW.showUpdate();
 	}
-
+	//@@author Liang Yuan(A0133975W)
 	private void executeAll(String command) throws Exception {
 		Controller.executeCMD(command);
 		GUI_VIEW.userCommandBlock.clear();
 		GUI_VIEW.showPartitionList(0);
 		GUI_VIEW.showAll();
 	}
-
+	//@@author Liang Yuan(A0133975W)
 	private void executeSave(String command) throws Exception {
 		Controller.executeCMD(command);
 		GUI_VIEW.userCommandBlock.clear();
 		GUI_VIEW.showSave();
 	}
-
+	//@@author Liang Yuan(A0133975W)
 	private void executeLoad(String command) throws Exception {
 		Controller.executeCMD(command);
 		GUI_VIEW.userCommandBlock.clear();
@@ -230,14 +231,14 @@ public class GUIController extends Application {
 		GUI_VIEW.showAll();
 		GUI_VIEW.showLoad();
 	}
-
+	//@@author Liang Yuan(A0133975W)
 	private void executeSearch(String command) throws Exception {
 		Controller.executeCMD(command);
 		GUI_VIEW.userCommandBlock.clear();
 		GUI_VIEW.showGettedList(Controller.getTaskList());
 		GUI_VIEW.showSearch();
 	}
-
+	//@@author Jason (A0127830J)
 	private void executeDelete(String command) throws Exception {
 		Controller.executeCMD(command);
 		GUI_VIEW.userCommandBlock.clear();
@@ -245,7 +246,7 @@ public class GUIController extends Application {
 		GUI_VIEW.showAll();
 		GUI_VIEW.showDelete();
 	}
-
+	//@@author Jason (A0127830J)
 	private void executeShow(String command) throws Exception {
 		Controller.executeCMD(command);
 		switch (getCommandType(command, 1)) {
@@ -289,7 +290,7 @@ public class GUIController extends Application {
 			break;
 		}
 	}
-
+	//@@author Jason (A0127830J)
 	private void executeSet(String command) throws Exception {
 		Controller.executeCMD(command);
 		switch (getCommandType(command, 1)) {
@@ -306,7 +307,7 @@ public class GUIController extends Application {
 			break;
 		}
 	}
-
+	//@@author Liang Yuan(A0133975W)
 	private void executeAdd(String command) throws Exception {
 		Controller.executeCMD(command);
 		GUI_VIEW.userCommandBlock.clear();
