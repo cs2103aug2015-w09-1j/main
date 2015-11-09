@@ -25,7 +25,22 @@ public class SystematicTest {
 	 * 
 	 * @author Liang Yuan
 	 */
-/*	@Test
+	@Test
+	public void initializeTest() throws Exception {
+		Controller.executeCMD("set path systematicTest\\");
+		Controller.executeCMD("set filename systematicTest");
+		Controller.executeCMD("load");
+		Controller.executeCMD("display");
+		Controller.executeCMD("delete all");
+		Controller.executeCMD("show complete");
+		Controller.executeCMD("delete all");
+		Controller.executeCMD("show archived");
+		Controller.executeCMD("delete all");
+		(new File("systematicTest\\systematicTest.fxml")).delete();
+		(new File("systematicTest")).delete();
+	}
+
+	@Test
 	public void testSet() throws Exception {
 		Controller.executeCMD("set path testFolder\\");
 		assertTrue((new File("testFolder")).exists());
@@ -38,14 +53,21 @@ public class SystematicTest {
 		
 		(new File("testFolder\\testFile.fxml")).delete();
 		(new File("testFolder")).delete();
+		
+		(new File("systematicTest\\systematicTest.fxml")).delete();
+		
+		Controller.executeCMD("set path systematicTest\\");
+		Controller.executeCMD("set filename systematicTest");
+		(new File("systematicTest\\systematicTest.fxml")).delete();
+		(new File("systematicTest")).delete();
 	}
-*/
+
 	@Test
 	public void testAddWithUndo() throws Exception {
 		Controller.executeCMD("display");
 		Controller.executeCMD("delete all");
 		Controller.executeCMD("add deadLine by 2015-12-30 2359");
-		/*taskList = Controller.getTaskList();
+		taskList = Controller.getTaskList();
 		task = taskList.get(0);
 		assertTrue(task instanceof DeadlineTask);
 		deadline = (DeadlineTask) task;
@@ -82,15 +104,12 @@ public class SystematicTest {
 		
 		Controller.executeCMD("undo");
 		taskList = Controller.getTaskList();
-		assertEquals(taskList.size(),0);*/	
-	
-		(new File("testFolder\\testFile.fxml")).delete();
-		(new File("testFolder")).delete();
+		assertEquals(taskList.size(),0);
 	}
 
-/*	@Test
+	@Test
 	public void testDeleteWithUndo() throws Exception {
-		Controller.executeCMD("set path testFolder\\");
+		Controller.executeCMD("display");
 		Controller.executeCMD("delete all");
 		for (int i = 0; i < 30; i++) {
 			Controller.executeCMD("add floating");
@@ -126,13 +145,11 @@ public class SystematicTest {
 		taskList=Controller.getTaskList();
 		size=taskList.size();
 		assertEquals(size,29);
-		
-		new File("testFolder").delete();
 	}
 	
 	@Test
 	public void testUpdate() throws Exception {
-		Controller.executeCMD("set path testFolder\\");
+		Controller.executeCMD("display");
 		Controller.executeCMD("delete all");
 		Controller.executeCMD("add deadLine by 2015-12-30 2359");
 		
@@ -140,7 +157,7 @@ public class SystematicTest {
 		taskList = Controller.getTaskList();
 		task = taskList.get(0);
 		deadline = (DeadlineTask) task;
-		//assertEquals(deadline.getTaskName(),"ddl");
+		assertEquals(deadline.getTaskName(),"ddl");
 		
 		Controller.executeCMD("undo");
 		taskList = Controller.getTaskList();
@@ -250,26 +267,24 @@ public class SystematicTest {
 		floating = (FloatingTask) task;
 		assertEquals(floating.getTaskName(),"floating");
 		Controller.executeCMD("delete 1");
-		new File("testFolder").delete();
 	}
 
 	@Test
 	public void testSaveAndLoad() throws Exception {
-		Controller.executeCMD("set path testFolder\\");
+		Controller.executeCMD("display");
 		Controller.executeCMD("delete all");
 		for (int i = 0; i < 30; i++) {
 			Controller.executeCMD("add floating");
 		}
-		taskList = Controller.getTaskList();
 		Controller.executeCMD("save");
+		taskList = Controller.getTaskList();
 		Controller.executeCMD("load");
-		assertEquals(taskList,Controller.getTaskList());
-		new File("testFolder").delete();
+		assertEquals(taskList.size(),Controller.getTaskList().size());
 	}
 	
 	@Test
 	public void testSearchAndShow() throws Exception {
-		Controller.executeCMD("set path testFolder\\");
+		Controller.executeCMD("display");
 		Controller.executeCMD("delete all");
 		Controller.executeCMD("add deadLine by 2015-12-20 2359");
 		Controller.executeCMD("add event from 2015-12-25 0800 to 2015-12-30 2300");
@@ -341,21 +356,22 @@ public class SystematicTest {
 		assertTrue(task instanceof DeadlineTask);
 		task = taskList.get(2);
 		assertTrue(task instanceof EventTask);
-		new File("testFolder").delete();
 	}
-	/*
+
 	@Test
 	public void testCompleteUncomplete() throws Exception {
+		Controller.executeCMD("display");
 		Controller.executeCMD("delete all");
 		Controller.executeCMD("add deadLine by 2015-12-20 2359");
 		Controller.executeCMD("add event from 2015-12-25 0800 to 2015-12-30 2300");
 		Controller.executeCMD("add floating");
-		
+
 		Controller.executeCMD("complete 1");
 		taskList = Controller.getCompletedList();
 		task = taskList.get(0);
-		//assertTrue(task instanceof DeadlineTask);
+		assertTrue(task instanceof DeadlineTask);
 		
+		Controller.executeCMD("display");
 		taskList = Controller.getTaskList();
 		task = taskList.get(0);
 		assertFalse(task instanceof DeadlineTask);
@@ -363,7 +379,7 @@ public class SystematicTest {
 		Controller.executeCMD("show complete");
 		Controller.executeCMD("uncomplete 1");
 		taskList = Controller.getCompletedList();
-		//assertTrue(taskList.size()==0);
+		assertTrue(taskList.size()==0);
 		
 		taskList = Controller.getTaskList();
 		task = taskList.get(0);
@@ -419,6 +435,7 @@ public class SystematicTest {
 	
 	@Test
 	public void testArchiveUnarchive() throws Exception {
+		Controller.executeCMD("display");
 		Controller.executeCMD("delete all");
 		Controller.executeCMD("add deadLine by 2015-12-20 2359");
 		Controller.executeCMD("add event from 2015-12-25 0800 to 2015-12-30 2300");
@@ -489,10 +506,11 @@ public class SystematicTest {
 		taskList = Controller.getArchivedList();
 		assertTrue(taskList.size()==0);
 	}
-	*/
+
 	
-	/*@Test
+	@Test
 	public void testOtherShow() throws Exception {
+		Controller.executeCMD("display");
 		Controller.executeCMD("delete all");
 		Controller.executeCMD("add deadLine by today 2359");
 		Controller.executeCMD("add event from today 0800 to today 2300");
@@ -505,17 +523,17 @@ public class SystematicTest {
 		Controller.executeCMD("show floating");
 		taskList = Controller.getFloatingTaskList();
 		assertTrue(taskList.size()==1);
-	}*/
+	}
 	
-	/*@Test
-	public void testHelp() throws Exception {
-		Controller.executeCMD("set path testFolder\\");
-		Controller.executeCMD("set filename testFile");
+	@Test
+	public void testHelpThenExit() throws Exception {
 		Controller.executeCMD("help");
-		assertEquals(Controller.getHelpString(),"add <name>\nadd <name> from <time> to <time>\nadd <name> by   <deadline>\ndelete  <id>\nsearch  <id>\narchive <id>\nedit <id> <attribute> <info>\nset  path     <storage path>\nset  filename <filename>\nundo\n");
-		(new File("testFolder")).delete();
-	}*/
-
+		assertEquals(Controller.getHelpString(),"add <name>\nadd <name> from <time> to <time>\nadd <name> by   <deadline>\ndelete  <id>\nsearch  <id>\narchive <id>\nedit <id> <attribute> <info>\nset  path     <storage path>\nset  filename <filename>\nshow on <date>\nshow by <date>\nundo\n");
+		
+		Controller.executeCMD("exit");
+		(new File("systematicTest\\systematicTest.fxml")).delete();
+		(new File("systematicTest")).delete();
+	}
 }
 ```
 ###### src\test\TestStorage.java
@@ -839,109 +857,6 @@ public class Storage {
 	}
 }
 ```
-###### src\view\GUIController.java
-``` java
-
-package view;
-
-
-import controller.Controller;
-import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
-
-public class GUIController extends Application {
-	private static double xOffset = 0;
-	private static double yOffset = 0;
-	private static GUIView GUI_VIEW = GUIView.getInstance();
-	
-	public GUIView getView() {
-		return GUI_VIEW;
-	}
-	
-	public static void main(String args[]) {
-		launch(args);
-	}
-
-	@Override
-	public void start(Stage Stage) throws Exception {
-		GUI_VIEW.buildGUI(Stage);
-		getCommand();
-	}
-	
-```
-###### src\view\GUIController.java
-``` java
-	private void executeComplete(String command) throws Exception {
-		Controller.executeCMD(command);
-		GUI_VIEW.userCommandBlock.clear();
-		GUI_VIEW.showPartitionList(0);
-		GUI_VIEW.showAll();
-		GUI_VIEW.showComplete();
-	}
-```
-###### src\view\GUIController.java
-``` java
-	private void executeUpdate(String command) throws Exception {
-		Controller.executeCMD(command);
-		GUI_VIEW.userCommandBlock.clear();
-		GUI_VIEW.showPartitionList(0);
-		GUI_VIEW.showAll();
-		GUI_VIEW.showUpdate();
-	}
-```
-###### src\view\GUIController.java
-``` java
-	private void executeAll(String command) throws Exception {
-		Controller.executeCMD(command);
-		GUI_VIEW.userCommandBlock.clear();
-		GUI_VIEW.showPartitionList(0);
-		GUI_VIEW.showAll();
-	}
-```
-###### src\view\GUIController.java
-``` java
-	private void executeSave(String command) throws Exception {
-		Controller.executeCMD(command);
-		GUI_VIEW.userCommandBlock.clear();
-		GUI_VIEW.showSave();
-	}
-```
-###### src\view\GUIController.java
-``` java
-	private void executeLoad(String command) throws Exception {
-		Controller.executeCMD(command);
-		GUI_VIEW.userCommandBlock.clear();
-		GUI_VIEW.showPartitionList(0);
-		GUI_VIEW.showAll();
-		GUI_VIEW.showLoad();
-	}
-```
-###### src\view\GUIController.java
-``` java
-	private void executeSearch(String command) throws Exception {
-		Controller.executeCMD(command);
-		GUI_VIEW.userCommandBlock.clear();
-		GUI_VIEW.showGettedList(Controller.getTaskList());
-		GUI_VIEW.showSearch();
-	}
-```
-###### src\view\GUIController.java
-``` java
-	private void executeAdd(String command) throws Exception {
-		Controller.executeCMD(command);
-		GUI_VIEW.userCommandBlock.clear();
-		GUI_VIEW.showPartitionList(0);
-		GUI_VIEW.showAll();
-		GUI_VIEW.showAdd();
-	}
-}
-```
 ###### src\view\GUIView.java
 ``` java
 package view;
@@ -976,6 +891,9 @@ import model.FloatingTask;
 import model.Task;
 import util.Storage;
 
+/**
+ * This is a class to build GUI directly
+ * */
 public class GUIView{
 	private int taskCount;
 	private int gridRowCount;

@@ -7,7 +7,7 @@ import model.Task;
 /*
  * This class is to execute multiple create 
  * 
- * @@author A0111947E
+ * @@author Jason (A0127830J)
  */
 public class CreateBulkTask extends CreateCommand {
 	private ArrayList<Task> tasks;
