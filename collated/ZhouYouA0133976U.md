@@ -1349,7 +1349,7 @@ public class CommandParser {
 	 */
 	private void parseEventTask(String args)  {
 		String taskNameStr = args.substring(0, args.lastIndexOf("from"));
-		String timeStr = args.substring(args.lastIndexOf("from"),args.length()-1);	
+		String timeStr = args.substring(args.lastIndexOf("from"),args.length());	
 		setTaskName(taskNameStr);
 		
 		List<Date> dates = new PrettyTimeParser().parse(timeStr);
@@ -1652,6 +1652,7 @@ public class CommandParser {
 			return "float";
 		}	
 	}
+	
 
 }
 
