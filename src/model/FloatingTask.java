@@ -1,8 +1,9 @@
 package model;
 import java.util.*;
 
-/**
- * @author Sim Thiam Guan, Calvin
+/*
+ * This is a Floating Task
+ * @@author A0111947E
  */
 public class FloatingTask extends Task{
 	public FloatingTask(){

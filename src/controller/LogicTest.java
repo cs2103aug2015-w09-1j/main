@@ -1,8 +1,4 @@
 package controller;
-
-/**
- * @author Sim Thiam Guan, Calvin
- */
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
@@ -14,6 +10,11 @@ import org.junit.Test;
 import command.TaskMemory;
 import util.Storage;
 
+/*
+ * JUnit Testing
+ * @@author A0111947E
+ *
+ */
 public class LogicTest {
 	// get instance from TaskMemory
 	ArrayList<Task> taskList = TaskMemory.getInstance().getCombinedTaskList();

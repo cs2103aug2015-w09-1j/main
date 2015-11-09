@@ -11,14 +11,14 @@ import model.EventTask;
 import model.FloatingTask;
 import model.Task;
 
-/**
+/*
  * This is a Task Memory Class. The controller and logic can interact with this
  * class. The purpose of this class is to call Storage load api. In this class,
  * its manipulate the loaded data to different array list.
  * 
  * There are 11 public API can be used.
  * 
- * @author calvin sim
+ * @@author A0111947E
  *
  */
 public class TaskMemory {

@@ -4,6 +4,11 @@ import java.util.ArrayList;
 
 import model.Task;
 
+/*
+ * This class is to execute multiple create 
+ * 
+ * @@author A0111947E
+ */
 public class CreateBulkTask extends CreateCommand {
 	private ArrayList<Task> tasks;
 

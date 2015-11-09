@@ -4,8 +4,9 @@ import java.util.*;
 
 import javafx.beans.property.StringProperty;
 
-/**
- * @author Sim Thiam Guan, Calvin
+/*
+ * This class is the abstract class of Deadline, Event and Floating Class.
+ * @@author A0111947E
  */
 
 public abstract class Task {

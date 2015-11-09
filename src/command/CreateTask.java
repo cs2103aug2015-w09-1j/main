@@ -1,7 +1,12 @@
-package command;
+ package command;
 
 import model.Task;
 
+/*
+ * This class is to execute single create task.
+ * 
+ * @@author A0111947E
+ */
 public class CreateTask extends CreateCommand {
 	private Task task;
 

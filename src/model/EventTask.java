@@ -2,8 +2,9 @@ package model;
 
 import java.util.*;
 
-/**
- * @author Sim Thiam Guan, Calvin
+/*
+ * This a Event Class
+ * @@author A0111947E
  */
 
 public class EventTask extends Task {

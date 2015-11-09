@@ -1,7 +1,8 @@
 package model;
 import java.util.*;
-/**
- * @author Sim Thiam Guan, Calvin
+/*
+ * This is a Deadline Class
+ * @@author A0111947E
  */
 public class DeadlineTask extends Task {
 	private String deadline_date;

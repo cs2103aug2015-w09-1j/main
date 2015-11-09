@@ -9,13 +9,12 @@ import util.Storage;
 import command.*;
 import model.*;
 
-/**
+/*
  * 
  * Method to parse user commands, and pass parameters to UI, Storage and Logic
- * 
+ * @@author A0111947E
  */
 public class Controller {
-	private static Controller _instance;
 	private static Logic logic = new Logic();
 	private static ArrayList<Task> displayList = TaskMemory.getInstance()
 			.getCombinedTaskList();

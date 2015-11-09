@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import model.Task;
 
+/*
+ * @@author A0111947E
+ */
 public class DeleteBulkTask extends DeleteCommand {
 	private ArrayList<Task> tasks;
 	

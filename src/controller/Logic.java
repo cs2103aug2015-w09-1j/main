@@ -14,13 +14,12 @@ import command.UpdateBulkTask;
 import command.UpdateTask;
 import model.*;
 
-/**
+/*
  * This is a Logic class. It provide all algorithm API for 'CRUD' that
  * Controller.java will called.
  * 
- * There are 11 Public API can be called.
  * 
- * @author calvin sim
+ * @@author A0111947E
  *
  */
 

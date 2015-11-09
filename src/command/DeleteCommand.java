@@ -1,5 +1,8 @@
 package command;
 
+/*
+ * @@author A0111947E
+ */
 public abstract class DeleteCommand implements ICommand {
 	public abstract void execute();
 
