@@ -133,8 +133,8 @@ public class CommandParser {
 	private int[] completeIDs;
 
 	
-	private static String help = "add <name>\nadd <name> from <time> to <time>\nadd <name> by   <deadline>\ndelete  <id>\nsearch  <id>\narchive <id>\nedit <id> <attribute> <info>\nset  path     <storage path>\nset  filename <filename>\nundo\n";
-	
+	private static final String help = "add <name>\nadd <name> from <time> to <time>\nadd <name> by   <deadline>\ndelete  <id>\nsearch  <id>\narchive <id>\nedit <id> <attribute> <info>\nset  path     <storage path>\nset  filename <filename>\nundo\n";
+	private static final int taskNameMaximumLength = 37;
 	CommandChecker cc;
 	
 	/**********************************************************************
@@ -650,7 +650,10 @@ public class CommandParser {
 		return this.args;
 	}
 	private void setTaskName(String name) {
-		this.taskName = name.trim().substring(0,36);
+		if(name.trim().length() > taskNameMaximumLength) {
+			name = name.trim().substring(0, taskNameMaximumLength-1);
+		}
+		this.taskName = name.trim();
 	}
 	private void setStartTime(String time) {
 		this.startTime = time.trim();
