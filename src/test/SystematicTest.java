@@ -442,6 +442,8 @@ public class SystematicTest {
 		Controller.executeCMD("add event from 2015-12-25 0800 to 2015-12-30 2300");
 		Controller.executeCMD("add floating");
 		
+		Controller.executeCMD("show archived");
+		Controller.executeCMD("delete all");
 		Controller.executeCMD("archive 1");
 		taskList = Controller.getArchivedList();
 		task = taskList.get(0);

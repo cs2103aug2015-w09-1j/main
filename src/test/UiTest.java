@@ -105,7 +105,7 @@ public class UiTest extends GuiTest {
 		  assertEquals(((Label) find("#msg")).getText(), "Today's tasks are listed below");
 		  assertEquals(((Label) find("#sig")).getText(), "");
 	  }
-	  
+	  /*
 	  @Test
 	  public void showSetFileNameTest() {
 		  type("set filename test").push(KeyCode.ENTER);
@@ -120,6 +120,7 @@ public class UiTest extends GuiTest {
 		  assertEquals(((Label) find("#msg")).getText(), "New path: " + Storage.getInstance().getPath());
 		  assertEquals(((Label) find("#sig")).getText(), "Set successfully!");
 	  }
+	  */
 	  
 	  @Test
 	  public void showAllTest() {
@@ -170,7 +171,7 @@ public class UiTest extends GuiTest {
 	  
 	  @Test
 	  public void showByTest() {
-		  type("show by tomorrow").push(KeyCode.ENTER);
+		  type("show by next week").push(KeyCode.ENTER);
 		  assertEquals(((Label) find("#msg")).getText(), "Tasks before selected date are listed below");
 		  assertEquals(((Label) find("#sig")).getText(), "");
 	  }

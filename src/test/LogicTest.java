@@ -55,17 +55,17 @@ public class LogicTest {
 		assertEquals(0, taskList.size());
 
 		// create a event task
-		logic.executeCreateTask("Event task", "2015-11-05", "2359",
-				"2015-11-11", "1000");
+		logic.executeCreateTask("Event task", "2015-11-13", "2359",
+				"2015-11-14", "1000");
 		// get instance
 		taskList = TaskMemory.getInstance().getCombinedTaskList();
 		assertEquals(2, taskList.size());
 		// assert event task attribute
 		EventTask event = (EventTask) taskList.get(0);
 		assertEquals("Event task", event.getTaskName());
-		assertEquals("2015-11-05", event.getStartDate());
+		assertEquals("2015-11-13", event.getStartDate());
 		assertEquals("2359", event.getStartTime());
-		assertEquals("2015-11-11", event.getEndDate());
+		assertEquals("2015-11-14", event.getEndDate());
 		assertEquals("1000", event.getEndTime());
 		assertEquals("null", event.getTaskType());
 	}
@@ -89,14 +89,14 @@ public class LogicTest {
 		assertEquals(0, taskList.size());
 
 		// create a deadline task
-		logic.executeCreateTask("Deadline task", null, null, "2015-11-12",
+		logic.executeCreateTask("Deadline task", null, null, "2015-11-14",
 				"1100");
 
 		taskList = TaskMemory.getInstance().getCombinedTaskList();
 		assertEquals(1, taskList.size());
 		DeadlineTask deadline = (DeadlineTask) taskList.get(0);
 		assertEquals("Deadline task", deadline.getTaskName());
-		assertEquals("2015-11-12", deadline.getDeadlineDate());
+		assertEquals("2015-11-14", deadline.getDeadlineDate());
 		assertEquals("1100", deadline.getDeadlineTime());
 
 	}
